@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class PlanshboardAppApplication
 
 fun main(args: Array<String>) {
-	runApplication<PlanshboardAppApplication>(*args)
+    runApplication<PlanshboardAppApplication>(*args)
 }
