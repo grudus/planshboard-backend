@@ -1,5 +1,7 @@
 package com.grudus.planshboard.configuration.spring
 
+import com.grudus.planshboard.commons.CurrentTimeProvider
+import com.grudus.planshboard.commons.SystemCurrentTimeProvider
 import com.grudus.planshboard.env.EnvironmentKeys.FRONTEND_ADDRESS
 import com.grudus.planshboard.env.EnvironmentKeys.SPRING_DATASOURCE_DRIVER_CLASS_NAME
 import com.grudus.planshboard.env.EnvironmentKeys.SPRING_DATASOURCE_PASSWORD
@@ -19,6 +21,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.transaction.annotation.EnableTransactionManagement
+import java.time.LocalDateTime
 import javax.sql.DataSource
 
 @Configuration
@@ -56,4 +59,7 @@ class PlanshboardContext {
     @Bean
     fun allowedOrigins(env: EnvironmentService): List<String> =
         env.getList(FRONTEND_ADDRESS)
+
+    @Bean
+    fun currentTimeProvider(): CurrentTimeProvider = SystemCurrentTimeProvider()
 }
