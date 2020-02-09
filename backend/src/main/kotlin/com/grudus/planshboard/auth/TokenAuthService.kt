@@ -1,6 +1,7 @@
 package com.grudus.planshboard.auth
 
 import com.grudus.planshboard.commons.AuthConstants.JWT_USER_ID_HEADER
+import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.env.EnvironmentKeys
 import com.grudus.planshboard.env.EnvironmentService
 import io.jsonwebtoken.Claims
@@ -14,7 +15,8 @@ import javax.crypto.SecretKey
 @Service
 class TokenAuthService
 @Autowired
-constructor(private val env: EnvironmentService) {
+constructor(private val env: EnvironmentService,
+            private val currentTimeProvider: CurrentTimeProvider) {
     private val jwtKey: ByteArray by lazy { (env.getText(EnvironmentKeys.JWT_KEY).toByteArray()) }
     private val signKey: SecretKey by lazy { Keys.hmacShaKeyFor(jwtKey) }
 
@@ -41,7 +43,7 @@ constructor(private val env: EnvironmentService) {
     }
 
     private fun expirationDate(): Date =
-        java.time.LocalDateTime.now()
+        currentTimeProvider.now()
             .plusSeconds(env.getLong(EnvironmentKeys.JWT_EXPIRE_SECONDS))
             .atZone(java.time.ZoneOffset.systemDefault()).toInstant()
             .let { instant -> Date.from(instant) }
