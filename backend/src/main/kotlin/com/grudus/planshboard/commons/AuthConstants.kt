@@ -7,4 +7,5 @@ object AuthConstants {
     const val LOGIN_PASSWORD_PARAM = "password"
     const val JWT_USER_ID_HEADER = "userId"
     const val LOGIN_PATH = "/api/auth/login"
+    const val URI_START_WITHOUT_AUTH = "/api/auth"
 }

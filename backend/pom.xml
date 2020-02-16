@@ -15,12 +15,6 @@
     <description>Backend server for Planshboard app</description>
 
     <properties>
-        <java.version>1.8</java.version>
-        <kotlin.version>1.3.61</kotlin.version>
-        <flyway.version>6.2.2</flyway.version>
-        <jooq.version>3.12.4</jooq.version>
-        <jwt-library.version>0.11.0</jwt-library.version>
-
         <db.driver>org.postgresql.Driver</db.driver>
         <db.url>jdbc:postgresql://localhost:5432/planshboard</db.url>
         <db.username>grudus</db.username>
@@ -28,6 +22,13 @@
 
         <jooq.db.dialect>org.jooq.meta.postgres.PostgresDatabase</jooq.db.dialect>
         <jooq.db.inputSchema>public</jooq.db.inputSchema>
+
+        <java.version>1.8</java.version>
+        <kotlin.version>1.3.61</kotlin.version>
+        <flyway.version>6.2.2</flyway.version>
+        <jooq.version>3.12.4</jooq.version>
+        <jwt-library.version>0.11.0</jwt-library.version>
+        <apache-commons.version>3.9</apache-commons.version>
     </properties>
 
     <dependencies>
@@ -110,6 +111,11 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>${jwt-library.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache-commons.version}</version>
         </dependency>
 
     </dependencies>
