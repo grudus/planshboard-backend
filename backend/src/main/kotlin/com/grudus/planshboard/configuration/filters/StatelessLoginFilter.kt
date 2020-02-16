@@ -2,7 +2,7 @@ package com.grudus.planshboard.configuration.filters
 
 import com.grudus.planshboard.auth.TokenAuthService
 import com.grudus.planshboard.auth.UserAuthentication
-import com.grudus.planshboard.auth.UserLoginService
+import com.grudus.planshboard.auth.UserAuthenticationService
 import com.grudus.planshboard.commons.AuthConstants
 import com.grudus.planshboard.commons.AuthConstants.AUTH_HEADER_NAME
 import com.grudus.planshboard.commons.AuthConstants.AUTH_TOKEN_PREFIX
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class StatelessLoginFilter
 @Autowired
-constructor(private val userLoginService: UserLoginService,
+constructor(private val userAuthenticationService: UserAuthenticationService,
             private val tokenAuthService: TokenAuthService) : AbstractAuthenticationProcessingFilter(LOGIN_PATH) {
 
     private val log = LoggerFactory.getLogger(javaClass.simpleName)
@@ -34,7 +34,7 @@ constructor(private val userLoginService: UserLoginService,
         val username = request.getParameter(AuthConstants.LOGIN_USERNAME_PARAM)
         val password = request.getParameter(AuthConstants.LOGIN_PASSWORD_PARAM)
 
-        return userLoginService.tryToLogin(username, password)
+        return userAuthenticationService.tryToLogin(username, password)
     }
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain, authResult: Authentication) {

@@ -2,6 +2,7 @@ package com.grudus.planshboard.configuration.filters
 
 import com.grudus.planshboard.auth.TokenAuthService
 import com.grudus.planshboard.commons.AuthConstants
+import com.grudus.planshboard.commons.AuthConstants.URI_START_WITHOUT_AUTH
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
@@ -16,8 +17,14 @@ class StatelessAuthenticationFilter
 constructor(private val tokenAuthService: TokenAuthService) : OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        val authToken: String? = request.getHeader(AuthConstants.AUTH_HEADER_NAME)
-            ?.removePrefix(AuthConstants.AUTH_TOKEN_PREFIX)
+
+        if (request.requestURI.startsWith(URI_START_WITHOUT_AUTH)) {
+            logger.debug("Request ${request.requestURI} doesn't need authentication")
+            filterChain.doFilter(request, response)
+            return
+        }
+
+        val authToken: String? = extractAuthToken(request)
 
         if (authToken == null) {
             logger.warn("Cannot authenticate request, because auth token is not present")
@@ -34,4 +41,8 @@ constructor(private val tokenAuthService: TokenAuthService) : OncePerRequestFilt
 
         filterChain.doFilter(request, response)
     }
+
+    private fun extractAuthToken(request: HttpServletRequest): String? =
+        request.getHeader(AuthConstants.AUTH_HEADER_NAME)
+            ?.removePrefix(AuthConstants.AUTH_TOKEN_PREFIX)
 }
