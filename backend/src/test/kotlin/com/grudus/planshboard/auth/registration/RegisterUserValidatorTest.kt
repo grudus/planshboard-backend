@@ -10,10 +10,8 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import utils.randomText
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import com.grudus.planshboard.utils.randomText
+import org.junit.jupiter.api.Assertions.*
 
 @ExtendWith(MockitoExtension::class)
 class RegisterUserValidatorTest {

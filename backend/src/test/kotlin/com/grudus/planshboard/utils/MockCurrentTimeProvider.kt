@@ -1,4 +1,4 @@
-package utils
+package com.grudus.planshboard.utils
 
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import java.time.Clock

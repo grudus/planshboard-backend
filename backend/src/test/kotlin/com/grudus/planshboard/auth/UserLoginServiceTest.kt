@@ -12,10 +12,10 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
-import utils.MockCurrentTimeProvider
-import utils.randomText
+import com.grudus.planshboard.utils.MockCurrentTimeProvider
+import com.grudus.planshboard.utils.randomText
+import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.random.Random.Default.nextLong
-import kotlin.test.assertEquals
 
 @ExtendWith(MockitoExtension::class)
 class UserLoginServiceTest {
