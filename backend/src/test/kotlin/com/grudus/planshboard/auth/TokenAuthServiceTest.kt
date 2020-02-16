@@ -11,9 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import utils.MockCurrentTimeProvider
+import com.grudus.planshboard.utils.MockCurrentTimeProvider
+import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.LocalDateTime
-import kotlin.test.assertEquals
 
 @ExtendWith(MockitoExtension::class)
 class TokenAuthServiceTest {
