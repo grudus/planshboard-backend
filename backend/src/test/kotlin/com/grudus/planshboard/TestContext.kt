@@ -9,7 +9,7 @@ import javax.sql.DataSource
 
 @Configuration
 @Import(PlanshboardContext::class)
-@PropertySource("classpath:/test.properties")
+@PropertySource("classpath:/application.properties")
 @ComponentScan("com.grudus.planshboard")
 class TestContext {
 
