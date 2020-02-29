@@ -2,6 +2,9 @@ package com.grudus.planshboard.boardgames
 
 import com.grudus.planshboard.AuthenticatedControllerTest
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
+import com.grudus.planshboard.boardgames.model.RenameBoardGameRequest
+import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.utils.TestUtils.hasSize
 import com.grudus.planshboard.utils.randomText
@@ -10,8 +13,9 @@ import org.hamcrest.Matchers.notNullValue
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import kotlin.random.Random.Default.nextLong
 
-class BoardGameControllerTest: AuthenticatedControllerTest() {
+class BoardGameControllerTest : AuthenticatedControllerTest() {
     private val baseUrl = "/api/board-games"
 
     @Test
@@ -57,5 +61,52 @@ class BoardGameControllerTest: AuthenticatedControllerTest() {
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.[*]", hasSize(1)))
     }
+
+    @Test
+    fun `should rename board game properly`() {
+        val oldName = randomText()
+        val newName = randomText()
+        val id = addBoardGame(oldName)
+
+        putRequest("$baseUrl/$id", RenameBoardGameRequest(newName))
+            .andExpect(status().isOk)
+
+        getRequest(baseUrl)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[0].name").value(newName))
+    }
+
+    @Test
+    fun `should not be able to rename to existing name`() {
+        val oldName = randomText()
+        val newName = randomText()
+        val id = addBoardGame(oldName)
+        addBoardGame(newName)
+
+        putRequest("$baseUrl/$id", RenameBoardGameRequest(newName))
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.code").value(ValidationKeys.GAME_ALREADY_EXISTS))
+    }
+
+    @Test
+    fun `should not be able to rename someone else's board game`() {
+        val oldName = randomText()
+        val newName = randomText()
+        val id = addBoardGame(oldName)
+        setupAuthContextForAnotherUser()
+
+        putRequest("$baseUrl/$id", RenameBoardGameRequest(newName))
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `should not be able to rename not existing board game`() {
+        putRequest("$baseUrl/${nextLong()}", RenameBoardGameRequest(randomText()))
+            .andExpect(status().isForbidden)
+    }
+
+    private fun addBoardGame(name: String): Id =
+        postRequest(baseUrl, CreateBoardGameRequest(name))
+            .getResponse(IdResponse::class.java).id
 
 }

@@ -1,6 +1,6 @@
-package com.grudus.planshboard.boardgames
+package com.grudus.planshboard.boardgames.validators
 
-import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
+import com.grudus.planshboard.boardgames.BoardGameService
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.user.CurrentUserService
 import com.grudus.planshboard.utils.randomText
@@ -15,35 +15,35 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 
 @ExtendWith(MockitoExtension::class)
-class CreateBoardGameValidatorTest {
+class BoardGameNameValidatorTest {
     @Mock
     private lateinit var boardGameService: BoardGameService
 
     @Mock
     private lateinit var currentUserService: CurrentUserService
 
-    private lateinit var validator: CreateBoardGameValidator
+    private lateinit var nameValidator: BoardGameNameValidator
 
     @BeforeEach
     fun init() {
-        validator = CreateBoardGameValidator(boardGameService, currentUserService)
+        nameValidator = BoardGameNameValidator(boardGameService, currentUserService)
     }
 
     @Test
     fun `should validate properly`() {
         `when`(boardGameService.nameExists(anyLong(), anyString())).thenReturn(false)
-        val request = CreateBoardGameRequest(randomText())
+        val name = randomText()
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = nameValidator.performValidation(name)
 
         assertTrue(validationResult.isSuccess())
     }
 
     @Test
     fun `should not validate properly when empty name`() {
-        val request = CreateBoardGameRequest("\t ")
+        val name = "\t "
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = nameValidator.performValidation(name)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.EMPTY_FIELD, validationResult.getError())
@@ -52,9 +52,9 @@ class CreateBoardGameValidatorTest {
     @Test
     fun `should not validate properly when name exists`() {
         `when`(boardGameService.nameExists(anyLong(), anyString())).thenReturn(true)
-        val request = CreateBoardGameRequest(randomText())
+        val name = randomText()
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = nameValidator.performValidation(name)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.GAME_ALREADY_EXISTS, validationResult.getError())

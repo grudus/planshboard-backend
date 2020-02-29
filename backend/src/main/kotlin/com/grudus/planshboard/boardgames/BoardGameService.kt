@@ -24,4 +24,6 @@ constructor(private val boardGameDao: BoardGameDao) {
     fun nameExists(currentUserId: Id, name: String): Boolean =
         boardGameDao.nameExists(currentUserId, name)
 
+    fun rename(boardGameId: Id, newName: String) =
+        boardGameDao.rename(boardGameId, newName)
 }
