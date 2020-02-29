@@ -46,5 +46,9 @@ abstract class AbstractControllerTest : SpringBasedTest() {
 
     protected fun <T> toJson(o: T): ByteArray =
         objectMapper.writeValueAsBytes(o)
+
+    protected fun <T> ResultActions.getResponse(aClass: Class<T>): T =
+        objectMapper.readValue(this.andReturn().response.contentAsString, aClass)
+
 }
 

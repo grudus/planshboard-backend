@@ -52,6 +52,11 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
     fun getRequest(url: String): ResultActions =
         performRequestWithAuth(MockMvcRequestBuilders.get(url))
 
+    fun <T> putRequest(url: String, requestBody: T): ResultActions =
+        performRequestWithAuth(MockMvcRequestBuilders.put(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(toJson(requestBody)))
+
     private fun setupContext() {
         val context = SecurityContextHolder.createEmptyContext()
         SecurityContextHolder.setContext(context)
@@ -65,6 +70,4 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
     private fun performRequestWithAuth(requestBuilders: MockHttpServletRequestBuilder): ResultActions {
         return mockMvc.perform(requestBuilders.header(AUTH_HEADER_NAME, token).principal(authentication))
     }
-
-
 }

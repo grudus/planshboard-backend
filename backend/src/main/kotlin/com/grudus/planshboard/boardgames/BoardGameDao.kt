@@ -43,4 +43,20 @@ constructor(private val dsl: DSLContext) {
                 .and(BOARD_GAMES.CREATOR_ID.eq(userId))
         )
 
+
+    fun rename(boardGameId: Id, newName: String) =
+        dsl.update(BOARD_GAMES)
+            .set(BOARD_GAMES.NAME, newName)
+            .where(BOARD_GAMES.ID.eq(boardGameId))
+            .execute()
+
+
+    fun isCreatedByUser(boardGameId: Id, userId: Id): Boolean =
+        dsl.fetchExists(
+            dsl.select()
+                .from(BOARD_GAMES)
+                .where(BOARD_GAMES.ID.eq(boardGameId))
+                .and(BOARD_GAMES.CREATOR_ID.eq(userId))
+        )
+
 }
