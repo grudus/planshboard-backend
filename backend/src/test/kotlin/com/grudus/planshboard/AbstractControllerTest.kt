@@ -25,7 +25,7 @@ abstract class AbstractControllerTest : SpringBasedTest() {
     @Autowired
     private lateinit var objectMapper: ObjectMapper
 
-    private lateinit var mockMvc: MockMvc
+    protected lateinit var mockMvc: MockMvc
 
     @BeforeEach
     fun setUp() {
@@ -39,12 +39,12 @@ abstract class AbstractControllerTest : SpringBasedTest() {
         SecurityContextHolder.clearContext()
     }
 
-    protected fun postRequest(url: String, requestBody: Any): ResultActions =
+    protected fun <T> postRequest(url: String, requestBody: T): ResultActions =
         mockMvc.perform(MockMvcRequestBuilders.post(url)
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(requestBody)))
 
-    private fun toJson(o: Any): ByteArray =
+    protected fun <T> toJson(o: T): ByteArray =
         objectMapper.writeValueAsBytes(o)
 }
 
