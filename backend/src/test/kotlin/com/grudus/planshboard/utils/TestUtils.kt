@@ -1,5 +1,7 @@
 package com.grudus.planshboard.utils
 
+import org.hamcrest.Matcher
+import org.hamcrest.Matchers
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito
 
@@ -17,4 +19,6 @@ object TestUtils {
      * when null is returned.
      */
     fun <T> capture(argumentCaptor: ArgumentCaptor<T>): T = argumentCaptor.capture()
+
+    fun hasSize(size: Int): Matcher<MutableCollection<out Int>> = Matchers.hasSize<Int>(size)
 }
