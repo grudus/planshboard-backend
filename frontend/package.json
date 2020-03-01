@@ -6,7 +6,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:dev": "react-scripts test",
+    "test": "react-scripts test --watch-all false",
     "eject": "react-scripts eject",
     "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --fix"
   },
