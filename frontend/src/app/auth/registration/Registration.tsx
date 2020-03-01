@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-const Registration = () => <div>Registration</div>;
+const Registration: React.FunctionComponent<any> = () => <div>Registration</div>;
 
 export default Registration;
