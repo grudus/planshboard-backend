@@ -2,12 +2,12 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import PlashboardRoutes from "./routing/PlanshboardRoutes";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <PlashboardRoutes/>
-    </BrowserRouter>
-  );
-}
+const App: React.FunctionComponent<any> = () => {
+    return (
+        <BrowserRouter>
+            <PlashboardRoutes />
+        </BrowserRouter>
+    );
+};
 
 export default App;
