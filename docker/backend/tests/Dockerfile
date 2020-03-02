@@ -1,7 +1,7 @@
-FROM maven:3.6.3-jdk-8-slim as build
+FROM maven:3.6.3-jdk-8-slim
 WORKDIR /workspace/app
 
-VOLUME ~/.m2 /root/.m2
+VOLUME $HOME/.m2 /root/.m2
 
 COPY backend/pom.xml .
 RUN mvn dependency:go-offline -q
