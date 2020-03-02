@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-    tempIgnoreReduxWarnings: () => null,
+    tempIgnoreReduxWarnings: state => state || null,
 });
 
 export default rootReducer;

@@ -1,7 +1,7 @@
 import { all } from "redux-saga/effects";
 import initAppSaga from "./initAppSaga";
 
-function* rootSaga() {
+function* rootSaga(): Generator {
     yield all([initAppSaga()]);
 }
 
