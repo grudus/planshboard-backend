@@ -9,14 +9,12 @@ BACKEND_TEST_IMAGE_NAME=planshboard_test_backend_image
 BACKEND_TEST_CONTAINER_NAME=planshboard_test_backend_container
 
 
-echo "=== Start frontend tests ==="
-runDockerTests $FRONTEND_DOCKER_COMPOSE_FILE $FRONTEND_TEST_IMAGE_NAME $FRONTEND_TEST_CONTAINER_NAME || testFailed
-echo "=== Start backend tests ==="
-runDockerTests $BACKEND_DOCKER_COMPOSE_FILE $BACKEND_TEST_IMAGE_NAME $BACKEND_TEST_CONTAINER_NAME || testFailed
 
-exit 0
-
-
+# shellcheck disable=SC2112
+function testFailed() {
+    echo "=== Some tests failed ==="
+    exit 3
+}
 
 # shellcheck disable=SC2112
 function runDockerTests() {
@@ -35,8 +33,10 @@ function runDockerTests() {
     return "${test_result}";
 }
 
-# shellcheck disable=SC2112
-function testFailed() {
-    echo "=== Some tests failed ==="
-    exit 3
-}
+
+echo "=== Start frontend tests ==="
+runDockerTests $FRONTEND_DOCKER_COMPOSE_FILE $FRONTEND_TEST_IMAGE_NAME $FRONTEND_TEST_CONTAINER_NAME || testFailed
+echo "=== Start backend tests ==="
+runDockerTests $BACKEND_DOCKER_COMPOSE_FILE $BACKEND_TEST_IMAGE_NAME $BACKEND_TEST_CONTAINER_NAME || testFailed
+
+exit 0
