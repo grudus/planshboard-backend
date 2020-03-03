@@ -8,4 +8,4 @@ COPY /frontend/tsconfig.json /app/tsconfig.json
 COPY /frontend/public /app/public
 COPY /frontend/src /app/src
 
-RUN npm test
+CMD npm test
