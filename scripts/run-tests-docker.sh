@@ -1,19 +1,42 @@
 #!/usr/bin/env sh
 
 DOCKER_COMPOSES_DIR=docker/compose
-RUN_TESTS_DOCKER_COMPOSE_FILE=docker-compose-tests.yml
-MAIN_TEST_IMAGE_NAME=planshboard_test_backend_image
-MAIN_TEST_CONTAINER_NAME=planshboard_test_backend_container
+BACKEND_DOCKER_COMPOSE_FILE=docker-compose-backend-tests.yml
+FRONTEND_DOCKER_COMPOSE_FILE=docker-compose-frontend-tests.yml
+FRONTEND_TEST_CONTAINER_NAME=planshboard_test_frontend_container
+FRONTEND_TEST_IMAGE_NAME=planshboard_test_frontend_image
+BACKEND_TEST_IMAGE_NAME=planshboard_test_backend_image
+BACKEND_TEST_CONTAINER_NAME=planshboard_test_backend_container
 
-echo "Copy $RUN_TESTS_DOCKER_COMPOSE_FILE from $DOCKER_COMPOSES_DIR to root directory"
-cp ${DOCKER_COMPOSES_DIR}/${RUN_TESTS_DOCKER_COMPOSE_FILE} ${RUN_TESTS_DOCKER_COMPOSE_FILE}
 
-echo "Runnig docker compose file ${RUN_TESTS_DOCKER_COMPOSE_FILE}. Get output code from $MAIN_TEST_IMAGE_NAME"
+echo "=== Start frontend tests ==="
+runDockerTests $FRONTEND_DOCKER_COMPOSE_FILE $FRONTEND_TEST_IMAGE_NAME $FRONTEND_TEST_CONTAINER_NAME || testFailed
+echo "=== Start backend tests ==="
+runDockerTests $BACKEND_DOCKER_COMPOSE_FILE $BACKEND_TEST_IMAGE_NAME $BACKEND_TEST_CONTAINER_NAME || testFailed
 
-docker-compose -f ${RUN_TESTS_DOCKER_COMPOSE_FILE} up --build --exit-code-from ${MAIN_TEST_IMAGE_NAME} --abort-on-container-exit --remove-orphans
-test_result=$(docker wait ${MAIN_TEST_CONTAINER_NAME})
+exit 0
 
-echo "After running tests. Test result: ${test_result} Cleaning up"
-rm ${RUN_TESTS_DOCKER_COMPOSE_FILE}
 
-exit "${test_result}"
+
+# shellcheck disable=SC2112
+function runDockerTests() {
+    composeFile=$1
+    imageName=$2
+    containerName=$3
+    echo "== Copy $composeFile from $DOCKER_COMPOSES_DIR to root directory"
+    cp ${DOCKER_COMPOSES_DIR}/"${composeFile}" "${composeFile}"
+
+    echo "== Building docker compose file ${composeFile}"
+    docker-compose -f "$composeFile" up --build --exit-code-from "$imageName" --abort-on-container-exit --remove-orphans
+    test_result=$(docker wait "${containerName}")
+    echo "After running tests. Test result: ${test_result} Cleaning up."
+    rm "${composeFile}"
+    # shellcheck disable=SC2152
+    return "${test_result}";
+}
+
+# shellcheck disable=SC2112
+function testFailed() {
+    echo "=== Some tests failed ==="
+    exit 3
+}
