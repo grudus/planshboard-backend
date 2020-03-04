@@ -10,14 +10,12 @@ BACKEND_TEST_CONTAINER_NAME=planshboard_test_backend_container
 
 
 
-# shellcheck disable=SC2112
-function testFailed() {
+testFailed() {
     echo "=== Some tests failed ==="
     exit 3
 }
 
-# shellcheck disable=SC2112
-function runDockerTests() {
+runDockerTests() {
     composeFile=$1
     imageName=$2
     containerName=$3
@@ -29,7 +27,7 @@ function runDockerTests() {
     test_result=$(docker wait "${containerName}")
     echo "After running tests. Test result: ${test_result} Cleaning up."
     rm "${composeFile}"
-    # shellcheck disable=SC2152
+    
     return "${test_result}";
 }
 
