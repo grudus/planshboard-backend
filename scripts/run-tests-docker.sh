@@ -27,7 +27,7 @@ runDockerTests() {
     test_result=$(docker wait "${containerName}")
     echo "After running tests. Test result: ${test_result} Cleaning up."
     rm "${composeFile}"
-    
+
     return "${test_result}";
 }
 

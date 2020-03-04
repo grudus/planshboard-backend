@@ -8,6 +8,6 @@ cp ${DOCKER_COMPOSES_DIR}/${RUN_APP_DOCKER_COMPOSE_FILE} ${RUN_APP_DOCKER_COMPOS
 
 echo "Runnig docker compose file ${RUN_APP_DOCKER_COMPOSE_FILE}"
 
-docker-compose -f ${RUN_APP_DOCKER_COMPOSE_FILE} up --abort-on-container-exit --remove-orphans
+docker-compose -f ${RUN_APP_DOCKER_COMPOSE_FILE} up --build --abort-on-container-exit --remove-orphans
 
 rm ${RUN_APP_DOCKER_COMPOSE_FILE}
