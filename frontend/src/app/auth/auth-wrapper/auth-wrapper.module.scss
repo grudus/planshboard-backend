@@ -1,3 +1,9 @@
+@import "src/variables";
+
+.image {
+    display: none;
+}
+
 .wrapper {
     display: flex;
     height: 100vh;
@@ -7,6 +13,9 @@
     flex: 1;
 }
 
-.image {
-    background: var(--primary-color);
+@media (min-width: $medium) {
+    .image {
+        display: block;
+        background: var(--primary-color);
+    }
 }
