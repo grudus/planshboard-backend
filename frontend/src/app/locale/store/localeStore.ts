@@ -1,7 +1,7 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import { changeLanguageSuccess, ChangeLanguageSuccessPayload } from "./localeActions";
 
-export type Translations = { [key: string]: object };
+export type Translations = { [key: string]: object | string };
 export type Language = "en" | "pl";
 
 export interface LocaleStore {

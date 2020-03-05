@@ -8,7 +8,6 @@ const getTranslations = async (lang: string) => {
     return awaitedImport.default;
 };
 
-// TODO Download translations on demand
 function* doChangeLanguage(action: PayloadAction<Language>): Generator {
     const translation = yield call(getTranslations, action.payload);
     yield put(changeLanguageSuccess(action.payload, translation));
