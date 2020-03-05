@@ -1,6 +1,6 @@
 import React from "react";
-import AuthFormWrapper from "../auth-wrapper/AuthFormWrapper";
-import useTranslations from "../../locale/hooks/useTranslations";
+import useTranslations from "app/locale/hooks/useTranslations";
+import AuthFormWrapper from "app/auth/auth-wrapper/AuthFormWrapper";
 
 const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
