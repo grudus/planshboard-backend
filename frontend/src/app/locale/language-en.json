@@ -2,7 +2,11 @@
   "APP_TITLE": "Planshboard English",
   "AUTH": {
     "LOGIN": {
-      "TITLE": "Login"
+      "TITLE": "Login",
+      "INPUT_LOGIN_PLACEHOLDER": "Enter login",
+      "INPUT_PASSWORD_PLACEHOLDER": "Enter password",
+      "BUTTON": "Login",
+      "IMAGE_TITLE": "Play with friends and analyze your progress!"
     }
   }
 }
