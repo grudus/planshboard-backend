@@ -3,8 +3,8 @@
   "AUTH": {
     "LOGIN": {
       "TITLE": "Login",
-      "INPUT_LOGIN_PLACEHOLDER": "Enter login",
-      "INPUT_PASSWORD_PLACEHOLDER": "Enter password",
+      "INPUT_LOGIN_LABEL": "Login",
+      "INPUT_PASSWORD_LABEL": "Password",
       "BUTTON": "Login",
       "IMAGE_TITLE": "Play with friends and analyze your progress!"
     }
