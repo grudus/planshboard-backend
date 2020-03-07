@@ -24,14 +24,9 @@ const Login: React.FunctionComponent<any> = () => {
             <form onSubmit={tryToLogin} className={css.loginForm}>
                 <h1 className={css.title}>{translate("AUTH.LOGIN.TITLE")}</h1>
 
-                <Input
-                    placeholderKey="AUTH.LOGIN.INPUT_LOGIN_PLACEHOLDER"
-                    onChange={setLogin}
-                    autoFocus
-                    frontIcon={<UserIcon />}
-                />
+                <Input labelKey="AUTH.LOGIN.INPUT_LOGIN_LABEL" onChange={setLogin} autoFocus frontIcon={<UserIcon />} />
                 <PasswordInput
-                    placeholderKey="AUTH.LOGIN.INPUT_PASSWORD_PLACEHOLDER"
+                    labelKey="AUTH.LOGIN.INPUT_PASSWORD_LABEL"
                     onChange={setPassword}
                     frontIcon={<PassIcon />}
                 />

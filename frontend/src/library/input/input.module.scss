@@ -4,7 +4,7 @@
 }
 
 .input {
-    padding: 13px 16px;
+    padding: 20px 16px 13px;
     font-size: 14px;
     line-height: 14px;
     color: var(--input-text);
@@ -17,6 +17,10 @@
 
     &:focus {
         border-color: var(--input-border-focus);
+    }
+
+    &:focus + .label {
+        @extend .labelUp
     }
 
     &::placeholder {
@@ -56,4 +60,22 @@
 
 .actionIcon ~.input {
     padding-right: calc(var(--icon-size) + var(--icon-margin) * 2);
+}
+
+.label {
+    position: absolute;
+    left: calc(var(--icon-size) + var(--icon-margin) * 2);
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .3s all ease-in-out;
+    color: var(--input-text-muted);
+}
+
+.labelUp {
+    font-size: 12px;
+    top: 2px;
+    transform: none;
+    font-weight: bold;
+    color: var(--input-text);
 }

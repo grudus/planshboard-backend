@@ -3,8 +3,8 @@
   "AUTH": {
     "LOGIN": {
       "TITLE": "Zaloguj się do Planshboarda",
-      "INPUT_LOGIN_PLACEHOLDER": "Wpisz login",
-      "INPUT_PASSWORD_PLACEHOLDER": "Wpisz hasło",
+      "INPUT_LOGIN_LABEL": "Login",
+      "INPUT_PASSWORD_LABEL": "Hasło",
       "BUTTON": "Zaloguj się",
       "IMAGE_TITLE": "Graj z przyjaciółmi i analizuj swoje postępy!"
     }
