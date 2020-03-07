@@ -1,21 +1,49 @@
 @import "src/variables";
 
-.image {
+.imageWrapper {
     display: none;
 }
 
 .wrapper {
     display: flex;
     height: 100vh;
+    justify-content: center;
+    width: 100%;
 }
 
-.halfItem {
-    flex: 1;
+.form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 24px;
+    width: 100%;
 }
 
-@media (min-width: $medium) {
+@media (min-width: $large) {
+    .imageWrapper {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background: var(--light-background);
+        color: var(--text-on-light-background);
+    }
+
+    .imageTitle {
+        margin-top: -100px;
+        padding-bottom: 16px;
+        width: 300px;
+        text-align: center;
+        font-weight: 300;
+    }
+
+    .form {
+        flex: 1;
+        justify-content: center;
+    }
+
     .image {
-        display: block;
-        background: var(--primary-color);
+        width: 300px;
     }
 }

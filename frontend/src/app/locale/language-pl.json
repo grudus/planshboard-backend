@@ -2,7 +2,11 @@
   "APP_TITLE": "Planshboard Polish",
   "AUTH": {
     "LOGIN": {
-      "TITLE": "Logowanie"
+      "TITLE": "Zaloguj się do Planshboarda",
+      "INPUT_LOGIN_PLACEHOLDER": "Wpisz login",
+      "INPUT_PASSWORD_PLACEHOLDER": "Wpisz hasło",
+      "BUTTON": "Zaloguj się",
+      "IMAGE_TITLE": "Graj z przyjaciółmi i analizuj swoje postępy!"
     }
   }
 }
