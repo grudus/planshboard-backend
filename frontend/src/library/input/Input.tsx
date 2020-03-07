@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FunctionComponent, ReactElement, SVGProps, useState } from "react";
 import css from "./input.module.scss";
 import useTranslations from "app/locale/hooks/useTranslations";
 
@@ -7,6 +7,8 @@ interface InputProps {
     onChange?: (a: string) => void;
     placeholderKey?: string;
     autoFocus?: boolean;
+    icon?: ReactElement;
+    type?: string;
 }
 
 const Input: React.FC<InputProps> = props => {
@@ -21,13 +23,17 @@ const Input: React.FC<InputProps> = props => {
     };
 
     return (
-        <input
-            value={text}
-            placeholder={translate(props.placeholderKey || "")}
-            onChange={handleChange}
-            className={css.input}
-            autoFocus={props.autoFocus}
-        />
+        <div className={css.wrapper}>
+            {props.icon && React.cloneElement(props.icon, { className: css.icon })}
+            <input
+                value={text}
+                placeholder={translate(props.placeholderKey || "")}
+                onChange={handleChange}
+                className={css.input}
+                autoFocus={props.autoFocus}
+                type={props.type || "text"}
+            />
+        </div>
     );
 };
 
