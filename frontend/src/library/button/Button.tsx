@@ -12,7 +12,6 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = props => {
-    console.log("@@@@@@@@ Button render");
     const { translate } = useTranslations();
     const { className, onClick, type, textKey, fullWidth, ...buttonProps } = props;
     const classes = merge(

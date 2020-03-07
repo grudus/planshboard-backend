@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FunctionComponent, ReactElement, SVGProps, useState } from "react";
+import React, { ChangeEvent, ReactElement, useState } from "react";
 import css from "./input.module.scss";
 import useTranslations from "app/locale/hooks/useTranslations";
 
@@ -13,7 +13,6 @@ export interface InputProps {
 }
 
 const Input: React.FC<InputProps> = props => {
-    console.log("@@@@ Input render");
     const { translate } = useTranslations();
     const [text, setText] = useState(props.initialValue || "");
 
@@ -26,8 +25,6 @@ const Input: React.FC<InputProps> = props => {
     return (
         <div className={css.wrapper}>
             {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
-            {props.actionIcon && React.cloneElement(props.actionIcon, { className: css.actionIcon })}
-
             <input
                 value={text}
                 placeholder={translate(props.placeholderKey || "")}
@@ -36,6 +33,7 @@ const Input: React.FC<InputProps> = props => {
                 autoFocus={props.autoFocus}
                 type={props.type || "text"}
             />
+            {props.actionIcon && React.cloneElement(props.actionIcon, { className: css.actionIcon })}
         </div>
     );
 };
