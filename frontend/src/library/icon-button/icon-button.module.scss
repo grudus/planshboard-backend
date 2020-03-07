@@ -1,0 +1,21 @@
+.button {
+    padding: 0;
+    background: none;
+    border: none;
+    width: 28px;
+    height: 28px;
+
+    & svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    &:focus {
+        border: 1px dotted var(--primary-color);
+    }
+
+    &::-moz-focus-inner {
+        border: 0;
+    }
+
+}
