@@ -5,6 +5,8 @@ import Input from "library/input/Input";
 import Button from "library/button/Button";
 import css from "./login.module.scss";
 import image from "./login-left-3.svg";
+import { ReactComponent as UserIcon } from "./icon-user.svg";
+import { ReactComponent as PassIcon } from "./icon-lock.svg";
 
 const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
@@ -21,8 +23,18 @@ const Login: React.FunctionComponent<any> = () => {
             <form onSubmit={tryToLogin} className={css.loginForm}>
                 <h1 className={css.title}>{translate("AUTH.LOGIN.TITLE")}</h1>
 
-                <Input placeholderKey="AUTH.LOGIN.INPUT_LOGIN_PLACEHOLDER" onChange={setLogin} autoFocus />
-                <Input placeholderKey="AUTH.LOGIN.INPUT_PASSWORD_PLACEHOLDER" onChange={setPassword} />
+                <Input
+                    placeholderKey="AUTH.LOGIN.INPUT_LOGIN_PLACEHOLDER"
+                    onChange={setLogin}
+                    autoFocus
+                    icon={<UserIcon />}
+                />
+                <Input
+                    placeholderKey="AUTH.LOGIN.INPUT_PASSWORD_PLACEHOLDER"
+                    onChange={setPassword}
+                    icon={<PassIcon />}
+                    type="password"
+                />
 
                 <Button textKey="AUTH.LOGIN.BUTTON" color="primary" fullWidth className={css.button} type="submit" />
             </form>

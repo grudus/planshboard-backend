@@ -27,4 +27,6 @@ code {
 
     --input-border-focus: var(--accent-color);
     --input-border-normal: #E9EBF4;
+    --input-text: #1A3349;
+    --input-text-muted: #d2d0d5;
 }

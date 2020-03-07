@@ -1,8 +1,13 @@
+.wrapper {
+    width: 100%;
+    position: relative;
+}
+
 .input {
     padding: 13px 16px;
     font-size: 14px;
     line-height: 14px;
-    color: #1A3349;
+    color: var(--input-text);
     border-radius: 2px;
     transition: border-color .2s ease-in-out;
     border: 1px solid var(--input-border-normal);
@@ -17,4 +22,24 @@
     &::placeholder {
         color: #9DA2BD;
     }
+}
+
+:root {
+    --icon-size: 16px;
+    --icon-margin: 12px;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    left: var(--icon-margin);
+    z-index: 1;
+    color: var(--input-text);
+}
+
+.icon ~ .input {
+    padding-left: calc(var(--icon-size) + var(--icon-margin) * 2);
 }
