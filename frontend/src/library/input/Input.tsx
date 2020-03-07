@@ -2,12 +2,13 @@ import React, { ChangeEvent, FunctionComponent, ReactElement, SVGProps, useState
 import css from "./input.module.scss";
 import useTranslations from "app/locale/hooks/useTranslations";
 
-interface InputProps {
+export interface InputProps {
     initialValue?: string;
     onChange?: (a: string) => void;
     placeholderKey?: string;
     autoFocus?: boolean;
-    icon?: ReactElement;
+    frontIcon?: ReactElement;
+    actionIcon?: ReactElement;
     type?: string;
 }
 
@@ -24,7 +25,9 @@ const Input: React.FC<InputProps> = props => {
 
     return (
         <div className={css.wrapper}>
-            {props.icon && React.cloneElement(props.icon, { className: css.icon })}
+            {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
+            {props.actionIcon && React.cloneElement(props.actionIcon, { className: css.actionIcon })}
+
             <input
                 value={text}
                 placeholder={translate(props.placeholderKey || "")}
