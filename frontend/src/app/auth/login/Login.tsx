@@ -13,10 +13,12 @@ const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [errorKey, setErrorKey] = useState("");
 
     const tryToLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        alert(`LOGIN ${login} ${password}`);
+        setErrorKey("AUTH.ERRORS.INVALID_LOGIN");
+        setTimeout(() => setErrorKey(""), 2000);
     };
 
     return (
@@ -29,6 +31,7 @@ const Login: React.FunctionComponent<any> = () => {
                     labelKey="AUTH.LOGIN.INPUT_PASSWORD_LABEL"
                     onChange={setPassword}
                     frontIcon={<PassIcon />}
+                    errorKey={errorKey}
                 />
 
                 <Button textKey="AUTH.LOGIN.BUTTON" color="primary" fullWidth className={css.button} type="submit" />

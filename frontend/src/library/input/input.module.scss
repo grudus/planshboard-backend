@@ -1,6 +1,21 @@
 .wrapper {
     width: 100%;
     position: relative;
+    margin-bottom: 16px;
+
+    &.error {
+        & .label {
+            color: var(--error-color) !important;
+        }
+        & .input {
+            border: 1px solid var(--error-color) !important;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        & svg {
+            color: var(--error-color);
+        }
+    }
 }
 
 .input {
@@ -28,15 +43,14 @@
     }
 }
 
-:root {
-    --icon-size: 16px;
-    --icon-margin: 12px;
-}
+$iconSize: 16px;
+$iconMargin: 12px;
+
 
 .icon {
     position: absolute;
-    width: var(--icon-size);
-    height: var(--icon-size);
+    width: $iconSize;
+    height: $iconSize;
     color: var(--input-text);
     z-index: 1;
     top: 50%;
@@ -45,26 +59,30 @@
 
 .actionIcon {
     @extend .icon;
-    right: var(--icon-margin);
+    right: $iconMargin;
     cursor: pointer;
 }
 
 .frontIcon {
     @extend .icon;
-    left: var(--icon-margin);
+    left: $iconMargin;
 }
 
 .frontIcon ~ .input {
-    padding-left: calc(var(--icon-size) + var(--icon-margin) * 2);
+    padding-left: $iconSize + $iconMargin * 2;
+}
+
+.frontIcon ~ .errorMessage {
+    padding-left: $iconSize + $iconMargin * 2;
 }
 
 .actionIcon ~.input {
-    padding-right: calc(var(--icon-size) + var(--icon-margin) * 2);
+    padding-right: $iconSize + $iconMargin * 2;
 }
 
 .label {
     position: absolute;
-    left: calc(var(--icon-size) + var(--icon-margin) * 2);
+    left: $iconSize + $iconMargin * 2;
     z-index: 1;
     top: 50%;
     transform: translateY(-50%);
@@ -78,4 +96,31 @@
     transform: none;
     font-weight: bold;
     color: var(--input-text);
+}
+
+.errorMessage {
+    position: absolute;
+    left: 0;
+    bottom: -16px;
+    font-size: 14px;
+    color: var(--error-color);
+}
+
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(1px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(2px, 0, 0);
+    }
 }

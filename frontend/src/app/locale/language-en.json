@@ -7,6 +7,9 @@
       "INPUT_PASSWORD_LABEL": "Password",
       "BUTTON": "Login",
       "IMAGE_TITLE": "Play with friends and analyze your progress!"
+    },
+    "ERRORS": {
+      "INVALID_LOGIN": "Invalid login or password"
     }
   }
 }
