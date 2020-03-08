@@ -8,17 +8,20 @@ export interface LocaleStore {
     possibleLanguages: Language[];
     language: Language;
     translations: Translations;
+    translationsLoaded: boolean;
 }
 
 const initialState: LocaleStore = {
     language: "pl",
     translations: {},
     possibleLanguages: ["en", "pl"],
+    translationsLoaded: false,
 };
 
 export const localeReducer = createReducer(initialState, {
     [changeLanguageSuccess.type]: (state, action: PayloadAction<ChangeLanguageSuccessPayload>) => {
         state.language = action.payload.language;
         state.translations = action.payload.translations;
+        state.translationsLoaded = true;
     },
 });
