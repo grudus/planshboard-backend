@@ -7,6 +7,9 @@
       "INPUT_PASSWORD_LABEL": "Hasło",
       "BUTTON": "Zaloguj się",
       "IMAGE_TITLE": "Graj z przyjaciółmi i analizuj swoje postępy!"
+    },
+    "ERRORS": {
+      "INVALID_LOGIN": "Wprowadzono niepoprawne dane logowania"
     }
   }
 }

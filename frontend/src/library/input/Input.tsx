@@ -11,6 +11,7 @@ export interface InputProps {
     actionIcon?: ReactElement;
     type?: string;
     labelKey: string;
+    errorKey?: string;
 }
 
 const Input: React.FC<InputProps> = props => {
@@ -23,8 +24,10 @@ const Input: React.FC<InputProps> = props => {
         props?.onChange?.(value);
     };
 
+    const isError = () => !!props.errorKey;
+
     return (
-        <div className={css.wrapper}>
+        <div className={merge(css.wrapper, cssIf(css.error, isError()))}>
             {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
             <input
                 id={props.labelKey}
@@ -33,10 +36,12 @@ const Input: React.FC<InputProps> = props => {
                 className={css.input}
                 autoFocus={props.autoFocus}
                 type={props.type || "text"}
+                aria-invalid={isError()}
             />
             <label className={merge(css.label, cssIf(css.labelUp, !!text))} htmlFor={props.labelKey}>
                 {translate(props.labelKey)}
             </label>
+            {isError() && <span className={css.errorMessage}>{translate(props.errorKey ?? "")}</span>}
             {props.actionIcon && React.cloneElement(props.actionIcon, { className: css.actionIcon })}
         </div>
     );
