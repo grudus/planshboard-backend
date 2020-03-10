@@ -1,9 +1,9 @@
-import { takeEvery, put, call } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { changeLanguage, changeLanguageSuccess } from "../store/localeActions";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Language } from "../store/localeStore";
+import { Language, Translations } from "../store/localeStore";
 
-const getTranslations = async (lang: string) => {
+const getTranslations = async (lang: string): Promise<Translations> => {
     const awaitedImport = await import(`../language-${lang}.json`);
     return awaitedImport.default;
 };

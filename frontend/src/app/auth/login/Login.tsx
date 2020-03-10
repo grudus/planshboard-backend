@@ -15,7 +15,7 @@ const Login: React.FunctionComponent<any> = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const tryToLogin = (event: FormEvent<HTMLFormElement>) => {
+    const tryToLogin = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
         setTimeout(() => setError(""), 2000);
