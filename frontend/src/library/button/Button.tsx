@@ -1,10 +1,9 @@
 import React from "react";
-import useTranslations from "app/locale/hooks/useTranslations";
 import css from "./button.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 
 interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
-    textKey: string;
+    text: string;
     onClick?: () => void;
     type?: "button" | "submit" | "reset";
     color?: "primary" | "accent";
@@ -12,8 +11,7 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = props => {
-    const { translate } = useTranslations();
-    const { className, onClick, type, textKey, fullWidth, ...buttonProps } = props;
+    const { className, onClick, type, text, fullWidth, ...buttonProps } = props;
     const classes = merge(
         css.button,
         css[props.color || "primary"],
@@ -22,7 +20,7 @@ const Button: React.FC<ButtonProps> = props => {
     );
     return (
         <button className={classes} onClick={props.onClick} type={props.type} {...buttonProps}>
-            {translate(props.textKey)}
+            {props.text}
         </button>
     );
 };
