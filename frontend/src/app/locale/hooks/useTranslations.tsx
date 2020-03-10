@@ -2,7 +2,7 @@ import React from "react";
 import { useRedux } from "store/rootReducer";
 import { getNestedTranslation } from "utils/objectUtils";
 
-const useTranslations = () => {
+const useTranslations = (): { translate: Function } => {
     const { translations } = useRedux(state => state.locale);
 
     const translate = React.useCallback((key: string): string => key && getNestedTranslation(key, translations), [

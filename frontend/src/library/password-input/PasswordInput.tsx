@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import Input, { InputProps } from "library/input/Input";
+import Input, { InputProps, InputType } from "library/input/Input";
 import { ReactComponent as EyeIcon } from "./icon-eye.svg";
 import { ReactComponent as EyeOffIcon } from "./icon-eye-off.svg";
 import IconButton from "library/icon-button/IconButton";
@@ -7,7 +7,7 @@ import IconButton from "library/icon-button/IconButton";
 type PasswordInputProps = InputProps;
 
 const PasswordInput: React.FC<PasswordInputProps> = props => {
-    const [passwordType, setPasswordType] = useState("password");
+    const [passwordType, setPasswordType] = useState<InputType>("password");
 
     const changePasswordType = useCallback(() => {
         setPasswordType(passwordType === "password" ? "text" : "password");

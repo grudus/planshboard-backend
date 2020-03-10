@@ -2,6 +2,8 @@ import React, { ChangeEvent, ReactElement, useState } from "react";
 import css from "./input.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 
+export type InputType = "text" | "password";
+
 export interface InputProps {
     label: string;
     name: string;
@@ -10,20 +12,20 @@ export interface InputProps {
     autoFocus?: boolean;
     frontIcon?: ReactElement;
     actionIcon?: ReactElement;
-    type?: "text" | "password";
+    type?: InputType;
     error?: string;
 }
 
 const Input: React.FC<InputProps> = props => {
     const [text, setText] = useState(props.initialValue || "");
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { value } = e.target;
         setText(value);
         props?.onChange?.(value);
     };
 
-    const isError = () => !!props.error;
+    const isError = (): boolean => !!props.error;
 
     return (
         <div className={merge(css.wrapper, cssIf(css.error, isError()))}>
