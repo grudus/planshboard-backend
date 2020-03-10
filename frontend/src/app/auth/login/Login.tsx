@@ -13,12 +13,12 @@ const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    const [errorKey, setErrorKey] = useState("");
+    const [error, setError] = useState("");
 
     const tryToLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setErrorKey("AUTH.ERRORS.INVALID_LOGIN");
-        setTimeout(() => setErrorKey(""), 2000);
+        setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
+        setTimeout(() => setError(""), 2000);
     };
 
     return (
@@ -26,12 +26,19 @@ const Login: React.FunctionComponent<any> = () => {
             <form onSubmit={tryToLogin} className={css.loginForm}>
                 <h1 className={css.title}>{translate("AUTH.LOGIN.TITLE")}</h1>
 
-                <Input labelKey="AUTH.LOGIN.INPUT_LOGIN_LABEL" onChange={setLogin} autoFocus frontIcon={<UserIcon />} />
+                <Input
+                    label={translate("AUTH.LOGIN.INPUT_LOGIN_LABEL")}
+                    name="username"
+                    onChange={setLogin}
+                    autoFocus
+                    frontIcon={<UserIcon />}
+                />
                 <PasswordInput
-                    labelKey="AUTH.LOGIN.INPUT_PASSWORD_LABEL"
+                    label={translate("AUTH.LOGIN.INPUT_PASSWORD_LABEL")}
+                    name="password"
                     onChange={setPassword}
                     frontIcon={<PassIcon />}
-                    errorKey={errorKey}
+                    error={error}
                 />
 
                 <Button textKey="AUTH.LOGIN.BUTTON" color="primary" fullWidth className={css.button} type="submit" />
