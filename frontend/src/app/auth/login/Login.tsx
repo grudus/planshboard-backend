@@ -41,7 +41,13 @@ const Login: React.FunctionComponent<any> = () => {
                     error={error}
                 />
 
-                <Button textKey="AUTH.LOGIN.BUTTON" color="primary" fullWidth className={css.button} type="submit" />
+                <Button
+                    text={translate("AUTH.LOGIN.BUTTON")}
+                    color="primary"
+                    fullWidth
+                    className={css.button}
+                    type="submit"
+                />
             </form>
         </AuthFormWrapper>
     );
