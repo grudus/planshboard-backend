@@ -24,6 +24,7 @@ module.exports = {
         "react/state-in-constructor": 0,
         "react/static-property-placement": 0,
         "react/forbid-prop-types": 0,
+        "@typescript-eslint/explicit-function-return-type": 0,
     },
     settings: {
         react: {

@@ -21,11 +21,6 @@ constructor(private val allowedOrigins: List<String>): GenericFilterBean() {
         val response = res as HttpServletResponse
         val request = req as HttpServletRequest
 
-        if (request.method != RequestMethod.OPTIONS.name) {
-            chain.doFilter(request, response)
-            return
-        }
-
         val origin = request.getHeader("origin")
 
         if (allowedOrigins.contains(origin)) {
@@ -35,6 +30,11 @@ constructor(private val allowedOrigins: List<String>): GenericFilterBean() {
             response.setHeader("Access-Control-Allow-Credentials", "true")
             response.setHeader("Access-Control-Expose-Headers", AUTH_HEADER_NAME)
             response.setHeader("withCredentials", "true")
+        }
+
+        if (request.method != RequestMethod.OPTIONS.name) {
+            chain.doFilter(request, response)
+            return
         }
     }
 }
