@@ -8,17 +8,23 @@ import image from "./login-left-3.svg";
 import { ReactComponent as UserIcon } from "./icon-user.svg";
 import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
+import { useAwaitDispatch } from "app/shared/store/useAwaitDispatch";
+import { tryToLoginAction } from "app/auth/store/authActions";
 
 const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
+    const dispatch = useAwaitDispatch();
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const tryToLogin = (event: FormEvent<HTMLFormElement>): void => {
+    const tryToLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
-        setTimeout(() => setError(""), 2000);
+        try {
+            await dispatch({ username: login, password }, tryToLoginAction);
+        } catch (e) {
+            setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
+        }
     };
 
     return (
