@@ -16,6 +16,7 @@ const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
     const history = useHistory();
     const dispatch = useAwaitDispatch();
+
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
