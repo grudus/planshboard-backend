@@ -1,10 +1,15 @@
-import { put, take, takeLatest } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { loginSuccessAction, tryToLoginAction, WaitTryToLoginPayload } from "app/auth/store/authActions";
-import { httpRequestAction, httpSuccessAction } from "app/shared/store/httpRequestActions";
+import {
+    authTokenObtainedAction,
+    loginSuccessAction,
+    tryToLoginAction,
+    WaitTryToLoginPayload,
+} from "app/auth/store/authActions";
+import { httpRequestAction } from "app/shared/store/httpRequestActions";
 
-function extractAuthToken(successResponse: any): string {
-    return successResponse.payload.headers.get("Authorization");
+function extractAuthToken(successResponse: Response): string | null {
+    return successResponse.headers.get("Authorization");
 }
 
 function* login(action: PayloadAction<WaitTryToLoginPayload>): Generator {
@@ -12,20 +17,23 @@ function* login(action: PayloadAction<WaitTryToLoginPayload>): Generator {
 
     yield put(
         httpRequestAction({
-            resolve: resolve,
+            resolve,
             reject,
             type: "post",
             isForm: true,
             body,
             path: "api/auth/login",
+            successAction: loginSuccessAction,
         }),
     );
-    const successResponse = yield take(httpSuccessAction.type);
-    const token = extractAuthToken(successResponse);
-    yield put(loginSuccessAction({ token }));
-    resolve?.();
+}
+
+function* afterSuccessfulLogin(action: PayloadAction<Response>): Generator {
+    const token = extractAuthToken(action.payload);
+    if (token) yield put(authTokenObtainedAction(token));
 }
 
 export default function* loginSaga(): Generator {
     yield takeLatest(tryToLoginAction.type, login);
+    yield takeLatest(loginSuccessAction.type, afterSuccessfulLogin);
 }

@@ -13,4 +13,5 @@ export interface LoginSuccessPayload {
 }
 
 export const tryToLoginAction = createAction<WaitTryToLoginPayload>("TRY_TO_LOGIN");
-export const loginSuccessAction = createAction<LoginSuccessPayload>("LOGIN_SUCCESS");
+export const loginSuccessAction = createAction<Response>("LOGIN_SUCCESS");
+export const authTokenObtainedAction = createAction<string>("AUTH_TOKEN_OBTAINED");
