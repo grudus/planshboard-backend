@@ -1,39 +1,38 @@
 .button {
     min-width: 40px;
-    height: 40px;
-    line-height: 40px;
+    height: 44px;
     border: none;
     display: block;
     cursor: pointer;
     padding: 0 16px;
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 28px;
     letter-spacing: 1px;
     border-radius: 4px;
-}
+    font-weight: 500;
+    transition: all .2s linear;
 
-.button::-moz-focus-inner {
-    border: 0;
-}
+    &::-moz-focus-inner {
+        border: 0;
+    }
 
-.button:focus {
-    border: 1px dotted white;
+    &:focus {
+        border: 1px dotted white;
+    }
 }
 
 .primary {
     background: var(--primary-color);
     color: var(--text-on-primary);
-}
 
-.primary:focus {
-    box-shadow: 0 14px 28px #d0d9ee, 0 10px 10px #d0d9ee;
+    &:focus, &:hover {
+        box-shadow: 0 14px 28px #d0d9ee, 0 10px 10px #d0d9ee;
+    }
 }
 
 .accent {
     background: var(--accent-color);
     color: var(--text-on-accent);
-}
-
-.accent:focus {
 }
 
 .fullWidth {
