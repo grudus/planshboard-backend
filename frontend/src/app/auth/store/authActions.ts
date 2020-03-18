@@ -8,10 +8,6 @@ export interface TryToLoginPayload {
 
 export interface WaitTryToLoginPayload extends TryToLoginPayload, WaitPayload {}
 
-export interface LoginSuccessPayload {
-    token: string;
-}
-
 export const tryToLoginAction = createAction<WaitTryToLoginPayload>("TRY_TO_LOGIN");
 export const loginSuccessAction = createAction<Response>("LOGIN_SUCCESS");
 export const authTokenObtainedAction = createAction<string>("AUTH_TOKEN_OBTAINED");
