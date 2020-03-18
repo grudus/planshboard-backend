@@ -10,7 +10,8 @@ import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
 import { useAwaitDispatch } from "app/shared/store/useAwaitDispatch";
 import { tryToLoginAction } from "app/auth/store/authActions";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { appRoutes } from "app/routing/routes";
 
 const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
@@ -65,6 +66,11 @@ const Login: React.FunctionComponent<any> = () => {
                     loading={loading}
                 />
             </form>
+
+            <div className={css.footerText}>
+                <p>{translate("AUTH.LOGIN.BOTTOM_TEXT.TEXT")}</p>
+                <Link to={appRoutes.auth.registration}>{translate("AUTH.LOGIN.BOTTOM_TEXT.LINK")}</Link>
+            </div>
         </AuthFormWrapper>
     );
 };

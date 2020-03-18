@@ -8,6 +8,10 @@
       "BUTTON": "Login",
       "IMAGE_TITLE": "Play with friends and analyze your progress!"
     },
+    "BOTTOM_TEXT": {
+      "TEXT": "Don't have an account yet?",
+      "LINK": "Sign up!"
+    },
     "ERRORS": {
       "INVALID_LOGIN": "Invalid login or password"
     }
