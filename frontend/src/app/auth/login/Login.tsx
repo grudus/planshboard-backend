@@ -20,14 +20,19 @@ const Login: React.FunctionComponent<any> = () => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const tryToLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
+            setLoading(true);
+            setError("");
             await dispatch({ username: login, password }, tryToLoginAction);
             history.push("/");
         } catch (e) {
             setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -57,6 +62,7 @@ const Login: React.FunctionComponent<any> = () => {
                     fullWidth
                     className={css.button}
                     type="submit"
+                    loading={loading}
                 />
             </form>
         </AuthFormWrapper>
