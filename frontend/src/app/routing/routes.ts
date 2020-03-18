@@ -1,7 +1,7 @@
 export const appRoutes = {
     auth: {
         login: "/auth/login",
-        registration: "/auth/login",
+        registration: "/auth/registration",
         base: "/auth",
     },
     boardGames: {

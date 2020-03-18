@@ -6,7 +6,11 @@
       "INPUT_LOGIN_LABEL": "Login",
       "INPUT_PASSWORD_LABEL": "Hasło",
       "BUTTON": "Zaloguj się",
-      "IMAGE_TITLE": "Graj z przyjaciółmi i analizuj swoje postępy!"
+      "IMAGE_TITLE": "Graj z przyjaciółmi i analizuj swoje postępy!",
+      "BOTTOM_TEXT": {
+        "TEXT": "Nie masz jescze konta?",
+        "LINK": "Zarejestruj się!"
+      }
     },
     "ERRORS": {
       "INVALID_LOGIN": "Wprowadzono niepoprawne dane logowania"
