@@ -11,6 +11,7 @@
     border-radius: 4px;
     font-weight: 500;
     transition: all .2s linear;
+    position: relative;
 
     &::-moz-focus-inner {
         border: 0;
@@ -19,6 +20,20 @@
     &:focus {
         border: 1px dotted white;
     }
+
+    &[disabled] {
+        background: #ccc;
+        color: #888;
+        cursor: default;
+        pointer-events: none;
+    }
+}
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    --ring-loader-color: var(--accent-color);
 }
 
 .primary {
