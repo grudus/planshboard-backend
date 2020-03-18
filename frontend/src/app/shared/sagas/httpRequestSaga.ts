@@ -15,9 +15,11 @@ function* doHttpRequest(action: PayloadAction<WaitHttpRequestPayload>): Generato
             : yield fetchRequest(action.payload);
 
         yield put(httpSuccessAction(response));
+        if (action.payload.successAction) yield put(action.payload.successAction(response));
         action.payload.resolve?.(response);
     } catch (e) {
         yield put(httpErrorAction(e));
+        if (action.payload.errorAction) yield put(action.payload.errorAction(e));
         action.payload.reject?.(e);
     }
 }

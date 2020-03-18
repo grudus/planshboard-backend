@@ -8,7 +8,12 @@ export interface HttpRequestPayload {
     isForm?: boolean;
 }
 
-export interface WaitHttpRequestPayload extends HttpRequestPayload, WaitPayload {}
+export interface ProxyPayload {
+    successAction?: Function;
+    errorAction?: Function;
+}
+
+export interface WaitHttpRequestPayload extends HttpRequestPayload, WaitPayload, ProxyPayload {}
 
 export const httpRequestAction = createAction<WaitHttpRequestPayload>("HTTP_REQUEST");
 export const httpErrorAction = createAction<Error>("HTTP_REQUEST_ERROR");

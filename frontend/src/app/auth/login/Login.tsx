@@ -10,9 +10,11 @@ import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
 import { useAwaitDispatch } from "app/shared/store/useAwaitDispatch";
 import { tryToLoginAction } from "app/auth/store/authActions";
+import { useHistory } from "react-router-dom";
 
 const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
+    const history = useHistory();
     const dispatch = useAwaitDispatch();
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -22,6 +24,7 @@ const Login: React.FunctionComponent<any> = () => {
         event.preventDefault();
         try {
             await dispatch({ username: login, password }, tryToLoginAction);
+            history.push("/");
         } catch (e) {
             setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
         }

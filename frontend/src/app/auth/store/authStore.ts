@@ -1,5 +1,5 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { loginSuccessAction, LoginSuccessPayload } from "app/auth/store/authActions";
+import { authTokenObtainedAction } from "app/auth/store/authActions";
 
 export interface AuthStore {
     token?: string;
@@ -8,8 +8,8 @@ export interface AuthStore {
 const initialState: AuthStore = {};
 
 export const authReducer = createReducer(initialState, {
-    [loginSuccessAction.type]: (state, action: PayloadAction<LoginSuccessPayload>) => ({
+    [authTokenObtainedAction.type]: (state, action: PayloadAction<string>) => ({
         ...state,
-        token: action.payload.token,
+        token: action.payload,
     }),
 });
