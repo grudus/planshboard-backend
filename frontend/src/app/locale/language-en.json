@@ -5,15 +5,27 @@
       "TITLE": "Login",
       "INPUT_LOGIN_LABEL": "Login",
       "INPUT_PASSWORD_LABEL": "Password",
-      "BUTTON": "Login",
-      "IMAGE_TITLE": "Play with friends and analyze your progress!"
+      "BUTTON": "Sign in",
+      "IMAGE_TITLE": "Play with friends and analyze your progress!",
+      "BOTTOM_TEXT": {
+        "TEXT": "Don't have an account yet?",
+        "LINK": "Sign up!"
+      }
     },
-    "BOTTOM_TEXT": {
-      "TEXT": "Don't have an account yet?",
-      "LINK": "Sign up!"
+    "REGISTRATION": {
+      "TITLE": "Registration",
+      "INPUT_LOGIN_LABEL": "Login",
+      "INPUT_PASSWORD_LABEL": "Password",
+      "BUTTON": "Sign up",
+      "IMAGE_TITLE": "Play with friends and analyze your progress!",
+      "BOTTOM_TEXT": {
+        "TEXT": "Already have an account?",
+        "LINK": "Sign in!"
+      }
     },
     "ERRORS": {
-      "INVALID_LOGIN": "Invalid login or password"
+      "INVALID_LOGIN": "Invalid login or password",
+      "USERNAME_EXISTS": "Username already exists"
     }
   }
 }

@@ -15,8 +15,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class RegistrationControllerTest
-    @Autowired
-    constructor(private val userAuthenticationService: UserAuthenticationService): AbstractControllerTest() {
+@Autowired
+constructor(private val userAuthenticationService: UserAuthenticationService) : AbstractControllerTest() {
 
 
     @Test
@@ -59,6 +59,34 @@ class RegistrationControllerTest
             .andExpect(status().isBadRequest)
 
         assertFalse(userAuthenticationService.exists(username))
+    }
+
+    @Test
+    fun `should check if username exists`() {
+        val username = randomText()
+        registerUser(username)
+
+        getRequest("/api/auth/registration/exists?username={username}", username)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.exists").value(true))
+    }
+
+    @Test
+    fun `should detect that username does not exist`() {
+        registerUser()
+        registerUser()
+
+        getRequest("/api/auth/registration/exists?username={username}", randomText())
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.exists").value(false))
+    }
+
+    private fun registerUser(username: String = randomText()) {
+        val password = randomText()
+        val registerUserRequest = RegisterUserRequest(username, password, password)
+
+        postRequest("/api/auth/registration", registerUserRequest)
+            .andExpect(status().isCreated)
     }
 
 }

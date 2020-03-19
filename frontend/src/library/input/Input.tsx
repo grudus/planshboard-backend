@@ -8,12 +8,13 @@ export interface InputProps {
     label: string;
     name: string;
     initialValue?: string;
-    onChange?: (a: string) => void;
+    onTextChange?: (a: string) => void;
     autoFocus?: boolean;
     frontIcon?: ReactElement;
-    actionIcon?: ReactElement;
+    actionIcon?: ReactElement | false;
     type?: InputType;
     error?: string;
+    onBlur?: ((event: React.FocusEvent<HTMLInputElement>) => void) | undefined;
 }
 
 const Input: React.FC<InputProps> = props => {
@@ -22,7 +23,7 @@ const Input: React.FC<InputProps> = props => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { value } = e.target;
         setText(value);
-        props?.onChange?.(value);
+        props?.onTextChange?.(value);
     };
 
     const isError = (): boolean => !!props.error;
@@ -38,6 +39,7 @@ const Input: React.FC<InputProps> = props => {
                 className={css.input}
                 autoFocus={props.autoFocus}
                 type={props.type || "text"}
+                onBlur={props.onBlur}
                 aria-invalid={isError()}
             />
             <label className={merge(css.label, cssIf(css.labelUp, !!text))} htmlFor={props.name}>
@@ -48,7 +50,10 @@ const Input: React.FC<InputProps> = props => {
                     {props.error}
                 </span>
             )}
-            {props.actionIcon && React.cloneElement(props.actionIcon, { className: css.actionIcon })}
+            {props.actionIcon &&
+                React.cloneElement(props.actionIcon, {
+                    className: merge(css.actionIcon, props.actionIcon.props.className),
+                })}
         </div>
     );
 };

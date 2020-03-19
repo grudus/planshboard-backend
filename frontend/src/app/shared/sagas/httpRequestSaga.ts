@@ -6,13 +6,13 @@ import {
     httpSuccessAction,
     WaitHttpRequestPayload,
 } from "app/shared/store/httpRequestActions";
-import { fetchRequest, postFormRequest } from "utils/httpUtils";
+import { fetchJson, postFormRequest } from "utils/httpUtils";
 
 function* doHttpRequest(action: PayloadAction<WaitHttpRequestPayload>): Generator {
     try {
         const response = action.payload.isForm
             ? yield postFormRequest(action.payload)
-            : yield fetchRequest(action.payload);
+            : yield fetchJson(action.payload);
 
         yield put(httpSuccessAction(response));
         if (action.payload.successAction) yield put(action.payload.successAction(response));

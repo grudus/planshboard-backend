@@ -44,6 +44,9 @@ abstract class AbstractControllerTest : SpringBasedTest() {
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(requestBody)))
 
+    protected fun getRequest(url: String, vararg uriArgs: String): ResultActions =
+        mockMvc.perform(MockMvcRequestBuilders.get(url, uriArgs))
+
     protected fun <T> toJson(o: T): ByteArray =
         objectMapper.writeValueAsBytes(o)
 

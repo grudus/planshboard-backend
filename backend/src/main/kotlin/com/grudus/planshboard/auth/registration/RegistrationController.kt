@@ -1,6 +1,7 @@
 package com.grudus.planshboard.auth.registration
 
 import com.grudus.planshboard.auth.UserAuthenticationService
+import com.grudus.planshboard.commons.responses.ExistsResponse
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.responses.idOf
 import org.slf4j.LoggerFactory
@@ -25,4 +26,8 @@ constructor(private val userAuthenticationService: UserAuthenticationService,
         log.info("Registering user (${registerUserRequest.username})")
         return idOf(userAuthenticationService.register(registerUserRequest))
     }
+
+    @GetMapping("/exists")
+    fun checkIfUsernameExists(@RequestParam username: String): ExistsResponse =
+        ExistsResponse(userAuthenticationService.exists(username))
 }

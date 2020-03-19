@@ -3,8 +3,8 @@ import useTranslations from "app/locale/hooks/useTranslations";
 import AuthFormWrapper from "app/auth/auth-wrapper/AuthFormWrapper";
 import Input from "library/input/Input";
 import Button from "library/button/Button";
-import css from "./login.module.scss";
-import image from "./login-left-3.svg";
+import css from "app/auth/auth.module.scss";
+import image from "./login-left.svg";
 import { ReactComponent as UserIcon } from "./icon-user.svg";
 import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
@@ -39,20 +39,20 @@ const Login: React.FunctionComponent<any> = () => {
 
     return (
         <AuthFormWrapper image={image} text={translate("AUTH.LOGIN.IMAGE_TITLE")}>
-            <form onSubmit={tryToLogin} className={css.loginForm}>
+            <form onSubmit={tryToLogin} className={css.form}>
                 <h1 className={css.title}>{translate("AUTH.LOGIN.TITLE")}</h1>
 
                 <Input
                     label={translate("AUTH.LOGIN.INPUT_LOGIN_LABEL")}
                     name="username"
-                    onChange={setLogin}
+                    onTextChange={setLogin}
                     autoFocus
                     frontIcon={<UserIcon />}
                 />
                 <PasswordInput
                     label={translate("AUTH.LOGIN.INPUT_PASSWORD_LABEL")}
                     name="password"
-                    onChange={setPassword}
+                    onTextChange={setPassword}
                     frontIcon={<PassIcon />}
                     error={error}
                 />
