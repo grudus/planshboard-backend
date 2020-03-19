@@ -19,7 +19,8 @@ export const httpRequestAction = createAction<WaitHttpRequestPayload>("HTTP_REQU
 export const httpErrorAction = createAction<Error>("HTTP_REQUEST_ERROR");
 export const httpSuccessAction = createAction<Response | any>("HTTP_REQUEST_SUCCESS");
 
-export function useHttpDispatch(): (request: HttpRequestPayload) => Promise<any> {
+export type HttpDispatch = (request: HttpRequestPayload) => Promise<any>;
+export function useHttpDispatch(): HttpDispatch {
     const dispatch = useAwaitDispatch();
 
     return (request: HttpRequestPayload) => dispatch(request, httpRequestAction);

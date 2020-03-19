@@ -12,8 +12,20 @@
         "LINK": "Zarejestruj się!"
       }
     },
+    "REGISTRATION": {
+      "TITLE": "Utwórz swoje konto!",
+      "INPUT_LOGIN_LABEL": "Login",
+      "INPUT_PASSWORD_LABEL": "Hasło",
+      "BUTTON": "Zarejestruj się",
+      "IMAGE_TITLE": "Graj z przyjaciółmi i analizuj swoje postępy!",
+      "BOTTOM_TEXT": {
+        "TEXT": "Masz już konto?",
+        "LINK": "Zaloguj się!"
+      }
+    },
     "ERRORS": {
-      "INVALID_LOGIN": "Wprowadzono niepoprawne dane logowania"
+      "INVALID_LOGIN": "Wprowadzono niepoprawne dane logowania",
+      "USERNAME_EXISTS": "Istnieje już taki użytkownik"
     }
   }
 }

@@ -13,18 +13,24 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = props => {
-    const { className, onClick, type, text, fullWidth, ...buttonProps } = props;
+    const { className, onClick, type, text, fullWidth, disabled, loading, ...buttonProps } = props;
     const classes = merge(
         css.button,
         css[props.color || "primary"],
         cssIf(css.fullWidth, !!props.fullWidth),
-        cssIf(css.loading, !!props.loading),
+        cssIf(css.loading, !!loading),
         className || "",
     );
     return (
-        <button className={classes} disabled={props.loading} onClick={props.onClick} type={props.type} {...buttonProps}>
+        <button
+            className={classes}
+            disabled={disabled || loading}
+            onClick={props.onClick}
+            type={props.type}
+            {...buttonProps}
+        >
             {props.text}
-            {props.loading && <RingLoading className={css.loader} />}
+            {loading && <RingLoading className={css.loader} />}
         </button>
     );
 };

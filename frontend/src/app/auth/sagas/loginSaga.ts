@@ -7,6 +7,7 @@ import {
     WaitTryToLoginPayload,
 } from "app/auth/store/authActions";
 import { httpRequestAction } from "app/shared/store/httpRequestActions";
+import { apiRoutes } from "app/routing/routes";
 
 function extractAuthToken(successResponse: Response): string | null {
     return successResponse.headers.get("Authorization");
@@ -22,7 +23,7 @@ function* login(action: PayloadAction<WaitTryToLoginPayload>): Generator {
             type: "post",
             isForm: true,
             body,
-            path: "api/auth/login",
+            path: apiRoutes.auth.login,
             successAction: loginSuccessAction,
         }),
     );

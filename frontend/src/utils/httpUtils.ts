@@ -1,19 +1,32 @@
 import { HttpRequestPayload } from "app/shared/store/httpRequestActions";
 
-export function postFormRequest(request: HttpRequestPayload): Promise<Response | object> {
+export async function postFormRequest(request: HttpRequestPayload): Promise<Response | object> {
     const body = Object.keys(request.body)
         .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(request.body[key]))
         .join("&");
 
-    return fetchRequest(
+    const response = await fetchRequest(
         { ...request, body },
         {
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         },
     );
+    const text = await response.text();
+    return text ? JSON.parse(text) : response;
 }
 
-export async function fetchRequest(request: HttpRequestPayload, headers?: HeadersInit): Promise<Response | object> {
+export async function fetchJson(request: HttpRequestPayload): Promise<object> {
+    const response = await fetchRequest(
+        { ...request, body: JSON.stringify(request.body) },
+        {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+    );
+    return response.json();
+}
+
+export async function fetchRequest(request: HttpRequestPayload, headers?: HeadersInit): Promise<Response> {
     const response = await fetch(normalizePath(request), {
         body: request.body,
         method: request.type,
@@ -23,8 +36,7 @@ export async function fetchRequest(request: HttpRequestPayload, headers?: Header
     if (response.status >= 400) {
         return Promise.reject(response);
     }
-    const text = await response.text();
-    return text ? JSON.parse(text) : response;
+    return response;
 }
 
 function normalizePath(request: HttpRequestPayload) {
