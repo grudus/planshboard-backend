@@ -1,6 +1,6 @@
 import { HttpRequestPayload } from "app/shared/store/httpRequestActions";
 
-export async function postFormRequest(request: HttpRequestPayload): Promise<Response | object> {
+export async function postFormRequest(request: HttpRequestPayload, token?: string): Promise<Response | object> {
     const body = Object.keys(request.body)
         .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(request.body[key]))
         .join("&");
@@ -9,18 +9,20 @@ export async function postFormRequest(request: HttpRequestPayload): Promise<Resp
         { ...request, body },
         {
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            Authorization: token ?? "",
         },
     );
     const text = await response.text();
     return text ? JSON.parse(text) : response;
 }
 
-export async function fetchJson(request: HttpRequestPayload): Promise<object> {
+export async function fetchJson(request: HttpRequestPayload, token?: string): Promise<object> {
     const response = await fetchRequest(
         { ...request, body: JSON.stringify(request.body) },
         {
             Accept: "application/json",
             "Content-Type": "application/json",
+            Authorization: token ?? "",
         },
     );
     return response.json();

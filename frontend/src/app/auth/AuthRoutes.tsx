@@ -18,4 +18,4 @@ const AuthRoutes: React.FunctionComponent<any> = () => (
     </Switch>
 );
 
-export default AuthRoutes;
+export default React.memo(AuthRoutes);

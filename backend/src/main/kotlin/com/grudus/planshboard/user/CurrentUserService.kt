@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service
 class CurrentUserService {
 
     fun currentUserId(): Id =
+       currentUser().id
+
+    fun currentUser(): CurrentUser =
         getAuthentication().let { auth ->
             when (auth) {
-                is UserAuthentication -> auth.id
-                else -> throw AuthenticationCredentialsNotFoundException("Cannot obtain current user id")
+                is UserAuthentication -> CurrentUser(auth.id, auth.username)
+                else -> throw AuthenticationCredentialsNotFoundException("Cannot obtain current user")
             }
-        }
+    }
 
     private fun getAuthentication(): Authentication =
         SecurityContextHolder.getContext().authentication
