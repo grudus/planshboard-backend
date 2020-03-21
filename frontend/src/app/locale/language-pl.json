@@ -27,5 +27,13 @@
       "INVALID_LOGIN": "Wprowadzono niepoprawne dane logowania",
       "USERNAME_EXISTS": "Istnieje już taki użytkownik"
     }
+  },
+  "NAV_BAR": {
+    "BOARD_GAMES": "Gry",
+    "PLAYS": "Rozgrywki",
+    "STATS": "Statystyki",
+    "RANKING": "Ranking",
+    "NOTIFICATIONS": "Powiadomienia",
+    "SETTINGS": "Ustawienia"
   }
 }
