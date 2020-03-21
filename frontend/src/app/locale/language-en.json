@@ -27,5 +27,13 @@
       "INVALID_LOGIN": "Invalid login or password",
       "USERNAME_EXISTS": "Username already exists"
     }
+  },
+  "NAV_BAR": {
+    "BOARD_GAMES": "Board games",
+    "PLAYS": "Plays",
+    "STATS": "Stats",
+    "RANKING": "Ranking",
+    "NOTIFICATIONS": "Notifications",
+    "SETTINGS": "Settings"
   }
 }

@@ -7,6 +7,11 @@ export const appRoutes = {
     boardGames: {
         list: "/board-games",
     },
+    plays: "/plays",
+    stats: "/stats",
+    ranking: "/ranking",
+    notifications: "/notifications",
+    settings: "/settings",
     home: "/",
 };
 
@@ -20,3 +25,5 @@ export const apiRoutes = {
         current: "/api/users/me",
     },
 };
+
+export const routesWithoutNav = [appRoutes.auth.base];
