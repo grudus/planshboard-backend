@@ -1,4 +1,4 @@
-import { fetchRequest, postFormRequest } from "./httpUtils";
+import { fetchJson, fetchRequest, postFormRequest } from "./httpUtils";
 
 const MOCK_BACKEND_URL = "http://mock.backend";
 beforeEach(() => {
@@ -73,6 +73,21 @@ test("Should execute post-form request with valid headers", async () => {
         expect.objectContaining({
             headers: expect.objectContaining({
                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            }),
+        }),
+    );
+});
+
+test("Should do request with auth token header", async () => {
+    const mockResponse = { json: () => Promise.resolve() };
+    window.fetch = jest.fn().mockImplementation(() => mockResponse);
+
+    await fetchJson({ path: "/path", type: "get" }, "token");
+    expect(window.fetch).toBeCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+            headers: expect.objectContaining({
+                Authorization: "token",
             }),
         }),
     );
