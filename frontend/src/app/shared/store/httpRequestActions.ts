@@ -16,10 +16,10 @@ export interface ProxyPayload {
 export interface WaitHttpRequestPayload extends HttpRequestPayload, WaitPayload, ProxyPayload {}
 
 export const httpRequestAction = createAction<WaitHttpRequestPayload>("HTTP_REQUEST");
-export const httpErrorAction = createAction<Error>("HTTP_REQUEST_ERROR");
+export const httpErrorAction = createAction<Response>("HTTP_REQUEST_ERROR");
 export const httpSuccessAction = createAction<Response | any>("HTTP_REQUEST_SUCCESS");
 
-export type HttpDispatch = (request: HttpRequestPayload) => Promise<any>;
+export type HttpDispatch = (request: HttpRequestPayload | (HttpRequestPayload & ProxyPayload)) => Promise<any>;
 export function useHttpDispatch(): HttpDispatch {
     const dispatch = useAwaitDispatch();
 

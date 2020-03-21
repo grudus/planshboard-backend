@@ -53,7 +53,7 @@ test("Should execute post request with form data", async () => {
     const mockResponse = { text: () => Promise.resolve() };
     window.fetch = jest.fn().mockImplementation(() => mockResponse);
 
-    await postFormRequest({ path: "/path", body: { alfa: "beta", a: "b" }, type: "post" });
+    await postFormRequest({ path: "/path", body: { alfa: "beta", a: "b" }, type: "post" }, "token");
     expect(window.fetch).toBeCalledWith(
         expect.anything(),
         expect.objectContaining({
@@ -67,7 +67,7 @@ test("Should execute post-form request with valid headers", async () => {
     const mockResponse = { text: () => Promise.resolve() };
     window.fetch = jest.fn().mockImplementation(() => mockResponse);
 
-    await postFormRequest({ path: "/path", body: { alfa: "beta", a: "b" }, type: "post" });
+    await postFormRequest({ path: "/path", body: { alfa: "beta", a: "b" }, type: "post" }, "token");
     expect(window.fetch).toBeCalledWith(
         expect.anything(),
         expect.objectContaining({

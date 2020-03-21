@@ -1,9 +1,9 @@
 import changeLocaleSaga from "./changeLanguageSaga";
 import { changeLanguage, changeLanguageSuccess } from "../store/localeActions";
 import SagaTester from "redux-saga-tester";
-import rootReducer from "../../../store/rootReducer";
 import * as languageEn from "../language-en.json";
 import * as languagePl from "../language-pl.json";
+import { planshboardStore } from "store/configureStore";
 
 test("Should listen to change language action type", () => {
     const saga = changeLocaleSaga();
@@ -13,7 +13,7 @@ test("Should listen to change language action type", () => {
 });
 
 test("Should download and return translations ", async () => {
-    const sagaTester = new SagaTester({ initialState: undefined, reducers: rootReducer });
+    const sagaTester = new SagaTester({ initialState: undefined, reducers: planshboardStore.getState });
     sagaTester.start(changeLocaleSaga);
 
     sagaTester.dispatch(changeLanguage("en"));
@@ -27,7 +27,7 @@ test("Should download and return translations ", async () => {
 test("Should download proper translation for different languages", async () => {
     (languageEn as any).default = { LANG: "EN" };
     (languagePl as any).default = { LANG: "PL" };
-    const sagaTester = new SagaTester({ initialState: undefined, reducers: rootReducer });
+    const sagaTester = new SagaTester({ initialState: undefined, reducers: planshboardStore.getState });
     sagaTester.start(changeLocaleSaga);
 
     sagaTester.dispatch(changeLanguage("en"));

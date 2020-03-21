@@ -16,4 +16,7 @@ export const apiRoutes = {
         registration: "/api/auth/registration",
         checkUsername: (username: string) => `/api/auth/registration/exists?username=${username}`,
     },
+    user: {
+        current: "/api/users/me",
+    },
 };

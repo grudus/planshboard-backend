@@ -1,18 +1,18 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
 import PlashboardRoutes from "./routing/PlanshboardRoutes";
 import { Provider } from "react-redux";
-import { planshboardStore } from "store/configureStore";
+import { history, planshboardStore } from "store/configureStore";
 import LocaleLoadedGuard from "app/locale/LocaleLoadedGuard";
+import { ConnectedRouter } from "connected-react-router";
 
 const App: React.FC = () => {
     return (
         <Provider store={planshboardStore}>
-            <BrowserRouter>
+            <ConnectedRouter history={history}>
                 <LocaleLoadedGuard>
                     <PlashboardRoutes />
                 </LocaleLoadedGuard>
-            </BrowserRouter>
+            </ConnectedRouter>
         </Provider>
     );
 };
