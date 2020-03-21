@@ -2,8 +2,8 @@ import { combineReducers } from "redux";
 import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
 import { localeReducer } from "app/locale/store/localeStore";
 import { authReducer } from "app/auth/store/authStore";
-import { userReducer } from "app/user/store/userReducer";
 import { connectRouter } from "connected-react-router";
+import { userReducer } from "app/user/store/userReducer";
 
 const rootReducer = (history: any) =>
     combineReducers({
@@ -14,7 +14,7 @@ const rootReducer = (history: any) =>
     });
 
 export default rootReducer;
-const rootType = rootReducer({});
+export const testTypeRootReducer = rootReducer({});
 
-export type Store = ReturnType<typeof rootType>;
+export type Store = ReturnType<typeof testTypeRootReducer>;
 export const useRedux: TypedUseSelectorHook<Store> = useReduxSelector;

@@ -3,7 +3,7 @@ import { authTokenObtainedAction, tryToLoginAction } from "app/auth/store/authAc
 import SagaTester from "redux-saga-tester";
 import httpRequestSaga from "app/shared/sagas/httpRequestSaga";
 import { httpErrorAction } from "app/shared/store/httpRequestActions";
-import { planshboardStore } from "store/configureStore";
+import { testTypeRootReducer } from "store/rootReducer";
 
 test("Should listen for try to login action", () => {
     const saga = loginSaga();
@@ -13,7 +13,7 @@ test("Should listen for try to login action", () => {
 });
 
 test("Should save extract token from response header and store it in the store", async () => {
-    const sagaTester = new SagaTester({ initialState: undefined, reducers: planshboardStore.getState });
+    const sagaTester = new SagaTester({ initialState: undefined, reducers: testTypeRootReducer });
     sagaTester.start(loginSaga);
     sagaTester.start(httpRequestSaga);
 
@@ -29,7 +29,7 @@ test("Should save extract token from response header and store it in the store",
 });
 
 test("Store should not be changed after invalid login attempt", async () => {
-    const sagaTester = new SagaTester({ initialState: undefined, reducers: planshboardStore.getState });
+    const sagaTester = new SagaTester({ initialState: undefined, reducers: testTypeRootReducer });
     sagaTester.start(loginSaga);
     sagaTester.start(httpRequestSaga);
 
