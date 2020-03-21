@@ -13,15 +13,16 @@ test("Should return response object when no text in response", async () => {
 });
 
 test("Should return json when response has text", async () => {
-    const mockResponse = { text: () => Promise.resolve(`{"value": "test-value"}`) };
+    const mockResponse = { json: () => Promise.resolve({ value: "test-value" }) };
     window.fetch = jest.fn().mockImplementation(() => mockResponse);
-    const response: any = await fetchRequest({ path: "", body: "", type: "get" });
-    expect(response.value).toBe("test-value");
+    const response: Response = await fetchRequest({ path: "", body: "", type: "get" });
+    const json = await response.json();
+    expect(json.value).toBe("test-value");
 });
 
 test("Should reject when error status", async () => {
     expect.assertions(1);
-    const mockResponse = { text: () => Promise.resolve({ status: 400 }) };
+    const mockResponse = { status: 400 };
     window.fetch = jest.fn().mockImplementation(() => mockResponse);
     await fetchRequest({ path: "", body: "", type: "get" }).catch(e => {
         expect(e).not.toBeNull();
