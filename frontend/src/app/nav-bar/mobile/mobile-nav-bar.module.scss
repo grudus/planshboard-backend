@@ -1,0 +1,49 @@
+.menu {
+    display: flex;
+    height: 100%;
+    background: var(--accent-color);
+    z-index: 10;
+    position: relative;
+    box-shadow: 0 -1px 4px 1px rgba(0, 0, 0, 0.15);
+}
+
+.menuItem {
+    flex: 1;
+    height: 100%;
+    cursor: pointer;
+}
+
+.menuLink {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    & svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--accent-color-light);
+        z-index: 2;
+    }
+
+    & span {
+        transition: font-size .2s linear;
+        font-size: 12px;
+        color: var(--accent-color-light);
+    }
+
+
+    &.active {
+        & svg {
+            fill: #fff;
+        }
+        & span {
+            font-size: 14px;
+            color: #fff;
+        }
+    }
+}
+
+
+
