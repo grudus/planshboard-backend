@@ -32,6 +32,7 @@ a {
 
 :root {
     --primary-color: #4265BD;
+    --primary-color-light: #D9E0F2;
     --accent-color: #538688;
     --accent-color-light: #dce7e7;
     --light-background: #f4f5f9;
@@ -45,4 +46,7 @@ a {
     --input-border-normal: #E9EBF4;
     --input-text: #1A3349;
     --input-text-muted: #d2d0d5;
+
+    --nav-solid-color: var(--primary-color);
+    --nav-light-color: var(--primary-color-light);
 }

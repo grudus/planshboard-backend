@@ -54,14 +54,14 @@
     }
 
     &.active {
-        background: var(--accent-color-light);
+        background: var(--nav-light-color);
 
         & span {
-            color: var(--accent-color);
+            color: var(--nav-solid-color);
         }
 
         & svg {
-            fill: var(--accent-color);
+            fill: var(--nav-solid-color);
         }
     }
 }

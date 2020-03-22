@@ -1,7 +1,7 @@
 .menu {
     display: flex;
     height: 100%;
-    background: var(--accent-color);
+    background: var(--nav-solid-color);
     z-index: 10;
     position: relative;
     box-shadow: 0 -1px 4px 1px rgba(0, 0, 0, 0.15);
@@ -23,14 +23,14 @@
     & svg {
         width: 20px;
         height: 20px;
-        fill: var(--accent-color-light);
+        fill: var(--nav-light-color);
         z-index: 2;
     }
 
     & span {
         transition: font-size .2s linear;
         font-size: 12px;
-        color: var(--accent-color-light);
+        color: var(--nav-light-color);
     }
 
 
