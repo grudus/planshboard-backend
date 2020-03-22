@@ -12,10 +12,10 @@ $menuItemHeight: 40;
 .active {
     &.menuLink {
         font-weight: 500;
-        color: var(--accent-color);
+        color: var(--nav-solid-color);
 
         & svg {
-            fill: var(--accent-color);
+            fill: var(--nav-solid-color);
         }
     }
 }
@@ -39,14 +39,17 @@ $menuItemHeight: 40;
     }
 
     &:hover {
-        color: var(--accent-color);
-        fill: var(--accent-color);
+        color: var(--nav-solid-color);
+
+        & svg {
+            fill: var(--nav-solid-color);
+        }
     }
 }
 
 .activeLinkMoving {
     border-radius: 0 24px 24px 0;
-    background: var(--accent-color-light);
+    background: var(--nav-light-color);
     width: 100%;
     height: #{$menuItemHeight}px;
     position: absolute;
