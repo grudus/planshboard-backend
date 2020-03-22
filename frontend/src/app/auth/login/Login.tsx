@@ -29,11 +29,11 @@ const Login: React.FunctionComponent<any> = () => {
             setLoading(true);
             setError("");
             await dispatch({ username: login, password }, tryToLoginAction);
+            history.push("/");
         } catch (e) {
             setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
         } finally {
             setLoading(false);
-            history.push("/");
         }
     };
 
