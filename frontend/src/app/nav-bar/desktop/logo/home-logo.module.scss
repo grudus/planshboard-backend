@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    padding: 8px 8px 8px 26px;
+    margin-bottom: 8px;
+}
+
+.logo {
+    width: 40px;
+    margin-right: 8px;
+}
+
+.logoText {
+    color: var(--primary-color);
+}

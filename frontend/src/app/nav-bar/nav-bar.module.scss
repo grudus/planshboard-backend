@@ -7,6 +7,8 @@
     justify-content: space-between;
     height: 100%;
     padding-bottom: $bottomBarHeight;
+    background: var(--light-background);
+    z-index: 0;
 }
 
 .topNavBar {
@@ -36,9 +38,10 @@
     }
 
     .topNavBar {
-        width: 220px;
-        height: 100vh;
+        width: 260px;
+        height: 100%;
         position: relative;
         letter-spacing: initial;
+        margin-right: 16px;
     }
 }
