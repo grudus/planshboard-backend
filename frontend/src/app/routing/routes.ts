@@ -24,6 +24,9 @@ export const apiRoutes = {
     user: {
         current: "/api/users/me",
     },
+    boardGames: {
+        list: "/api/board-games",
+    },
 };
 
 export const routesWithoutNav = [appRoutes.auth.base];

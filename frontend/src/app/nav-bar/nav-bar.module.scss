@@ -17,12 +17,14 @@
     position: fixed;
     bottom: 0;
     letter-spacing: 1.1px;
+    z-index: 100;
 }
 
 .childrenWrapper {
     height: 100vh;
     overflow-y: scroll;
-    padding-bottom: $bottomBarHeight;
+    padding: 16px 16px $bottomBarHeight 16px ;
+    z-index: 1;
 }
 
 @media (min-width: $medium) {
@@ -35,6 +37,8 @@
 
     .childrenWrapper {
         width: 100%;
+        margin: auto 0;
+        padding-top: 64px;
     }
 
     .topNavBar {
