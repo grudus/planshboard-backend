@@ -28,6 +28,7 @@ ul {
 
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 :root {
@@ -39,7 +40,7 @@ a {
     --error-color: #cc0033;
     --text-on-primary: #fff;
     --text-on-accent: #fff;
-    --text-on-light-background: #0b0b0b;
+    --text-on-light-background: #1a1f36;
     --menu-icon-color: #747474;
 
     --input-border-focus: var(--accent-color);

@@ -1,0 +1,44 @@
+@import "src/variables";
+
+.list {
+    display: grid;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+}
+
+.singleItem {
+    position: relative;
+
+    & > * {
+        position: absolute;
+        top: 0;
+    }
+
+    &:before {
+        content: "";
+        padding-bottom: 100%;
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+
+
+@media (min-width: $small)  {
+    .list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: $medium)  {
+    .list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: $large)  {
+    .list {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

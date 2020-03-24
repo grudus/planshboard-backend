@@ -1,0 +1,23 @@
+@import "src/utils";
+
+.linkWrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.item {
+    @include word-wrap;
+    @include shadow;
+    @include shadowFocus;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    width: 100%;
+    height: 100%;
+}
+
+.boardGameName {
+    @include ellipsis;
+}
