@@ -36,5 +36,13 @@
     "NOTIFICATIONS": "Powiadomienia",
     "SETTINGS": "Ustawienia",
     "MORE": "Więcej"
+  },
+  "BOARD_GAMES": {
+    "LIST": {
+      "EMPTY": {
+        "TOP": "Nie masz jeszcze żadnych gier!",
+        "BOTTOM": "Stwórz je, aby móc zapisywać rozgrywki."
+      }
+    }
   }
 }
