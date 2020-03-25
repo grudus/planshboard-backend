@@ -36,5 +36,13 @@
     "NOTIFICATIONS": "Notifications",
     "SETTINGS": "Settings",
     "MORE": "More"
+  },
+  "BOARD_GAMES": {
+    "LIST": {
+      "EMPTY": {
+        "TOP": "You don't have any games yet!",
+        "BOTTOM": "Create one, to save your play results."
+      }
+    }
   }
 }
