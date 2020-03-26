@@ -42,7 +42,8 @@
       "EMPTY": {
         "TOP": "Nie masz jeszcze żadnych gier!",
         "BOTTOM": "Stwórz je, aby móc zapisywać rozgrywki."
-      }
+      },
+      "ADD_BUTTON": "Dodaj grę"
     }
   }
 }
