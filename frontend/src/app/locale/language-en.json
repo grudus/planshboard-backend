@@ -42,7 +42,8 @@
       "EMPTY": {
         "TOP": "You don't have any games yet!",
         "BOTTOM": "Create one, to save your play results."
-      }
+      },
+      "ADD_BUTTON": "Add new board game"
     }
   }
 }

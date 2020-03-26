@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import css from "./button.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 import RingLoading from "library/loading/RingLoading";
@@ -10,6 +10,7 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
     color?: "primary" | "accent";
     fullWidth?: boolean;
     loading?: boolean;
+    leftIcon?: ReactElement;
 }
 
 const Button: React.FC<ButtonProps> = props => {
@@ -19,7 +20,7 @@ const Button: React.FC<ButtonProps> = props => {
         css[props.color || "primary"],
         cssIf(css.fullWidth, !!props.fullWidth),
         cssIf(css.loading, !!loading),
-        className || "",
+        className,
     );
     return (
         <button
@@ -29,8 +30,11 @@ const Button: React.FC<ButtonProps> = props => {
             type={props.type}
             {...buttonProps}
         >
-            {props.text}
-            {loading && <RingLoading className={css.loader} />}
+            <span className={css.insideButton}>
+                {props.leftIcon}
+                {props.text}
+                {loading && <RingLoading className={css.loader} />}
+            </span>
         </button>
     );
 };

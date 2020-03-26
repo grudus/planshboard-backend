@@ -23,8 +23,9 @@
 .childrenWrapper {
     height: 100%;
     overflow-y: scroll;
-    padding: 16px 16px $bottomBarHeight 16px ;
+    padding: $appWrapperPadding $appWrapperPadding $bottomBarHeight $appWrapperPadding ;
     z-index: 1;
+    position: relative;
 }
 
 @media (min-width: $medium) {
@@ -38,7 +39,7 @@
     .childrenWrapper {
         width: 100%;
         margin: auto 0;
-        padding-top: 64px;
+        padding-top: 80px;
     }
 
     .topNavBar {

@@ -5,6 +5,7 @@ import css from "./board-game-list.module.scss";
 import BoardGameListItem from "app/board-games/list-item/BoardGameListItem";
 import EmptyListPlaceholder from "app/board-games/list/empty/EmptyListPlaceholder";
 import { useRedux } from "store/rootReducer";
+import AddBoardGameButton from "app/board-games/list/add-button/AddBoardGameButton";
 
 const BoardGameList: React.FunctionComponent<any> = () => {
     const dispatch = useHttpDispatch();
@@ -28,6 +29,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
                     </li>
                 ))}
             </ul>
+            <AddBoardGameButton className={css.addButton} />
         </div>
     );
 };

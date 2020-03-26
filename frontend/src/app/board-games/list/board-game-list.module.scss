@@ -1,4 +1,5 @@
 @import "src/variables";
+@import "src/utils";
 
 .list {
     display: grid;
@@ -24,6 +25,14 @@
     }
 }
 
+.addButton{
+    @include largeShadow;
+    @include shadowFocus;
+    position: fixed;
+    bottom: $bottomBarHeight + 16px;
+    right: 16px;
+}
+
 
 @media (min-width: $small)  {
     .list {
@@ -34,6 +43,11 @@
 @media (min-width: $medium)  {
     .list {
         grid-template-columns: repeat(4, 1fr);
+    }
+    .addButton {
+        position: absolute;
+        left: $appWrapperPadding;
+        top: 16px;
     }
 }
 
