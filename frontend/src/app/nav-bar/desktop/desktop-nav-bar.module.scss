@@ -28,14 +28,14 @@ $menuItemHeight: 40;
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--text-on-light-background);
+    color: var(--text-on-main-background);
     transition: font-weight .2s linear;
 
     & svg {
         width: 20px;
         height: 20px;
         margin-right: 16px;
-        fill: var(--text-on-light-background);
+        fill: var(--text-on-main-background);
         z-index: 2;
     }
 

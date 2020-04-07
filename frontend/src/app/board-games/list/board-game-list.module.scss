@@ -45,6 +45,7 @@
         grid-template-columns: repeat(4, 1fr);
     }
     .addButton {
+        @include shadow;
         position: absolute;
         left: $appWrapperPadding;
         top: 16px;

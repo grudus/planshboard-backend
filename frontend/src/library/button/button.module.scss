@@ -22,8 +22,8 @@
     }
 
     &[disabled] {
-        background: #ccc;
-        color: #888;
+        background: var(--disabled-background);
+        color: var(--disabled-text-color);
         cursor: default;
         pointer-events: none;
     }
@@ -52,7 +52,7 @@
     color: var(--text-on-primary);
 
     &:focus, &:hover {
-        box-shadow: 0 14px 28px #d0d9ee, 0 10px 10px #d0d9ee;
+        box-shadow: 0 14px 28px
     }
 }
 

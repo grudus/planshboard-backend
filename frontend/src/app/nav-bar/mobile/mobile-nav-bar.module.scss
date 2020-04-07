@@ -36,11 +36,11 @@
 
     &.active {
         & svg {
-            fill: #fff;
+            fill: var(--card-background);
         }
         & span {
             font-size: 14px;
-            color: #fff;
+            color: var(--card-background);
         }
     }
 }

@@ -9,7 +9,8 @@
     @include word-wrap;
     @include shadow;
     @include shadowFocus;
-    background: #fff;
+    background: var(--card-background);
+    color: var(--text-on-card-background);
     display: flex;
     align-items: center;
     justify-content: center;
