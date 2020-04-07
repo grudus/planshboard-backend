@@ -13,6 +13,7 @@ const AddBoardGameButton: React.FC<AddBoardGameButtonProps> = props => {
 
     return (
         <Button
+            tabIndex={1}
             className={css.button}
             leftIcon={<PlusIcon />}
             text={translate("BOARD_GAMES.LIST.ADD_BUTTON")}

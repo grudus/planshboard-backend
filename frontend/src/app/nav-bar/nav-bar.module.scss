@@ -39,7 +39,12 @@
     .childrenWrapper {
         width: 100%;
         margin: auto 0;
-        padding-top: 80px;
+        padding: 0 $appWrapperPadding $appWrapperPadding $appWrapperPadding;
+    }
+
+    .childrenTopSpace {
+        height: 80px;
+        width: 100%;
     }
 
     .topNavBar {
