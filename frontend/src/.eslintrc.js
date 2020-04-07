@@ -25,6 +25,7 @@ module.exports = {
         "react/static-property-placement": 0,
         "react/forbid-prop-types": 0,
         "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/ban-ts-ignore": 0,
     },
     settings: {
         react: {

@@ -25,34 +25,30 @@
     }
 }
 
-.addButton{
+.addButton {
     @include largeShadow;
     @include shadowFocus;
-    position: fixed;
-    bottom: $bottomBarHeight + 16px;
-    right: 16px;
+    @include floatingItem;
 }
 
 
-@media (min-width: $small)  {
+@media (min-width: $small) {
     .list {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (min-width: $medium)  {
+@media (min-width: $medium) {
     .list {
         grid-template-columns: repeat(4, 1fr);
     }
     .addButton {
         @include shadow;
-        position: absolute;
-        left: $appWrapperPadding;
-        top: 16px;
+        @include topSpaceItem;
     }
 }
 
-@media (min-width: $large)  {
+@media (min-width: $large) {
     .list {
         grid-template-columns: repeat(5, 1fr);
     }

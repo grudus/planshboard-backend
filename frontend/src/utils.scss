@@ -1,3 +1,5 @@
+@import "variables";
+
 //noinspection CssOverwrittenProperties
 @mixin word-wrap() {
     overflow-wrap: break-word;
@@ -22,7 +24,7 @@
 }
 
 @mixin largeShadow() {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 @mixin shadowFocus() {
@@ -35,4 +37,16 @@
     &:hover {
         box-shadow: 0 7px 14px 0 rgba(60, 66, 87, 0.12), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
     }
+}
+
+@mixin topSpaceItem() {
+    position: absolute;
+    left: $appWrapperPadding;
+    top: 16px;
+}
+
+@mixin floatingItem() {
+    position: fixed;
+    bottom: $bottomBarHeight + 16px;
+    right: 16px;
 }

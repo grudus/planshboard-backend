@@ -59,7 +59,10 @@ const NavBar: React.FC<{ children: ReactNode }> = props => {
                     <DesktopNavBar items={menuItems} currentPath={location.pathname} />
                 )}
             </nav>
-            <div className={css.childrenWrapper}>{props.children}</div>
+            <div className={css.childrenWrapper}>
+                <div className={css.childrenTopSpace} />
+                {props.children}
+            </div>
         </div>
     );
 };
