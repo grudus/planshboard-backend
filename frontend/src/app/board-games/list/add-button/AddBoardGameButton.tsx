@@ -1,8 +1,9 @@
 import React from "react";
 import useTranslations from "app/locale/hooks/useTranslations";
-import Button from "library/button/Button";
 import css from "./add-board-game-button.module.scss";
 import { ReactComponent as PlusIcon } from "./plus.svg";
+import LinkButton from "library/link-button/LinkButton";
+import { appRoutes } from "app/routing/routes";
 
 interface AddBoardGameButtonProps {
     className: string;
@@ -12,7 +13,8 @@ const AddBoardGameButton: React.FC<AddBoardGameButtonProps> = props => {
     const { translate } = useTranslations();
 
     return (
-        <Button
+        <LinkButton
+            href={appRoutes.boardGames.add}
             tabIndex={1}
             className={css.button}
             leftIcon={<PlusIcon />}

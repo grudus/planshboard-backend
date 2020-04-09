@@ -6,6 +6,7 @@ export const appRoutes = {
     },
     boardGames: {
         list: "/board-games",
+        add: "/board-games/new",
     },
     plays: "/plays",
     stats: "/stats",

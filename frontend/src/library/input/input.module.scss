@@ -82,12 +82,16 @@ $iconMargin: 12px;
 
 .label {
     position: absolute;
-    left: $iconSize + $iconMargin * 2;
+    left: $iconSize;
     z-index: 1;
     top: 50%;
     transform: translateY(-50%);
     transition: .3s all ease-in-out;
     color: var(--input-text-muted);
+}
+
+.frontIcon ~ .label {
+    left: $iconSize + $iconMargin * 2;
 }
 
 .labelUp {

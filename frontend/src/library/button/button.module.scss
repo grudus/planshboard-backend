@@ -1,5 +1,5 @@
 .button {
-    min-width: 40px;
+    min-width: 80px;
     height: 44px;
     border: none;
     display: block;
@@ -47,7 +47,7 @@
     --ring-loader-color: var(--accent-color);
 }
 
-.primary {
+.primary.solid {
     background: var(--primary-color);
     color: var(--text-on-primary);
 
@@ -56,9 +56,27 @@
     }
 }
 
-.accent {
+.primary.outlined {
+    background: transparent;
+    color: var(--primary-color);
+
+    &:focus, &:hover {
+        box-shadow: 0 14px 28px
+    }
+}
+
+.accent.solid {
     background: var(--accent-color);
     color: var(--text-on-accent);
+}
+
+.accent.outlined {
+    background: transparent;
+    color: var(--accent-color);
+
+    &:focus, &:hover {
+        background: var(--accent-color-light);
+    }
 }
 
 .fullWidth {
