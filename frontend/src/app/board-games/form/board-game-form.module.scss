@@ -1,0 +1,26 @@
+@import "src/variables";
+@import "src/utils";
+
+.title {
+    color: var(--text-on-main-background);
+}
+
+.buttonsWrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    & > * {
+        width: 120px;
+    }
+}
+
+@media (min-width: $large) {
+    .form {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .title {
+        margin-top: 0;
+    }
+}
