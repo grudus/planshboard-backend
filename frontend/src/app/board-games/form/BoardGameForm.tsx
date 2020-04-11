@@ -1,17 +1,25 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Input from "library/input/Input";
 import Button from "library/button/Button";
 import css from "./board-game-form.module.scss";
+import MediumTitle from "library/text/MediumTitle";
+import useTranslations from "app/locale/hooks/useTranslations";
 
 interface BoardGameFormProps {
     title: string;
     onSubmit: (name: string) => Promise<void>;
     onCancel: () => void;
+    error?: string;
 }
 
 const BoardGameForm: React.FC<BoardGameFormProps> = props => {
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
+    const { translate } = useTranslations();
+
+    useEffect(() => {
+        !!props.error && setLoading(false);
+    }, [props.error]);
 
     const submitForm = async (e: FormEvent) => {
         e.preventDefault();
@@ -21,11 +29,28 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
 
     return (
         <form onSubmit={submitForm} className={css.form}>
-            <h2 className={css.title}>{props.title}</h2>
-            <Input label="Podaj nazwę" name="name" onTextChange={setName} autoFocus />
+            <MediumTitle className={css.title}>{props.title}</MediumTitle>
+            <Input
+                label={translate("BOARD_GAMES.FORM.INPUT")}
+                name="name"
+                onTextChange={setName}
+                autoFocus
+                error={props.error}
+            />
             <div className={css.buttonsWrapper}>
-                <Button text="Cofnij" color="accent" decoration="outlined" onClick={props.onCancel} />
-                <Button text="Zapisz" color="primary" type="submit" disabled={!name} loading={loading} />
+                <Button
+                    text={translate("BOARD_GAMES.FORM.CANCEL")}
+                    color="accent"
+                    decoration="outlined"
+                    onClick={props.onCancel}
+                />
+                <Button
+                    text={translate("BOARD_GAMES.FORM.SAVE")}
+                    color="primary"
+                    type="submit"
+                    disabled={!name}
+                    loading={loading}
+                />
             </div>
         </form>
     );

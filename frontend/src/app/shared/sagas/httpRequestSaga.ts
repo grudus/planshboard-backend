@@ -1,4 +1,4 @@
-import { put, select, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
     httpErrorAction,
@@ -8,6 +8,10 @@ import {
 } from "app/shared/store/httpRequestActions";
 import { fetchJson, postFormRequest } from "utils/httpUtils";
 import { Store } from "store/rootReducer";
+
+const getError = async (e: Response) => {
+    return await e.text();
+};
 
 function* doHttpRequest(action: PayloadAction<WaitHttpRequestPayload>): Generator {
     const token = (yield select((store: Store) => store.auth.token)) as string | undefined;
@@ -20,9 +24,13 @@ function* doHttpRequest(action: PayloadAction<WaitHttpRequestPayload>): Generato
         if (action.payload.successAction) yield put(action.payload.successAction(response));
         action.payload.resolve?.(response);
     } catch (e) {
-        yield put(httpErrorAction(e));
-        if (action.payload.errorAction) yield put(action.payload.errorAction(e));
-        action.payload.reject?.(e);
+        let error = e;
+        if (e instanceof Response) {
+            error = yield call(getError, e);
+        }
+        yield put(httpErrorAction(error));
+        if (action.payload.errorAction) yield put(action.payload.errorAction(error));
+        action.payload.reject?.(error);
     }
 }
 

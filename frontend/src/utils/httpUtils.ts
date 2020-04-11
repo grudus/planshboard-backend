@@ -41,6 +41,8 @@ export async function fetchRequest(request: HttpRequestPayload, headers?: Header
     return response;
 }
 
+export const getErrorCode = (errorString: string): string | undefined => JSON.parse(errorString)?.code;
+
 function normalizePath(request: HttpRequestPayload) {
     if (request.path.startsWith("http")) return request.path;
     if (request.path.startsWith("/")) return process.env.REACT_APP_BACKEND_URL + request.path;
