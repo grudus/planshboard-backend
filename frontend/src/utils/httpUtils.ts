@@ -25,7 +25,8 @@ export async function fetchJson(request: HttpRequestPayload, token?: string): Pr
             Authorization: token ?? "",
         },
     );
-    return response.json();
+    const text = await response.text();
+    return text ? JSON.parse(text) : {};
 }
 
 export async function fetchRequest(request: HttpRequestPayload, headers?: HeadersInit): Promise<Response> {

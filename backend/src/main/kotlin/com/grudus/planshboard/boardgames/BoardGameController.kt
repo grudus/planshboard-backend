@@ -29,6 +29,11 @@ constructor(private val boardGameService: BoardGameService,
         return boardGameService.findBoardGamesForUser(user.id)
     }
 
+    @GetMapping("/{boardGameId}")
+    fun getSingleBoardGame(user: UserAuthentication, @PathVariable boardGameId: Id): BoardGame? {
+        boardGameSecurityService.checkAccess(boardGameId)
+        return boardGameService.findById(boardGameId)
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

@@ -10,6 +10,7 @@ interface BoardGameFormProps {
     onSubmit: (name: string) => Promise<void>;
     onCancel: () => void;
     error?: string;
+    initialValue?: string;
 }
 
 const BoardGameForm: React.FC<BoardGameFormProps> = props => {
@@ -20,6 +21,10 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
     useEffect(() => {
         !!props.error && setLoading(false);
     }, [props.error]);
+
+    useEffect(() => {
+        setName(props.initialValue ?? "");
+    }, [props.initialValue]);
 
     const submitForm = async (e: FormEvent) => {
         e.preventDefault();
@@ -36,6 +41,7 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
                 onTextChange={setName}
                 autoFocus
                 error={props.error}
+                initialValue={props.initialValue}
             />
             <div className={css.buttonsWrapper}>
                 <Button

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import css from "./input.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 
@@ -18,13 +18,17 @@ export interface InputProps {
 }
 
 const Input: React.FC<InputProps> = props => {
-    const [text, setText] = useState(props.initialValue || "");
+    const [text, setText] = useState("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { value } = e.target;
         setText(value);
         props?.onTextChange?.(value);
     };
+
+    useEffect(() => {
+        setText(props.initialValue || "");
+    }, [props.initialValue]);
 
     const isError = (): boolean => !!props.error;
 

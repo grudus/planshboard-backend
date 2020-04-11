@@ -26,4 +26,7 @@ constructor(private val boardGameDao: BoardGameDao) {
 
     fun rename(boardGameId: Id, newName: String) =
         boardGameDao.rename(boardGameId, newName)
+
+    fun findById(boardGameId: Id): BoardGame? =
+        boardGameDao.findById(boardGameId)
 }
