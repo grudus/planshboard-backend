@@ -9,6 +9,9 @@ export const mock = <T extends {}, K extends keyof T>(object: T, property: K, va
 export const mockRedux = <T>(response: any) => {
     mock(rootReducer, "useRedux", state => state(response));
 };
+export const mockTranslations = <T>(translations: any = {}) => {
+    mockRedux({ locale: { translations } });
+};
 export const mockHttpDispatch = <T>(response: any = {}) => {
     mock(httpActions, "useHttpDispatch", () => () => Promise.resolve(response));
 };
