@@ -44,6 +44,22 @@
         "BOTTOM": "Create one, to save your play results."
       },
       "ADD_BUTTON": "Add new board game"
+    },
+    "FORM": {
+      "INPUT": "Enter name",
+      "CANCEL": "Cancel",
+      "SAVE": "Save"
+    },
+    "ADD": {
+      "TITLE": "Add game"
+    },
+    "EDIT": {
+      "TITLE": "Edit game"
+    }
+  },
+  "ERRORS": {
+    "BOARD_GAME": {
+      "EXISTS": "Game already exists"
     }
   }
 }

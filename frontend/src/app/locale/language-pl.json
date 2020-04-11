@@ -44,6 +44,22 @@
         "BOTTOM": "Stwórz je, aby móc zapisywać rozgrywki."
       },
       "ADD_BUTTON": "Dodaj grę"
+    },
+    "FORM": {
+      "INPUT": "Podaj nazwę",
+      "CANCEL": "Cofnij",
+      "SAVE": "Zapisz"
+    },
+    "ADD": {
+      "TITLE": "Dodaj grę"
+    },
+    "EDIT": {
+      "TITLE": "Edytuj grę"
+    }
+  },
+  "ERRORS": {
+    "BOARD_GAME": {
+      "EXISTS": "Istnieje już gra o takiej nazwie"
     }
   }
 }
