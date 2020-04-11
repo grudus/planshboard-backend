@@ -2,6 +2,7 @@ import React from "react";
 import css from "./board-game-list-item.module.scss";
 import { appRoutes } from "app/routing/routes";
 import MediumTitle from "library/text/MediumTitle";
+import { Link } from "react-router-dom";
 
 interface BoardGameListItemProps {
     game: {
@@ -11,11 +12,11 @@ interface BoardGameListItemProps {
 }
 
 const BoardGameListItem: React.FC<BoardGameListItemProps> = props => (
-    <a className={css.linkWrapper} href={appRoutes.boardGames.list}>
+    <Link className={css.linkWrapper} to={appRoutes.boardGames.edit.replace(":id", props.game.id.toString())}>
         <section className={css.item} title={props.game.name}>
             <MediumTitle className={css.boardGameName}>{props.game.name}</MediumTitle>
         </section>
-    </a>
+    </Link>
 );
 
 export default React.memo(BoardGameListItem);

@@ -154,4 +154,27 @@ constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
         assertFalse(isCreatedByFirstUser)
     }
 
+    @Test
+    fun `should find by id`() {
+        val name = randomText();
+        boardGameDao.create(addUser(), randomText())
+        val id = boardGameDao.create(addUser(), name)
+        boardGameDao.create(addUser(), randomText())
+
+        val boardGame = boardGameDao.findById(id)
+
+        assertNotNull(boardGame)
+        assertEquals(name, boardGame!!.name)
+    }
+
+    @Test
+    fun `should return null when cannot find by id`() {
+        val name = randomText();
+        val id = boardGameDao.create(addUser(), name)
+
+        val boardGame = boardGameDao.findById(id + 1)
+
+        assertNull(boardGame)
+    }
+
 }

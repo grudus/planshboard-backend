@@ -7,6 +7,7 @@ export const appRoutes = {
     boardGames: {
         list: "/board-games",
         add: "/board-games/new",
+        edit: "/board-games/:id",
     },
     plays: "/plays",
     stats: "/stats",
@@ -27,6 +28,7 @@ export const apiRoutes = {
     },
     boardGames: {
         list: "/api/board-games",
+        single: (id: number) => `/api/board-games/${id}`,
     },
 };
 

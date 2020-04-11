@@ -105,6 +105,35 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
             .andExpect(status().isForbidden)
     }
 
+    @Test
+    fun `should be able to find game by id`() {
+        val name = randomText();
+        addBoardGame(randomText())
+        val id = addBoardGame(name)
+        addBoardGame(randomText())
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id").value(id))
+            .andExpect(jsonPath("$.name").value(name))
+    }
+
+    @Test
+    fun `should not be able to find someone else's board game`() {
+        val name = randomText();
+        val id = addBoardGame(name)
+        setupAuthContextForAnotherUser()
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `should not be able to find non existing board game`() {
+        getRequest("$baseUrl/${nextLong()}")
+            .andExpect(status().isForbidden)
+    }
+
     private fun addBoardGame(name: String): Id =
         postRequest(baseUrl, CreateBoardGameRequest(name))
             .getResponse(IdResponse::class.java).id

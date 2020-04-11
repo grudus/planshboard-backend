@@ -26,6 +26,8 @@ module.exports = {
         "react/forbid-prop-types": 0,
         "@typescript-eslint/explicit-function-return-type": 0,
         "@typescript-eslint/ban-ts-ignore": 0,
+        "@typescript-eslint/no-non-null-assertion": 0,
+
     },
     settings: {
         react: {

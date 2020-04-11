@@ -59,4 +59,9 @@ constructor(private val dsl: DSLContext) {
                 .and(BOARD_GAMES.CREATOR_ID.eq(userId))
         )
 
+    fun findById(boardGameId: Id): BoardGame? =
+        dsl.selectFrom(BOARD_GAMES)
+            .where(BOARD_GAMES.ID.eq(boardGameId))
+            .fetchOneInto(BoardGame::class.java)
+
 }
