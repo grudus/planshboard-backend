@@ -1,5 +1,5 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { BoardGameListItem } from "app/board-games/models/BoardGameModels";
+import { BasicBoardGame, BoardGameListItem } from "app/board-games/models/BoardGameModels";
 import { addBoardGameSuccessAction, getBoardGamesSuccessAction } from "app/board-games/store/boardGameActions";
 
 export interface BoardGameStore {
@@ -15,7 +15,8 @@ export const boardGamesReducer = createReducer<BoardGameStore>(initialState, {
         ...state,
         list: action.payload,
     }),
-    [addBoardGameSuccessAction.type]: (state, action) => ({
+    [addBoardGameSuccessAction.type]: (state, action: PayloadAction<BasicBoardGame>) => ({
         ...state,
+        list: [...state.list, { ...action.payload, createdAt: new Date() }],
     }),
 });

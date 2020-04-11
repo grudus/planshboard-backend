@@ -1,6 +1,7 @@
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 import { addBoardGameSuccessAction, getBoardGamesSuccessAction } from "app/board-games/store/boardGameActions";
+import { IdResponse } from "app/shared/models/Response";
 
 export function getBoardGamesRequest(dispatch: HttpDispatch): Promise<any> {
     return dispatch({
@@ -18,7 +19,7 @@ export function addBoardGameRequest(dispatch: HttpDispatch, request: AddBoardGam
     return dispatch({
         type: "post",
         path: apiRoutes.boardGames.list,
-        successAction: addBoardGameSuccessAction,
+        successAction: (response: IdResponse) => addBoardGameSuccessAction({ ...request, ...response }),
         body: request,
     });
 }
