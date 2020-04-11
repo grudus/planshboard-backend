@@ -17,7 +17,12 @@ const BoardGameList: React.FunctionComponent<any> = () => {
     }, []);
 
     if (boardGames?.length === 0) {
-        return <EmptyListPlaceholder />;
+        return (
+            <>
+                <EmptyListPlaceholder />
+                <AddBoardGameButton className={css.addButton} />
+            </>
+        );
     }
 
     return (

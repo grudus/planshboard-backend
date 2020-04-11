@@ -47,7 +47,7 @@ const Button: React.FC<ButtonProps> = props => {
             <span className={css.insideButton}>
                 {leftIcon}
                 {props.text}
-                {loading && <RingLoading className={css.loader} />}
+                {loading && <RingLoading className={merge(css.loader, css[props.color || "primary"])} />}
             </span>
         </button>
     );
