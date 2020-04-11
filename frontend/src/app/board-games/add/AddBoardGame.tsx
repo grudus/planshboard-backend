@@ -2,11 +2,15 @@ import React from "react";
 import BoardGameForm from "app/board-games/form/BoardGameForm";
 import { useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
+import { useHttpDispatch } from "app/shared/store/httpRequestActions";
+import { addBoardGameRequest } from "app/board-games/BoardGameApi";
 
 const AddBoardGame: React.FC = () => {
     const history = useHistory();
-    const onSubmit = (name: string) => {
-        alert("Submit form " + name);
+    const dispatch = useHttpDispatch();
+
+    const onSubmit = async (name: string) => {
+        await addBoardGameRequest(dispatch, { name });
         onCancel();
     };
     const onCancel = () => {
