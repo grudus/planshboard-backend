@@ -9,8 +9,8 @@ test("Should display button correctly", () => {
 });
 
 test("Should set button type correctly", () => {
-    const { getByText } = render(<Button text="My Button" type="submit" />);
-    const button = getByText(/My Button/i);
+    const { container } = render(<Button text="My Button" type="submit" />);
+    const button = container.querySelector("button");
     expect(button).toHaveAttribute("type", "submit");
 });
 

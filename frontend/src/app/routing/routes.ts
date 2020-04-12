@@ -3,6 +3,7 @@ export const appRoutes = {
         login: "/auth/login",
         registration: "/auth/registration",
         base: "/auth",
+        logout: "/auth/logout",
     },
     boardGames: {
         list: "/board-games",
@@ -33,3 +34,4 @@ export const apiRoutes = {
 };
 
 export const routesWithoutNav = [appRoutes.auth.base];
+export const routesWithoutAuth = [appRoutes.auth.base];

@@ -80,7 +80,7 @@ test("Should execute post-form request with valid headers", async () => {
 });
 
 test("Should do request with auth token header", async () => {
-    const mockResponse = { json: () => Promise.resolve() };
+    const mockResponse = { text: () => Promise.resolve() };
     window.fetch = jest.fn().mockImplementation(() => mockResponse);
 
     await fetchJson({ path: "/path", type: "get" }, "token");
