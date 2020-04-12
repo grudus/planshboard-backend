@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware, PayloadAction } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./rootReducer";
@@ -6,6 +6,7 @@ import rootSaga from "../sagas/rootSaga";
 import { getPersistedState, persistState } from "./persistStore";
 import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
+import { logoutAction } from "app/auth/store/authActions";
 
 const devMode = process.env.NODE_ENV === "development";
 
@@ -22,8 +23,13 @@ const commonMiddleware = [
     routerMiddleware(history),
 ];
 
+const logoutAwareReducer = (state: any, action: PayloadAction) => {
+    if (action.type === logoutAction.type) state = undefined;
+    return rootReducer(history)(state, action);
+};
+
 export const planshboardStore = configureStore({
-    reducer: rootReducer(history),
+    reducer: logoutAwareReducer,
     devTools: devMode,
     middleware: devMode ? [...commonMiddleware, logger] : commonMiddleware,
     preloadedState: getPersistedState(),

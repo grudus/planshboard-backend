@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import BoardGameList from "./BoardGameList";
 import { mockHttpDispatch, mockRedux } from "utils/testUtils";
+import { MemoryRouter } from "react-router-dom";
 
 beforeEach(() => {
     mockHttpDispatch();
@@ -15,22 +16,16 @@ test("Should display all items", () => {
                 { id: 2, name: "Item2" },
             ],
         },
+        locale: {},
     });
-    const { getByText } = render(<BoardGameList />);
+    const { getByText } = render(
+        <MemoryRouter>
+            <BoardGameList />
+        </MemoryRouter>,
+    );
     const game1 = getByText(/Item1/i);
     const game2 = getByText(/Item2/i);
 
     expect(game1).toBeInTheDocument();
     expect(game2).toBeInTheDocument();
-});
-
-test("Should display nothing when no items at all", () => {
-    mockRedux({
-        boardGames: {
-            list: [],
-        },
-    });
-    const { container } = render(<BoardGameList />);
-
-    expect(container.textContent).toBe("");
 });

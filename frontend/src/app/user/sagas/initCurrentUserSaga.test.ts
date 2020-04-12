@@ -17,7 +17,7 @@ test("Should set current user after successful http request", async () => {
     sagaTester.start(initCurrentUserSaga);
     sagaTester.start(httpRequestSaga);
 
-    const mockResponse = { json: () => Promise.resolve({ id: 1, username: "user" }) };
+    const mockResponse = { text: () => Promise.resolve(JSON.stringify({ id: 1, username: "user" })) };
     window.fetch = jest.fn().mockImplementation(() => mockResponse);
 
     sagaTester.dispatch(authTokenObtainedAction(""));
