@@ -15,7 +15,8 @@ constructor(private val boardGameDao: BoardGameDao) {
         val userBoardGames = boardGameDao.findBoardGamesCreatedByUser(userId)
         val linkedBoardGames = boardGameDao.findBoardGamesLinkedFroUser(userId)
 
-        return userBoardGames + linkedBoardGames
+        return (userBoardGames + linkedBoardGames)
+            .sortedBy { it.name }
     }
 
     fun createBoardGame(userId: Id, createBoardGameRequest: CreateBoardGameRequest): Id =
