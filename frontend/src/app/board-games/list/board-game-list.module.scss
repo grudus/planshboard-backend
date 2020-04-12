@@ -2,9 +2,10 @@
 @import "src/utils";
 
 .list {
+    --gap: 16px;
     display: grid;
-    grid-column-gap: 16px;
-    grid-row-gap: 16px;
+    grid-column-gap: var(--gap);
+    grid-row-gap: var(--gap);
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 
 }
@@ -50,6 +51,7 @@
 
 @media (min-width: $large) {
     .list {
+        --gap: 24px;
         grid-template-columns: repeat(5, 1fr);
     }
 }
