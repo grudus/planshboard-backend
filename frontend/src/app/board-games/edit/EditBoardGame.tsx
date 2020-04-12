@@ -39,7 +39,7 @@ const EditBoardGame: React.FC = () => {
 
     return (
         <BoardGameForm
-            title={translate("BOARD_GAMES.EDIT.TITLE")}
+            title={translate("BOARD_GAMES.EDIT.TITLE") + ` '${boardGame?.name}'`}
             onSubmit={onSubmit}
             onCancel={onCancel}
             error={error}
