@@ -5,9 +5,10 @@ import { logoutAction } from "app/auth/store/authActions";
 
 function* catchError(action: PayloadAction<Response | string>): Generator {
     if (typeof action.payload === "string") {
-        const body = JSON.parse(action.payload);
-
-        if (body?.status === 403) yield put(logoutAction());
+        try {
+            const body = JSON.parse(action.payload);
+            if (body?.status === 403) yield put(logoutAction());
+        } catch (e) {}
     }
 }
 
