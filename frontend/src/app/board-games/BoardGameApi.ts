@@ -12,7 +12,7 @@ import { IdResponse } from "app/shared/models/Response";
 export function getBoardGamesRequest(dispatch: HttpDispatch): Promise<any> {
     return dispatch({
         type: "get",
-        path: apiRoutes.boardGames.list,
+        path: apiRoutes.boardGame.list,
         successAction: getBoardGamesSuccessAction,
     });
 }
@@ -24,7 +24,7 @@ interface GetSingleBoardGameRequest {
 export function getSingleBoardGame(dispatch: HttpDispatch, request: GetSingleBoardGameRequest): Promise<any> {
     return dispatch({
         type: "get",
-        path: apiRoutes.boardGames.single(request.id),
+        path: apiRoutes.boardGame.single(request.id),
         successAction: getSingleBoardGameSuccessAction,
     });
 }
@@ -36,7 +36,7 @@ interface AddBoardGameRequest {
 export function addBoardGameRequest(dispatch: HttpDispatch, request: AddBoardGameRequest): Promise<any> {
     return dispatch({
         type: "post",
-        path: apiRoutes.boardGames.list,
+        path: apiRoutes.boardGame.list,
         successAction: (response: IdResponse) => addBoardGameSuccessAction({ ...request, ...response }),
         body: request,
     });
@@ -49,7 +49,7 @@ export interface EditBoardGameRequest extends AddBoardGameRequest {
 export function editBoardGameRequest(dispatch: HttpDispatch, request: EditBoardGameRequest): Promise<any> {
     return dispatch({
         type: "put",
-        path: apiRoutes.boardGames.single(request.id),
+        path: apiRoutes.boardGame.single(request.id),
         successAction: () => editBoardGameSuccessAction(request),
         body: request,
     });
@@ -62,7 +62,7 @@ export interface DeleteBoardGameRequest {
 export function deleteBoardGameRequest(dispatch: HttpDispatch, request: DeleteBoardGameRequest): Promise<any> {
     return dispatch({
         type: "delete",
-        path: apiRoutes.boardGames.single(request.id),
+        path: apiRoutes.boardGame.single(request.id),
         successAction: () => deleteBoardGameSuccessAction(request),
         body: request,
     });

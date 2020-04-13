@@ -21,5 +21,6 @@ export const emptyTestState: Store = {
     router: expect.anything(),
     locale: expect.anything(),
     user: expect.anything(),
-    boardGames: expect.anything(),
+    boardGame: expect.anything(),
+    opponent: expect.anything(),
 };

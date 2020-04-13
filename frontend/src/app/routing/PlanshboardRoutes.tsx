@@ -31,7 +31,7 @@ const PlashboardRoutes: React.FunctionComponent<any> = () => (
             <Settings />
         </Route>
         <Route exact path={appRoutes.home}>
-            <Redirect to={appRoutes.boardGames.list} />
+            <Redirect to={appRoutes.boardGame.list} />
         </Route>
     </>
 );

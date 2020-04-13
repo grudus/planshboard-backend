@@ -10,7 +10,7 @@ beforeEach(() => {
 
 test("Should display all items", () => {
     mockRedux({
-        boardGames: {
+        boardGame: {
             list: [
                 { id: 1, name: "Item1" },
                 { id: 2, name: "Item2" },
