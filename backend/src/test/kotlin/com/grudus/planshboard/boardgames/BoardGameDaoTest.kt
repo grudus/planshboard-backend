@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
+import kotlin.random.Random.Default.nextLong
 
 class BoardGameDaoTest
 @Autowired
@@ -175,6 +176,31 @@ constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
         val boardGame = boardGameDao.findById(id + 1)
 
         assertNull(boardGame)
+    }
+
+    @Test
+    fun `should delete board game by id`() {
+        val id = boardGameDao.create(addUser(), randomText())
+        boardGameDao.create(addUser(), randomText());
+
+        boardGameDao.remove(id)
+
+        val boardGame = boardGameDao.findById(id)
+
+        assertNull(boardGame)
+    }
+
+    @Test
+    fun `should not delete anything when id does not match`() {
+        val creatorId = addUser()
+        boardGameDao.create(creatorId, randomText())
+        boardGameDao.create(creatorId, randomText());
+
+        boardGameDao.remove(nextLong())
+
+        val games = boardGameDao.findBoardGamesCreatedByUser(creatorId)
+
+        assertEquals(2, games.size)
     }
 
 }

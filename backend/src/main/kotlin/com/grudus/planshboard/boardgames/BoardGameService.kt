@@ -30,4 +30,8 @@ constructor(private val boardGameDao: BoardGameDao) {
 
     fun findById(boardGameId: Id): BoardGame? =
         boardGameDao.findById(boardGameId)
+
+    fun remove(boardGameId: Id) {
+        boardGameDao.remove(boardGameId)
+    }
 }

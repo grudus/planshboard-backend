@@ -2,6 +2,7 @@ import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 import {
     addBoardGameSuccessAction,
+    deleteBoardGameSuccessAction,
     editBoardGameSuccessAction,
     getBoardGamesSuccessAction,
     getSingleBoardGameSuccessAction,
@@ -41,7 +42,7 @@ export function addBoardGameRequest(dispatch: HttpDispatch, request: AddBoardGam
     });
 }
 
-interface EditBoardGameRequest extends AddBoardGameRequest {
+export interface EditBoardGameRequest extends AddBoardGameRequest {
     id: number;
 }
 
@@ -50,6 +51,19 @@ export function editBoardGameRequest(dispatch: HttpDispatch, request: EditBoardG
         type: "put",
         path: apiRoutes.boardGames.single(request.id),
         successAction: () => editBoardGameSuccessAction(request),
+        body: request,
+    });
+}
+
+export interface DeleteBoardGameRequest {
+    id: number;
+}
+
+export function deleteBoardGameRequest(dispatch: HttpDispatch, request: DeleteBoardGameRequest): Promise<any> {
+    return dispatch({
+        type: "delete",
+        path: apiRoutes.boardGames.single(request.id),
+        successAction: () => deleteBoardGameSuccessAction(request),
         body: request,
     });
 }

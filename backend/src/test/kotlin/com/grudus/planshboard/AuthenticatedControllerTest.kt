@@ -52,6 +52,9 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
     fun getRequest(url: String): ResultActions =
         performRequestWithAuth(MockMvcRequestBuilders.get(url))
 
+    fun deleteRequest(url: String): ResultActions =
+        performRequestWithAuth(MockMvcRequestBuilders.delete(url))
+
     fun <T> putRequest(url: String, requestBody: T): ResultActions =
         performRequestWithAuth(MockMvcRequestBuilders.put(url)
             .contentType(MediaType.APPLICATION_JSON)

@@ -55,6 +55,12 @@
     },
     "EDIT": {
       "TITLE": "Edit game"
+    },
+    "DELETE": {
+      "TITLE": "Confirm removal",
+      "CONTENT": "Do you really want to remove game?",
+      "CONFIRM_TEXT": "Remove game",
+      "CANCEL_TEXT": "Cancel"
     }
   },
   "ERRORS": {
