@@ -1,7 +1,7 @@
-import initCurrentUserSaga from "app/user/sagas/initCurrentUserSaga";
-import { authTokenObtainedAction } from "app/auth/store/authActions";
+import initCurrentUserSaga from "app/user/__sagas/initCurrentUserSaga";
+import { authTokenObtainedAction } from "app/auth/__store/authActions";
 import SagaTester from "redux-saga-tester";
-import { getCurrentUserSuccessAction } from "app/user/store/userActions";
+import { getCurrentUserSuccessAction } from "app/user/__store/userActions";
 import { testTypeRootReducer } from "store/rootReducer";
 import httpRequestSaga from "app/shared/sagas/httpRequestSaga";
 

@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 import { Link } from "react-router-dom";
 import AuthFormWrapper from "app/auth/auth-wrapper/AuthFormWrapper";
 import image from "app/auth/registration/registration-left.svg";

@@ -1,12 +1,12 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { BasicBoardGame, BoardGameListItem } from "app/board-games/models/BoardGameModels";
+import { BasicBoardGame, BoardGameListItem } from "app/board-games/__models/BoardGameModels";
 import {
     addBoardGameSuccessAction,
     deleteBoardGameSuccessAction,
     editBoardGameSuccessAction,
     getBoardGamesSuccessAction,
     getSingleBoardGameSuccessAction,
-} from "app/board-games/store/boardGameActions";
+} from "app/board-games/__store/boardGameActions";
 import { DeleteBoardGameRequest } from "app/board-games/BoardGameApi";
 
 export interface BoardGameStore {

@@ -1,5 +1,5 @@
 import changeLocaleSaga from "./changeLanguageSaga";
-import { changeLanguage, changeLanguageSuccess } from "../store/localeActions";
+import { changeLanguage, changeLanguageSuccess } from "../__store/localeActions";
 import SagaTester from "redux-saga-tester";
 import * as languageEn from "../language-en.json";
 import * as languagePl from "../language-pl.json";

@@ -6,7 +6,7 @@ import {
     editBoardGameSuccessAction,
     getBoardGamesSuccessAction,
     getSingleBoardGameSuccessAction,
-} from "app/board-games/store/boardGameActions";
+} from "app/board-games/__store/boardGameActions";
 import { IdResponse } from "app/shared/models/Response";
 
 export function getBoardGamesRequest(dispatch: HttpDispatch): Promise<any> {

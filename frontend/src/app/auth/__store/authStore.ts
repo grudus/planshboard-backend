@@ -1,5 +1,5 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { authTokenObtainedAction } from "app/auth/store/authActions";
+import { authTokenObtainedAction } from "app/auth/__store/authActions";
 
 export interface AuthStore {
     token?: string;

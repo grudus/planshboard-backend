@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 import AuthFormWrapper from "app/auth/auth-wrapper/AuthFormWrapper";
 import Input from "library/input/Input";
 import Button from "library/button/Button";
@@ -9,7 +9,7 @@ import { ReactComponent as UserIcon } from "./icon-user.svg";
 import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
 import { useAwaitDispatch } from "app/shared/store/useAwaitDispatch";
-import { tryToLoginAction } from "app/auth/store/authActions";
+import { tryToLoginAction } from "app/auth/__store/authActions";
 import { Link, useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 

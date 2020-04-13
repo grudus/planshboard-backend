@@ -6,7 +6,7 @@ import rootSaga from "../sagas/rootSaga";
 import { getPersistedState, persistState } from "./persistStore";
 import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
-import { logoutAction } from "app/auth/store/authActions";
+import { logoutAction } from "app/auth/__store/authActions";
 
 const devMode = process.env.NODE_ENV === "development";
 

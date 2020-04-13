@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
-import { localeReducer } from "app/locale/store/localeStore";
-import { authReducer } from "app/auth/store/authStore";
+import { localeReducer } from "app/locale/__store/localeStore";
+import { authReducer } from "app/auth/__store/authStore";
 import { connectRouter } from "connected-react-router";
-import { userReducer } from "app/user/store/userReducer";
-import { boardGamesReducer } from "app/board-games/store/boardGameReducer";
+import { userReducer } from "app/user/__store/userReducer";
+import { boardGamesReducer } from "app/board-games/__store/boardGameReducer";
 
 const rootReducer = (history: any) =>
     combineReducers({

@@ -3,7 +3,7 @@ import Input from "library/input/Input";
 import Button from "library/button/Button";
 import css from "./board-game-form.module.scss";
 import MediumTitle from "library/text/MediumTitle";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 interface BoardGameFormProps {
     title: string;
