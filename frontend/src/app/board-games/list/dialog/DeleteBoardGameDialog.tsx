@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ConfirmDialog from "library/dialog/confirm-dialog/ConfirmDialog";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 export interface DeleteBoardGameDialogProps {
     open: boolean;

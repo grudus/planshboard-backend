@@ -5,7 +5,7 @@ import {
     loginSuccessAction,
     tryToLoginAction,
     WaitTryToLoginPayload,
-} from "app/auth/store/authActions";
+} from "app/auth/__store/authActions";
 import { httpRequestAction } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 

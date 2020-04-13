@@ -1,5 +1,5 @@
-import loginSaga from "app/auth/sagas/loginSaga";
-import { authTokenObtainedAction, tryToLoginAction } from "app/auth/store/authActions";
+import loginSaga from "app/auth/__sagas/loginSaga";
+import { authTokenObtainedAction, tryToLoginAction } from "app/auth/__store/authActions";
 import SagaTester from "redux-saga-tester";
 import httpRequestSaga from "app/shared/sagas/httpRequestSaga";
 import { httpErrorAction } from "app/shared/store/httpRequestActions";

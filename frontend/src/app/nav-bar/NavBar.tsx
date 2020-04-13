@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 import { appRoutes, routesWithoutNav } from "app/routing/routes";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 import DesktopNavBar from "app/nav-bar/desktop/DesktopNavBar";
 import { ReactComponent as BoardGamesIcon } from "./icons/board-games.svg";
 import { ReactComponent as StatsIcon } from "./icons/stats.svg";

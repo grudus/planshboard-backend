@@ -1,8 +1,8 @@
 import { put, select, takeEvery } from "redux-saga/effects";
 import { httpRequestAction } from "app/shared/store/httpRequestActions";
 import { apiRoutes, routesWithoutAuth } from "app/routing/routes";
-import { getCurrentUserSuccessAction } from "app/user/store/userActions";
-import { authTokenObtainedAction } from "app/auth/store/authActions";
+import { getCurrentUserSuccessAction } from "app/user/__store/userActions";
+import { authTokenObtainedAction } from "app/auth/__store/authActions";
 import { Store } from "store/rootReducer";
 
 function shouldIgnoreCurrentUser(currentPath: string) {

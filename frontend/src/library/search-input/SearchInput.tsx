@@ -1,6 +1,6 @@
 import React from "react";
 import Input, { InputProps } from "library/input/Input";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 import { ReactComponent as SearchIcon } from "./search.svg";
 
 type SearchInputProps = Omit<InputProps, "name" | "label">;

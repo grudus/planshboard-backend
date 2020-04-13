@@ -1,5 +1,5 @@
 import React from "react";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 import css from "./add-board-game-button.module.scss";
 import { ReactComponent as PlusIcon } from "./plus.svg";
 import LinkButton from "library/link-button/LinkButton";

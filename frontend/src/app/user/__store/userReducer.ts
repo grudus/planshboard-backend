@@ -1,5 +1,5 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { getCurrentUserSuccessAction, GetCurrentUserSuccessPayload } from "app/user/store/userActions";
+import { getCurrentUserSuccessAction, GetCurrentUserSuccessPayload } from "app/user/__store/userActions";
 
 export interface UserStore {
     current?: {

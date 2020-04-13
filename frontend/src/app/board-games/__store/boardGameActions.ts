@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { BasicBoardGame, BoardGameListItem } from "app/board-games/models/BoardGameModels";
+import { BasicBoardGame, BoardGameListItem } from "app/board-games/__models/BoardGameModels";
 import { DeleteBoardGameRequest, EditBoardGameRequest } from "app/board-games/BoardGameApi";
 
 export const getBoardGamesSuccessAction = createAction<BoardGameListItem[]>("GET_BOARD_GAMES_SUCCESS");

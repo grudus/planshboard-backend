@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { addBoardGameRequest } from "app/board-games/BoardGameApi";
-import useTranslations from "app/locale/hooks/useTranslations";
+import useTranslations from "app/locale/__hooks/useTranslations";
 import { getErrorCode } from "utils/httpUtils";
 
 const AddBoardGame: React.FC = () => {

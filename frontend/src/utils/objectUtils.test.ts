@@ -1,5 +1,5 @@
 import { getNestedTranslation } from "./objectUtils";
-import { Translations } from "app/locale/store/localeStore";
+import { Translations } from "app/locale/__store/localeStore";
 
 const translationJson: Translations = {
     key1: {
