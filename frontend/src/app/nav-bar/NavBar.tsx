@@ -8,6 +8,7 @@ import { ReactComponent as PlaysIcon } from "./icons/plays.svg";
 import { ReactComponent as NotificationsIcon } from "./icons/notifications.svg";
 import { ReactComponent as SettingsIcon } from "./icons/settings.svg";
 import { ReactComponent as RankingIcon } from "./icons/ranking.svg";
+import { ReactComponent as OpponentsIcon } from "./icons/opponents.svg";
 import css from "./nav-bar.module.scss";
 import { useLocation } from "react-router-dom";
 import { useSize } from "app/shared/hooks/useSize";
@@ -30,6 +31,7 @@ function menu(translate: Function): NavBarMenuItem[] {
         { path: appRoutes.plays, label: translate("NAV_BAR.PLAYS"), icon: <PlaysIcon /> },
         { path: appRoutes.stats, label: translate("NAV_BAR.STATS"), icon: <StatsIcon /> },
         { path: appRoutes.ranking, label: translate("NAV_BAR.RANKING"), icon: <RankingIcon /> },
+        { path: appRoutes.opponents.list, label: translate("NAV_BAR.OPPONENTS"), icon: <OpponentsIcon /> },
         { path: appRoutes.notifications, label: translate("NAV_BAR.NOTIFICATIONS"), icon: <NotificationsIcon /> },
         { path: appRoutes.settings, label: translate("NAV_BAR.SETTINGS"), icon: <SettingsIcon /> },
     ];
