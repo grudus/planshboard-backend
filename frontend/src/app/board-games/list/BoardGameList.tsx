@@ -7,6 +7,7 @@ import EmptyListPlaceholder from "app/board-games/list/empty/EmptyListPlaceholde
 import { useRedux } from "store/rootReducer";
 import AddBoardGameButton from "app/board-games/list/add-button/AddBoardGameButton";
 import DeleteBoardGameDialog from "app/board-games/list/dialog/DeleteBoardGameDialog";
+import FlipMove from "react-flip-move";
 
 const BoardGameList: React.FunctionComponent<any> = () => {
     const [idToDelete, setIdToDelete] = useState(null as number | null);
@@ -37,13 +38,13 @@ const BoardGameList: React.FunctionComponent<any> = () => {
 
     return (
         <div>
-            <ul className={css.list}>
+            <FlipMove className={css.list} typeName="ul">
                 {boardGames.map(boardGame => (
                     <li key={boardGame.id} className={css.singleItem}>
                         <BoardGameListItem game={boardGame} onDeleteIconClick={setIdToDelete} />
                     </li>
                 ))}
-            </ul>
+            </FlipMove>
             <AddBoardGameButton className={css.addButton} />
 
             <DeleteBoardGameDialog open={!!idToDelete} onConfirm={confirmDeleteItem} onCancel={cancelDeleteItem} />
