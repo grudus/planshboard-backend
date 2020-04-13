@@ -134,6 +134,32 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
             .andExpect(status().isForbidden)
     }
 
+    @Test
+    fun `should remove board game`() {
+        val id = addBoardGame(randomText())
+
+        deleteRequest("$baseUrl/$id")
+            .andExpect(status().isNoContent)
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `should not be able to remove someone else's board game`() {
+        val id = addBoardGame(randomText())
+        setupAuthContextForAnotherUser()
+
+        deleteRequest("$baseUrl/$id")
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `should not be able to remove non existing board game`() {
+        deleteRequest("$baseUrl/${nextLong()}")
+            .andExpect(status().isForbidden)
+    }
+
     private fun addBoardGame(name: String): Id =
         postRequest(baseUrl, CreateBoardGameRequest(name))
             .getResponse(IdResponse::class.java).id

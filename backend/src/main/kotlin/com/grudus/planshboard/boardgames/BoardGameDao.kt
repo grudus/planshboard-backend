@@ -64,4 +64,10 @@ constructor(private val dsl: DSLContext) {
             .where(BOARD_GAMES.ID.eq(boardGameId))
             .fetchOneInto(BoardGame::class.java)
 
+    fun remove(boardGameId: Id) {
+        dsl.deleteFrom(BOARD_GAMES)
+            .where(BOARD_GAMES.ID.eq(boardGameId))
+            .execute();
+    }
+
 }

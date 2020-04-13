@@ -44,6 +44,15 @@ constructor(private val boardGameService: BoardGameService,
         return idOf(boardGameService.createBoardGame(user.id, request))
     }
 
+    @DeleteMapping("/{boardGameId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun removeBoardGame(user: UserAuthentication,
+                        @PathVariable boardGameId: Id) {
+        boardGameSecurityService.checkAccess(boardGameId)
+        log.info("User[${user.id}] removes board game[$boardGameId]")
+        boardGameService.remove(boardGameId)
+    }
+
 
     @PutMapping("/{boardGameId}")
     fun renameBoardGame(user: UserAuthentication,

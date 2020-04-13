@@ -20,6 +20,12 @@
     border-radius: 4px;
 }
 
+.deleteButton {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+}
+
 .boardGameName {
     @include ellipsis;
     font-weight: 700;

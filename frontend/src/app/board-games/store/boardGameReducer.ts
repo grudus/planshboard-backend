@@ -2,10 +2,12 @@ import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import { BasicBoardGame, BoardGameListItem } from "app/board-games/models/BoardGameModels";
 import {
     addBoardGameSuccessAction,
+    deleteBoardGameSuccessAction,
     editBoardGameSuccessAction,
     getBoardGamesSuccessAction,
     getSingleBoardGameSuccessAction,
 } from "app/board-games/store/boardGameActions";
+import { DeleteBoardGameRequest } from "app/board-games/BoardGameApi";
 
 export interface BoardGameStore {
     list: BoardGameListItem[];
@@ -32,5 +34,9 @@ export const boardGamesReducer = createReducer<BoardGameStore>(initialState, {
     [editBoardGameSuccessAction.type]: (state, action: PayloadAction<BasicBoardGame>) => ({
         ...state,
         list: state.list.map(game => (game.id === action.payload.id ? { ...game, name: action.payload.name } : game)),
+    }),
+    [deleteBoardGameSuccessAction.type]: (state, action: PayloadAction<DeleteBoardGameRequest>) => ({
+        ...state,
+        list: state.list.filter(game => game.id !== action.payload.id),
     }),
 });

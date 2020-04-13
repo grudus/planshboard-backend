@@ -64,6 +64,10 @@
     &.outlined {
         background: transparent;
         color: var(--primary-color);
+
+        &:focus, &:hover {
+            background: var(--primary-color-light);
+        }
     }
 
     &:focus, &:hover {

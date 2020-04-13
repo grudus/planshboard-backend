@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 test("Should display board game name", () => {
     const { getByText } = render(
         <MemoryRouter>
-            <BoardGameListItem game={{ id: 1, name: "Game" }} />
+            <BoardGameListItem game={{ id: 1, name: "Game" }} onDeleteIconClick={jest.fn} />
         </MemoryRouter>,
     );
     const label = getByText(/Game/i);

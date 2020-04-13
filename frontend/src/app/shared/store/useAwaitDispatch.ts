@@ -6,11 +6,11 @@ export interface WaitPayload {
     reject?: (error: any) => void;
 }
 
-export type AwaitDispatch<T> = (request: T, action: ActionCreatorWithPayload<T>) => Promise<any>;
+export type AwaitDispatch<T> = (request: T, action: ActionCreatorWithPayload<any>) => Promise<any>;
 export function useAwaitDispatch<T>(): AwaitDispatch<T> {
     const dispatch = useDispatch();
 
-    return (request: T, action: ActionCreatorWithPayload<T>) =>
+    return (request: T, action: ActionCreatorWithPayload<any>) =>
         new Promise<any>((resolve, reject) => {
             dispatch(action({ ...request, resolve, reject }));
         });
