@@ -10,6 +10,9 @@ export const appRoutes = {
         add: "/board-games/new",
         edit: "/board-games/:id",
     },
+    opponents: {
+        list: "/opponents",
+    },
     plays: "/plays",
     stats: "/stats",
     ranking: "/ranking",

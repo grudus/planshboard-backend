@@ -8,11 +8,13 @@ import Stats from "app/stats/Stats";
 import Ranking from "app/ranking/Ranking";
 import Notifications from "app/notifications/Notifications";
 import Settings from "app/settings/Settings";
+import OpponentRoutes from "app/opponents/OpponentRoutes";
 
 const PlashboardRoutes: React.FunctionComponent<any> = () => (
     <>
         <AuthRoutes />
         <BoardGameRoutes />
+        <OpponentRoutes />
         <Route path={appRoutes.plays}>
             <Plays />
         </Route>
