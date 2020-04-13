@@ -8,9 +8,11 @@ import { useRedux } from "store/rootReducer";
 import AddBoardGameButton from "app/board-games/list/add-button/AddBoardGameButton";
 import DeleteBoardGameDialog from "app/board-games/list/dialog/DeleteBoardGameDialog";
 import FlipMove from "react-flip-move";
+import SearchInput from "library/search-input/SearchInput";
 
 const BoardGameList: React.FunctionComponent<any> = () => {
     const [idToDelete, setIdToDelete] = useState(null as number | null);
+    const [filter, setFilter] = useState("");
     const dispatch = useHttpDispatch();
     const boardGames = useRedux(state => state.boardGames.list);
 
@@ -38,12 +40,17 @@ const BoardGameList: React.FunctionComponent<any> = () => {
 
     return (
         <div>
+            <div className={css.searchWrapper}>
+                <SearchInput onTextChange={setFilter} />
+            </div>
             <FlipMove className={css.list} typeName="ul">
-                {boardGames.map(boardGame => (
-                    <li key={boardGame.id} className={css.singleItem}>
-                        <BoardGameListItem game={boardGame} onDeleteIconClick={setIdToDelete} />
-                    </li>
-                ))}
+                {boardGames
+                    .filter(game => !filter || game.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
+                    .map(boardGame => (
+                        <li key={boardGame.id} className={css.singleItem}>
+                            <BoardGameListItem game={boardGame} onDeleteIconClick={setIdToDelete} />
+                        </li>
+                    ))}
             </FlipMove>
             <AddBoardGameButton className={css.addButton} />
 
