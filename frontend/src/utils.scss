@@ -45,6 +45,12 @@
     top: 16px;
 }
 
+@mixin topSpaceCenterItem() {
+    @include topSpaceItem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 @mixin floatingItem() {
     position: fixed;
     bottom: $bottomBarHeight + 16px;

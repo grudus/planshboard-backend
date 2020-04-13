@@ -7,7 +7,11 @@
     grid-column-gap: var(--gap);
     grid-row-gap: var(--gap);
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
 
+
+.searchWrapper {
+    width: 100%;
 }
 
 .singleItem {
@@ -46,6 +50,11 @@
     .addButton {
         @include shadow;
         @include topSpaceItem;
+    }
+
+    .searchWrapper {
+        @include topSpaceCenterItem;
+        width: 50%;
     }
 }
 
