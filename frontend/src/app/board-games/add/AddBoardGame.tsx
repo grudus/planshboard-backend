@@ -24,7 +24,7 @@ const AddBoardGame: React.FC = () => {
         }
     };
     const onCancel = () => {
-        history.push(appRoutes.boardGames.list);
+        history.push(appRoutes.boardGame.list);
     };
     return (
         <BoardGameForm

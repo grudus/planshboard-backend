@@ -10,7 +10,7 @@ import { getErrorCode } from "utils/httpUtils";
 
 const EditBoardGame: React.FC = () => {
     const history = useHistory();
-    const boardGame = useRedux(state => state.boardGames.single);
+    const boardGame = useRedux(state => state.boardGame.single);
     const { id } = useParams();
     const dispatch = useHttpDispatch();
     const { translate } = useTranslations();
@@ -34,7 +34,7 @@ const EditBoardGame: React.FC = () => {
         }
     };
     const onCancel = () => {
-        history.push(appRoutes.boardGames.list);
+        history.push(appRoutes.boardGame.list);
     };
 
     return (

@@ -14,7 +14,7 @@ const AddBoardGameButton: React.FC<AddBoardGameButtonProps> = props => {
 
     return (
         <LinkButton
-            href={appRoutes.boardGames.add}
+            href={appRoutes.boardGame.add}
             tabIndex={1}
             className={css.button}
             leftIcon={<PlusIcon />}

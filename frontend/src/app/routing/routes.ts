@@ -5,7 +5,7 @@ export const appRoutes = {
         base: "/auth",
         logout: "/auth/logout",
     },
-    boardGames: {
+    boardGame: {
         list: "/board-games",
         add: "/board-games/new",
         edit: "/board-games/:id",
@@ -30,9 +30,12 @@ export const apiRoutes = {
     user: {
         current: "/api/users/me",
     },
-    boardGames: {
+    boardGame: {
         list: "/api/board-games",
         single: (id: number) => `/api/board-games/${id}`,
+    },
+    opponent: {
+        list: "/api/opponents",
     },
 };
 

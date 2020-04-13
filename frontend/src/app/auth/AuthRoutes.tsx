@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Login from "./login/Login";
 import Registration from "./registration/Registration";
 import { appRoutes } from "../routing/routes";
@@ -12,9 +12,6 @@ const AuthRoutes: React.FunctionComponent<any> = () => (
         </Route>
         <Route path={appRoutes.auth.registration}>
             <Registration />
-        </Route>
-        <Route path={appRoutes.auth.base}>
-            <Redirect to={appRoutes.auth.login} />
         </Route>
         <Route path={appRoutes.auth.logout}>
             <Logout />

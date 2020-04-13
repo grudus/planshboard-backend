@@ -27,7 +27,7 @@ export interface NavBarMenuListProps {
 
 function menu(translate: Function): NavBarMenuItem[] {
     return [
-        { path: appRoutes.boardGames.list, label: translate("NAV_BAR.BOARD_GAMES"), icon: <BoardGamesIcon /> },
+        { path: appRoutes.boardGame.list, label: translate("NAV_BAR.BOARD_GAMES"), icon: <BoardGamesIcon /> },
         { path: appRoutes.plays, label: translate("NAV_BAR.PLAYS"), icon: <PlaysIcon /> },
         { path: appRoutes.stats, label: translate("NAV_BAR.STATS"), icon: <StatsIcon /> },
         { path: appRoutes.ranking, label: translate("NAV_BAR.RANKING"), icon: <RankingIcon /> },

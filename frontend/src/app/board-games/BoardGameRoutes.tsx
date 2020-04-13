@@ -7,13 +7,13 @@ import EditBoardGame from "app/board-games/edit/EditBoardGame";
 
 const BoardGameRoutes: React.FunctionComponent<any> = () => (
     <Switch>
-        <Route path={appRoutes.boardGames.add}>
+        <Route path={appRoutes.boardGame.add}>
             <AddBoardGame />
         </Route>
-        <Route path={appRoutes.boardGames.edit}>
+        <Route path={appRoutes.boardGame.edit}>
             <EditBoardGame />
         </Route>
-        <Route path={appRoutes.boardGames.list}>
+        <Route path={appRoutes.boardGame.list}>
             <BoardGameList />
         </Route>
     </Switch>

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { merge } from "utils/cssUtils";
 import css from "./icon-button.module.scss";
 

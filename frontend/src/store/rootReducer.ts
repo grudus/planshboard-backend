@@ -5,13 +5,15 @@ import { authReducer } from "app/auth/__store/authStore";
 import { connectRouter } from "connected-react-router";
 import { userReducer } from "app/user/__store/userReducer";
 import { boardGamesReducer } from "app/board-games/__store/boardGameReducer";
+import { opponentReducer } from "app/opponents/__store/opponentReducer";
 
 const rootReducer = (history: any) =>
     combineReducers({
         locale: localeReducer,
         auth: authReducer,
         user: userReducer,
-        boardGames: boardGamesReducer,
+        boardGame: boardGamesReducer,
+        opponent: opponentReducer,
         router: connectRouter(history),
     });
 
