@@ -1,23 +1,34 @@
 import { Opponent } from "app/opponents/__models/OpponentModels";
-import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { getALlOpponentsSuccessAction } from "app/opponents/__store/opponentActions";
+import { createReducer } from "@reduxjs/toolkit";
 
 export interface OpponentStore {
     list: Opponent[];
 }
 
 const initialState: OpponentStore = {
-    list: [
-        {
-            id: -1,
-            name: "ja",
-        },
-    ],
+    list: [],
 };
 
 export const opponentReducer = createReducer<OpponentStore>(initialState, {
-    [getALlOpponentsSuccessAction.type]: (state, action: PayloadAction<Opponent[]>) => ({
+    APP_INITIALIZED: state => ({
         ...state,
-        list: action.payload,
+        list: [
+            {
+                id: -1,
+                name: "grudus",
+            },
+            {
+                id: 0,
+                name: "madzia",
+            },
+            {
+                id: 1,
+                name: "bolec",
+            },
+            {
+                id: 2,
+                name: "kamrat",
+            },
+        ],
     }),
 });
