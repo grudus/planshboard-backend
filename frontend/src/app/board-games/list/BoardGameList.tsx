@@ -26,8 +26,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
 
     useEffect(() => {
         getBoardGamesRequest(dispatch);
-        // eslint-disable-next-line
-    }, []);
+    }, [dispatch]);
 
     if (boardGames?.length === 0) {
         return (
