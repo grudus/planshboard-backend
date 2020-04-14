@@ -7,7 +7,8 @@ export const mock = <T extends {}, K extends keyof T>(object: T, property: K, va
 };
 
 export const mockRedux = <T>(response: any) => {
-    mock(rootReducer, "useRedux", state => state(response));
+    const store = "locale" in response ? response : { ...response, locale: {} };
+    mock(rootReducer, "useRedux", state => state(store));
 };
 export const mockTranslations = <T>(translations: any = {}) => {
     mockRedux({ locale: { translations } });
