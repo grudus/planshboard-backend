@@ -10,6 +10,9 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
+.searchWrapper {
+    width: 100%;
+}
 
 @media (min-width: $small) {
     .list {
@@ -20,6 +23,10 @@
 @media (min-width: $medium) {
     .list {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .searchWrapper {
+        @include topSpaceCenterItem;
+        width: 50%;
     }
 }
 

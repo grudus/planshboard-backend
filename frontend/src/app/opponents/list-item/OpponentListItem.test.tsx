@@ -1,6 +1,6 @@
 import React from "react";
 import { mockTranslations } from "utils/testUtils";
-import { fireEvent, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import OpponentListItem from "app/opponents/list-item/OpponentListItem";
 import { MemoryRouter } from "react-router-dom";
 
@@ -17,7 +17,7 @@ test("Should render opponent's name", () => {
     };
     const { getByText } = render(
         <MemoryRouter>
-            <OpponentListItem opponent={opponent} onDeleteClick={jest.fn} />
+            <OpponentListItem opponent={opponent} />
         </MemoryRouter>,
     );
     const title = getByText(/Opponent name/i);
@@ -35,7 +35,7 @@ test("Should render basic stats", () => {
     };
     const { getByText } = render(
         <MemoryRouter>
-            <OpponentListItem opponent={opponent} onDeleteClick={jest.fn} />
+            <OpponentListItem opponent={opponent} />
         </MemoryRouter>,
     );
     const numberOfPlays = getByText(/200/i);
@@ -57,7 +57,7 @@ test("Should render hypen when no last played game", () => {
     };
     const { getByText } = render(
         <MemoryRouter>
-            <OpponentListItem opponent={opponent} onDeleteClick={jest.fn} />
+            <OpponentListItem opponent={opponent} />
         </MemoryRouter>,
     );
     const lastPlayedGame = getByText(/-/i);
@@ -74,7 +74,7 @@ test("Should show 0% win ration when no plays", () => {
     };
     const { getByText } = render(
         <MemoryRouter>
-            <OpponentListItem opponent={opponent} onDeleteClick={jest.fn} />
+            <OpponentListItem opponent={opponent} />
         </MemoryRouter>,
     );
     const winsRation = getByText(/0%/i);
