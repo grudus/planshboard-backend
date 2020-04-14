@@ -18,8 +18,7 @@ const EditBoardGame: React.FC = () => {
 
     useEffect(() => {
         getSingleBoardGame(dispatch, { id: +id!! });
-        // eslint-disable-next-line
-    }, [id]);
+    }, [dispatch, id]);
 
     const onSubmit = async (name: string) => {
         try {

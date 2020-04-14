@@ -17,8 +17,7 @@ const OpponentList: React.FC = () => {
 
     useEffect(() => {
         getAllOpponentsRequest(dispatch);
-        // eslint-disable-next-line
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>
