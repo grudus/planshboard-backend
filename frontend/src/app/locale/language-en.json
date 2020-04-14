@@ -65,6 +65,14 @@
       "CANCEL_TEXT": "Cancel"
     }
   },
+  "OPPONENTS": {
+    "LIST": {
+      "LAST_PLAY": "Last play",
+      "NUMBER_OF_PLAYS": "No. of plays",
+      "NUMBER_OF_WINS": "No. of wins",
+      "WINS_RATION": "Wins ration"
+    }
+  },
   "ERRORS": {
     "BOARD_GAME": {
       "EXISTS": "Game already exists"
