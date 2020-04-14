@@ -2,8 +2,6 @@ import React from "react";
 import { Opponent, OpponentListItem as ListItem } from "app/opponents/__models/OpponentModels";
 import css from "./opponent-list-item.module.scss";
 import { appRoutes } from "app/routing/routes";
-import IconButton from "library/icon-button/IconButton";
-import { ReactComponent as DeleteIcon } from "app/board-games/list-item/delete.svg";
 import { Link } from "react-router-dom";
 import { ReactComponent as NoImageIcon } from "./avatar.svg";
 import Avatar from "library/avatar/Avatar";
@@ -16,9 +14,7 @@ interface OpponentListItemProps {
 
 const OpponentListItem: React.FC<OpponentListItemProps> = props => {
     const { translate } = useTranslations();
-    const onDeleteClick = () => {
-        props.onDeleteClick(props.opponent);
-    };
+
     const winsRatio = props.opponent.numberOfPlays
         ? Math.round((100 * props.opponent.numberOfWins) / props.opponent.numberOfPlays)
         : 0;
@@ -47,7 +43,6 @@ const OpponentListItem: React.FC<OpponentListItemProps> = props => {
                     </div>
                 </div>
             </section>
-            <IconButton svgIcon={<DeleteIcon />} onClick={onDeleteClick} className={css.deleteButton} />
         </Link>
     );
 };

@@ -81,23 +81,3 @@ test("Should show 0% win ration when no plays", () => {
 
     expect(winsRation).toBeInTheDocument();
 });
-
-test("Should call delete callback after button click", () => {
-    const opponent = {
-        id: 1,
-        name: "Opponent name",
-        numberOfPlays: 0,
-        numberOfWins: 0,
-    };
-    const deleteCallback = jest.fn();
-    const { container } = render(
-        <MemoryRouter>
-            <OpponentListItem opponent={opponent} onDeleteClick={deleteCallback} />
-        </MemoryRouter>,
-    );
-    const button = container.querySelector("button")!!;
-
-    fireEvent.click(button);
-
-    expect(deleteCallback).toBeCalledWith(opponent);
-});
