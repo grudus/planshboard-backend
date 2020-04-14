@@ -9,7 +9,6 @@ import useTranslations from "app/locale/__hooks/useTranslations";
 
 interface OpponentListItemProps {
     opponent: ListItem;
-    onDeleteClick: (opponent: Opponent) => void;
 }
 
 const OpponentListItem: React.FC<OpponentListItemProps> = props => {
