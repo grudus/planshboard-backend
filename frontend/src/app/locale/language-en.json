@@ -70,7 +70,13 @@
       "LAST_PLAY": "Last play",
       "NUMBER_OF_PLAYS": "No. of plays",
       "NUMBER_OF_WINS": "No. of wins",
-      "WINS_RATION": "Wins ration"
+      "WINS_RATION": "Wins ration",
+      "ADD_BUTTON": "Add player"
+    },
+    "FORM": {
+      "NAME_LABEL": "Opponent's name",
+      "NEW_OPPONENT_VALUE": "New player",
+      "EXISTING_OPPONENT_VALUE": "Existing user"
     }
   },
   "ERRORS": {

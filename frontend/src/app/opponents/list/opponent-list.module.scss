@@ -14,6 +14,12 @@
     width: 100%;
 }
 
+.addButton {
+    @include largeShadow;
+    @include shadowFocus;
+    @include floatingItem;
+}
+
 @media (min-width: $small) {
     .list {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -28,11 +34,18 @@
         @include topSpaceCenterItem;
         width: 50%;
     }
+    .addButton {
+        @include shadow;
+        @include topSpaceItem;
+    }
 }
 
 @media (min-width: $large) {
     .list {
         --gap: 24px;
         grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .searchWrapper {
+        width: 50%;
     }
 }

@@ -13,6 +13,7 @@ export const appRoutes = {
     opponents: {
         list: "/opponents",
         edit: "/opponents/:id",
+        add: "/opponents/new",
     },
     plays: "/plays",
     stats: "/stats",
