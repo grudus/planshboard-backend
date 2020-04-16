@@ -1,0 +1,9 @@
+@import "src/variables";
+
+
+
+@media (min-width: $medium) {
+    .formWrapper {
+        width: 50%;
+    }
+}

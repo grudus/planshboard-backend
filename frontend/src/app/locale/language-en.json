@@ -1,6 +1,8 @@
 {
   "APP_TITLE": "Planshboard English",
   "SEARCH": "Search",
+  "CANCEL": "Cancel",
+  "SAVE": "Save",
   "AUTH": {
     "LOGIN": {
       "TITLE": "Login",
@@ -75,8 +77,10 @@
     },
     "FORM": {
       "NAME_LABEL": "Opponent's name",
+      "EXISTING_USER_LABEL":  "User name",
       "NEW_OPPONENT_VALUE": "New player",
-      "EXISTING_OPPONENT_VALUE": "Existing user"
+      "EXISTING_USER_VALUE": "Existing user",
+      "EXISTING_USER_EXPLANATION": "Enter user's account name. It will be linked with this opponent. When you save play with him, the user will see the notification and will be able to follow the results. The integration works in both directions."
     }
   },
   "ERRORS": {
