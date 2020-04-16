@@ -1,6 +1,8 @@
 {
   "APP_TITLE": "Planshboard Polish",
   "SEARCH": "Szukaj",
+  "CANCEL": "Cofnij",
+  "SAVE": "Zapisz",
   "AUTH": {
     "LOGIN": {
       "TITLE": "Zaloguj się do Planshboarda",
@@ -75,8 +77,10 @@
     },
     "FORM": {
       "NAME_LABEL": "Nazwa gracza",
+      "EXISTING_USER_LABEL":  "Nazwa użytkownika",
       "NEW_OPPONENT_VALUE": "Nowy przeciwnik",
-      "EXISTING_OPPONENT_VALUE": "Istniejący użytkownik"
+      "EXISTING_USER_VALUE": "Istniejący użytkownik",
+      "EXISTING_USER_EXPLANATION": "Podaj nazwę konta użytkownika, które ma zostać połączone z tym przeciwnikiem. Po dodaniu rozgrywki z jego udziałem, użytkownik dostanie powiadomienie i będzie mógł śledzić wyniki. Połączenie działa w obie strony."
     }
   },
   "ERRORS": {

@@ -1,13 +1,13 @@
-import React, { FormEvent, useState } from "react";
+import React from "react";
 import OpponentForm from "app/opponents/form/OpponentForm";
+import css from "./add-opponent.module.scss";
 
 const AddOpponent: React.FC = () => {
-    const [opponentName, setOpponentName] = useState("");
-    const onSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        alert("Submit " + opponentName);
-    };
-    return <OpponentForm />;
+    return (
+        <article className={css.formWrapper}>
+            <OpponentForm />
+        </article>
+    );
 };
 
 export default AddOpponent;

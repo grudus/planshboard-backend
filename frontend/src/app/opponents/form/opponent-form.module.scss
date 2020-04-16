@@ -1,3 +1,36 @@
 .radioGroup {
     display: flex;
 }
+
+.existingUserWrapper {
+    margin-top: 24px;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    transform: scaleY(0);
+    transform-origin: 100% 0;
+
+    &.visible {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+.buttons {
+    position: relative;
+    transition: top .2s ease-in-out;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+
+    &.goToTop {
+        top: -160px;
+    }
+}
+
+.existingUserExplanation {
+    color: var(--secondary-text-on-card);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
