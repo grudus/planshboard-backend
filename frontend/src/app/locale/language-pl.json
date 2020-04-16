@@ -70,7 +70,13 @@
       "LAST_PLAY": "Ostatnia rozgrywka",
       "NUMBER_OF_PLAYS": "Liczba rozgrywek",
       "NUMBER_OF_WINS": "Liczba zwycięstw",
-      "WINS_RATIO": "Procent zwycięstw"
+      "WINS_RATIO": "Procent zwycięstw",
+      "ADD_BUTTON": "Dodaj gracza"
+    },
+    "FORM": {
+      "NAME_LABEL": "Nazwa gracza",
+      "NEW_OPPONENT_VALUE": "Nowy przeciwnik",
+      "EXISTING_OPPONENT_VALUE": "Istniejący użytkownik"
     }
   },
   "ERRORS": {

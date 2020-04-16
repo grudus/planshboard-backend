@@ -1,0 +1,56 @@
+@import "src/variables";
+
+.radioLabelWrapper {
+    border: 1px solid var(--input-text-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    flex: 1;
+    height: 160px;
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    transition: all .2s ease-in-out;
+
+    &:not(:first-child) {
+        margin-left: 8px;
+    }
+
+    &:hover {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+    }
+
+    &.selected {
+        border-color: var(--accent-color);
+        background: var(--accent-color-light);
+        color: var(--accent-color);
+
+    }
+}
+
+.radioTitle {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.radio {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+
+@media (min-width: $medium) {
+    .radioLabelWrapper {
+        width: 160px;
+        flex: initial;
+    }
+}

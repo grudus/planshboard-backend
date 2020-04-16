@@ -2,25 +2,25 @@ import React from "react";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import LinkButton from "library/link-button/LinkButton";
 import { appRoutes } from "app/routing/routes";
-import Icons from "library/icons/Icons";
+import { ReactComponent as PlusIcon } from "app/board-games/list/add-button/plus.svg";
 
-interface AddBoardGameButtonProps {
+interface AddOpponentButtonProps {
     className: string;
 }
 
-const AddBoardGameButton: React.FC<AddBoardGameButtonProps> = props => {
+const AddOpponentButton: React.FC<AddOpponentButtonProps> = props => {
     const { translate } = useTranslations();
 
     return (
         <LinkButton
-            href={appRoutes.boardGame.add}
+            href={appRoutes.opponents.add}
             tabIndex={1}
-            leftIcon={Icons.PlusIcon}
-            text={translate("BOARD_GAMES.LIST.ADD_BUTTON")}
+            leftIcon={<PlusIcon />}
+            text={translate("OPPONENTS.LIST.ADD_BUTTON")}
             color="accent"
             {...props}
         />
     );
 };
 
-export default React.memo(AddBoardGameButton);
+export default React.memo(AddOpponentButton);
