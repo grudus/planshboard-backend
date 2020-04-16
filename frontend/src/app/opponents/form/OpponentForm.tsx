@@ -6,19 +6,27 @@ import OpponentRadio from "app/opponents/form/checkbox/OpponentRadio";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { cssIf, merge } from "utils/cssUtils";
 import Button from "library/button/Button";
+import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
 
 const NEW_OPPONENT_VALUE = "new";
 const EXISTING_OPPONENT_VALUE = "existing";
 
-const OpponentForm: React.FC = () => {
+interface OpponentFormProps {
+    onSubmit: (request: CreateOpponentRequest) => Promise<void>;
+}
+
+const OpponentForm: React.FC<OpponentFormProps> = props => {
     const [opponentName, setOpponentName] = useState("");
     const [existingUserName, setExistingUserName] = useState("");
-    const [opponentType, setOpponentType] = useState(EXISTING_OPPONENT_VALUE);
+    const [loading, setLoading] = useState(false);
+    const [opponentType, setOpponentType] = useState(NEW_OPPONENT_VALUE);
     const { translate } = useTranslations();
 
     const onSubmit = async (e: FormEvent) => {
+        setLoading(true);
         e.preventDefault();
-        alert("Submit " + opponentName);
+        await props.onSubmit({ opponentName, existingUserName });
+        setLoading(false);
     };
 
     const isFormValid = () => {
@@ -60,9 +68,9 @@ const OpponentForm: React.FC = () => {
                 />
             </div>
 
-            <div className={merge(css.buttons, cssIf(css.goToTop, !shouldDisplayUserInput))}>
-                <Button text={translate("CANCEL")} decoration="outlined" />
-                <Button text={translate("SAVE")} type="submit" disabled={!isFormValid()} />
+            <div className={merge(css.buttons)}>
+                <Button text={translate("CANCEL")} decoration="outlined" color="accent" />
+                <Button text={translate("SAVE")} type="submit" disabled={!isFormValid()} loading={loading} />
             </div>
         </form>
     );
