@@ -4,8 +4,7 @@
 
 body {
     margin: 0;
-    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    font-family: 'Lato', sans-serif,
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -41,6 +40,9 @@ a {
     --main-background: #f4f5f9;
     --card-background: #fefefe;
     --table-background: var(--card-background);
+
+    --card-form-header-backgrund: #F8F9FC;
+    --card-form-header-text: #83889e;
 
     --error-color: #cc0033;
 

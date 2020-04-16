@@ -1,5 +1,6 @@
 .radioGroup {
     display: flex;
+    margin-top: 24px;
 }
 
 .existingUserWrapper {
@@ -16,21 +17,19 @@
 }
 
 .buttons {
+    margin-top: 24px;
     position: relative;
     transition: top .2s ease-in-out;
     top: 0;
     display: flex;
     justify-content: flex-end;
-
-    &.goToTop {
-        top: -160px;
-    }
 }
 
 .existingUserExplanation {
     color: var(--secondary-text-on-card);
     font-size: 12px;
     font-weight: 700;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    line-height: 20px;
 }
 
