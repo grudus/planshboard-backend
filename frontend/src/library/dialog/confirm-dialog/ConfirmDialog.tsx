@@ -6,6 +6,7 @@ import DialogContent from "library/dialog/DialogContent";
 import DialogFooter from "library/dialog/DialogFooter";
 import Button from "library/button/Button";
 import css from "./confirm-dialog.module.scss";
+import CardFormTitle from "library/card-form/CardFormTitle";
 
 interface ConfirmDialogProps extends DialogProps {
     onConfirm: () => void;
@@ -19,9 +20,7 @@ interface ConfirmDialogProps extends DialogProps {
 const ConfirmDialog: React.FC<ConfirmDialogProps> = props => {
     return (
         <Dialog {...props}>
-            <DialogTitle>
-                <BoldTitle>{props.title}</BoldTitle>
-            </DialogTitle>
+            <CardFormTitle>{props.title}</CardFormTitle>
             <DialogContent>
                 <p>{props.text}</p>
             </DialogContent>
