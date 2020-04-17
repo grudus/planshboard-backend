@@ -13,6 +13,7 @@ const EXISTING_OPPONENT_VALUE = "existing";
 
 interface OpponentFormProps {
     onSubmit: (request: CreateOpponentRequest) => Promise<void>;
+    onCancel: () => void;
 }
 
 const OpponentForm: React.FC<OpponentFormProps> = props => {
@@ -26,7 +27,6 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
         setLoading(true);
         e.preventDefault();
         await props.onSubmit({ opponentName, existingUserName });
-        setLoading(false);
     };
 
     const isFormValid = () => {
@@ -42,7 +42,12 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
 
     return (
         <form onSubmit={onSubmit}>
-            <Input label={translate("OPPONENTS.FORM.NAME_LABEL")} name="name" onTextChange={setOpponentName} />
+            <Input
+                label={translate("OPPONENTS.FORM.NAME_LABEL")}
+                name="name"
+                onTextChange={setOpponentName}
+                autoFocus
+            />
 
             <div className={css.radioGroup} onChange={change}>
                 <OpponentRadio
@@ -69,7 +74,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
             </div>
 
             <div className={merge(css.buttons)}>
-                <Button text={translate("CANCEL")} decoration="outlined" color="accent" />
+                <Button text={translate("CANCEL")} decoration="outlined" color="accent" onClick={props.onCancel} />
                 <Button text={translate("SAVE")} type="submit" disabled={!isFormValid()} loading={loading} />
             </div>
         </form>
