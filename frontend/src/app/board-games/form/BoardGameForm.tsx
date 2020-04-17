@@ -2,11 +2,9 @@ import React, { FormEvent, useEffect, useState } from "react";
 import Input from "library/input/Input";
 import Button from "library/button/Button";
 import css from "./board-game-form.module.scss";
-import MediumTitle from "library/text/MediumTitle";
 import useTranslations from "app/locale/__hooks/useTranslations";
 
 interface BoardGameFormProps {
-    title: string;
     onSubmit: (name: string) => Promise<void>;
     onCancel: () => void;
     error?: string;
@@ -34,7 +32,6 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
 
     return (
         <form onSubmit={submitForm} className={css.form}>
-            <MediumTitle className={css.title}>{props.title}</MediumTitle>
             <Input
                 label={translate("BOARD_GAMES.FORM.INPUT")}
                 name="name"
