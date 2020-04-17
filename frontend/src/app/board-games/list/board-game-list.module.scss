@@ -32,7 +32,6 @@
 
 .addButton {
     @include largeShadow;
-    @include shadowFocus;
     @include floatingItem;
 }
 
@@ -48,7 +47,7 @@
         grid-template-columns: repeat(4, 1fr);
     }
     .addButton {
-        @include shadow;
+        @include noShadow;
         @include topSpaceItem;
     }
 
