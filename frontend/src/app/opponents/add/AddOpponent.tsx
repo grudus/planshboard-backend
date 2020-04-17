@@ -1,7 +1,10 @@
 import React from "react";
 import OpponentForm from "app/opponents/form/OpponentForm";
-import css from "./add-opponent.module.scss";
 import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
+import CardForm from "library/card-form/CardForm";
+import CardFormTitle from "library/card-form/CardFormTitle";
+import CardFormContent from "library/card-form/CardFormContent";
+import css from "./add-opponent.module.scss";
 
 const AddOpponent: React.FC = () => {
     const onSubmit = async (request: CreateOpponentRequest) => {
@@ -9,10 +12,12 @@ const AddOpponent: React.FC = () => {
     };
 
     return (
-        <section className={css.formWrapper}>
-            <h1 className={css.header}>Dodaj przeciwnika</h1>
-            <OpponentForm onSubmit={onSubmit} />
-        </section>
+        <CardForm className={css.formWrapper}>
+            <CardFormTitle>Dodaj przeciwnika</CardFormTitle>
+            <CardFormContent>
+                <OpponentForm onSubmit={onSubmit} />
+            </CardFormContent>
+        </CardForm>
     );
 };
 

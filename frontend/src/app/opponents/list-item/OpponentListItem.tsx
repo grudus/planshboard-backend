@@ -1,5 +1,5 @@
 import React from "react";
-import { Opponent, OpponentListItem as ListItem } from "app/opponents/__models/OpponentModels";
+import { OpponentListItem as ListItem } from "app/opponents/__models/OpponentModels";
 import css from "./opponent-list-item.module.scss";
 import { appRoutes } from "app/routing/routes";
 import { Link } from "react-router-dom";

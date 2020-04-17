@@ -6,6 +6,10 @@ import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { addBoardGameRequest } from "app/board-games/BoardGameApi";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { getErrorCode } from "utils/httpUtils";
+import CardForm from "library/card-form/CardForm";
+import CardFormTitle from "library/card-form/CardFormTitle";
+import CardFormContent from "library/card-form/CardFormContent";
+import css from "./add-board-game.module.scss";
 
 const AddBoardGame: React.FC = () => {
     const history = useHistory();
@@ -27,12 +31,12 @@ const AddBoardGame: React.FC = () => {
         history.push(appRoutes.boardGame.list);
     };
     return (
-        <BoardGameForm
-            title={translate("BOARD_GAMES.ADD.TITLE")}
-            onSubmit={onSubmit}
-            onCancel={onCancel}
-            error={error}
-        />
+        <CardForm className={css.formWrapper}>
+            <CardFormTitle>{translate("BOARD_GAMES.ADD.TITLE")}</CardFormTitle>
+            <CardFormContent>
+                <BoardGameForm onSubmit={onSubmit} onCancel={onCancel} error={error} />
+            </CardFormContent>
+        </CardForm>
     );
 };
 
