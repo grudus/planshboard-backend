@@ -5,17 +5,25 @@ import CardForm from "library/card-form/CardForm";
 import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
 import css from "./add-opponent.module.scss";
+import { useHistory } from "react-router-dom";
+import { appRoutes } from "app/routing/routes";
 
 const AddOpponent: React.FC = () => {
+    const history = useHistory();
     const onSubmit = async (request: CreateOpponentRequest) => {
         alert(JSON.stringify(request));
+        onCancel();
+    };
+
+    const onCancel = () => {
+        history.push(appRoutes.opponents.list);
     };
 
     return (
         <CardForm className={css.formWrapper}>
             <CardFormTitle>Dodaj przeciwnika</CardFormTitle>
             <CardFormContent>
-                <OpponentForm onSubmit={onSubmit} />
+                <OpponentForm onSubmit={onSubmit} onCancel={onCancel} />
             </CardFormContent>
         </CardForm>
     );
