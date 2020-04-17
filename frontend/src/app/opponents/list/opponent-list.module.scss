@@ -16,7 +16,6 @@
 
 .addButton {
     @include largeShadow;
-    @include shadowFocus;
     @include floatingItem;
 }
 
@@ -35,7 +34,7 @@
         width: 50%;
     }
     .addButton {
-        @include shadow;
+        @include noShadow;
         @include topSpaceItem;
     }
 }

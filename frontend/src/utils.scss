@@ -43,6 +43,10 @@
     }
 }
 
+@mixin noShadow() {
+    box-shadow: none !important;
+}
+
 @mixin topSpaceItem() {
     position: absolute;
     left: $appWrapperPadding;

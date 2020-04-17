@@ -76,7 +76,7 @@
       "ADD_BUTTON": "Dodaj gracza"
     },
     "FORM": {
-      "NAME_LABEL": "Nazwa gracza",
+      "NAME_LABEL": "Nazwa przeciwnika",
       "EXISTING_USER_LABEL":  "Nazwa użytkownika",
       "NEW_OPPONENT_VALUE": "Nowy przeciwnik",
       "EXISTING_USER_VALUE": "Istniejący użytkownik",

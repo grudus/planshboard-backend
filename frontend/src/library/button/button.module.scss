@@ -24,7 +24,7 @@
     &[disabled] {
         background: var(--disabled-background) !important;
         color: var(--disabled-text-color) !important;
-        cursor: default;
+        cursor: not-allowed;
         pointer-events: none;
     }
 }
@@ -59,6 +59,10 @@
     &.solid {
         background: var(--primary-color);
         color: var(--text-on-primary);
+
+        &:focus, &:hover {
+            background: var(--primary-color-dark);
+        }
     }
 
     &.outlined {
@@ -69,10 +73,6 @@
             background: var(--primary-color-light);
         }
     }
-
-    &:focus, &:hover {
-        box-shadow: 0 14px 28px
-    }
 }
 
 .accent {
@@ -80,6 +80,10 @@
     &.solid {
         background: var(--accent-color);
         color: var(--text-on-accent);
+
+        &:focus, &:hover {
+            background: var(--accent-color-dark);
+        }
     }
 
     &.outlined {
