@@ -3,6 +3,7 @@ package com.grudus.planshboard.auth
 import com.grudus.planshboard.auth.registration.RegisterUserRequest
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.opponents.OpponentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.Authentication
@@ -17,6 +18,7 @@ class UserAuthenticationService
 @Autowired
 constructor(private val userAuthDao: UserAuthDao,
             private val passwordEncoder: PasswordEncoder,
+            private val opponentService: OpponentService,
             private val currentTimeProvider: CurrentTimeProvider) {
 
     fun tryToLogin(username: String, password: String): Authentication {
@@ -32,7 +34,9 @@ constructor(private val userAuthDao: UserAuthDao,
 
     fun register(request: RegisterUserRequest): Id {
         val hashedPassword = passwordEncoder.encode(request.password)
-        return userAuthDao.registerUser(request.username, hashedPassword, currentTimeProvider.now())
+        val userId = userAuthDao.registerUser(request.username, hashedPassword, currentTimeProvider.now())
+        opponentService.createInitial(request.username, userId)
+        return userId
     }
 
     fun exists(username: String): Boolean =

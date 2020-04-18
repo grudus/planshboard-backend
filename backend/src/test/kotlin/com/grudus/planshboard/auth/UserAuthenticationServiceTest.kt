@@ -2,6 +2,7 @@ package com.grudus.planshboard.auth
 
 import com.grudus.planshboard.auth.registration.RegisterUserRequest
 import com.grudus.planshboard.commons.SystemCurrentTimeProvider
+import com.grudus.planshboard.opponents.OpponentService
 import com.grudus.planshboard.utils.TestUtils.any
 import com.grudus.planshboard.utils.TestUtils.eq
 import com.grudus.planshboard.utils.randomText
@@ -25,12 +26,14 @@ class UserAuthenticationServiceTest {
     private lateinit var userAuthDao: UserAuthDao
     @Mock
     private lateinit var passwordEncoder: PasswordEncoder
+    @Mock
+    private lateinit var opponentService: OpponentService
 
     private lateinit var userAuthenticationService: UserAuthenticationService
 
     @BeforeEach
     fun init() {
-        userAuthenticationService = UserAuthenticationService(userAuthDao, passwordEncoder, SystemCurrentTimeProvider())
+        userAuthenticationService = UserAuthenticationService(userAuthDao, passwordEncoder, opponentService, SystemCurrentTimeProvider())
     }
 
     @Test

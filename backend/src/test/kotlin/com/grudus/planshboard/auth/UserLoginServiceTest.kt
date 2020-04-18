@@ -1,5 +1,9 @@
 package com.grudus.planshboard.auth
 
+import com.grudus.planshboard.opponents.OpponentService
+import com.grudus.planshboard.utils.MockCurrentTimeProvider
+import com.grudus.planshboard.utils.randomText
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -12,9 +16,6 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
-import com.grudus.planshboard.utils.MockCurrentTimeProvider
-import com.grudus.planshboard.utils.randomText
-import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.random.Random.Default.nextLong
 
 @ExtendWith(MockitoExtension::class)
@@ -23,12 +24,14 @@ class UserLoginServiceTest {
     private lateinit var userAuthDao: UserAuthDao
     @Mock
     private lateinit var passwordEncoder: PasswordEncoder
+    @Mock
+    private lateinit var opponentService: OpponentService
 
     private lateinit var userService: UserAuthenticationService
 
     @BeforeEach
     fun init() {
-        userService = UserAuthenticationService(userAuthDao, passwordEncoder, MockCurrentTimeProvider())
+        userService = UserAuthenticationService(userAuthDao, passwordEncoder, opponentService, MockCurrentTimeProvider())
     }
 
     @Test

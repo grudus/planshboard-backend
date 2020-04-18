@@ -1,0 +1,35 @@
+package com.grudus.planshboard.opponents
+
+import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.opponents.model.OpponentListItem
+import com.grudus.planshboard.tables.Opponents.OPPONENTS
+import com.grudus.planshboard.tables.Users.USERS
+import org.jooq.DSLContext
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Repository
+
+@Repository
+class OpponentDao
+@Autowired
+constructor(private val dsl: DSLContext) {
+
+    fun creteInitial(name: String, userId: Id): Id =
+        dsl.insertInto(OPPONENTS)
+            .set(OPPONENTS.NAME, name)
+            .set(OPPONENTS.CREATOR_ID, userId)
+            .set(OPPONENTS.LINKED_TO, userId)
+            .returning()
+            .fetchOne()
+            .id
+
+    // TODO mocked until plays implemented
+    fun findListItems(userId: Id): List<OpponentListItem> =
+        dsl.select(OPPONENTS.ID, OPPONENTS.NAME, USERS.NAME)
+            .from(OPPONENTS)
+            .join(USERS).on(USERS.ID.eq(OPPONENTS.LINKED_TO))
+            .where(OPPONENTS.CREATOR_ID.eq(userId))
+            .fetch {(id, opponentName, existingUserName) ->
+                OpponentListItem(id, opponentName, existingUserName, 0, 0, null)
+            }
+
+}
