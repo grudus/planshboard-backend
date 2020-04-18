@@ -1,0 +1,30 @@
+@import "src/utils";
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 32px;
+}
+
+.namesWrapper {
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    color: var(--text-on-card-background);
+
+    & > * {
+        margin: 4px 0;
+        font-weight: 300;
+    }
+}
+
+.existingUserName {
+    color: var(--secondary-text-on-card);
+    font-size: 12px;
+}
+
+.avatar {
+    padding: 12px;
+}
+

@@ -1,11 +1,22 @@
 .image {
+    border-radius: 50%;
+    padding: 8px;
+}
+
+.accent {
     background: var(--accent-color-light);
     color: var(--accent-color);
     fill: var(--accent-color);
+}
 
-    $size: 48px;
-    width: $size;
-    height: $size;
-    border-radius: 50%;
-    padding: 8px;
+.primary {
+    background: var(--primary-color-light);
+    color: var(--primary-color);
+    fill: var(--primary-color);
+}
+
+.neutral {
+    background: var(--card-form-header-backgrund);
+    color: var(--card-form-header-text);
+    fill: var(--card-form-header-text);
 }

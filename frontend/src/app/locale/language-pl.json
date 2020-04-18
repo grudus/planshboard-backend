@@ -89,6 +89,7 @@
     },
     "PROFILE": {
       "TITLE": "Profil przeciwnika",
+      "EDIT": "Edytuj",
       "STATS": {
         "TITLE": "Statystyki",
         "LAST_PLAY": "Ostatnia gra",

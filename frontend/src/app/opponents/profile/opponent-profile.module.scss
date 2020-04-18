@@ -5,6 +5,23 @@
     @include mobileFullScreen;
 }
 
+.formWrapper, .statsWrapper {
+    min-width: initial;
+    max-width: initial;
+    width: 100%;
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.editButton {
+    width: 100%;
+}
+
+
 .opponentName {
     font-size: 12px;
     padding: 4px 8px;
@@ -28,17 +45,30 @@
 
 
 @media (min-width: $large) {
+    .formWrapper, .statsWrapper {
+        min-width: 45%;
+        max-width: 45%;
+        width: initial;
+    }
+
     .contentWrapper {
         flex: 1 1 0px;
         flex-direction: row;
         align-items: initial;
+        height: 496px;
     }
 
     .divider {
-        height: 380px;
+        height: 90%;
         width: 1px;
         margin-left: 24px;
         margin-right: 24px;
+    }
+
+    .editButton {
+        width: 120px;
+        margin-left: auto;
+        margin-bottom: 16px;
     }
 }
 
