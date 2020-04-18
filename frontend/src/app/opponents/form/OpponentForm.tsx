@@ -61,12 +61,14 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
                 <OpponentRadio
                     icon={Icons.NewUser}
                     title={translate("OPPONENTS.FORM.NEW_OPPONENT_VALUE")}
+                    secondaryText={translate("OPPONENTS.FORM.NEW_OPPONENT_SECONDARY")}
                     value={NEW_OPPONENT_VALUE}
                     selectedValue={opponentType}
                 />
                 <OpponentRadio
                     icon={Icons.ExistingUser}
                     title={translate("OPPONENTS.FORM.EXISTING_USER_VALUE")}
+                    secondaryText={translate("OPPONENTS.FORM.EXISTING_USER_SECONDARY")}
                     value={EXISTING_OPPONENT_VALUE}
                     selectedValue={opponentType}
                 />
@@ -83,7 +85,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
             </div>
 
             <div className={merge(css.buttons)}>
-                <Button text={translate("CANCEL")} decoration="outlined" color="accent" onClick={props.onCancel} />
+                <Button text={translate("CANCEL")} decoration="outlined" color="primary" onClick={props.onCancel} />
                 <Button text={translate("SAVE")} type="submit" disabled={!isFormValid()} loading={loading} />
             </div>
         </form>

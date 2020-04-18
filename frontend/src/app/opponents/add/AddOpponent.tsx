@@ -7,9 +7,11 @@ import CardFormContent from "library/card-form/CardFormContent";
 import css from "./add-opponent.module.scss";
 import { useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 const AddOpponent: React.FC = () => {
     const history = useHistory();
+    const { translate } = useTranslations();
     const onSubmit = async (request: CreateOpponentRequest) => {
         alert(JSON.stringify(request));
         onCancel();
@@ -21,7 +23,7 @@ const AddOpponent: React.FC = () => {
 
     return (
         <CardForm className={css.formWrapper}>
-            <CardFormTitle>Dodaj przeciwnika</CardFormTitle>
+            <CardFormTitle>{translate("OPPONENTS.ADD.TITLE")}</CardFormTitle>
             <CardFormContent>
                 <OpponentForm onSubmit={onSubmit} onCancel={onCancel} />
             </CardFormContent>

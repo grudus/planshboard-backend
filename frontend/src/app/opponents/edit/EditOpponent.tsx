@@ -10,10 +10,12 @@ import OpponentForm from "app/opponents/form/OpponentForm";
 import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
 import { appRoutes } from "app/routing/routes";
 import { useRedux } from "store/rootReducer";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 const EditOpponent: React.FC = () => {
     const { id } = useParams();
     const history = useHistory();
+    const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
     const opponent = useRedux(state => state.opponent.single);
 
@@ -31,7 +33,9 @@ const EditOpponent: React.FC = () => {
 
     return (
         <CardForm className={css.formWrapper}>
-            <CardFormTitle>Edytuj przeciwnika {opponent?.name}</CardFormTitle>
+            <CardFormTitle>
+                {translate("OPPONENTS.EDIT.TITLE")} <span className={css.opponentName}>{opponent?.name}</span>
+            </CardFormTitle>
             <CardFormContent>
                 <OpponentForm onSubmit={onSubmit} onCancel={onCancel} initialValue={opponent} />
             </CardFormContent>
