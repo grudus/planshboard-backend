@@ -87,8 +87,14 @@
     "ADD": {
       "TITLE": "Dodaj przeciwnika"
     },
-    "EDIT": {
-      "TITLE": "Profil przeciwnika"
+    "PROFILE": {
+      "TITLE": "Profil przeciwnika",
+      "STATS": {
+        "TITLE": "Statystyki",
+        "LAST_PLAY": "Ostatnia gra",
+        "MOST_PLAYED_BOARD_GAME": "Najwięcej rozgrywek",
+        "MOST_WINS_BOARD_GAME": "Najwięcej zwycięstw"
+      }
     }
   },
   "ERRORS": {

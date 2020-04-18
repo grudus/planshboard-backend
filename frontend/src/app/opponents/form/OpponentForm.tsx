@@ -6,7 +6,7 @@ import OpponentRadio from "app/opponents/form/checkbox/OpponentRadio";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { cssIf, merge } from "utils/cssUtils";
 import Button from "library/button/Button";
-import { CreateOpponentRequest, SingleOpponentStats } from "app/opponents/__models/OpponentModels";
+import { CreateOpponentRequest, Opponent } from "app/opponents/__models/OpponentModels";
 
 const NEW_OPPONENT_VALUE = "new";
 const EXISTING_OPPONENT_VALUE = "existing";
@@ -14,7 +14,7 @@ const EXISTING_OPPONENT_VALUE = "existing";
 interface OpponentFormProps {
     onSubmit: (request: CreateOpponentRequest) => Promise<void>;
     onCancel: () => void;
-    initialValue?: SingleOpponentStats;
+    initialValue?: Opponent;
 }
 
 const OpponentForm: React.FC<OpponentFormProps> = props => {

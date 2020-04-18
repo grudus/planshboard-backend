@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 import OpponentList from "app/opponents/list/OpponentList";
 import AddOpponent from "app/opponents/add/AddOpponent";
-import EditOpponent from "app/opponents/edit/EditOpponent";
+import OpponentProfile from "app/opponents/profile/OpponentProfile";
 
 const OpponentRoutes: React.FunctionComponent<any> = () => (
     <Switch>
@@ -11,7 +11,7 @@ const OpponentRoutes: React.FunctionComponent<any> = () => (
             <AddOpponent />
         </Route>
         <Route path={appRoutes.opponents.edit}>
-            <EditOpponent />
+            <OpponentProfile />
         </Route>
         <Route path={appRoutes.opponents.list}>
             <OpponentList />
