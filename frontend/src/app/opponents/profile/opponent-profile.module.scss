@@ -1,0 +1,44 @@
+@import "src/variables";
+@import "src/utils";
+
+.cardWrapper {
+    @include mobileFullScreen;
+}
+
+.opponentName {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+    background: var(--primary-color-light);
+    color: var(--primary-color);
+}
+
+.contentWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divider {
+    height: 1px;
+    width: 80%;
+    background: #eaeaea;
+}
+
+
+@media (min-width: $large) {
+    .contentWrapper {
+        flex: 1 1 0px;
+        flex-direction: row;
+        align-items: initial;
+    }
+
+    .divider {
+        height: 380px;
+        width: 1px;
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+}
+
