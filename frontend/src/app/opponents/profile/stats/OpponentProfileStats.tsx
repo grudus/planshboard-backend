@@ -56,4 +56,4 @@ const OpponentProfileStats: React.FC<OpponentProfileStatsProps> = props => {
     );
 };
 
-export default OpponentProfileStats;
+export default React.memo(OpponentProfileStats);

@@ -89,6 +89,7 @@
     },
     "PROFILE": {
       "TITLE": "Opponent's profile",
+      "EDIT": "Edit",
       "STATS": {
         "TITLE": "Stats",
         "LAST_PLAY": "Last played",

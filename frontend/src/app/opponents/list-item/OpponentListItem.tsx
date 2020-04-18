@@ -3,9 +3,9 @@ import { OpponentListItem as ListItem } from "app/opponents/__models/OpponentMod
 import css from "./opponent-list-item.module.scss";
 import { appRoutes } from "app/routing/routes";
 import { Link } from "react-router-dom";
-import { ReactComponent as NoImageIcon } from "./avatar.svg";
 import Avatar from "library/avatar/Avatar";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import Icons from "library/icons/Icons";
 
 interface OpponentListItemProps {
     opponent: ListItem;
@@ -21,7 +21,7 @@ const OpponentListItem: React.FC<OpponentListItemProps> = props => {
     return (
         <Link className={css.linkWrapper} to={appRoutes.opponents.edit.replace(":id", props.opponent.id.toString())}>
             <section className={css.item} title={props.opponent.name}>
-                <Avatar image={<NoImageIcon />} name={props.opponent.name} />
+                <Avatar image={Icons.NoImageUserIcon} name={props.opponent.name} />
                 <h3 className={css.opponentName}>{props.opponent.name}</h3>
                 <div className={css.stats}>
                     <div className={css.row}>
