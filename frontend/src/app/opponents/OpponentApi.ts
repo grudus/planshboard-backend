@@ -1,4 +1,4 @@
-import { getAllOpponentsSuccessAction } from "app/opponents/__store/opponentActions";
+import { getAllOpponentsSuccessAction, getSingleOpponentSuccessAction } from "app/opponents/__store/opponentActions";
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 
@@ -17,6 +17,6 @@ export function getSingleOpponent(dispatch: HttpDispatch, request: GetSingleOppo
     return dispatch({
         type: "get",
         path: apiRoutes.opponent.single(request.id),
-        successAction: getAllOpponentsSuccessAction,
+        successAction: getSingleOpponentSuccessAction,
     });
 }

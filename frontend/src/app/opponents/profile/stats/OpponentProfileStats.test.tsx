@@ -15,11 +15,11 @@ test("Should render board game names with corresponding number", () => {
         lastPlayedBoardGame: "Osadnicy z Katanu",
         mostPlayedBoardGame: {
             name: "Carcassone",
-            plays: 31,
+            count: 31,
         },
         mostWinsBoardGame: {
             name: "Dobble",
-            wins: 23,
+            count: 23,
         },
     };
     const { getByText } = render(<OpponentProfileStats stats={stats} />);
@@ -36,7 +36,7 @@ test("Should return hypen when no board game", () => {
         lastPlayedBoardGame: "Osadnicy z Katanu",
         mostWinsBoardGame: {
             name: "Dobble",
-            wins: 23,
+            count: 23,
         },
     };
     const { getByText } = render(<OpponentProfileStats stats={stats} />);

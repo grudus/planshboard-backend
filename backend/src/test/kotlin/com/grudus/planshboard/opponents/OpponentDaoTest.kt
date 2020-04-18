@@ -5,6 +5,7 @@ import com.grudus.planshboard.opponents.model.OpponentListItem
 import com.grudus.planshboard.utils.randomText
 import org.jooq.exception.DataAccessException
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,6 +30,17 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         assertThrows<DataAccessException> {
             opponentDao.creteInitial(randomText(), id)
         }
+    }
+
+    @Test
+    fun `should be able to find by id`() {
+        val id = addUser()
+        val firstItemId = opponentDao.findListItems(id)[0].id
+
+        val opponent = opponentDao.findById(firstItemId)
+
+        assertNotNull(opponent)
+        assertEquals(firstItemId, opponent!!.id)
     }
 
 }

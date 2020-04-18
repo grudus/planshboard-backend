@@ -10,6 +10,11 @@ export interface OpponentListItem extends Opponent {
     lastPlayedBoardGame?: string;
 }
 
+export interface OpponentWithStats {
+    opponent: Opponent;
+    stats: SingleOpponentStats;
+}
+
 export interface SingleOpponentStats {
     numberOfPlays: number;
     numberOfWins: number;
@@ -17,11 +22,11 @@ export interface SingleOpponentStats {
     lastPlayedBoardGame?: string;
     mostPlayedBoardGame?: {
         name: string;
-        plays: number;
+        count: number;
     };
     mostWinsBoardGame?: {
         name: string;
-        wins: number;
+        count: number;
     };
 }
 

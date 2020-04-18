@@ -1,6 +1,11 @@
-import { Opponent, OpponentListItem, SingleOpponentStats } from "app/opponents/__models/OpponentModels";
+import {
+    Opponent,
+    OpponentListItem,
+    OpponentWithStats,
+    SingleOpponentStats,
+} from "app/opponents/__models/OpponentModels";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { getAllOpponentsSuccessAction } from "app/opponents/__store/opponentActions";
+import { getAllOpponentsSuccessAction, getSingleOpponentSuccessAction } from "app/opponents/__store/opponentActions";
 
 export interface OpponentStore {
     list: OpponentListItem[];
@@ -19,27 +24,8 @@ export const opponentReducer = createReducer<OpponentStore>(initialState, {
         ...state,
         list: action.payload,
     }),
-    APP_INITIALIZED: state => ({
+    [getSingleOpponentSuccessAction.type]: (state, action: PayloadAction<OpponentWithStats>) => ({
         ...state,
-        single: {
-            opponent: {
-                id: 2,
-                name: "Madzia",
-                existingUserName: "maddie",
-            },
-            stats: {
-                numberOfPlays: 254,
-                numberOfWins: 133,
-                lastPlayedBoardGame: "Osadnicy z Katanu",
-                mostPlayedBoardGame: {
-                    name: "Carcassone",
-                    plays: 31,
-                },
-                mostWinsBoardGame: {
-                    name: "Dobble",
-                    wins: 23,
-                },
-            },
-        },
+        single: action.payload,
     }),
 });

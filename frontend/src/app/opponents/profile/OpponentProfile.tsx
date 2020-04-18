@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { getSingleOpponent } from "app/opponents/OpponentApi";
 import CardForm from "library/card-form/CardForm";
