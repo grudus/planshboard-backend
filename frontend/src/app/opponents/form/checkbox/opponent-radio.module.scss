@@ -11,7 +11,7 @@
     flex-direction: column;
     align-content: center;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     text-align: center;
 
     transition: all .2s ease-in-out;
@@ -38,6 +38,14 @@
     text-align: center;
     font-size: 14px;
     font-weight: 300;
+    margin: 0;
+}
+
+.secondaryText {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: var(--secondary-text-on-card);
 }
 
 .radio {

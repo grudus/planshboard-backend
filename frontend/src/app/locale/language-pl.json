@@ -79,8 +79,16 @@
       "NAME_LABEL": "Nazwa przeciwnika",
       "EXISTING_USER_LABEL":  "Nazwa użytkownika",
       "NEW_OPPONENT_VALUE": "Nowy przeciwnik",
+      "NEW_OPPONENT_SECONDARY": "Tylko ty zobaczysz jego wyniki",
       "EXISTING_USER_VALUE": "Istniejący użytkownik",
+      "EXISTING_USER_SECONDARY": "Dziel się wynikami z innymi",
       "EXISTING_USER_EXPLANATION": "Podaj nazwę konta użytkownika, które ma zostać połączone z tym przeciwnikiem. Po dodaniu rozgrywki z jego udziałem, użytkownik dostanie powiadomienie i będzie mógł śledzić wyniki. Połączenie działa w obie strony."
+    },
+    "ADD": {
+      "TITLE": "Dodaj przeciwnika"
+    },
+    "EDIT": {
+      "TITLE": "Profil przeciwnika"
     }
   },
   "ERRORS": {
