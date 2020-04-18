@@ -2,12 +2,11 @@ package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.boardgames.BoardGameService
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
 import com.grudus.planshboard.commons.responses.NameCount
-import com.grudus.planshboard.commons.validation.InvalidRequestException
-import com.grudus.planshboard.opponents.model.OpponentDto
-import com.grudus.planshboard.opponents.model.OpponentListItem
-import com.grudus.planshboard.opponents.model.OpponentStats
-import com.grudus.planshboard.opponents.model.OpponentWithStats
+import com.grudus.planshboard.opponents.model.*
+import com.grudus.planshboard.user.CurrentUserService
+import com.grudus.planshboard.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextInt
@@ -16,7 +15,9 @@ import kotlin.random.Random.Default.nextInt
 class OpponentService
 @Autowired
 constructor(private val opponentDao: OpponentDao,
-            private val boardGameService: BoardGameService) {
+            private val boardGameService: BoardGameService,
+            private val userService: UserService,
+            private val currentUserService: CurrentUserService) {
 
     fun createInitial(userName: String, userId: Id) {
         opponentDao.creteInitial(userName, userId)
@@ -38,7 +39,8 @@ constructor(private val opponentDao: OpponentDao,
         val numberOfWins = nextInt(numberOfPlays)
         val boardGame: String? = boardGameService.findBoardGamesForUser(userId).shuffled().firstOrNull()?.name
 
-        val opponent: OpponentDto = opponentDao.findById(opponentId)!!
+        val opponent: OpponentDto = opponentDao.findById(opponentId)
+            ?: throw ResourceNotFoundException("Cannot find opponent[$opponentId]")
 
         val stats = OpponentStats(numberOfPlays,
             numberOfWins,
@@ -48,5 +50,18 @@ constructor(private val opponentDao: OpponentDao,
 
         return OpponentWithStats(opponent, stats)
     }
+
+    fun create(request: CreateOpponentRequest, currentUserId: Id): Id {
+        if (request.existingUserName == null) {
+            return opponentDao.createNew(request.opponentName, currentUserId)
+        }
+        val userId = userService.findIdByName(request.existingUserName)
+            ?: throw ResourceNotFoundException("Cannot find user[${request.existingUserName}]")
+
+        return opponentDao.createAndLinkToUser(request.opponentName, currentUserId, userId)
+    }
+
+    fun existsForCurrentUser(name: String): Boolean =
+        opponentDao.exists(name, currentUserService.currentUserId())
 
 }

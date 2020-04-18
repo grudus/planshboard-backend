@@ -2,6 +2,7 @@ package com.grudus.planshboard.user
 
 import com.grudus.planshboard.auth.UserAuthentication
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.user.model.CurrentUser
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder

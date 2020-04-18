@@ -43,4 +43,28 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         assertEquals(firstItemId, opponent!!.id)
     }
 
+    @Test
+    fun `should be able to create and find opponent without linked user`() {
+        val creatorId = addUser()
+        val name = randomText()
+        val id = opponentDao.createNew(name, creatorId)
+
+        val opponent = opponentDao.findById(id)
+
+        assertNotNull(opponent)
+        assertEquals(name, opponent!!.name)
+    }
+
+    @Test
+    fun `should be able to create and find opponent with linked user`() {
+        val creatorId = addUser()
+        val name = randomText()
+        val id = opponentDao.createAndLinkToUser(name, creatorId, addUser())
+
+        val opponent = opponentDao.findById(id)
+
+        assertNotNull(opponent)
+        assertEquals(name, opponent!!.name)
+    }
+
 }
