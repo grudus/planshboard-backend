@@ -1,6 +1,7 @@
 package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.OpponentListItem
 import com.grudus.planshboard.tables.Opponents.OPPONENTS
 import com.grudus.planshboard.tables.Users.USERS
@@ -31,5 +32,12 @@ constructor(private val dsl: DSLContext) {
             .fetch {(id, opponentName, existingUserName) ->
                 OpponentListItem(id, opponentName, existingUserName, 0, 0, null)
             }
+
+    fun findById(opponentId: Id): OpponentDto? =
+        dsl.select(OPPONENTS.ID, OPPONENTS.NAME, USERS.NAME.`as`("existingUserName"))
+            .from(OPPONENTS)
+            .join(USERS).on(USERS.ID.eq(OPPONENTS.LINKED_TO))
+            .where(OPPONENTS.ID.eq(opponentId))
+            .fetchOneInto(OpponentDto::class.java)
 
 }

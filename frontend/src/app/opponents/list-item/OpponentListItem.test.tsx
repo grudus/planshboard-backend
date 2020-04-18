@@ -65,7 +65,7 @@ test("Should render hypen when no last played game", () => {
     expect(lastPlayedGame).toBeInTheDocument();
 });
 
-test("Should show 0% win ration when no plays", () => {
+test("Should show 0% win ration when no count", () => {
     const opponent = {
         id: 1,
         name: "Opponent name",

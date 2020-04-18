@@ -1,7 +1,5 @@
 import React from "react";
-import BoldTitle from "library/text/BoldTitle";
 import Dialog, { DialogProps } from "library/dialog/Dialog";
-import DialogTitle from "library/dialog/DialogTitle";
 import DialogContent from "library/dialog/DialogContent";
 import DialogFooter from "library/dialog/DialogFooter";
 import Button from "library/button/Button";

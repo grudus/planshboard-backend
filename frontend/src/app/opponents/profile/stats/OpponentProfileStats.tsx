@@ -44,12 +44,12 @@ const OpponentProfileStats: React.FC<OpponentProfileStatsProps> = props => {
                 <div className={css.textStat}>
                     <span>{translate("OPPONENTS.PROFILE.STATS.MOST_PLAYED_BOARD_GAME")}</span>
                     <span>
-                        {!mostPlayedBoardGame ? "-" : `${mostPlayedBoardGame.name} (${mostPlayedBoardGame?.plays})`}
+                        {!mostPlayedBoardGame ? "-" : `${mostPlayedBoardGame.name} (${mostPlayedBoardGame?.count})`}
                     </span>
                 </div>
                 <div className={css.textStat}>
                     <span>{translate("OPPONENTS.PROFILE.STATS.MOST_WINS_BOARD_GAME")}</span>
-                    <span>{!mostWinsBoardGame ? "-" : `${mostWinsBoardGame.name} (${mostWinsBoardGame?.wins})`}</span>
+                    <span>{!mostWinsBoardGame ? "-" : `${mostWinsBoardGame.name} (${mostWinsBoardGame?.count})`}</span>
                 </div>
             </div>
         </CardFormContent>

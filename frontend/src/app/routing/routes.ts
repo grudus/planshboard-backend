@@ -15,7 +15,7 @@ export const appRoutes = {
         edit: "/opponents/:id",
         add: "/opponents/new",
     },
-    plays: "/plays",
+    plays: "/count",
     stats: "/stats",
     ranking: "/ranking",
     notifications: "/notifications",
