@@ -4,10 +4,13 @@ export interface Opponent {
 }
 
 export interface OpponentListItem extends Opponent {
-    lastPlayedBoardGame?: string;
     numberOfPlays: number;
     numberOfWins: number;
+    lastPlayedBoardGame?: string;
+    existingUserName?: string;
 }
+
+export type SingleOpponentStats = OpponentListItem;
 
 export interface CreateOpponentRequest {
     opponentName: string;

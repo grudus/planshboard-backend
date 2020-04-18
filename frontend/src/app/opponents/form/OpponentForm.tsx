@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Input from "library/input/Input";
 import css from "./opponent-form.module.scss";
 import Icons from "library/icons/Icons";
@@ -6,7 +6,7 @@ import OpponentRadio from "app/opponents/form/checkbox/OpponentRadio";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { cssIf, merge } from "utils/cssUtils";
 import Button from "library/button/Button";
-import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
+import { CreateOpponentRequest, SingleOpponentStats } from "app/opponents/__models/OpponentModels";
 
 const NEW_OPPONENT_VALUE = "new";
 const EXISTING_OPPONENT_VALUE = "existing";
@@ -14,6 +14,7 @@ const EXISTING_OPPONENT_VALUE = "existing";
 interface OpponentFormProps {
     onSubmit: (request: CreateOpponentRequest) => Promise<void>;
     onCancel: () => void;
+    initialValue?: SingleOpponentStats;
 }
 
 const OpponentForm: React.FC<OpponentFormProps> = props => {
@@ -22,6 +23,12 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
     const [loading, setLoading] = useState(false);
     const [opponentType, setOpponentType] = useState(NEW_OPPONENT_VALUE);
     const { translate } = useTranslations();
+
+    useEffect(() => {
+        setOpponentName(props.initialValue?.name ?? "");
+        setExistingUserName(props.initialValue?.existingUserName ?? "");
+        setOpponentType(props.initialValue?.existingUserName ? EXISTING_OPPONENT_VALUE : NEW_OPPONENT_VALUE);
+    }, [props.initialValue]);
 
     const onSubmit = async (e: FormEvent) => {
         setLoading(true);
@@ -47,6 +54,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
                 name="name"
                 onTextChange={setOpponentName}
                 autoFocus
+                initialValue={props.initialValue?.name}
             />
 
             <div className={css.radioGroup} onChange={change}>
@@ -70,6 +78,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
                     label={translate("OPPONENTS.FORM.EXISTING_USER_LABEL")}
                     name="existing-user"
                     onTextChange={setExistingUserName}
+                    initialValue={props.initialValue?.existingUserName}
                 />
             </div>
 
