@@ -1,4 +1,4 @@
-package com.grudus.planshboard.user
+package com.grudus.planshboard.user.model
 
 import com.grudus.planshboard.commons.Id
 

@@ -6,4 +6,6 @@ object ValidationKeys {
     const val EMPTY_FIELD = "FIELD.EMPTY"
     const val PASSWORD_MISMATCH = "PASSWORD.MISMATCH"
     const val FORBIDDEN = "FORBIDDEN"
+    const val OPPONENT_ALREADY_EXISTS = "OPPONENT_ALREADY_EXISTS"
+    const val UNKNOWN_USER = "UNKNOWN_USER"
 }

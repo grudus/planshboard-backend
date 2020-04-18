@@ -15,13 +15,7 @@ class OpponentDao
 constructor(private val dsl: DSLContext) {
 
     fun creteInitial(name: String, userId: Id): Id =
-        dsl.insertInto(OPPONENTS)
-            .set(OPPONENTS.NAME, name)
-            .set(OPPONENTS.CREATOR_ID, userId)
-            .set(OPPONENTS.LINKED_TO, userId)
-            .returning()
-            .fetchOne()
-            .id
+        createAndLinkToUser(name, userId, userId)
 
     // TODO mocked until plays implemented
     fun findListItems(userId: Id): List<OpponentListItem> =
@@ -36,8 +30,35 @@ constructor(private val dsl: DSLContext) {
     fun findById(opponentId: Id): OpponentDto? =
         dsl.select(OPPONENTS.ID, OPPONENTS.NAME, USERS.NAME.`as`("existingUserName"))
             .from(OPPONENTS)
-            .join(USERS).on(USERS.ID.eq(OPPONENTS.LINKED_TO))
+            .leftJoin(USERS).on(USERS.ID.eq(OPPONENTS.LINKED_TO))
             .where(OPPONENTS.ID.eq(opponentId))
             .fetchOneInto(OpponentDto::class.java)
+
+
+    fun createNew(name: String, userId: Id): Id =
+        dsl.insertInto(OPPONENTS)
+            .set(OPPONENTS.NAME, name)
+            .set(OPPONENTS.CREATOR_ID, userId)
+            .returning()
+            .fetchOne()
+            .id
+
+
+    fun createAndLinkToUser(name: String, creatorId: Id, linkedTo: Id): Id =
+        dsl.insertInto(OPPONENTS)
+            .set(OPPONENTS.NAME, name)
+            .set(OPPONENTS.CREATOR_ID, creatorId)
+            .set(OPPONENTS.LINKED_TO, linkedTo)
+            .returning()
+            .fetchOne()
+            .id
+
+    fun exists(name: String, creatorId: Id): Boolean =
+        dsl.fetchExists(
+            dsl.select(OPPONENTS.ID)
+                .from(OPPONENTS)
+                .where(OPPONENTS.NAME.eq(name))
+                .and(OPPONENTS.CREATOR_ID.eq(creatorId))
+        )
 
 }
