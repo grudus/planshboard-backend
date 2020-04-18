@@ -1,8 +1,9 @@
-import { OpponentListItem } from "app/opponents/__models/OpponentModels";
+import { OpponentListItem, SingleOpponentStats } from "app/opponents/__models/OpponentModels";
 import { createReducer } from "@reduxjs/toolkit";
 
 export interface OpponentStore {
     list: OpponentListItem[];
+    single?: SingleOpponentStats;
 }
 
 const initialState: OpponentStore = {
@@ -41,5 +42,12 @@ export const opponentReducer = createReducer<OpponentStore>(initialState, {
                 numberOfWins: 0,
             },
         ],
+        single: {
+            id: 2,
+            name: "Marcin Grzegorz Karwat syn Grzegorza i Lidii",
+            numberOfPlays: 0,
+            numberOfWins: 0,
+            existingUserName: "Elisz",
+        },
     }),
 });
