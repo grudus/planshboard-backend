@@ -8,4 +8,5 @@ object ValidationKeys {
     const val FORBIDDEN = "FORBIDDEN"
     const val OPPONENT_ALREADY_EXISTS = "OPPONENT_ALREADY_EXISTS"
     const val UNKNOWN_USER = "UNKNOWN_USER"
+    const val USER_ALREADY_LINKED = "USER_ALREADY_LINKED"
 }

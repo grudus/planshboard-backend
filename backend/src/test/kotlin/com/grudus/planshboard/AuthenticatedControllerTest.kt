@@ -66,7 +66,7 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
         context.authentication = authentication
     }
 
-    private fun addUser(username: String = randomText(), password: String = randomText()): Id =
+    protected fun addUser(username: String = randomText(), password: String = randomText()): Id =
         authService.register(RegisterUserRequest(username, password, password))
 
 

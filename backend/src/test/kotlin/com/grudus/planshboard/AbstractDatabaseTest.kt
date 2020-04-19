@@ -17,6 +17,6 @@ abstract class AbstractDatabaseTest : SpringBasedTest() {
 
     protected val firstUserId by lazy { addUser() }
 
-    protected fun addUser(): Id =
-        userService.register(RegisterUserRequest(randomText(), randomText(), randomText()))
+    protected fun addUser(username: String = randomText()): Id =
+        userService.register(RegisterUserRequest(username, randomText(), randomText()))
 }

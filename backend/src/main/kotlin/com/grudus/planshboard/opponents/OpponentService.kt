@@ -64,4 +64,7 @@ constructor(private val opponentDao: OpponentDao,
     fun existsForCurrentUser(name: String): Boolean =
         opponentDao.exists(name, currentUserService.currentUserId())
 
+    fun userAlreadyLinked(existingUserName: String): Boolean =
+        opponentDao.userAlreadyLinked(existingUserName, currentUserService.currentUserId())
+
 }

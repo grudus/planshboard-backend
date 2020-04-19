@@ -19,8 +19,13 @@ constructor(private val opponentService: OpponentService,
             emptyFields(request) -> ValidationError(ValidationKeys.EMPTY_FIELD)
             opponentExists(request) -> ValidationError(ValidationKeys.OPPONENT_ALREADY_EXISTS)
             existingUserDoesNotExists(request) -> ValidationError(ValidationKeys.UNKNOWN_USER)
+            userAlreadyLinked(request) -> ValidationError(ValidationKeys.USER_ALREADY_LINKED)
             else -> ValidationSuccess
         }
+
+    private fun userAlreadyLinked(request: CreateOpponentRequest): Boolean =
+        if (request.existingUserName == null) false
+        else opponentService.userAlreadyLinked(request.existingUserName)
 
     private fun existingUserDoesNotExists(request: CreateOpponentRequest): Boolean =
         if (request.existingUserName == null) false
