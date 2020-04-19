@@ -39,7 +39,7 @@ constructor(private val boardGameService: BoardGameService,
     @ResponseStatus(HttpStatus.CREATED)
     fun createBoardGame(user: UserAuthentication,
                         @RequestBody request: CreateBoardGameRequest): IdResponse {
-        createBoardGameRequestValidator.validate(request)
+        createBoardGameRequestValidator.validate(request).throwOnError()
         log.info("User[${user.id}] creates board game: $request")
         return idOf(boardGameService.createBoardGame(user.id, request))
     }
@@ -59,7 +59,7 @@ constructor(private val boardGameService: BoardGameService,
                         @RequestBody request: RenameBoardGameRequest,
                         @PathVariable boardGameId: Id) {
         boardGameSecurityService.checkAccess(boardGameId)
-        renameBoardGameRequestValidator.validate(request)
+        renameBoardGameRequestValidator.validate(request).throwOnError()
         log.info("User[${user.id}] renames board game[$boardGameId]: $request")
         boardGameService.rename(boardGameId, request.name)
     }

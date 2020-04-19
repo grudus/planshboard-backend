@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component
 @Component
 class RegisterUserValidator
 @Autowired
-constructor(private val authenticationService: UserAuthenticationService) : RequestValidator<RegisterUserRequest>() {
+constructor(private val authenticationService: UserAuthenticationService) {
 
-    override fun performValidation(request: RegisterUserRequest): ValidationResult =
+    fun validate(request: RegisterUserRequest): ValidationResult =
         when {
             requiredFieldsAreEmpty(request) -> ValidationError(ValidationKeys.EMPTY_FIELD)
             passwordsAreNotEqual(request) -> ValidationError(ValidationKeys.PASSWORD_MISMATCH)

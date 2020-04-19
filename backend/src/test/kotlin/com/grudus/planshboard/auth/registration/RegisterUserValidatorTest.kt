@@ -38,7 +38,7 @@ class RegisterUserValidatorTest {
 
         val request = RegisterUserRequest(username, password, password)
 
-        val validationResult = registerUserValidator.performValidation(request)
+        val validationResult = registerUserValidator.validate(request)
 
         assertTrue(validationResult.isSuccess())
     }
@@ -50,7 +50,7 @@ class RegisterUserValidatorTest {
 
         val request = RegisterUserRequest(username, password, password)
 
-        val validationResult = registerUserValidator.performValidation(request)
+        val validationResult = registerUserValidator.validate(request)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.EMPTY_FIELD, validationResult.getError())
@@ -63,7 +63,7 @@ class RegisterUserValidatorTest {
 
         val request = RegisterUserRequest(username, password, randomText())
 
-        val validationResult = registerUserValidator.performValidation(request)
+        val validationResult = registerUserValidator.validate(request)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.PASSWORD_MISMATCH, validationResult.getError())
@@ -78,7 +78,7 @@ class RegisterUserValidatorTest {
 
         val request = RegisterUserRequest(username, password, randomText())
 
-        val validationResult = registerUserValidator.performValidation(request)
+        val validationResult = registerUserValidator.validate(request)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.PASSWORD_MISMATCH, validationResult.getError())
