@@ -90,6 +90,7 @@
     "PROFILE": {
       "TITLE": "Opponent's profile",
       "EDIT": "Edit",
+      "LINKED_WITH_CREATOR": "Your account",
       "STATS": {
         "TITLE": "Stats",
         "LAST_PLAY": "Last played",
