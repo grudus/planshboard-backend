@@ -1,6 +1,7 @@
 package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.AbstractDatabaseTest
+import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.OpponentListItem
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions.*
@@ -53,6 +54,23 @@ class OpponentDaoTest : AbstractDatabaseTest() {
 
         assertNotNull(opponent)
         assertEquals(name, opponent!!.name)
+    }
+
+
+    @Test
+    fun `should get opponent with linked user and it's status`() {
+        val creatorId = addUser()
+        val name = randomText()
+        val linkedUserId = addUser()
+        val id = opponentDao.createAndLinkToUser(name, creatorId, linkedUserId)
+
+        val opponent = opponentDao.findById(id)
+
+        assertNotNull(opponent)
+        assertEquals(name, opponent!!.name)
+        assertNotNull(opponent.linkedUser)
+        assertEquals(linkedUserId, opponent.linkedUser!!.userId)
+        assertEquals(LinkedOpponentStatus.WAITING_FOR_CONFIRMATION, opponent.linkedUser!!.status)
     }
 
     @Test

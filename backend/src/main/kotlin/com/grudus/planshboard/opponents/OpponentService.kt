@@ -1,21 +1,17 @@
 package com.grudus.planshboard.opponents
 
-import com.grudus.planshboard.boardgames.BoardGameService
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
-import com.grudus.planshboard.commons.responses.NameCount
 import com.grudus.planshboard.opponents.model.*
 import com.grudus.planshboard.user.CurrentUserService
 import com.grudus.planshboard.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import kotlin.random.Random.Default.nextInt
 
 @Service
 class OpponentService
 @Autowired
 constructor(private val opponentDao: OpponentDao,
-            private val boardGameService: BoardGameService,
             private val userService: UserService,
             private val currentUserService: CurrentUserService) {
 
@@ -23,8 +19,9 @@ constructor(private val opponentDao: OpponentDao,
         opponentDao.creteInitial(userName, userId)
     }
 
-    fun findListItems(userId: Id): List<OpponentListItem> =
-        opponentDao.findListItems(userId)
+    fun findListItems(userId: Id): List<OpponentListItem> {
+        return opponentDao.findListItems(userId)
+    }
 
     // TODO mocked until plays implemented
     fun getWithStats(opponentId: Id, userId: Id): OpponentWithStats {

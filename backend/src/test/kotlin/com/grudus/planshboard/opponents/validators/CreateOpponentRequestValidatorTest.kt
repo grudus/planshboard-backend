@@ -68,4 +68,15 @@ class CreateOpponentRequestValidatorTest {
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.UNKNOWN_USER, validationResult.getError())
     }
+
+    @Test
+    fun `should not pass validation when linking with already linked user`() {
+        Mockito.`when`(opponentService.userAlreadyLinked(anyString())).thenReturn(true)
+        val request = CreateOpponentRequest(randomText(), randomText())
+
+        val validationResult = validator.performValidation(request)
+
+        assertFalse(validationResult.isSuccess())
+        assertEquals(ValidationKeys.USER_ALREADY_LINKED, validationResult.getError())
+    }
 }

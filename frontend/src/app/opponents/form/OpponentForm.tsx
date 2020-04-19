@@ -26,8 +26,8 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
 
     useEffect(() => {
         setOpponentName(props.initialValue?.name ?? "");
-        setExistingUserName(props.initialValue?.existingUserName ?? "");
-        setOpponentType(props.initialValue?.existingUserName ? EXISTING_OPPONENT_VALUE : NEW_OPPONENT_VALUE);
+        setExistingUserName(props.initialValue?.linkedUser?.userName ?? "");
+        setOpponentType(props.initialValue?.linkedUser ? EXISTING_OPPONENT_VALUE : NEW_OPPONENT_VALUE);
     }, [props.initialValue]);
 
     const onSubmit = async (e: FormEvent) => {
@@ -80,7 +80,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
                     label={translate("OPPONENTS.FORM.EXISTING_USER_LABEL")}
                     name="existing-user"
                     onTextChange={setExistingUserName}
-                    initialValue={props.initialValue?.existingUserName}
+                    initialValue={props.initialValue?.linkedUser?.userName}
                 />
             </div>
 

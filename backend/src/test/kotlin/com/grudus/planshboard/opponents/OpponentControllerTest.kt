@@ -5,6 +5,8 @@ import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.model.CreateOpponentRequest
+import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
+import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
 import com.grudus.planshboard.utils.TestUtils.hasSize
 import com.grudus.planshboard.utils.randomText
 import org.hamcrest.CoreMatchers.notNullValue
@@ -23,7 +25,8 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
             .andExpect(jsonPath("$.[*]", hasSize(1)))
             .andExpect(jsonPath("$.[0].id").isNotEmpty)
             .andExpect(jsonPath("$.[0].name").isNotEmpty)
-            .andExpect(jsonPath("$.[0].existingUserName").value(authentication.username))
+            .andExpect(jsonPath("$.[0].linkedUser.userName").value(authentication.username))
+            .andExpect(jsonPath("$.[0].linkedUser.status").value(LINKED_WITH_CREATOR.name))
     }
 
     @Test
@@ -103,15 +106,17 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
     }
 
     @Test
-    fun `should be able to link user to opponent and get it's username`() {
+    fun `should be able to link user to opponent and get it's data`() {
         val linkedUserName = randomText()
         addUser(linkedUserName)
         addOpponent(CreateOpponentRequest(randomText(), linkedUserName))
 
         getRequest(baseUrl)
             .andExpect(status().isOk)
-            .andExpect(jsonPath("$.[0].existingUserName").value(authentication.username))
-            .andExpect(jsonPath("$.[1].existingUserName").value(linkedUserName))
+            .andExpect(jsonPath("$.[0].linkedUser.userName").value(authentication.username))
+            .andExpect(jsonPath("$.[0].linkedUser.status").value(LINKED_WITH_CREATOR.name))
+            .andExpect(jsonPath("$.[1].linkedUser.userName").value(linkedUserName))
+            .andExpect(jsonPath("$.[1].linkedUser.status").value(WAITING_FOR_CONFIRMATION.name))
     }
 
     private fun addOpponent(createOpponentRequest: CreateOpponentRequest): Id =
