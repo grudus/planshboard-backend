@@ -1,6 +1,7 @@
 package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.AuthenticatedControllerTest
+import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.model.CreateOpponentRequest
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class OpponentControllerTest: AuthenticatedControllerTest() {
+class OpponentControllerTest : AuthenticatedControllerTest() {
     private val baseUrl = "/api/opponents"
 
     @Test
@@ -53,4 +54,58 @@ class OpponentControllerTest: AuthenticatedControllerTest() {
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.opponent.name").value(request.opponentName))
     }
+
+    @Test
+    fun `should find created opponents`() {
+        addOpponent(CreateOpponentRequest(randomText()))
+        addOpponent(CreateOpponentRequest(randomText()))
+        val anotherUser = randomText()
+        addUser(anotherUser)
+        addOpponent(CreateOpponentRequest(randomText(), anotherUser))
+
+        getRequest(baseUrl)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*]", hasSize(4))) //one opponent is created when adding user
+    }
+
+    @Test
+    fun `should not be able to link 2 opponents to the same user`() {
+        val anotherUser = randomText()
+        addUser(anotherUser)
+        addOpponent(CreateOpponentRequest(randomText(), anotherUser))
+
+        postRequest(baseUrl, CreateOpponentRequest(randomText(), anotherUser))
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.code").value(ValidationKeys.USER_ALREADY_LINKED))
+    }
+
+    @Test
+    fun `should be able to link the same user to opponents on different creator user`() {
+        val linkedUserName = randomText()
+        addUser(linkedUserName)
+
+        addOpponent(CreateOpponentRequest(randomText(), linkedUserName))
+
+        setupAuthContextForAnotherUser()
+
+        postRequest(baseUrl, CreateOpponentRequest(randomText(), linkedUserName))
+            .andExpect(status().isCreated)
+    }
+
+    @Test
+    fun `should be able to link user to opponent and get it's username`() {
+        val linkedUserName = randomText()
+        addUser(linkedUserName)
+        addOpponent(CreateOpponentRequest(randomText(), linkedUserName))
+
+        getRequest(baseUrl)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[0].existingUserName").value(authentication.username))
+            .andExpect(jsonPath("$.[1].existingUserName").value(linkedUserName))
+    }
+
+    private fun addOpponent(createOpponentRequest: CreateOpponentRequest): Id =
+        postRequest(baseUrl, createOpponentRequest)
+            .andExpect(status().isCreated)
+            .getResponse(IdResponse::class.java).id
 }

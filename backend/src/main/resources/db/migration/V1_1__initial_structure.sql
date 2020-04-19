@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS board_games
 
 CREATE TABLE IF NOT EXISTS linked_board_games
 (
-    board_game_id  BIGINT  NOT NULL REFERENCES board_games (id),
-    linked_user_id BIGINT  NOT NULL REFERENCES users (id),
+    board_game_id  BIGINT  NOT NULL REFERENCES board_games (id) ON DELETE CASCADE,
+    linked_user_id BIGINT  NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     hidden         BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT UNIQUE_LINKED_BOARDGAMES UNIQUE (board_game_id, linked_user_id)
 );
@@ -29,8 +29,18 @@ CREATE TABLE IF NOT EXISTS opponents
     name       VARCHAR(255) NOT NULL,
     creator_id BIGINT       NOT NULL REFERENCES users ON DELETE CASCADE,
     created_at TIMESTAMP    NOT NULL DEFAULT NOW(),
-    linked_to  BIGINT       NULL REFERENCES users ON DELETE SET NULL,
 
-    CONSTRAINT UNIQUE_OPPONENT_NAME UNIQUE (name, creator_id),
-    CONSTRAINT UNIQUE_LINKED_OPPONENT UNIQUE (linked_to, creator_id)
+    CONSTRAINT UNIQUE_OPPONENT_NAME UNIQUE (name, creator_id)
 );
+
+CREATE TYPE linked_opponent_status AS ENUM ('WAITING_FOR_CONFIRMATION', 'ENABLED', 'DISABLED');
+
+
+CREATE TABLE IF NOT EXISTS linked_opponents
+(
+    opponent_id        BIGINT                 NOT NULL REFERENCES opponents (id) ON DELETE CASCADE,
+    linked_user_id     BIGINT                 NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    integration_status linked_opponent_status NOT NULL DEFAULT 'WAITING_FOR_CONFIRMATION',
+
+    CONSTRAINT UNIQUE_LINKED_OPPONENT UNIQUE (opponent_id, linked_user_id)
+)
