@@ -56,6 +56,16 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
     }
 
     @Test
+    fun `should not be able to get someone else's opponent`() {
+        val id = addOpponent(CreateOpponentRequest(randomText()))
+        setupAuthContextForAnotherUser()
+        addOpponent(CreateOpponentRequest(randomText()))
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
     fun `should find created opponents`() {
         addOpponent(CreateOpponentRequest(randomText()))
         addOpponent(CreateOpponentRequest(randomText()))

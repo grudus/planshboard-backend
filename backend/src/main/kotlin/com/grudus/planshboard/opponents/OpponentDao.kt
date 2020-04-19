@@ -83,4 +83,12 @@ constructor(private val dsl: DSLContext) {
                 .and(USERS.NAME.eq(userName))
         )
 
+    fun isCreatedByUser(opponentId: Id, creatorId: Id): Boolean =
+        dsl.fetchExists(
+            dsl.select(OPPONENTS.ID)
+                .from(OPPONENTS)
+                .where(OPPONENTS.CREATOR_ID.eq(creatorId))
+                .and(OPPONENTS.ID.eq(opponentId))
+        )
+
 }

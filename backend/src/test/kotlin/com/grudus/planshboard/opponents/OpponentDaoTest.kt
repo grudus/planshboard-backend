@@ -81,4 +81,27 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         assertTrue(userAlreadyLinked)
     }
 
+    @Test
+    fun `should check if is created by user`() {
+        val creatorId = addUser()
+        opponentDao.createNew(randomText(), creatorId)
+        val id = opponentDao.createNew(randomText(), creatorId)
+
+        val createdByUser = opponentDao.isCreatedByUser(id, creatorId)
+
+        assertTrue(createdByUser)
+    }
+
+    @Test
+    fun `should detect that opponent is not created by user`() {
+        val creatorId = addUser()
+        opponentDao.createNew(randomText(), creatorId)
+        val id = opponentDao.createNew(randomText(), addUser())
+        opponentDao.createAndLinkToUser(randomText(), addUser(), creatorId)
+
+        val createdByUser = opponentDao.isCreatedByUser(id, creatorId)
+
+        assertFalse(createdByUser)
+    }
+
 }
