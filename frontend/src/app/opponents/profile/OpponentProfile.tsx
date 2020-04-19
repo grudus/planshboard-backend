@@ -20,6 +20,7 @@ const OpponentProfile: React.FC = () => {
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
     const { opponent, stats } = useRedux(state => state.opponent.single) ?? {};
+    const isCurrentUser = opponent?.linkedUser?.status === "LINKED_WITH_CREATOR" ?? false;
 
     useEffect(() => {
         getSingleOpponent(dispatch, { id: +id!! });
@@ -42,7 +43,7 @@ const OpponentProfile: React.FC = () => {
                 <CardFormContent className={css.formWrapper}>
                     {editing && <OpponentForm onSubmit={onSubmit} onCancel={onCancel} initialValue={opponent} />}
                     {!editing && <OpponentData opponent={opponent} />}
-                    {!editing && (
+                    {!editing && !isCurrentUser && (
                         <Button
                             text={translate("OPPONENTS.PROFILE.EDIT")}
                             onClick={() => setEditing(!editing)}
