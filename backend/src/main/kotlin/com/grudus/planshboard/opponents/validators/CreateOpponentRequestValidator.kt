@@ -24,12 +24,12 @@ constructor(private val opponentService: OpponentService,
         }
 
     private fun userAlreadyLinked(request: CreateOpponentRequest): Boolean =
-        if (request.existingUserName == null) false
-        else opponentService.userAlreadyLinked(request.existingUserName)
+        if (!request.isLinkedToUser()) false
+        else opponentService.userAlreadyLinked(request.existingUserName!!)
 
     private fun existingUserDoesNotExists(request: CreateOpponentRequest): Boolean =
-        if (request.existingUserName == null) false
-        else userService.findIdByName(request.existingUserName) == null
+        if (!request.isLinkedToUser()) false
+        else userService.findIdByName(request.existingUserName!!) == null
 
     private fun opponentExists(request: CreateOpponentRequest): Boolean =
         opponentService.existsForCurrentUser(request.opponentName)

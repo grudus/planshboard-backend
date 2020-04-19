@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import OpponentForm from "app/opponents/form/OpponentForm";
 import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
 import CardForm from "library/card-form/CardForm";
@@ -8,13 +8,28 @@ import css from "./add-opponent.module.scss";
 import { useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import { useHttpDispatch } from "app/shared/store/httpRequestActions";
+import { createOpponentRequest } from "app/opponents/OpponentApi";
 
 const AddOpponent: React.FC = () => {
     const history = useHistory();
     const { translate } = useTranslations();
+    const dispatch = useHttpDispatch();
+    const [opponentNameError, setOpponentNameError] = useState("");
+    const [existingUserNameError, setExistingUserNameError] = useState("");
+
     const onSubmit = async (request: CreateOpponentRequest) => {
-        alert(JSON.stringify(request));
-        onCancel();
+        try {
+            setExistingUserNameError("");
+            setOpponentNameError("");
+            await createOpponentRequest(dispatch, request);
+            onCancel();
+        } catch (e) {
+            const code = JSON.parse(e).code;
+            const errorText = translate(`OPPONENTS.ADD.ERRORS.${code}`);
+            const inputWithError = code === "OPPONENT_ALREADY_EXISTS" ? setOpponentNameError : setExistingUserNameError;
+            inputWithError(errorText);
+        }
     };
 
     const onCancel = () => {
@@ -25,7 +40,12 @@ const AddOpponent: React.FC = () => {
         <CardForm className={css.formWrapper}>
             <CardFormTitle>{translate("OPPONENTS.ADD.TITLE")}</CardFormTitle>
             <CardFormContent>
-                <OpponentForm onSubmit={onSubmit} onCancel={onCancel} />
+                <OpponentForm
+                    onSubmit={onSubmit}
+                    onCancel={onCancel}
+                    opponentNameError={opponentNameError}
+                    existingUserNameError={existingUserNameError}
+                />
             </CardFormContent>
         </CardForm>
     );

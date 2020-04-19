@@ -38,6 +38,7 @@ export const apiRoutes = {
     },
     opponent: {
         list: "/api/opponents",
+        create: "/api/opponents",
         single: (id: number) => `/api/opponents/${id}`,
     },
 };

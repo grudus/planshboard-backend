@@ -85,7 +85,12 @@
       "EXISTING_USER_EXPLANATION": "Podaj nazwę konta użytkownika, które ma zostać połączone z tym przeciwnikiem. Po dodaniu rozgrywki z jego udziałem, użytkownik dostanie powiadomienie i będzie mógł śledzić wyniki. Połączenie działa w obie strony."
     },
     "ADD": {
-      "TITLE": "Dodaj przeciwnika"
+      "TITLE": "Dodaj przeciwnika",
+      "ERRORS": {
+        "OPPONENT_ALREADY_EXISTS": "Istnieje już przeciwnik o takiej nazwie",
+        "UNKNOWN_USER": "Nie ma takiego użytkownika",
+        "USER_ALREADY_LINKED": "Ten użytkownik już jest powiązany z przeciwnikiem"
+      }
     },
     "PROFILE": {
       "TITLE": "Profil przeciwnika",

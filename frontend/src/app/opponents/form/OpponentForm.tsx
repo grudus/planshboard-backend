@@ -15,6 +15,8 @@ interface OpponentFormProps {
     onSubmit: (request: CreateOpponentRequest) => Promise<void>;
     onCancel: () => void;
     initialValue?: Opponent;
+    opponentNameError?: string;
+    existingUserNameError?: string;
 }
 
 const OpponentForm: React.FC<OpponentFormProps> = props => {
@@ -34,6 +36,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
         setLoading(true);
         e.preventDefault();
         await props.onSubmit({ opponentName, existingUserName });
+        setLoading(false);
     };
 
     const isFormValid = () => {
@@ -42,6 +45,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
 
     const change = (a: ChangeEvent<HTMLInputElement>) => {
         const { value } = a.target;
+        setExistingUserName("");
         setOpponentType(value);
     };
 
@@ -55,6 +59,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
                 onTextChange={setOpponentName}
                 autoFocus
                 initialValue={props.initialValue?.name}
+                error={props.opponentNameError}
             />
 
             <div className={css.radioGroup} onChange={change}>
@@ -81,6 +86,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
                     name="existing-user"
                     onTextChange={setExistingUserName}
                     initialValue={props.initialValue?.linkedUser?.userName}
+                    error={props.existingUserNameError}
                 />
             </div>
 
@@ -92,4 +98,4 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
     );
 };
 
-export default OpponentForm;
+export default React.memo(OpponentForm);

@@ -12,6 +12,8 @@
     margin-top: 16px;
     margin-bottom: 16px;
     color: var(--text-on-card-background);
+    word-wrap: break-word;
+    max-width: 90%;
 
     & > * {
         margin: 4px 0;
