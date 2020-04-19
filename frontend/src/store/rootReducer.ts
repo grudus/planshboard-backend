@@ -6,8 +6,9 @@ import { connectRouter } from "connected-react-router";
 import { userReducer } from "app/user/__store/userReducer";
 import { boardGamesReducer } from "app/board-games/__store/boardGameReducer";
 import { opponentReducer } from "app/opponents/__store/opponentReducer";
+import { History, LocationState } from "history";
 
-const rootReducer = (history: any) =>
+const rootReducer = (history: History<LocationState>) =>
     combineReducers({
         locale: localeReducer,
         auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = (history: any) =>
     });
 
 export default rootReducer;
+// @ts-ignore tet only
 export const testTypeRootReducer = rootReducer({});
 
 export type Store = ReturnType<typeof testTypeRootReducer>;

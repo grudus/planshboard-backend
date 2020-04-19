@@ -7,7 +7,7 @@ function* catchError(action: PayloadAction<Response | string>): Generator {
     if (typeof action.payload === "string") {
         try {
             const body = JSON.parse(action.payload);
-            if (body?.status === 403) yield put(logoutAction());
+            if (body?.code === "FORBIDDEN" || body?.status === 403) yield put(logoutAction());
         } catch (e) {}
     }
 }
