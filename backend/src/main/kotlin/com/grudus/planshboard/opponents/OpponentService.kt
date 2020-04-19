@@ -23,31 +23,15 @@ constructor(private val opponentDao: OpponentDao,
         opponentDao.creteInitial(userName, userId)
     }
 
-    // TODO mocked until plays implemented
     fun findListItems(userId: Id): List<OpponentListItem> =
         opponentDao.findListItems(userId)
-            .map {
-                val numberOfPlays = nextInt(1000)
-                val numberOfWins = nextInt(numberOfPlays)
-                val lastPlayedBoardGame = boardGameService.findBoardGamesForUser(userId).shuffled().firstOrNull()
-                it.copy(numberOfPlays = numberOfPlays, numberOfWins = numberOfWins, lastPlayedBoardGame = lastPlayedBoardGame?.name)
-            }
 
     // TODO mocked until plays implemented
     fun getWithStats(opponentId: Id, userId: Id): OpponentWithStats {
-        val numberOfPlays = nextInt(1000)
-        val numberOfWins = nextInt(numberOfPlays)
-        val boardGame: String? = boardGameService.findBoardGamesForUser(userId).shuffled().firstOrNull()?.name
-
         val opponent: OpponentDto = opponentDao.findById(opponentId)
             ?: throw ResourceNotFoundException("Cannot find opponent[$opponentId]")
 
-        val stats = OpponentStats(numberOfPlays,
-            numberOfWins,
-            boardGame,
-            boardGame?.let { NameCount(boardGame, numberOfPlays) },
-            boardGame?.let { NameCount(boardGame, numberOfWins) })
-
+        val stats = OpponentStats(0, 0)
         return OpponentWithStats(opponent, stats)
     }
 
