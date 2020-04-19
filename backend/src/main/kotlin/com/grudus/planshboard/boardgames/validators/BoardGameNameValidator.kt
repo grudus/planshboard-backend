@@ -16,7 +16,7 @@ class BoardGameNameValidator
 constructor(private val boardGameService: BoardGameService,
             private val currentUserService: CurrentUserService) {
 
-    fun performValidation(name: String): ValidationResult =
+    fun validate(name: String): ValidationResult =
         when {
             isEmptyName(name) -> ValidationError(ValidationKeys.EMPTY_FIELD)
             gameAlreadyExists(name) -> ValidationError(ValidationKeys.GAME_ALREADY_EXISTS)

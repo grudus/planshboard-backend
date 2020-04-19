@@ -34,7 +34,7 @@ class BoardGameNameValidatorTest {
         `when`(boardGameService.nameExists(anyLong(), anyString())).thenReturn(false)
         val name = randomText()
 
-        val validationResult = nameValidator.performValidation(name)
+        val validationResult = nameValidator.validate(name)
 
         assertTrue(validationResult.isSuccess())
     }
@@ -43,7 +43,7 @@ class BoardGameNameValidatorTest {
     fun `should not validate properly when empty name`() {
         val name = "\t "
 
-        val validationResult = nameValidator.performValidation(name)
+        val validationResult = nameValidator.validate(name)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.EMPTY_FIELD, validationResult.getError())
@@ -54,7 +54,7 @@ class BoardGameNameValidatorTest {
         `when`(boardGameService.nameExists(anyLong(), anyString())).thenReturn(true)
         val name = randomText()
 
-        val validationResult = nameValidator.performValidation(name)
+        val validationResult = nameValidator.validate(name)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.GAME_ALREADY_EXISTS, validationResult.getError())

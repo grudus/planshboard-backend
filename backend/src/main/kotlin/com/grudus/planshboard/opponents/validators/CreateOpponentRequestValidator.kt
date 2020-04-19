@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component
 class CreateOpponentRequestValidator
 @Autowired
 constructor(private val opponentService: OpponentService,
-            private val userService: UserService) : RequestValidator<CreateOpponentRequest>() {
+            private val userService: UserService) {
 
-    override fun performValidation(request: CreateOpponentRequest): ValidationResult =
+    fun validate(request: CreateOpponentRequest): ValidationResult =
         when {
             emptyFields(request) -> ValidationError(ValidationKeys.EMPTY_FIELD)
             opponentExists(request) -> ValidationError(ValidationKeys.OPPONENT_ALREADY_EXISTS)

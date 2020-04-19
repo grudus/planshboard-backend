@@ -32,7 +32,7 @@ class CreateOpponentRequestValidatorTest {
     fun `should validate properly`() {
         val request = CreateOpponentRequest(randomText())
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = validator.validate(request)
 
         assertTrue(validationResult.isSuccess())
     }
@@ -41,7 +41,7 @@ class CreateOpponentRequestValidatorTest {
     fun `should not pass validation with empty opponent name`() {
         val request = CreateOpponentRequest("")
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = validator.validate(request)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.EMPTY_FIELD, validationResult.getError())
@@ -52,7 +52,7 @@ class CreateOpponentRequestValidatorTest {
         Mockito.`when`(opponentService.existsForCurrentUser(anyString())).thenReturn(true)
         val request = CreateOpponentRequest(randomText())
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = validator.validate(request)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.OPPONENT_ALREADY_EXISTS, validationResult.getError())
@@ -63,7 +63,7 @@ class CreateOpponentRequestValidatorTest {
         Mockito.`when`(userService.findIdByName(anyString())).thenReturn(null)
         val request = CreateOpponentRequest(randomText(), randomText())
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = validator.validate(request)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.UNKNOWN_USER, validationResult.getError())
@@ -74,7 +74,7 @@ class CreateOpponentRequestValidatorTest {
         Mockito.`when`(opponentService.userAlreadyLinked(anyString())).thenReturn(true)
         val request = CreateOpponentRequest(randomText(), randomText())
 
-        val validationResult = validator.performValidation(request)
+        val validationResult = validator.validate(request)
 
         assertFalse(validationResult.isSuccess())
         assertEquals(ValidationKeys.USER_ALREADY_LINKED, validationResult.getError())

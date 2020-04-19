@@ -37,7 +37,7 @@ constructor(private val opponentService: OpponentService,
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody request: CreateOpponentRequest,
                user: UserAuthentication): IdResponse {
-        createOpponentRequestValidator.validate(request)
+        createOpponentRequestValidator.validate(request).throwOnError()
         log.info("User[${user.id}] creates opponent: $request")
         return idOf(opponentService.create(request, user.id))
     }

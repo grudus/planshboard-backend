@@ -21,7 +21,7 @@ constructor(private val userAuthenticationService: UserAuthenticationService,
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun registerUser(@RequestBody registerUserRequest: RegisterUserRequest): IdResponse {
-        registerUserValidator.validate(registerUserRequest)
+        registerUserValidator.validate(registerUserRequest).throwOnError()
 
         log.info("Registering user (${registerUserRequest.username})")
         return idOf(userAuthenticationService.register(registerUserRequest))
