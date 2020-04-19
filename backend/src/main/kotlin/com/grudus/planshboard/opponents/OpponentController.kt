@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*
 class OpponentController
 @Autowired
 constructor(private val opponentService: OpponentService,
+            private val opponentSecurityService: OpponentSecurityService,
             private val createOpponentRequestValidator: CreateOpponentRequestValidator) {
     private val log = LoggerFactory.getLogger(javaClass.simpleName)
 
@@ -28,7 +29,7 @@ constructor(private val opponentService: OpponentService,
     @GetMapping("/{id}")
     fun getSingleOpponentWithStats(@PathVariable("id") opponentId: Id,
                                    authentication: UserAuthentication): OpponentWithStats {
-
+        opponentSecurityService.checkAccess(opponentId)
         return opponentService.getWithStats(opponentId, authentication.id)
     }
 
