@@ -85,7 +85,12 @@
       "EXISTING_USER_EXPLANATION": "Enter user's account name. It will be linked with this opponent. When you save play with him, the user will see the notification and will be able to follow the results. The integration works in both directions."
     },
     "ADD": {
-      "TITLE": "Add opponent"
+      "TITLE": "Add opponent",
+      "ERRORS": {
+        "OPPONENT_ALREADY_EXISTS": "Name already taken",
+        "UNKNOWN_USER": "Unknown user",
+        "USER_ALREADY_LINKED": "User is already linked"
+      }
     },
     "PROFILE": {
       "TITLE": "Opponent's profile",

@@ -33,10 +33,10 @@ constructor(private val opponentDao: OpponentDao,
     }
 
     fun create(request: CreateOpponentRequest, currentUserId: Id): Id {
-        if (request.existingUserName == null) {
+        if (!request.isLinkedToUser()) {
             return opponentDao.createNew(request.opponentName, currentUserId)
         }
-        val userId = userService.findIdByName(request.existingUserName)
+        val userId = userService.findIdByName(request.existingUserName!!)
             ?: throw ResourceNotFoundException("Cannot find user[${request.existingUserName}]")
 
         return opponentDao.createAndLinkToUser(request.opponentName, currentUserId, userId)
