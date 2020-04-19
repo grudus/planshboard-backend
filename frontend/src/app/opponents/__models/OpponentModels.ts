@@ -1,7 +1,15 @@
+export type LinkedOpponentStatus = "WAITING_FOR_CONFIRMATION" | "ENABLED" | "DISABLED" | "LINKED_WITH_CREATOR";
+
+export interface UserLinkedToOpponent {
+    userId: number;
+    userName: string;
+    status: LinkedOpponentStatus;
+}
+
 export interface Opponent {
     id: number;
     name: string;
-    existingUserName?: string;
+    linkedUser?: UserLinkedToOpponent;
 }
 
 export interface OpponentListItem extends Opponent {

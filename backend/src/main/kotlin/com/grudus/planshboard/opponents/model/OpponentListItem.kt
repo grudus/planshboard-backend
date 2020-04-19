@@ -5,8 +5,8 @@ import com.grudus.planshboard.commons.Id
 data class OpponentListItem(
     val id: Id,
     val name: String,
-    val existingUserName: String?,
+    val linkedUser: UserLinkedToOpponent?,
     val numberOfPlays: Int,
     val numberOfWins: Int,
-    val lastPlayedBoardGame: String?
+    val lastPlayedBoardGame: String? = null
 )
