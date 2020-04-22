@@ -1,12 +1,12 @@
 package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.commons.Id
-import com.grudus.planshboard.opponents.model.UserLinkedToOpponent
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.OpponentListItem
+import com.grudus.planshboard.opponents.model.UserLinkedToOpponent
 import com.grudus.planshboard.tables.LinkedOpponents.LINKED_OPPONENTS
 import com.grudus.planshboard.tables.Opponents.OPPONENTS
 import com.grudus.planshboard.tables.Users.USERS
@@ -72,6 +72,27 @@ constructor(private val dsl: DSLContext) {
         return opponentId
     }
 
+    fun updateName(id: Id, name: String) {
+        dsl.update(OPPONENTS)
+            .set(OPPONENTS.NAME, name)
+            .where(OPPONENTS.ID.eq(id))
+            .execute()
+    }
+
+    fun removeLinkedUser(opponentId: Id) {
+        dsl.deleteFrom(LINKED_OPPONENTS)
+            .where(LINKED_OPPONENTS.OPPONENT_ID.eq(opponentId))
+            .execute()
+    }
+
+    fun linkToUser(opponentId: Id, linkedTo: Id, status: LinkedOpponentStatus = WAITING_FOR_CONFIRMATION) {
+        dsl.insertInto(LINKED_OPPONENTS)
+            .set(LINKED_OPPONENTS.OPPONENT_ID, opponentId)
+            .set(LINKED_OPPONENTS.LINKED_USER_ID, linkedTo)
+            .set(LINKED_OPPONENTS.INTEGRATION_STATUS, convert(status))
+            .execute()
+    }
+
     fun exists(name: String, creatorId: Id): Boolean =
         dsl.fetchExists(
             dsl.select(OPPONENTS.ID)
@@ -103,4 +124,5 @@ constructor(private val dsl: DSLContext) {
 
     private fun convert(status: com.grudus.planshboard.enums.LinkedOpponentStatus): LinkedOpponentStatus  =
         LinkedOpponentStatus.valueOf(status.name)
+
 }

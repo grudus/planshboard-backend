@@ -4,12 +4,13 @@ import com.grudus.planshboard.AuthenticatedControllerTest
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
-import com.grudus.planshboard.opponents.model.CreateOpponentRequest
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
+import com.grudus.planshboard.opponents.model.SaveOpponentRequest
 import com.grudus.planshboard.utils.TestUtils.hasSize
 import com.grudus.planshboard.utils.randomText
 import org.hamcrest.CoreMatchers.notNullValue
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -31,7 +32,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should create opponent and return it's id`() {
-        val request = CreateOpponentRequest(randomText())
+        val request = SaveOpponentRequest(randomText())
         postRequest(baseUrl, request)
             .andExpect(status().isCreated)
             .andExpect(jsonPath("$.id", notNullValue()))
@@ -39,7 +40,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should perform validation when creating opponent`() {
-        val request = CreateOpponentRequest(" ")
+        val request = SaveOpponentRequest(" ")
         postRequest(baseUrl, request)
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.code", Matchers.`is`(ValidationKeys.EMPTY_FIELD)))
@@ -47,7 +48,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should find created opponent by id`() {
-        val request = CreateOpponentRequest(randomText())
+        val request = SaveOpponentRequest(randomText())
 
         val id = postRequest(baseUrl, request)
             .andExpect(status().isCreated)
@@ -60,9 +61,9 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should not be able to get someone else's opponent`() {
-        val id = addOpponent(CreateOpponentRequest(randomText()))
+        val id = addOpponent(SaveOpponentRequest(randomText()))
         setupAuthContextForAnotherUser()
-        addOpponent(CreateOpponentRequest(randomText()))
+        addOpponent(SaveOpponentRequest(randomText()))
 
         getRequest("$baseUrl/$id")
             .andExpect(status().isForbidden)
@@ -70,11 +71,11 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should find created opponents`() {
-        addOpponent(CreateOpponentRequest(randomText()))
-        addOpponent(CreateOpponentRequest(randomText()))
+        addOpponent(SaveOpponentRequest(randomText()))
+        addOpponent(SaveOpponentRequest(randomText()))
         val anotherUser = randomText()
         addUser(anotherUser)
-        addOpponent(CreateOpponentRequest(randomText(), anotherUser))
+        addOpponent(SaveOpponentRequest(randomText(), anotherUser))
 
         getRequest(baseUrl)
             .andExpect(status().isOk)
@@ -85,9 +86,9 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
     fun `should not be able to link 2 opponents to the same user`() {
         val anotherUser = randomText()
         addUser(anotherUser)
-        addOpponent(CreateOpponentRequest(randomText(), anotherUser))
+        addOpponent(SaveOpponentRequest(randomText(), anotherUser))
 
-        postRequest(baseUrl, CreateOpponentRequest(randomText(), anotherUser))
+        postRequest(baseUrl, SaveOpponentRequest(randomText(), anotherUser))
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.code").value(ValidationKeys.USER_ALREADY_LINKED))
     }
@@ -97,11 +98,11 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
         val linkedUserName = randomText()
         addUser(linkedUserName)
 
-        addOpponent(CreateOpponentRequest(randomText(), linkedUserName))
+        addOpponent(SaveOpponentRequest(randomText(), linkedUserName))
 
         setupAuthContextForAnotherUser()
 
-        postRequest(baseUrl, CreateOpponentRequest(randomText(), linkedUserName))
+        postRequest(baseUrl, SaveOpponentRequest(randomText(), linkedUserName))
             .andExpect(status().isCreated)
     }
 
@@ -109,7 +110,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
     fun `should be able to link user to opponent and get it's data`() {
         val linkedUserName = randomText()
         addUser(linkedUserName)
-        addOpponent(CreateOpponentRequest(randomText(), linkedUserName))
+        addOpponent(SaveOpponentRequest(randomText(), linkedUserName))
 
         getRequest(baseUrl)
             .andExpect(status().isOk)
@@ -119,8 +120,96 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
             .andExpect(jsonPath("$.[1].linkedUser.status").value(WAITING_FOR_CONFIRMATION.name))
     }
 
-    private fun addOpponent(createOpponentRequest: CreateOpponentRequest): Id =
-        postRequest(baseUrl, createOpponentRequest)
+    @Test
+    fun `should update user's name`() {
+        val oldName = randomText()
+        val updatedName = randomText()
+        val id = addOpponent(SaveOpponentRequest(oldName))
+
+        putRequest("$baseUrl/$id", SaveOpponentRequest(updatedName))
+            .andExpect(status().is2xxSuccessful)
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.opponent.id").value(id))
+            .andExpect(jsonPath("$.opponent.name").value(updatedName))
+    }
+
+    @Test
+    fun `should remove assigned user when update opponent name and existing user name is empty`() {
+        val linkedUserName = randomText()
+        addUser(linkedUserName)
+        val id = addOpponent(SaveOpponentRequest(randomText(), linkedUserName))
+
+        putRequest("$baseUrl/$id", SaveOpponentRequest(randomText()))
+            .andExpect(status().is2xxSuccessful)
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.opponent.linkedUser", nullValue()))
+    }
+
+
+    @Test
+    fun `should rename opponent and keep linked user`() {
+        val linkedUserName = randomText()
+        addUser(linkedUserName)
+        val oldOpponentName = randomText()
+        val updatedOpponentName = randomText()
+        val id = addOpponent(SaveOpponentRequest(oldOpponentName, linkedUserName))
+
+        putRequest("$baseUrl/$id", SaveOpponentRequest(updatedOpponentName, linkedUserName))
+            .andExpect(status().is2xxSuccessful)
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.opponent.name").value(updatedOpponentName))
+            .andExpect(jsonPath("$.opponent.linkedUser", notNullValue()))
+            .andExpect(jsonPath("$.opponent.linkedUser.userName").value(linkedUserName))
+    }
+
+
+    @Test
+    fun `should change user assigned to opponent`() {
+        val oldLinkedUserName = randomText()
+        val updatedLinkedUserName = randomText()
+        addUser(updatedLinkedUserName)
+        addUser(oldLinkedUserName)
+        val id = addOpponent(SaveOpponentRequest(randomText(), oldLinkedUserName))
+
+        putRequest("$baseUrl/$id", SaveOpponentRequest(randomText(), updatedLinkedUserName))
+            .andExpect(status().is2xxSuccessful)
+
+        getRequest("$baseUrl/$id")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.opponent.linkedUser", notNullValue()))
+            .andExpect(jsonPath("$.opponent.linkedUser.userName").value(updatedLinkedUserName))
+            .andExpect(jsonPath("$.opponent.linkedUser.status").value(WAITING_FOR_CONFIRMATION.name))
+    }
+
+
+    @Test
+    fun `should perform validation when updating opponent`() {
+        val linkedUserName = randomText()
+        addUser(linkedUserName)
+        val id = addOpponent(SaveOpponentRequest(randomText(), linkedUserName))
+
+        putRequest("$baseUrl/$id", SaveOpponentRequest(randomText(), randomText()))
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.code").value(ValidationKeys.UNKNOWN_USER))
+    }
+
+    @Test
+    fun `should not be able to update someone else's opponent`() {
+        val id = addOpponent(SaveOpponentRequest(randomText()))
+        setupAuthContextForAnotherUser()
+
+        putRequest("$baseUrl/$id", SaveOpponentRequest(randomText()))
+            .andExpect(status().isForbidden)
+    }
+
+    private fun addOpponent(saveOpponentRequest: SaveOpponentRequest): Id =
+        postRequest(baseUrl, saveOpponentRequest)
             .andExpect(status().isCreated)
             .getResponse(IdResponse::class.java).id
 }

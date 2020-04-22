@@ -4,10 +4,10 @@ import com.grudus.planshboard.auth.UserAuthentication
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.responses.idOf
-import com.grudus.planshboard.opponents.model.CreateOpponentRequest
 import com.grudus.planshboard.opponents.model.OpponentListItem
 import com.grudus.planshboard.opponents.model.OpponentWithStats
-import com.grudus.planshboard.opponents.validators.CreateOpponentRequestValidator
+import com.grudus.planshboard.opponents.model.SaveOpponentRequest
+import com.grudus.planshboard.opponents.validators.SaveOpponentRequestValidator
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -19,7 +19,7 @@ class OpponentController
 @Autowired
 constructor(private val opponentService: OpponentService,
             private val opponentSecurityService: OpponentSecurityService,
-            private val createOpponentRequestValidator: CreateOpponentRequestValidator) {
+            private val saveOpponentRequestValidator: SaveOpponentRequestValidator) {
     private val log = LoggerFactory.getLogger(javaClass.simpleName)
 
     @GetMapping
@@ -35,11 +35,22 @@ constructor(private val opponentService: OpponentService,
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: CreateOpponentRequest,
+    fun create(@RequestBody request: SaveOpponentRequest,
                user: UserAuthentication): IdResponse {
-        createOpponentRequestValidator.validate(request).throwOnError()
+        saveOpponentRequestValidator.validate(request).throwOnError()
         log.info("User[${user.id}] creates opponent: $request")
         return idOf(opponentService.create(request, user.id))
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun update(@RequestBody request: SaveOpponentRequest,
+               @PathVariable("id") opponentId: Id,
+               user: UserAuthentication) {
+        opponentSecurityService.checkAccess(opponentId)
+        saveOpponentRequestValidator.validate(request, opponentId).throwOnError()
+        log.info("User[${user.id}] updates opponent[$opponentId]: $request")
+        opponentService.update(opponentId, request)
     }
 
 }

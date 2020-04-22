@@ -7,8 +7,10 @@ import com.grudus.planshboard.user.CurrentUserService
 import com.grudus.planshboard.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class OpponentService
 @Autowired
 constructor(private val opponentDao: OpponentDao,
@@ -32,7 +34,10 @@ constructor(private val opponentDao: OpponentDao,
         return OpponentWithStats(opponent, stats)
     }
 
-    fun create(request: CreateOpponentRequest, currentUserId: Id): Id {
+    fun findById(id: Id): OpponentDto? =
+        opponentDao.findById(id)
+
+    fun create(request: SaveOpponentRequest, currentUserId: Id): Id {
         if (!request.isLinkedToUser()) {
             return opponentDao.createNew(request.opponentName, currentUserId)
         }
@@ -48,4 +53,19 @@ constructor(private val opponentDao: OpponentDao,
     fun userAlreadyLinked(existingUserName: String): Boolean =
         opponentDao.userAlreadyLinked(existingUserName, currentUserService.currentUserId())
 
+    fun update(opponentId: Id, request: SaveOpponentRequest) {
+        opponentDao.updateName(opponentId, request.opponentName)
+
+        if (!request.isLinkedToUser()) {
+            opponentDao.removeLinkedUser(opponentId)
+            return
+        }
+        val currentOpponent = findById(opponentId) ?: throw ResourceNotFoundException("Cannot find opponent with id [${opponentId}]")
+
+        if (currentOpponent.linkedUser == null || currentOpponent.linkedUser.userName != request.existingUserName) {
+            val userId = userService.findIdByName(request.existingUserName!!) ?: throw ResourceNotFoundException("Cannot find user with name ${request.existingUserName}")
+            opponentDao.removeLinkedUser(opponentId)
+            opponentDao.linkToUser(opponentId, userId)
+        }
+    }
 }
