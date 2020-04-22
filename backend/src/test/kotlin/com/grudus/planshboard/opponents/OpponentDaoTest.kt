@@ -122,4 +122,66 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         assertFalse(createdByUser)
     }
 
+    @Test
+    fun `should update opponent's name`() {
+        val newName = randomText()
+        val id = opponentDao.createNew(randomText(), addUser())
+        opponentDao.createNew(randomText(), addUser())
+
+        opponentDao.updateName(id, newName)
+
+        val opponent = opponentDao.findById(id)
+
+        assertEquals(newName, opponent!!.name)
+    }
+
+    @Test
+    fun `should update nothing when id doesn't match`() {
+        val newName = randomText()
+        val id = opponentDao.createNew(randomText(), addUser())
+        opponentDao.createNew(randomText(), addUser())
+
+        opponentDao.updateName(id + 1, newName)
+
+        val opponent = opponentDao.findById(id)
+
+        assertNotEquals(newName, opponent!!.name)
+    }
+
+    @Test
+    fun `should remove link with the user`() {
+        val id = opponentDao.createAndLinkToUser(randomText(), addUser(), addUser())
+
+        opponentDao.removeLinkedUser(id)
+
+        val opponent = opponentDao.findById(id)!!
+
+        assertNull(opponent.linkedUser)
+    }
+
+    @Test
+    fun `should not remove link with the user when id doesn't match`() {
+        val id = opponentDao.createAndLinkToUser(randomText(), addUser(), addUser())
+
+        opponentDao.removeLinkedUser(id + 1)
+
+        val opponent = opponentDao.findById(id)!!
+
+        assertNotNull(opponent.linkedUser)
+    }
+
+
+    @Test
+    fun `should link existing opponent with user`() {
+        val id = opponentDao.createNew(randomText(), addUser())
+        val linkedUserId = addUser()
+        opponentDao.linkToUser(id, linkedUserId, LinkedOpponentStatus.ENABLED)
+
+        val opponent = opponentDao.findById(id)!!
+
+        assertNotNull(opponent.linkedUser)
+        assertEquals(linkedUserId, opponent.linkedUser!!.userId)
+        assertEquals(LinkedOpponentStatus.ENABLED, opponent.linkedUser!!.status)
+    }
+
 }

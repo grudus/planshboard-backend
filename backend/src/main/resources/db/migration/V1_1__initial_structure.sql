@@ -42,5 +42,5 @@ CREATE TABLE IF NOT EXISTS linked_opponents
     linked_user_id     BIGINT                 NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     integration_status linked_opponent_status NOT NULL DEFAULT 'WAITING_FOR_CONFIRMATION',
 
-    CONSTRAINT UNIQUE_LINKED_OPPONENT UNIQUE (opponent_id, linked_user_id)
+    CONSTRAINT UNIQUE_LINKED_OPPONENT UNIQUE (opponent_id)
 )
