@@ -2,10 +2,11 @@ import {
     createOpponentSuccessAction,
     getAllOpponentsSuccessAction,
     getSingleOpponentSuccessAction,
+    updateOpponentSuccessAction,
 } from "app/opponents/__store/opponentActions";
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
-import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
+import { SaveOpponentRequest } from "app/opponents/__models/OpponentModels";
 
 export function getAllOpponentsRequest(dispatch: HttpDispatch): Promise<any> {
     return dispatch({
@@ -26,11 +27,20 @@ export function getSingleOpponent(dispatch: HttpDispatch, request: GetSingleOppo
     });
 }
 
-export function createOpponentRequest(dispatch: HttpDispatch, request: CreateOpponentRequest) {
+export function createOpponentRequest(dispatch: HttpDispatch, request: SaveOpponentRequest) {
     return dispatch({
         type: "post",
         path: apiRoutes.opponent.create,
         body: request,
         successAction: createOpponentSuccessAction,
+    });
+}
+
+export function updateOpponentRequest(dispatch: HttpDispatch, id: number, request: SaveOpponentRequest) {
+    return dispatch({
+        type: "put",
+        path: apiRoutes.opponent.update(id),
+        body: request,
+        successAction: () => updateOpponentSuccessAction({ id, ...request }),
     });
 }
