@@ -29,7 +29,10 @@
         border-color: var(--accent-color);
         background: var(--accent-color-light);
         color: var(--accent-color);
+    }
 
+    &:focus-within {
+        border: 2px dotted var(--accent-color);
     }
 }
 
