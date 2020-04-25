@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import OpponentForm from "app/opponents/form/OpponentForm";
-import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
+import { SaveOpponentRequest } from "app/opponents/__models/OpponentModels";
 import CardForm from "library/card-form/CardForm";
 import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
@@ -18,7 +18,7 @@ const AddOpponent: React.FC = () => {
     const [opponentNameError, setOpponentNameError] = useState("");
     const [existingUserNameError, setExistingUserNameError] = useState("");
 
-    const onSubmit = async (request: CreateOpponentRequest) => {
+    const onSubmit = async (request: SaveOpponentRequest) => {
         try {
             setExistingUserNameError("");
             setOpponentNameError("");

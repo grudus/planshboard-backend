@@ -38,7 +38,8 @@ export interface SingleOpponentStats {
     };
 }
 
-export interface CreateOpponentRequest {
+export interface SaveOpponentRequest {
     opponentName: string;
     existingUserName: string;
+    id?: number;
 }

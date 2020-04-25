@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { getSingleOpponent } from "app/opponents/OpponentApi";
+import { getSingleOpponent, updateOpponentRequest } from "app/opponents/OpponentApi";
 import CardForm from "library/card-form/CardForm";
 import css from "app/opponents/profile/opponent-profile.module.scss";
 import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
 import OpponentForm from "app/opponents/form/OpponentForm";
-import { CreateOpponentRequest } from "app/opponents/__models/OpponentModels";
+import { SaveOpponentRequest } from "app/opponents/__models/OpponentModels";
 import { useRedux } from "store/rootReducer";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import OpponentProfileStats from "app/opponents/profile/stats/OpponentProfileStats";
@@ -16,6 +16,9 @@ import Button from "library/button/Button";
 
 const OpponentProfile: React.FC = () => {
     const [editing, setEditing] = useState(false);
+    const [opponentNameError, setOpponentNameError] = useState("");
+    const [existingUserNameError, setExistingUserNameError] = useState("");
+    const history = useHistory();
     const { id } = useParams();
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
@@ -26,12 +29,21 @@ const OpponentProfile: React.FC = () => {
         getSingleOpponent(dispatch, { id: +id!! });
     }, [dispatch, id]);
 
-    const onSubmit = async (request: CreateOpponentRequest) => {
-        alert(JSON.stringify(request));
-        onCancel();
+    const onSubmit = async (request: SaveOpponentRequest) => {
+        try {
+            setExistingUserNameError("");
+            setOpponentNameError("");
+            await updateOpponentRequest(dispatch, +id!!, request);
+            onCancel();
+        } catch (e) {
+            const code = JSON.parse(e).code;
+            const errorText = translate(`OPPONENTS.ADD.ERRORS.${code}`);
+            const inputWithError = code === "OPPONENT_ALREADY_EXISTS" ? setOpponentNameError : setExistingUserNameError;
+            inputWithError(errorText);
+        }
     };
     const onCancel = () => {
-        setEditing(false);
+        history.go(0);
     };
 
     return (
@@ -41,7 +53,15 @@ const OpponentProfile: React.FC = () => {
             </CardFormTitle>
             <div className={css.contentWrapper}>
                 <CardFormContent className={css.formWrapper}>
-                    {editing && <OpponentForm onSubmit={onSubmit} onCancel={onCancel} initialValue={opponent} />}
+                    {editing && (
+                        <OpponentForm
+                            onSubmit={onSubmit}
+                            onCancel={onCancel}
+                            initialValue={opponent}
+                            opponentNameError={opponentNameError}
+                            existingUserNameError={existingUserNameError}
+                        />
+                    )}
                     {!editing && <OpponentData opponent={opponent} />}
                     {!editing && !isCurrentUser && (
                         <Button

@@ -39,6 +39,7 @@ export const apiRoutes = {
     opponent: {
         list: "/api/opponents",
         create: "/api/opponents",
+        update: (id: number) => `/api/opponents/${id}`,
         single: (id: number) => `/api/opponents/${id}`,
     },
 };
