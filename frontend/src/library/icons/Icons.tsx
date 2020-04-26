@@ -3,12 +3,16 @@ import { ReactComponent as PlusIcon } from "./plus.svg";
 import { ReactComponent as NewUser } from "./user-plus.svg";
 import { ReactComponent as ExistingUser } from "./user-check.svg";
 import { ReactComponent as NoImageUserIcon } from "./avatar.svg";
+import { ReactComponent as AlertIcon } from "./alert.svg";
+import { ReactComponent as CheckIcon } from "./check.svg";
 
 const Icons = {
     PlusIcon: <PlusIcon />,
     NewUser: <NewUser />,
     ExistingUser: <ExistingUser />,
     NoImageUserIcon: <NoImageUserIcon />,
+    AlertIcon: <AlertIcon />,
+    CheckIcon: <CheckIcon />,
 };
 
 export default Icons;
