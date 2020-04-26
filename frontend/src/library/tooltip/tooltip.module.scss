@@ -1,0 +1,10 @@
+
+.tooltip {
+    background-color: var(--primary-color) !important;
+    color: var(--text-on-primary) !important;
+    border-top-color: var(--primary-color) !important;
+
+    &::after {
+        border-top-color:  var(--primary-color) !important;
+    }
+}

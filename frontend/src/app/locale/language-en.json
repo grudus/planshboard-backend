@@ -102,7 +102,8 @@
         "MOST_PLAYED_BOARD_GAME": "Most played",
         "MOST_WINS_BOARD_GAME": "Most wins"
       }
-    }
+    },
+    "WAITING_FOR_CONFIRMATION": "User doesn't accept the invitation"
   },
   "ERRORS": {
     "BOARD_GAME": {
