@@ -5,4 +5,4 @@ WORKDIR /app
 COPY /frontend/package.json /app/package.json
 RUN npm install --silent
 
-CMD npm rebuild node-sass && npm start
+CMD npm rebuild node-sass && REACT_APP_BACKEND_URL=$BACKEND_URL npm start

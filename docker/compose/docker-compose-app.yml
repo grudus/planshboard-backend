@@ -1,38 +1,43 @@
 version: '3.7'
 
 services:
-#    planshboard_app_postgres_image:
-#        container_name: planshboard_app_postgres_container
-#        build:
-#            context: .
-#            dockerfile: docker/database/Dockerfile
-#        restart: always
-#        environment:
-#            POSTGRES_USER: app_user
-#            POSTGRES_PASSWORD: app_password
-#            POSTGRES_MULTIPLE_DATABASES: planshboard
-#        ports:
-#            - 5432:5432
-#    planshboard_app_backend_image:
-#        container_name: planshboard_app_backend_container
-#        build:
-#            context: .
-#            dockerfile: docker/backend/Dockerfile
-#        restart: "no"
-#        environment:
-#            DATABASE_USER: app_user
-#            DATABASE_PASSWORD: app_password
-#            DATABASE_URL: "jdbc:postgresql://planshboard_app_postgres_image:5432/planshboard"
-#        depends_on:
-#            - planshboard_app_postgres_image
-#        ports:
-#        - 8080:8080
+    planshboard_app_postgres_image:
+        container_name: planshboard_app_postgres_container
+        build:
+            context: .
+            dockerfile: docker/database/Dockerfile
+        restart: always
+        environment:
+            POSTGRES_USER: app_user
+            POSTGRES_PASSWORD: app_password
+            POSTGRES_MULTIPLE_DATABASES: planshboard
+        ports:
+            - 5432:5432
+    planshboard_app_backend_image:
+        container_name: planshboard_app_backend_container
+        build:
+            context: .
+            dockerfile: docker/backend/Dockerfile
+        restart: "no"
+        environment:
+            DATABASE_USER: app_user
+            DATABASE_PASSWORD: app_password
+            DATABASE_URL: "jdbc:postgresql://planshboard_app_postgres_image:5432/planshboard"
+            FRONTEND_ADDRESS: "http://localhost:3001"
+        depends_on:
+            - planshboard_app_postgres_image
+        ports:
+        - 8083:8080
     planshboard_app_frontend_image:
         container_name: planshboard_app_frontend_container
         build:
           context: .
           dockerfile: docker/frontend/Dockerfile
         restart: "no"
+        depends_on:
+            - planshboard_app_backend_image
+        environment:
+          BACKEND_URL: http://localhost:8083
         volumes:
         - ./frontend:/app
         ports:
