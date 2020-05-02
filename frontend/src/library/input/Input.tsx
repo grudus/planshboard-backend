@@ -2,10 +2,11 @@ import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import css from "./input.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 
-export type InputType = "text" | "password";
+export type InputType = "text" | "password" | "number";
 
 export interface InputProps {
-    label: string;
+    label?: string;
+    size?: "small" | "normal";
     name: string;
     initialValue?: string;
     onTextChange?: (a: string) => void;
@@ -14,6 +15,7 @@ export interface InputProps {
     actionIcon?: ReactElement | false;
     type?: InputType;
     error?: string;
+    className?: string;
     onBlur?: ((event: React.FocusEvent<HTMLInputElement>) => void) | undefined;
 }
 
@@ -33,7 +35,7 @@ const Input: React.FC<InputProps> = props => {
     const isError = (): boolean => !!props.error;
 
     return (
-        <div className={merge(css.wrapper, cssIf(css.error, isError()))}>
+        <div className={merge(css.wrapper, cssIf(css.error, isError()), css[props.size ?? "normal"], props.className)}>
             {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
             <input
                 id={props.name}

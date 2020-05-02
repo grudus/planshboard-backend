@@ -3,21 +3,19 @@ import { Redirect, Route } from "react-router-dom";
 import AuthRoutes from "../auth/AuthRoutes";
 import BoardGameRoutes from "../board-games/BoardGameRoutes";
 import { appRoutes } from "./routes";
-import Plays from "app/plays/Plays";
 import Stats from "app/stats/Stats";
 import Ranking from "app/ranking/Ranking";
 import Notifications from "app/notifications/Notifications";
 import Settings from "app/settings/Settings";
 import OpponentRoutes from "app/opponents/OpponentRoutes";
+import PlayRoutes from "app/plays/PlayRoutes";
 
 const PlashboardRoutes: React.FunctionComponent<any> = () => (
     <>
         <AuthRoutes />
         <BoardGameRoutes />
         <OpponentRoutes />
-        <Route path={appRoutes.plays}>
-            <Plays />
-        </Route>
+        <PlayRoutes />
         <Route path={appRoutes.stats}>
             <Stats />
         </Route>

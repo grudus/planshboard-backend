@@ -1,0 +1,37 @@
+.table {
+    border-collapse:collapse;
+    width: 100%;
+    table-layout: fixed;
+
+
+    & thead {
+        & th {
+            padding-bottom: 16px;
+        }
+
+        .pointsHeader {
+            width: 80px;
+        }
+    }
+
+
+
+    & tbody {
+
+        & tr {
+            border-top: 1px solid var(--card-form-header-backgrund);
+        }
+
+        & td {
+            height: 96px;
+            vertical-align: center;
+            width: 100%;
+            text-align: center;
+            padding: 8px 8px;
+        }
+    }
+}
+
+.pointsInput {
+    margin-bottom: 0;
+}
