@@ -105,6 +105,15 @@
     },
     "WAITING_FOR_CONFIRMATION": "Użytkownik nie zaakceptował zaproszenia"
   },
+  "PLAYS": {
+    "FORM": {
+      "RESULTS_TABLE": {
+        "OPPONENT": "Przeciwnik",
+        "POSITION": "Pozycja",
+        "POINTS": "Punkty"
+      }
+    }
+  },
   "ERRORS": {
     "BOARD_GAME": {
       "EXISTS": "Istnieje już gra o takiej nazwie"

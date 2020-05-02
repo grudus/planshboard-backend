@@ -16,10 +16,17 @@
             color: var(--error-color);
         }
     }
+
+    &.normal {
+        --input-padding: 20px 16px 13px;
+    }
+    &.small {
+        --input-padding: 8px 8px;
+    }
 }
 
 .input {
-    padding: 20px 16px 13px;
+    padding: var(--input-padding);
     font-size: 14px;
     line-height: 14px;
     color: var(--input-text);

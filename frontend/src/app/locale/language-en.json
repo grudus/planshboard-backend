@@ -105,6 +105,15 @@
     },
     "WAITING_FOR_CONFIRMATION": "User doesn't accept the invitation"
   },
+  "PLAYS": {
+    "FORM": {
+      "RESULTS_TABLE": {
+        "OPPONENT": "Opponent",
+        "POSITION": "Position",
+        "POINTS": "Points"
+      }
+    }
+  },
   "ERRORS": {
     "BOARD_GAME": {
       "EXISTS": "Game already exists"
