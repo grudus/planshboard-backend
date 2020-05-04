@@ -5,6 +5,7 @@ import css from "./play-results-table.module.scss";
 import { Opponent } from "app/opponents/__models/OpponentModels";
 import { BoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import FlipMove from "react-flip-move";
 
 interface PlayResultsTableProps {
     selectedOpponents: Opponent[];
@@ -25,7 +26,7 @@ const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
                     {showPoints && <th className={css.pointsHeader}>{translate("PLAYS.FORM.RESULTS_TABLE.POINTS")}</th>}
                 </tr>
             </thead>
-            <tbody>
+            <FlipMove typeName="tbody" appearAnimation="fade">
                 {props.selectedOpponents.map(op => (
                     <tr key={op.id}>
                         <td>
@@ -40,7 +41,7 @@ const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
                         )}
                     </tr>
                 ))}
-            </tbody>
+            </FlipMove>
         </table>
     );
 };

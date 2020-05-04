@@ -1,0 +1,23 @@
+@import "src/utils";
+
+.title {
+    margin: 12px 0;
+}
+
+.frequentOpponentsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+
+    & > *:not(:last-child) {
+        margin-right: 8px;
+    }
+}
+
+.more {
+    color: var(--primary-color);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}

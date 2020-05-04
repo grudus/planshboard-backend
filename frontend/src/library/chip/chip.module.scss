@@ -1,0 +1,36 @@
+@import "src/utils";
+
+.chip {
+    @include ellipsis;
+    max-width: 120px;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 16px;
+    align-items: center;
+    height: 32px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    transition: background-color .3s linear;
+
+
+    &.normal {
+        border: 1px solid var(--input-border-normal);
+        background: var(--input-background);
+        color: var(--input-placeholder);
+
+        &:hover,&:focus {
+            background: var(--input-border-normal);
+        }
+    }
+
+    &.clickable {
+        cursor: pointer;
+    }
+
+    &[disabled] {
+        cursor: not-allowed !important;
+        pointer-events: none;
+        background: var(--disabled-background);
+        color: var(--disabled-text-color);
+    }
+}
