@@ -4,6 +4,7 @@ import { BoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameM
 import LinkedUser from "app/opponents/linkedUser/LinkedUser";
 import Input from "library/input/Input";
 import css from "app/plays/form/results/results-table/play-results-table.module.scss";
+import SelectOpponentPosition from "app/plays/form/results/results-table/select-position/SelectOpponentPosition";
 
 interface PlayResultsRowProps {
     result: PlayResultRow;
@@ -16,7 +17,6 @@ const PlayResultsRowElement: React.FC<PlayResultsRowProps> = forwardRef<HTMLTabl
     (props, ref) => {
         const { result } = props;
         const { showPoints, showPosition } = props.gameOptions;
-        const position = [...Array(props.numberOfResults).keys()].map((p, index) => `[${index + 1}]`);
 
         const pointsChange = (text: string) => {
             const copy = { ...result, points: parseInt(text, 10) };
@@ -29,7 +29,15 @@ const PlayResultsRowElement: React.FC<PlayResultsRowProps> = forwardRef<HTMLTabl
                     <span>{result.opponent.name}</span>
                     <LinkedUser opponent={result.opponent} />
                 </td>
-                {showPosition && <td>{position}</td>}
+                {showPosition && (
+                    <td>
+                        <SelectOpponentPosition
+                            numberOfPositions={props.numberOfResults}
+                            result={props.result}
+                            onChange={props.onChange}
+                        />
+                    </td>
+                )}
                 {showPoints && (
                     <td>
                         <Input
