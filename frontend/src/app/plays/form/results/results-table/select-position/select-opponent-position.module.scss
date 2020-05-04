@@ -20,10 +20,16 @@
     width: 24px;
     height: 24px;
     font-size: 12px;
+    cursor: pointer;
 
     &:focus-within {
         transform: scale(1.1);
         font-weight: bold;
+    }
+
+    &:hover {
+        color: var(--primary-color);
+        border-color: var(--primary-color-light);
     }
 
     &.selected {
