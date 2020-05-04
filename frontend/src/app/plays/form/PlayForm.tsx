@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Opponent } from "app/opponents/__models/OpponentModels";
 import css from "./play-form.module.scss";
 import PlayResultsTable from "app/plays/form/results/results-table/PlayResultsTable";
 import { defaultBoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
 import PlayFormOpponents from "app/plays/form/play-form-opponents/PlayFormOpponents";
+import { PlayResultRow } from "app/plays/__models/PlayModels";
 
 interface PlayFormProps {
-    selectedOpponents: Opponent[];
+    results: PlayResultRow[];
 }
 
 const initialFrequentOpponents: Opponent[] = [
@@ -21,11 +22,15 @@ const initialFrequentOpponents: Opponent[] = [
 
 const PlayForm: React.FC<PlayFormProps> = props => {
     const [frequentOpponents, setFrequentOpponents] = useState(initialFrequentOpponents);
-    const [selectedOpponents, setSelectedOpponents] = useState(props.selectedOpponents);
+    const [results, setResults] = useState(props.results);
 
-    const selectOpponent = (op: Opponent) => {
-        setFrequentOpponents(frequentOpponents.filter(o => o.id !== op.id));
-        setSelectedOpponents([...selectedOpponents, op]);
+    useEffect(() => {
+        setResults(props.results);
+    }, [props.results]);
+
+    const selectOpponent = (opponent: Opponent) => {
+        setFrequentOpponents(frequentOpponents.filter(o => o.id !== opponent.id));
+        setResults([...results, { opponent }]);
     };
 
     return (
@@ -33,12 +38,13 @@ const PlayForm: React.FC<PlayFormProps> = props => {
             <PlayFormOpponents frequentOpponents={frequentOpponents} onSelect={selectOpponent} />
             <form className={css.opponentsForm}>
                 <PlayResultsTable
-                    selectedOpponents={selectedOpponents}
+                    onChange={setResults}
                     gameOptions={defaultBoardGamePlayResultsOptions}
+                    results={results}
                 />
             </form>
         </main>
     );
 };
 
-export default PlayForm;
+export default React.memo(PlayForm);

@@ -1,21 +1,28 @@
-import React from "react";
-import LinkedUser from "app/opponents/linkedUser/LinkedUser";
-import Input from "library/input/Input";
+import React, { useCallback } from "react";
 import css from "./play-results-table.module.scss";
-import { Opponent } from "app/opponents/__models/OpponentModels";
 import { BoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import FlipMove from "react-flip-move";
+import { PlayResultRow } from "app/plays/__models/PlayModels";
+import PlayResultsRowElement from "./row/PlayResultsRowElement";
 
 interface PlayResultsTableProps {
-    selectedOpponents: Opponent[];
+    results: PlayResultRow[];
     gameOptions: BoardGamePlayResultsOptions;
+    onChange: (results: PlayResultRow[]) => void;
 }
 
 const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
     const { translate } = useTranslations();
-    const { showPoints, type, showPosition } = props.gameOptions;
-    const position = props.selectedOpponents.map((p, index) => `[${index + 1}]`);
+    const { showPoints, showPosition } = props.gameOptions;
+
+    const onRowChange = useCallback(
+        (result: PlayResultRow) => {
+            const copy = props.results.map(res => (res.opponent.id === result.opponent.id ? result : res));
+            props.onChange(copy);
+        },
+        [props],
+    );
 
     return (
         <table className={css.table}>
@@ -26,20 +33,15 @@ const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
                     {showPoints && <th className={css.pointsHeader}>{translate("PLAYS.FORM.RESULTS_TABLE.POINTS")}</th>}
                 </tr>
             </thead>
-            <FlipMove typeName="tbody" appearAnimation="fade">
-                {props.selectedOpponents.map(op => (
-                    <tr key={op.id}>
-                        <td>
-                            <span>{op.name}</span>
-                            <LinkedUser opponent={op} />
-                        </td>
-                        {showPosition && <td>{position}</td>}
-                        {showPoints && (
-                            <td>
-                                <Input name="name" size="small" type="number" className={css.pointsInput} />
-                            </td>
-                        )}
-                    </tr>
+            <FlipMove typeName="tbody">
+                {props.results.map(result => (
+                    <PlayResultsRowElement
+                        onChange={onRowChange}
+                        key={result.opponent.id}
+                        result={result}
+                        gameOptions={props.gameOptions}
+                        numberOfResults={props.results.length}
+                    />
                 ))}
             </FlipMove>
         </table>

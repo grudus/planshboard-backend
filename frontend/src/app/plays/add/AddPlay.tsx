@@ -5,17 +5,17 @@ import CardFormContent from "library/card-form/CardFormContent";
 import PlayForm from "app/plays/form/PlayForm";
 import css from "./add-play.module.scss";
 import { Opponent } from "app/opponents/__models/OpponentModels";
+import { useRedux } from "store/rootReducer";
 
 const AddPlay: React.FC = () => {
-    const selectedOpponents: Opponent[] = [
-        { id: 1, name: "grudus", linkedUser: { status: "LINKED_WITH_CREATOR", userId: 1, userName: "grudus" } },
-    ];
+    const currentUser = useRedux(s => s.opponent.currentUser);
+    const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
 
     return (
         <CardForm className={css.formWrapper}>
             <CardFormTitle>Dodaj rozgrywkę</CardFormTitle>
             <CardFormContent>
-                <PlayForm selectedOpponents={selectedOpponents} />
+                <PlayForm results={selectedOpponents.map(o => ({ opponent: o }))} />
             </CardFormContent>
         </CardForm>
     );
