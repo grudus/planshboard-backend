@@ -3,6 +3,10 @@
   "SEARCH": "Search",
   "CANCEL": "Cancel",
   "SAVE": "Save",
+  "DROPDOWN": {
+    "SELECT_LABEL": "Select",
+    "CREATE_LABEL": "Create"
+  },
   "AUTH": {
     "LOGIN": {
       "TITLE": "Login",
