@@ -3,6 +3,10 @@
   "SEARCH": "Szukaj",
   "CANCEL": "Cofnij",
   "SAVE": "Zapisz",
+  "DROPDOWN": {
+    "SELECT_LABEL": "Wybierz",
+    "CREATE_LABEL": "Dodaj"
+  },
   "AUTH": {
     "LOGIN": {
       "TITLE": "Zaloguj się do Planshboarda",
