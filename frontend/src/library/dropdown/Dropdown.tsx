@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import CreatableSelect from "react-select/creatable";
+import CreatableSelect, { Props } from "react-select/creatable";
 import useTranslations from "../../app/locale/__hooks/useTranslations";
 import useTheme from "../../app/shared/hooks/useTheme";
 import { OptionsType, ValueType } from "react-select/src/types";
@@ -7,7 +7,7 @@ import RingLoading from "library/loading/RingLoading";
 import css from "./dropdown.module.scss";
 import { SelectComponents } from "react-select/src/components";
 
-interface DropdownProps<T> {
+export interface DropdownProps<T> extends Props<T> {
     options: OptionsType<T>;
     onSelect: (value: ValueType<T>) => void;
     onCreateOption?: (inputValue: string) => void;
@@ -16,12 +16,13 @@ interface DropdownProps<T> {
     isLoading?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps<{ label: string; value: string }>> = props => {
+const Dropdown: React.FC<DropdownProps<{ label: string; value: any }>> = props => {
     const { translate } = useTranslations();
     const theme = useTheme();
 
     const components: Partial<SelectComponents<any>> = {
         ClearIndicator: null,
+        IndicatorSeparator: null,
         LoadingIndicator: a => (
             <div className={css.loadingWrapper} {...a}>
                 <RingLoading borderWidth={2} size={20} />
@@ -33,10 +34,6 @@ const Dropdown: React.FC<DropdownProps<{ label: string; value: string }>> = prop
         menuList: (provided: CSSProperties) => ({
             ...provided,
             background: theme["--card-background"],
-        }),
-
-        indicatorSeparator: () => ({
-            display: "none",
         }),
 
         option: (provided: CSSProperties, state: any) => ({
@@ -77,6 +74,7 @@ const Dropdown: React.FC<DropdownProps<{ label: string; value: string }>> = prop
             isLoading={props.isLoading}
             isDisabled={props.isLoading}
             components={components}
+            {...props}
         />
     );
 };

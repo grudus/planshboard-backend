@@ -34,15 +34,17 @@ const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
                 </tr>
             </thead>
             <FlipMove typeName="tbody">
-                {props.results.map(result => (
-                    <PlayResultsRowElement
-                        onChange={onRowChange}
-                        key={result.opponent.id}
-                        result={result}
-                        gameOptions={props.gameOptions}
-                        numberOfResults={props.results.length}
-                    />
-                ))}
+                {props.results
+                    .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+                    .map(result => (
+                        <PlayResultsRowElement
+                            onChange={onRowChange}
+                            key={result.opponent.id}
+                            result={result}
+                            gameOptions={props.gameOptions}
+                            numberOfResults={props.results.length}
+                        />
+                    ))}
             </FlipMove>
         </table>
     );

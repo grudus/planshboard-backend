@@ -111,6 +111,11 @@
   },
   "PLAYS": {
     "FORM": {
+      "OPPONENTS": {
+        "TITLE": "Wybierz graczy",
+        "MORE": "Więcej",
+        "LESS": "Mniej"
+      },
       "RESULTS_TABLE": {
         "OPPONENT": "Przeciwnik",
         "POSITION": "Pozycja",

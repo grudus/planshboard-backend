@@ -111,6 +111,11 @@
   },
   "PLAYS": {
     "FORM": {
+      "OPPONENTS": {
+        "TITLE": "Choose players",
+        "MORE": "More",
+        "LESS": "Less"
+      },
       "RESULTS_TABLE": {
         "OPPONENT": "Opponent",
         "POSITION": "Position",

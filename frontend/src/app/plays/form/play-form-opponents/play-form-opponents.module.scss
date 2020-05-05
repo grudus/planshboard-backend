@@ -1,18 +1,12 @@
 @import "src/utils";
 
-.title {
-    margin: 12px 0;
+.titleMoreWrapper {
+    display: flex;
+    margin-bottom: 16px;
 }
 
-.frequentOpponentsWrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-bottom: 24px;
-
-    & > *:not(:last-child) {
-        margin-right: 8px;
-    }
+.title {
+    margin: 0;
 }
 
 .more {
@@ -20,4 +14,27 @@
     font-size: 12px;
     display: flex;
     align-items: center;
+    margin-left: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+.frequentOpponentsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    transition: all .2s ease-in-out;
+    opacity: 1;
+    max-height: 300px;
+
+    & > *:not(:last-child) {
+        margin-right: 8px;
+    }
+
+    &.hidden {
+        opacity: 0;
+        max-height: 0;
+    }
 }
