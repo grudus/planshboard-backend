@@ -48,5 +48,26 @@ export const opponentReducer = createReducer<OpponentStore>(initialState, {
             { id: 8, name: "Mama Madzi" },
             { id: 2, name: "madzia", linkedUser: { status: "ENABLED", userId: 2, userName: "maddie" } },
         ],
+        list: [
+            { numberOfPlays: 0, numberOfWins: 0, id: 3, name: "kamrat" },
+            {
+                numberOfPlays: 0,
+                numberOfWins: 0,
+                id: 4,
+                name: "bolec",
+                linkedUser: { status: "ENABLED", userId: 3, userName: "boltzman" },
+            },
+            { numberOfPlays: 0, numberOfWins: 0, id: 5, name: "ramzes" },
+            { numberOfPlays: 0, numberOfWins: 0, id: 6, name: "długie imie po co w ogóle takie wymyślać dla kogoś" },
+            { numberOfPlays: 0, numberOfWins: 0, id: 7, name: "Cezary Cezary" },
+            { numberOfPlays: 0, numberOfWins: 0, id: 8, name: "Mama Madzi" },
+            {
+                numberOfPlays: 0,
+                numberOfWins: 0,
+                id: 2,
+                name: "madzia",
+                linkedUser: { status: "ENABLED", userId: 2, userName: "maddie" },
+            },
+        ],
     }),
 });
