@@ -116,6 +116,10 @@
         "MORE": "Więcej",
         "LESS": "Mniej"
       },
+      "META": {
+        "NOTE": "Notatka",
+        "TITLE": "Dodatkowe informacje"
+      },
       "RESULTS_TABLE": {
         "OPPONENT": "Przeciwnik",
         "POSITION": "Pozycja",

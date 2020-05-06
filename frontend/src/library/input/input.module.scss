@@ -36,6 +36,7 @@
     background: var(--input-background);
     opacity: .9;
     width: 100%;
+    resize: vertical;
 
     &:focus {
         border-color: var(--input-border-focus);

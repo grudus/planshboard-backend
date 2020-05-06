@@ -16,13 +16,14 @@ export interface InputProps {
     type?: InputType;
     error?: string;
     className?: string;
-    onBlur?: ((event: React.FocusEvent<HTMLInputElement>) => void) | undefined;
+    onBlur?: ((event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void) | undefined;
+    multiline?: boolean;
 }
 
 const Input: React.FC<InputProps> = props => {
     const [text, setText] = useState("");
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { value } = e.target;
         setText(value);
         props?.onTextChange?.(value);
@@ -34,20 +35,36 @@ const Input: React.FC<InputProps> = props => {
 
     const isError = (): boolean => !!props.error;
 
+    const inputElement = props.multiline ? (
+        <textarea
+            id={props.name}
+            name={props.name}
+            value={text}
+            onChange={handleChange}
+            className={css.input}
+            autoFocus={props.autoFocus}
+            onBlur={props.onBlur}
+            aria-invalid={isError()}
+            rows={1}
+        />
+    ) : (
+        <input
+            id={props.name}
+            name={props.name}
+            value={text}
+            onChange={handleChange}
+            className={css.input}
+            autoFocus={props.autoFocus}
+            type={props.type || "text"}
+            onBlur={props.onBlur}
+            aria-invalid={isError()}
+        />
+    );
+
     return (
         <div className={merge(css.wrapper, cssIf(css.error, isError()), css[props.size ?? "normal"], props.className)}>
             {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
-            <input
-                id={props.name}
-                name={props.name}
-                value={text}
-                onChange={handleChange}
-                className={css.input}
-                autoFocus={props.autoFocus}
-                type={props.type || "text"}
-                onBlur={props.onBlur}
-                aria-invalid={isError()}
-            />
+            {inputElement}
             <label className={merge(css.label, cssIf(css.labelUp, !!text))} htmlFor={props.name}>
                 {props.label}
             </label>
