@@ -5,3 +5,9 @@ export interface PlayResultRow {
     position?: number;
     points?: number;
 }
+
+export interface PlayMeta {
+    note?: string;
+    tags?: string[];
+    date?: string;
+}

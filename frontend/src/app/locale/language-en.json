@@ -116,6 +116,10 @@
         "MORE": "More",
         "LESS": "Less"
       },
+      "META": {
+        "NOTE": "Note",
+        "TITLE": "Additional info"
+      },
       "RESULTS_TABLE": {
         "OPPONENT": "Opponent",
         "POSITION": "Position",
