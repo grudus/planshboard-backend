@@ -3,6 +3,7 @@ import css from "./play-meta-fields.module.scss";
 import Input from "library/input/Input";
 import { PlayMeta } from "app/plays/__models/PlayModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import DatePicker from "library/datepicker/DatePicker";
 
 interface PlayMetaFieldsProps {
     meta?: PlayMeta;
@@ -13,6 +14,11 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
     const { translate } = useTranslations();
     const onNoteChange = (note: string) => {
         const copy = { ...props.meta, note };
+        props.onChange(copy);
+    };
+
+    const onDateChange = (date: Date) => {
+        const copy = { ...props.meta, date: date.toLocaleDateString() };
         props.onChange(copy);
     };
 
@@ -27,6 +33,7 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
                 initialValue={props.meta?.note}
                 onTextChange={onNoteChange}
             />
+            <DatePicker onSelect={onDateChange} />
         </div>
     );
 };

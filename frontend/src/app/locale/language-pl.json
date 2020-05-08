@@ -3,6 +3,11 @@
   "SEARCH": "Szukaj",
   "CANCEL": "Cofnij",
   "SAVE": "Zapisz",
+  "DATEPICKER": {
+    "MONTHS": "Styczeń,Luty,Marzec,Kwiecień,Maj,Czerwiec,Lipiec,Sierpień,Wrzesień,Październik,Listopad,Grudzień",
+    "WEEKDAYS": "Poniedziałek,Wtorek,Środa,Czwartek,Piątek,Sobota,Niedziela",
+    "WEEKDAYS_SHORT": "Pn,Wt,Śr,Cz,Pt,Sb,Nd"
+  },
   "DROPDOWN": {
     "SELECT_LABEL": "Wybierz",
     "CREATE_LABEL": "Dodaj"
