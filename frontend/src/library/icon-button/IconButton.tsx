@@ -6,6 +6,7 @@ interface IconButtonProps {
     onClick: () => void;
     svgIcon: ReactElement;
     className?: string;
+    reference?: React.Ref<any>;
 }
 
 const IconButton: React.FC<IconButtonProps> = props => {
@@ -18,7 +19,7 @@ const IconButton: React.FC<IconButtonProps> = props => {
         onClick();
     };
     return (
-        <button type="button" className={classes} onClick={click} {...buttonProps}>
+        <button type="button" className={classes} onClick={click} {...buttonProps} ref={props.reference}>
             <span className={css.iconWrapper}>{svgIcon}</span>
         </button>
     );
