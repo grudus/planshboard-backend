@@ -18,6 +18,7 @@ export interface InputProps {
     className?: string;
     onBlur?: ((event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void) | undefined;
     multiline?: boolean;
+    inputExtra?: React.HTMLProps<HTMLInputElement>;
 }
 
 const Input: React.FC<InputProps> = props => {
@@ -58,6 +59,7 @@ const Input: React.FC<InputProps> = props => {
             type={props.type || "text"}
             onBlur={props.onBlur}
             aria-invalid={isError()}
+            {...props.inputExtra}
         />
     );
 

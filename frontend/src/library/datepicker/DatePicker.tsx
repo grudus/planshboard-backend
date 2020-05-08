@@ -5,6 +5,7 @@ import IconButton from "library/icon-button/IconButton";
 import Icons from "library/icons/Icons";
 import "./datepicker.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import { formatFullDate } from "utils/dateUtils";
 
 interface DatePickerProps {
     initialValue?: Date;
@@ -13,13 +14,15 @@ interface DatePickerProps {
 
 const DatePicker: React.FC<DatePickerProps> = props => {
     const { translate } = useTranslations();
-    const pickadayRef = useRef();
+    const pickadayRef: any = useRef();
     const [date, setDate] = useState(props.initialValue ?? new Date());
     const [picker, setPicker] = useState(null as Pikaday | null);
 
     useEffect(() => {
         const pickerTemp = new Pikaday({
             field: pickadayRef.current,
+            defaultDate: date,
+            setDefaultDate: true,
             onSelect(date: Date) {
                 setDate(date);
                 props.onSelect(date);
@@ -45,11 +48,12 @@ const DatePicker: React.FC<DatePickerProps> = props => {
             <Input
                 label="Data"
                 name="date"
-                initialValue={date?.toLocaleDateString()}
-                actionIcon={<IconButton svgIcon={Icons.CalendarIcon} onClick={showPicker} reference={pickadayRef} />}
+                initialValue={formatFullDate(date)}
+                actionIcon={<IconButton svgIcon={Icons.CalendarIcon} onClick={showPicker} />}
+                inputExtra={{ readOnly: true, ref: pickadayRef }}
             />
         </div>
     );
 };
 
-export default DatePicker;
+export default React.memo(DatePicker);
