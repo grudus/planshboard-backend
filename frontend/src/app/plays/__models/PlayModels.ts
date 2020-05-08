@@ -9,5 +9,5 @@ export interface PlayResultRow {
 export interface PlayMeta {
     note?: string;
     tags?: string[];
-    date?: string;
+    date?: Date;
 }

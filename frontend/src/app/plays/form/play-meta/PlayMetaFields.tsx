@@ -18,7 +18,7 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
     };
 
     const onDateChange = (date: Date) => {
-        const copy = { ...props.meta, date: date.toLocaleDateString() };
+        const copy = { ...props.meta, date };
         props.onChange(copy);
     };
 
@@ -33,7 +33,7 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
                 initialValue={props.meta?.note}
                 onTextChange={onNoteChange}
             />
-            <DatePicker onSelect={onDateChange} />
+            <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />
         </div>
     );
 };
