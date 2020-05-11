@@ -4,6 +4,7 @@ import Input from "library/input/Input";
 import { PlayMeta } from "app/plays/__models/PlayModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import DatePicker from "library/datepicker/DatePicker";
+import TagsInput from "library/tags-input/TagsInput";
 
 interface PlayMetaFieldsProps {
     meta?: PlayMeta;
@@ -34,6 +35,8 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
                 onTextChange={onNoteChange}
             />
             <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />
+
+            <TagsInput allTags={["fajne", "gra", "ale", "jaja"]} selectedTags={["gra"]} />
         </div>
     );
 };

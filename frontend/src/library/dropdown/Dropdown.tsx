@@ -28,6 +28,7 @@ const Dropdown: React.FC<DropdownProps<{ label: string; value: any }>> = props =
                 <RingLoading borderWidth={2} size={20} />
             </div>
         ),
+        ...props.components,
     };
 
     const customStyles = {
