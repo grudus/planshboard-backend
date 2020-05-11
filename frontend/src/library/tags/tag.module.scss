@@ -1,0 +1,35 @@
+.tag {
+    height: 24px;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+    &.primary {
+        background: var(--primary-color-light);
+        color: var(--primary-color);
+    }
+
+    &.closeable {
+        padding-right: 4px;
+    }
+
+}
+
+.closeIcon {
+    width: 22px;
+    height: 22px;
+    margin-left: 4px;
+    color: var(--primary-color);
+
+    --icon-button-hover-background: var(--primary-color-light);
+
+    & svg {
+        width: 11px;
+        height: 11px;
+    }
+
+}

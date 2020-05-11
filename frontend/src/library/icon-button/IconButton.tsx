@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { merge } from "utils/cssUtils";
 import css from "./icon-button.module.scss";
 
-interface IconButtonProps {
+interface IconButtonProps extends React.HTMLProps<HTMLButtonElement> {
     onClick: () => void;
     svgIcon: ReactElement;
     className?: string;
@@ -11,7 +11,7 @@ interface IconButtonProps {
 
 const IconButton: React.FC<IconButtonProps> = props => {
     const { onClick, svgIcon, className, ...buttonProps } = props;
-    const classes = merge(className ?? "", css.button);
+    const classes = merge(css.button, className);
 
     const click = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
@@ -19,7 +19,7 @@ const IconButton: React.FC<IconButtonProps> = props => {
         onClick();
     };
     return (
-        <button type="button" className={classes} onClick={click} {...buttonProps} ref={props.reference}>
+        <button className={classes} onClick={click} {...buttonProps} ref={props.reference} type="button">
             <span className={css.iconWrapper}>{svgIcon}</span>
         </button>
     );
