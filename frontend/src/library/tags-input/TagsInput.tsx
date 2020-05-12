@@ -1,22 +1,22 @@
 import React from "react";
-import Dropdown from "library/dropdown/Dropdown";
+import Dropdown, { BaseDropdownItem } from "library/dropdown/Dropdown";
 import { SelectComponents } from "react-select/src/components";
 import Tag from "library/tags/Tag";
 import css from "./tags-input.module.scss";
+import { TagCounts } from "app/plays/__models/TagModels";
 
 export interface TagsInputProps {
     selectedTags?: string[];
-    allTags?: string[];
+    allTags?: TagCounts[];
     onChange?: (tags: string[]) => void;
 }
 
 const TagsInput: React.FC<TagsInputProps> = props => {
-    const options = props.allTags?.map(tag => ({ label: tag, value: tag })) ?? [];
+    const options = props.allTags?.map(tag => ({ label: tag.name, value: tag.name, count: tag.count })) ?? [];
     const selected = props.selectedTags?.map(tag => ({ label: tag, value: tag })) ?? [];
 
-    const onSelect = (tagValues: any /*: { label: tag, value: tag }*/) => {
-        const tags = tagValues?.map((tag: any) => tag.value);
-        console.log("@@ Selected", tags);
+    const onSelect = (tagValues: any) => {
+        const tags = (tagValues as BaseDropdownItem[])?.map(tag => tag.value);
         props.onChange?.(tags);
     };
 
@@ -33,11 +33,30 @@ const TagsInput: React.FC<TagsInputProps> = props => {
         ),
     };
 
+    const formatOptionLabel = (option: BaseDropdownItem) => {
+        const tagOption = option as BaseDropdownItem & TagCounts;
+        const { label, count, __isNew__ } = tagOption;
+        if (__isNew__) {
+            return (
+                <div className={css.tagOptionWrapper}>
+                    <div>{label}</div>
+                </div>
+            );
+        }
+        return (
+            <div className={css.tagOptionWrapper}>
+                <Tag text={label} />
+                <span className={css.tagCount}>{count ?? 0} gier</span>
+            </div>
+        );
+    };
+
     return (
         <Dropdown
             options={options}
             onSelect={onSelect}
             isMulti
+            formatOptionLabel={formatOptionLabel}
             defaultValue={selected}
             components={components}
             menuPlacement="top"

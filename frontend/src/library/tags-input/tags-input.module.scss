@@ -3,3 +3,20 @@
     margin-bottom: 2px;
     margin-top: 2px;
 }
+
+.tagOptionWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--card-form-header-text);
+    font-size: 12px;
+}
+
+.tagCount {
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+    width: 80px;
+    text-align: end;
+    //background: var(--card-form-header-backgrund);
+}

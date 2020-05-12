@@ -16,7 +16,13 @@ export interface DropdownProps<T> extends Props<T> {
     isLoading?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps<{ label: string; value: any }>> = props => {
+export interface BaseDropdownItem {
+    label: string;
+    value: any;
+    __isNew__?: boolean;
+}
+
+const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
     const { translate } = useTranslations();
     const theme = useTheme();
 

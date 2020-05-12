@@ -24,4 +24,5 @@ export const emptyTestState: Store = {
     user: expect.anything(),
     boardGame: expect.anything(),
     opponent: expect.anything(),
+    play: expect.anything(),
 };

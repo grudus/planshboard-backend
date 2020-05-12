@@ -5,6 +5,7 @@ import { PlayMeta } from "app/plays/__models/PlayModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import DatePicker from "library/datepicker/DatePicker";
 import TagsInput from "library/tags-input/TagsInput";
+import { useRedux } from "store/rootReducer";
 
 interface PlayMetaFieldsProps {
     meta?: PlayMeta;
@@ -12,6 +13,7 @@ interface PlayMetaFieldsProps {
 }
 
 const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
+    const allTags = useRedux(state => state.play.tags);
     const { translate } = useTranslations();
     const onNoteChange = (note: string) => {
         const copy = { ...props.meta, note };
@@ -36,7 +38,7 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
             />
             <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />
 
-            <TagsInput allTags={["fajne", "gra", "ale", "jaja"]} selectedTags={["gra"]} />
+            <TagsInput allTags={allTags} selectedTags={[]} />
         </div>
     );
 };
