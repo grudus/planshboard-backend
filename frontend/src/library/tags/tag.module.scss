@@ -13,6 +13,11 @@
         color: var(--primary-color);
     }
 
+    &.neutral {
+        background: var(--card-form-header-backgrund);
+        color: var(--card-form-header-text);
+    }
+
     &.closeable {
         padding-right: 4px;
     }

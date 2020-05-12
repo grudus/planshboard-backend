@@ -6,7 +6,7 @@ import Icons from "library/icons/Icons";
 
 interface TagProps {
     text: string;
-    color?: "primary" | "accent";
+    color?: "primary" | "accent" | "neutral";
     className?: string;
     onClose?: () => void;
     onCloseButtonProps?: React.HTMLProps<HTMLButtonElement>;

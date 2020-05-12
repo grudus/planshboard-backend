@@ -7,6 +7,7 @@ import { userReducer } from "app/user/__store/userReducer";
 import { boardGamesReducer } from "app/board-games/__store/boardGameReducer";
 import { opponentReducer } from "app/opponents/__store/opponentReducer";
 import { History, LocationState } from "history";
+import { playReducer } from "app/plays/__store/playReducer";
 
 const rootReducer = (history: History<LocationState>) =>
     combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = (history: History<LocationState>) =>
         user: userReducer,
         boardGame: boardGamesReducer,
         opponent: opponentReducer,
+        play: playReducer,
         router: connectRouter(history),
     });
 
