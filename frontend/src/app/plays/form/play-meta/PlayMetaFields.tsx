@@ -27,6 +27,11 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
         props.onChange(copy);
     };
 
+    const onTagsChange = (tags: string[]) => {
+        const copy = { ...props.meta, tags };
+        props.onChange(copy);
+    };
+
     return (
         <div className={css.wrapper}>
             <h6>{translate("PLAYS.FORM.META.TITLE")}</h6>
@@ -42,7 +47,7 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
             )}
 
             {props.gameOptions.showDate && <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />}
-            {props.gameOptions.showTags && <TagsInput allTags={allTags} selectedTags={[]} />}
+            {props.gameOptions.showTags && <TagsInput allTags={allTags} selectedTags={[]} onChange={onTagsChange} />}
         </div>
     );
 };
