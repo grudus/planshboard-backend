@@ -36,18 +36,21 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
         <div className={css.wrapper}>
             <h6>{translate("PLAYS.FORM.META.TITLE")}</h6>
 
-            {props.gameOptions.showNote && (
-                <Input
-                    name="note"
-                    label={translate("PLAYS.FORM.META.NOTE")}
-                    multiline
-                    initialValue={props.meta?.note}
-                    onTextChange={onNoteChange}
-                />
-            )}
-
-            {props.gameOptions.showDate && <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />}
-            {props.gameOptions.showTags && <TagsInput allTags={allTags} selectedTags={[]} onChange={onTagsChange} />}
+            <div className={css.fieldsWrapper}>
+                {props.gameOptions.showTags && (
+                    <TagsInput allTags={allTags} selectedTags={[]} onChange={onTagsChange} />
+                )}
+                {props.gameOptions.showDate && <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />}
+                {props.gameOptions.showNote && (
+                    <Input
+                        name="note"
+                        label={translate("PLAYS.FORM.META.NOTE")}
+                        multiline
+                        initialValue={props.meta?.note}
+                        onTextChange={onNoteChange}
+                    />
+                )}
+            </div>
         </div>
     );
 };

@@ -1,3 +1,5 @@
+@import "src/variables";
+
 .table {
     border-collapse:collapse;
     width: 100%;
@@ -13,7 +15,6 @@
             width: 80px;
         }
     }
-
 
 
     & tbody {
@@ -34,4 +35,27 @@
 
 .pointsInput {
     margin-bottom: 0;
+}
+
+@media (min-width: $medium) {
+    .table {
+
+        & thead {
+            & th {
+                padding-bottom: 16px;
+            }
+
+            .pointsHeader {
+                width: auto;
+            }
+        }
+
+        & tbody {
+            input {
+                width: 100px;
+            }
+        }
+
+
+    }
 }

@@ -1,3 +1,5 @@
+@import "src/variables";
+
 .wrapper {
     width: 100%;
     position: relative;
@@ -140,5 +142,11 @@ $iconMargin: 12px;
 
     40%, 60% {
         transform: translate3d(2px, 0, 0);
+    }
+}
+
+@media (min-width: $medium) {
+    .input {
+        resize: both;
     }
 }
