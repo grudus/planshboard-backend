@@ -105,6 +105,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             {...props}
             components={customComponents}
             openMenuOnFocus
+            tabSelectsValue={false}
         />
     );
 };
