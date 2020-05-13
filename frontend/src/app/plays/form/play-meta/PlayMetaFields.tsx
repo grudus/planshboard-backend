@@ -6,10 +6,12 @@ import useTranslations from "app/locale/__hooks/useTranslations";
 import DatePicker from "library/datepicker/DatePicker";
 import TagsInput from "library/tags-input/TagsInput";
 import { useRedux } from "store/rootReducer";
+import { BoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
 
 interface PlayMetaFieldsProps {
     meta?: PlayMeta;
     onChange: (meta: PlayMeta) => void;
+    gameOptions: BoardGamePlayResultsOptions;
 }
 
 const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
@@ -29,16 +31,18 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
         <div className={css.wrapper}>
             <h6>{translate("PLAYS.FORM.META.TITLE")}</h6>
 
-            <Input
-                name="note"
-                label={translate("PLAYS.FORM.META.NOTE")}
-                multiline
-                initialValue={props.meta?.note}
-                onTextChange={onNoteChange}
-            />
-            <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />
+            {props.gameOptions.showNote && (
+                <Input
+                    name="note"
+                    label={translate("PLAYS.FORM.META.NOTE")}
+                    multiline
+                    initialValue={props.meta?.note}
+                    onTextChange={onNoteChange}
+                />
+            )}
 
-            <TagsInput allTags={allTags} selectedTags={[]} />
+            {props.gameOptions.showDate && <DatePicker onSelect={onDateChange} initialValue={props.meta?.date} />}
+            {props.gameOptions.showTags && <TagsInput allTags={allTags} selectedTags={[]} />}
         </div>
     );
 };

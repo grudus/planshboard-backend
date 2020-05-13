@@ -37,7 +37,7 @@ const PlayForm: React.FC<PlayFormProps> = props => {
                     gameOptions={defaultBoardGamePlayResultsOptions}
                     results={results}
                 />
-                <PlayMetaFields onChange={setMeta} meta={meta} />
+                <PlayMetaFields onChange={setMeta} meta={meta} gameOptions={defaultBoardGamePlayResultsOptions} />
             </form>
         </main>
     );
