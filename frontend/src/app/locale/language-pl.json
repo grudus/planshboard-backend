@@ -119,7 +119,8 @@
       "OPPONENTS": {
         "TITLE": "Wybierz graczy",
         "MORE": "Więcej",
-        "LESS": "Mniej"
+        "LESS": "Mniej",
+        "DROPDOWN_LABEL": "Wybierz przeciwnika"
       },
       "META": {
         "NOTE": "Notatka",
@@ -130,6 +131,9 @@
         "POSITION": "Pozycja",
         "POINTS": "Punkty"
       }
+    },
+    "TAGS": {
+      "DROPDOWN_LABEL": "Dodaj tagi"
     }
   },
   "ERRORS": {
