@@ -21,8 +21,6 @@ const TagsInput: React.FC<TagsInputProps> = props => {
     };
 
     const components: Partial<SelectComponents<any>> = {
-        ClearIndicator: null,
-        IndicatorSeparator: null,
         MultiValue: props => (
             <Tag
                 text={props.data.label}
@@ -60,6 +58,7 @@ const TagsInput: React.FC<TagsInputProps> = props => {
             defaultValue={selected}
             components={components}
             menuPlacement="top"
+            selectTextKey="PLAYS.TAGS.DROPDOWN_LABEL"
         />
     );
 };

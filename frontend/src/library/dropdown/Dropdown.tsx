@@ -6,6 +6,9 @@ import { OptionsType, ValueType } from "react-select/src/types";
 import RingLoading from "library/loading/RingLoading";
 import css from "./dropdown.module.scss";
 import { SelectComponents } from "react-select/src/components";
+import { components } from "react-select";
+import { StylesConfig } from "react-select/src/styles";
+import { cssIf, merge } from "utils/cssUtils";
 
 export interface DropdownProps<T> extends Props<T> {
     options: OptionsType<T>;
@@ -25,8 +28,9 @@ export interface BaseDropdownItem {
 const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
     const { translate } = useTranslations();
     const theme = useTheme();
+    const placeholder = translate(props.selectTextKey ?? "DROPDOWN.SELECT_LABEL");
 
-    const components: Partial<SelectComponents<any>> = {
+    const customComponents: Partial<SelectComponents<any>> = {
         ClearIndicator: null,
         IndicatorSeparator: null,
         LoadingIndicator: a => (
@@ -34,10 +38,22 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
                 <RingLoading borderWidth={2} size={20} />
             </div>
         ),
+        ValueContainer: container => {
+            const shouldFloatLabel = container.selectProps.menuIsOpen || container.hasValue;
+            return (
+                <components.ValueContainer {...container}>
+                    <label className={merge(css.dropdownLabel, cssIf(css.floating, shouldFloatLabel))}>
+                        {placeholder}
+                    </label>
+                    {container.children}
+                </components.ValueContainer>
+            );
+        },
+
         ...props.components,
     };
 
-    const customStyles = {
+    const customStyles: StylesConfig = {
         menuList: (provided: CSSProperties) => ({
             ...provided,
             background: theme["--card-background"],
@@ -68,6 +84,12 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             ...provided,
             color: theme["--input-text"],
         }),
+        valueContainer: base => ({
+            ...base,
+            minHeight: "52px",
+            paddingLeft: "16px",
+            paddingTop: "16px",
+        }),
     };
 
     return (
@@ -76,12 +98,13 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             onChange={props.onSelect}
             formatCreateLabel={value => `${translate(props.createTextKey ?? "DROPDOWN.CREATE_LABEL")} "${value}"`}
             styles={customStyles}
-            placeholder={translate(props.selectTextKey ?? "DROPDOWN.SELECT_LABEL")}
+            placeholder=""
             onCreateOption={props.onCreateOption}
             isLoading={props.isLoading}
             isDisabled={props.isLoading}
-            components={components}
             {...props}
+            components={customComponents}
+            openMenuOnFocus
         />
     );
 };

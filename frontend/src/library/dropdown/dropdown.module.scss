@@ -4,3 +4,21 @@
     height: 20px;
     --ring-loader-color: var(--primary-color);
 }
+
+.dropdownLabel {
+    position: absolute;
+    left: 16px;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .3s all ease-in-out;
+    color: var(--input-text-muted);
+
+    &.floating {
+        font-size: 12px;
+        top: 2px;
+        transform: none;
+        font-weight: bold;
+        color: var(--input-text);
+    }
+}

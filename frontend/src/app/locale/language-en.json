@@ -119,7 +119,8 @@
       "OPPONENTS": {
         "TITLE": "Choose players",
         "MORE": "More",
-        "LESS": "Less"
+        "LESS": "Less",
+        "DROPDOWN_LABEL": "Opponent"
       },
       "META": {
         "NOTE": "Note",
@@ -130,6 +131,9 @@
         "POSITION": "Position",
         "POINTS": "Points"
       }
+    },
+    "TAGS": {
+      "DROPDOWN_LABEL": "Tags"
     }
   },
   "ERRORS": {
