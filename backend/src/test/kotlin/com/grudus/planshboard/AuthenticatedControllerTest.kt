@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import kotlin.text.Charsets.UTF_8
 
 abstract class AuthenticatedControllerTest : AbstractControllerTest() {
 
@@ -46,7 +47,8 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
 
     override fun <T> postRequest(url: String, requestBody: T): ResultActions =
         performRequestWithAuth(MockMvcRequestBuilders.post(url)
-            .contentType(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .characterEncoding(UTF_8.name())
             .content(toJson(requestBody)))
 
     fun getRequest(url: String): ResultActions =

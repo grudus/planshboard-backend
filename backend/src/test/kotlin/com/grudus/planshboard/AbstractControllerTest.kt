@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -52,6 +53,10 @@ abstract class AbstractControllerTest : SpringBasedTest() {
 
     protected fun <T> ResultActions.getResponse(aClass: Class<T>): T =
         objectMapper.readValue(this.andReturn().response.contentAsString, aClass)
+
+    protected fun ResultActions.debug(): ResultActions =
+        this.andDo(MockMvcResultHandlers.print())
+
 
 }
 
