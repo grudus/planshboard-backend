@@ -20,5 +20,11 @@ constructor(private val opponentDao: OpponentDao,
             throw UserHasNoAccessToResourceException("User $currentUserId has no access to the opponent $opponentId")
     }
 
+    fun checkAccessForMultipleOpponents(opponentIds: List<Id>) {
+        val currentUserId = currentUserService.currentUserId()
+        val hasAccessForEach = opponentDao.areAllCreatedByUser(opponentIds, currentUserId)
+        if (!hasAccessForEach)
+            throw UserHasNoAccessToResourceException("User $currentUserId has no access to the opponents $opponentIds")
+    }
 }
 

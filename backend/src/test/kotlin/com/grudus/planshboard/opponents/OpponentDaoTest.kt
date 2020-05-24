@@ -7,6 +7,7 @@ import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import kotlin.random.Random.Default.nextLong
 
 class OpponentDaoTest : AbstractDatabaseTest() {
     @Autowired
@@ -108,6 +109,46 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         val createdByUser = opponentDao.isCreatedByUser(id, creatorId)
 
         assertTrue(createdByUser)
+    }
+
+    @Test
+    fun `should check if all opponents are created by user`() {
+        val creatorId = addUser()
+        val names = listOf(randomText(), randomText())
+        val ids = names.map {
+            opponentDao.createNew(it, creatorId)
+        }
+        opponentDao.createNew(randomText(), creatorId)
+
+        val allCreatedByUser = opponentDao.areAllCreatedByUser(ids, creatorId)
+
+        assertTrue(allCreatedByUser)
+    }
+
+    @Test
+    fun `should detect that not all opponents are created by user`() {
+        val creatorId = addUser()
+        val names = listOf(randomText(), randomText())
+        val ids = names.map {
+            opponentDao.createNew(it, creatorId)
+        }
+        opponentDao.createNew(randomText(), creatorId)
+
+        val allCreatedByUser = opponentDao.areAllCreatedByUser(ids + nextLong(), creatorId)
+
+        assertFalse(allCreatedByUser)
+    }
+
+    @Test
+    fun `should detect that not all opponents are created by user when accessing another user's opponent`() {
+        val user1Id = addUser()
+        val user2Id = addUser()
+
+        val opponentFromUser1Id = opponentDao.createNew(randomText(), user1Id)
+
+        val allCreatedByUser = opponentDao.areAllCreatedByUser(listOf(opponentFromUser1Id), user2Id)
+
+        assertFalse(allCreatedByUser)
     }
 
     @Test

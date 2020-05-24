@@ -29,6 +29,7 @@ constructor(private val dsl: DSLContext) {
             .leftJoin(LINKED_OPPONENTS).on(LINKED_OPPONENTS.OPPONENT_ID.eq(OPPONENTS.ID))
             .leftJoin(USERS).on(USERS.ID.eq(LINKED_OPPONENTS.LINKED_USER_ID))
             .where(OPPONENTS.CREATOR_ID.eq(userId))
+            .orderBy(OPPONENTS.ID)
             .fetch { (id, opponentName, userId, userName, status) ->
                 val linked = userId?.let { UserLinkedToOpponent(userId, userName, convert(status)) }
                 OpponentListItem(id, opponentName, linked, 0, 0)
@@ -118,6 +119,15 @@ constructor(private val dsl: DSLContext) {
                 .where(OPPONENTS.CREATOR_ID.eq(creatorId))
                 .and(OPPONENTS.ID.eq(opponentId))
         )
+
+    fun areAllCreatedByUser(opponentIds: List<Id>, creatorId: Id): Boolean =
+        dsl.fetchCount(
+            dsl.select(OPPONENTS.ID)
+                .from(OPPONENTS)
+                .where(OPPONENTS.CREATOR_ID.eq(creatorId))
+                .and(OPPONENTS.ID.`in`(opponentIds))
+        ) == opponentIds.size
+
 
     private fun convert(status: LinkedOpponentStatus): com.grudus.planshboard.enums.LinkedOpponentStatus =
         com.grudus.planshboard.enums.LinkedOpponentStatus.valueOf(status.name)
