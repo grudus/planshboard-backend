@@ -3,9 +3,11 @@ package com.grudus.planshboard.plays.tags
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.jooq.JooqCommons.insertMultipleAndReturnIds
 import com.grudus.planshboard.tables.PlayTags.PLAY_TAGS
+import com.grudus.planshboard.tables.Plays.PLAYS
 import com.grudus.planshboard.tables.Tags.TAGS
 import com.grudus.planshboard.tables.records.TagsRecord
 import org.jooq.DSLContext
+import org.jooq.impl.DSL
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
@@ -39,4 +41,17 @@ constructor(private val dsl: DSLContext) {
             .where(TAGS.CREATOR_ID.eq(userId))
             .and(TAGS.NAME.`in`(tags))
             .fetchInto(Tag::class.java)
+
+
+    fun getAllTagsWithPlaysCount(creatorId: Id): List<TagsCount> {
+        val countField = DSL.count(PLAYS.ID).`as`("count")
+        return dsl.select(TAGS.NAME, countField)
+            .from(TAGS)
+            .leftJoin(PLAY_TAGS).on(PLAY_TAGS.TAG_ID.eq(TAGS.ID))
+            .leftJoin(PLAYS).on(PLAYS.ID.eq(PLAY_TAGS.PLAY_ID))
+            .where(TAGS.CREATOR_ID.eq(creatorId))
+            .groupBy(TAGS.NAME)
+            .orderBy(countField.desc(), TAGS.NAME)
+            .fetchInto(TagsCount::class.java)
+    }
 }

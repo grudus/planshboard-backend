@@ -7,6 +7,7 @@ import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
 import com.grudus.planshboard.plays.model.CreatePlayRequest
 import com.grudus.planshboard.plays.model.PlayResult
+import com.grudus.planshboard.utils.TestUtils.hasSize
 import com.grudus.planshboard.utils.randomText
 import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.jupiter.api.Test
@@ -55,6 +56,57 @@ constructor() : AuthenticatedControllerTest() {
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.code").value(ValidationKeys.INVALID_OPPONENT))
 
+    }
+
+    @Test
+    fun `should create new tags when saving plays`() {
+        val boardGameId = addBoardGame()
+        val opponentId = addOpponent()
+        val tag1 = "a" + randomText();
+        val tag2 = "b" + randomText();
+
+        val request = CreatePlayRequest(
+            boardGameId,
+            listOf(PlayResult(opponentId, 1, 1)),
+            listOf(tag1, tag2),
+            LocalDateTime.now().minusDays(2),
+            randomText()
+        )
+
+        postRequest(baseUrl, request)
+            .andExpect(status().isCreated)
+
+        getRequest("/api/tags")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*]", hasSize(2)))
+            .andExpect(jsonPath("$.[0].name").value(tag1))
+            .andExpect(jsonPath("$.[1].name").value(tag2))
+    }
+
+    @Test
+    fun `should increase tag count when saving tag another time`() {
+        val boardGameId = addBoardGame()
+        val opponentId = addOpponent()
+        val tag = "a" + randomText()
+
+        (0 until 3).forEach { _ ->
+            val request = CreatePlayRequest(
+                boardGameId,
+                listOf(PlayResult(opponentId, 1, 1)),
+                listOf(tag, "z" + randomText()),
+                LocalDateTime.now().minusDays(2),
+                randomText()
+            )
+
+            postRequest(baseUrl, request).andExpect(status().isCreated)
+        }
+
+        getRequest("/api/tags")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*]", hasSize(4)))
+            .andExpect(jsonPath("$.[0].count").value(3))
+            .andExpect(jsonPath("$.[1].count").value(1))
+            .andExpect(jsonPath("$.[2].count").value(1))
     }
 
     private fun addOpponent() =

@@ -30,4 +30,9 @@ constructor(private val tagDao: TagDao,
         tagDao.linkTagsToPlay(existingTagIds + createdTagIds, playId)
     }
 
+    fun getAllTagsWithPlaysCount(): List<TagsCount> {
+        val userId = currentUserService.currentUserId()
+        return tagDao.getAllTagsWithPlaysCount(userId)
+    }
+
 }
