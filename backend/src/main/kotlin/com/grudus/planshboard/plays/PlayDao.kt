@@ -2,13 +2,15 @@ package com.grudus.planshboard.plays
 
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
-import com.grudus.planshboard.plays.model.CreatePlayRequest
 import com.grudus.planshboard.plays.model.PlayResult
+import com.grudus.planshboard.plays.model.SavePlayRequest
+import com.grudus.planshboard.tables.BoardGames.BOARD_GAMES
 import com.grudus.planshboard.tables.PlayResults.PLAY_RESULTS
 import com.grudus.planshboard.tables.Plays.PLAYS
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class PlayDao
@@ -16,7 +18,7 @@ class PlayDao
 constructor(private val dsl: DSLContext,
             private val currentTimeProvider: CurrentTimeProvider) {
 
-    fun savePlayAlone(request: CreatePlayRequest): Id =
+    fun savePlayAlone(request: SavePlayRequest): Id =
         dsl.insertInto(PLAYS)
             .set(PLAYS.BOARD_GAME_ID, request.boardGameId)
             .set(PLAYS.CREATED_AT, currentTimeProvider.now())
@@ -25,6 +27,14 @@ constructor(private val dsl: DSLContext,
             .returning()
             .fetchOne()
             .id!!
+
+    fun updatePlayAlone(playId: Id, date: LocalDateTime?, note: String?) {
+        dsl.update(PLAYS)
+            .set(PLAYS.DATE, date)
+            .set(PLAYS.NOTE, note)
+            .where(PLAYS.ID.eq(playId))
+            .execute()
+    }
 
     fun savePlayResults(playId: Long, results: List<PlayResult>) {
         val batch = dsl.batch(
@@ -37,5 +47,18 @@ constructor(private val dsl: DSLContext,
         batch.execute()
     }
 
+    fun isCreatedByUser(playId: Id, creatorId: Id): Boolean =
+        dsl.fetchExists(
+            dsl.select(PLAYS.ID)
+                .from(PLAYS)
+                .join(BOARD_GAMES).on(BOARD_GAMES.ID.eq(PLAYS.BOARD_GAME_ID))
+                .where(PLAYS.ID.eq(playId))
+                .and(BOARD_GAMES.CREATOR_ID.eq(creatorId))
+        )
 
+    fun removePlayResults(playId: Id) {
+        dsl.deleteFrom(PLAY_RESULTS)
+            .where(PLAY_RESULTS.PLAY_ID.eq(playId))
+            .execute()
+    }
 }

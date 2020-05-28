@@ -17,6 +17,9 @@ constructor(private val tagDao: TagDao,
 
 
     fun addTagsToPlay(tags: List<String>, playId: Id) {
+        if (tags.isEmpty()) {
+            return
+        }
         val userId = currentUserService.currentUserId()
         log.info("User[$userId] adds tags $tags to the play[$playId]")
 
@@ -33,6 +36,11 @@ constructor(private val tagDao: TagDao,
     fun getAllTagsWithPlaysCount(): List<TagsCount> {
         val userId = currentUserService.currentUserId()
         return tagDao.getAllTagsWithPlaysCount(userId)
+    }
+
+    fun resetTagsForPlay(tags: List<String>, playId: Id) {
+        tagDao.removeTagsLinkedWithPlay(playId)
+        addTagsToPlay(tags, playId)
     }
 
 }

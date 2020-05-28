@@ -54,4 +54,10 @@ constructor(private val dsl: DSLContext) {
             .orderBy(countField.desc(), TAGS.NAME)
             .fetchInto(TagsCount::class.java)
     }
+
+    fun removeTagsLinkedWithPlay(playId: Id) {
+        dsl.deleteFrom(PLAY_TAGS)
+            .where(PLAY_TAGS.PLAY_ID.eq(playId))
+            .execute()
+    }
 }

@@ -5,8 +5,8 @@ import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
-import com.grudus.planshboard.plays.model.CreatePlayRequest
 import com.grudus.planshboard.plays.model.PlayResult
+import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.utils.TestUtils.hasSize
 import com.grudus.planshboard.utils.randomText
 import org.hamcrest.CoreMatchers.notNullValue
@@ -28,7 +28,7 @@ constructor() : AuthenticatedControllerTest() {
         val opponentId = addOpponent()
         val boardGameId = addBoardGame()
 
-        val request = CreatePlayRequest(
+        val request = SavePlayRequest(
             boardGameId,
             listOf(PlayResult(opponentId, 1, 1)), listOf(randomText()),
             LocalDateTime.now().minusDays(2),
@@ -45,7 +45,7 @@ constructor() : AuthenticatedControllerTest() {
     fun `should perform validation before creating play`() {
         val boardGameId = addBoardGame()
 
-        val request = CreatePlayRequest(
+        val request = SavePlayRequest(
             boardGameId,
             listOf(PlayResult(nextLong(), 1, 1)), listOf(randomText()),
             LocalDateTime.now().minusDays(2),
@@ -65,7 +65,7 @@ constructor() : AuthenticatedControllerTest() {
         val tag1 = "a" + randomText();
         val tag2 = "b" + randomText();
 
-        val request = CreatePlayRequest(
+        val request = SavePlayRequest(
             boardGameId,
             listOf(PlayResult(opponentId, 1, 1)),
             listOf(tag1, tag2),
@@ -83,6 +83,90 @@ constructor() : AuthenticatedControllerTest() {
             .andExpect(jsonPath("$.[1].name").value(tag2))
     }
 
+
+    @Test
+    fun `should add new tag when update play`() {
+        val boardGameId = addBoardGame()
+        val opponentId = addOpponent()
+        val tag1 = "a" + randomText();
+        val tag2 = "b" + randomText();
+
+        val saveRequest = SavePlayRequest(
+            boardGameId,
+            listOf(PlayResult(opponentId, 1, 1)),
+            listOf(tag1)
+        )
+        val updateRequest = saveRequest.copy(tags = listOf(tag1, tag2))
+
+        val id = postRequest(baseUrl, saveRequest)
+            .andExpect(status().isCreated)
+            .getResponse(IdResponse::class.java).id
+
+        putRequest("$baseUrl/$id", updateRequest)
+            .andExpect(status().isOk)
+
+
+        getRequest("/api/tags")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*]", hasSize(2)))
+            .andExpect(jsonPath("$.[0].name").value(tag1))
+            .andExpect(jsonPath("$.[0].count").value(1))
+            .andExpect(jsonPath("$.[1].count").value(1))
+            .andExpect(jsonPath("$.[1].name").value(tag2))
+    }
+
+    @Test
+    fun `should remove tag assigned to play when updating play without that tag`() {
+        val boardGameId = addBoardGame()
+        val opponentId = addOpponent()
+        val tag1 = "a" + randomText();
+        val tag2 = "b" + randomText();
+
+        val saveRequest = SavePlayRequest(
+            boardGameId,
+            listOf(PlayResult(opponentId, 1, 1)),
+            listOf(tag1, tag2)
+        )
+        val updateRequest = saveRequest.copy(tags = listOf(tag1))
+
+        val id = postRequest(baseUrl, saveRequest)
+            .andExpect(status().isCreated)
+            .getResponse(IdResponse::class.java).id
+
+        putRequest("$baseUrl/$id", updateRequest)
+            .andExpect(status().isOk)
+
+
+        getRequest("/api/tags")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*]", hasSize(2)))
+            .andExpect(jsonPath("$.[0].name").value(tag1))
+            .andExpect(jsonPath("$.[0].count").value(1))
+            .andExpect(jsonPath("$.[1].count").value(0))
+            .andExpect(jsonPath("$.[1].name").value(tag2))
+    }
+
+    @Test
+    fun `should not be able to edit someone else's play`() {
+        val boardGameId = addBoardGame()
+        val opponentId = addOpponent()
+
+        val saveRequest = SavePlayRequest(
+            boardGameId,
+            listOf(PlayResult(opponentId, 1, 1)),
+            emptyList()
+        )
+
+        val id = postRequest(baseUrl, saveRequest)
+            .andExpect(status().isCreated)
+            .getResponse(IdResponse::class.java).id
+
+        setupAuthContextForAnotherUser()
+
+        putRequest("$baseUrl/$id", saveRequest)
+            .andExpect(status().isForbidden)
+    }
+
     @Test
     fun `should increase tag count when saving tag another time`() {
         val boardGameId = addBoardGame()
@@ -90,7 +174,7 @@ constructor() : AuthenticatedControllerTest() {
         val tag = "a" + randomText()
 
         (0 until 3).forEach { _ ->
-            val request = CreatePlayRequest(
+            val request = SavePlayRequest(
                 boardGameId,
                 listOf(PlayResult(opponentId, 1, 1)),
                 listOf(tag, "z" + randomText()),

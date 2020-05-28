@@ -7,17 +7,17 @@ import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.commons.validation.ValidationResult
 import com.grudus.planshboard.commons.validation.ValidationSuccess
 import com.grudus.planshboard.opponents.OpponentSecurityService
-import com.grudus.planshboard.plays.model.CreatePlayRequest
+import com.grudus.planshboard.plays.model.SavePlayRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class CreatePlayRequestValidator
+class SavePlayRequestValidator
 @Autowired
 constructor(private val boardGameSecurityService: BoardGameSecurityService,
             private val opponentSecurityService: OpponentSecurityService) {
 
-    fun validate(request: CreatePlayRequest): ValidationResult =
+    fun validate(request: SavePlayRequest): ValidationResult =
         when {
             noResults(request) -> ValidationError(ValidationKeys.EMPTY_FIELD)
             positionOutOfRange(request) -> ValidationError(ValidationKeys.INVALID_POSITION)
@@ -26,16 +26,16 @@ constructor(private val boardGameSecurityService: BoardGameSecurityService,
             else -> ValidationSuccess
         }
 
-    fun positionOutOfRange(request: CreatePlayRequest): Boolean {
+    fun positionOutOfRange(request: SavePlayRequest): Boolean {
         val results = request.results.size
-        return request.results.all { (it.position ?: 0) > results || (it.position ?: 1) <= 0 }
+        return request.results.any { (it.position ?: 0) > results || (it.position ?: 1) <= 0 }
     }
 
 
-    private fun noResults(request: CreatePlayRequest): Boolean =
+    private fun noResults(request: SavePlayRequest): Boolean =
         request.results.isEmpty()
 
-    private fun boardGameDoesNotExist(request: CreatePlayRequest): Boolean =
+    private fun boardGameDoesNotExist(request: SavePlayRequest): Boolean =
         try {
             boardGameSecurityService.checkAccess(request.boardGameId)
             false
@@ -43,7 +43,7 @@ constructor(private val boardGameSecurityService: BoardGameSecurityService,
             true
         }
 
-    private fun opponentsDoesNotExists(request: CreatePlayRequest): Boolean =
+    private fun opponentsDoesNotExists(request: SavePlayRequest): Boolean =
         try {
             val opponentIds = request.results.map { it.opponentId }
             opponentSecurityService.checkAccessForMultipleOpponents(opponentIds)
