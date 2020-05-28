@@ -4,7 +4,7 @@ import com.grudus.planshboard.AbstractDatabaseTest
 import com.grudus.planshboard.boardgames.BoardGameDao
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.plays.PlayDao
-import com.grudus.planshboard.plays.model.CreatePlayRequest
+import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.tables.PlayTags.PLAY_TAGS
 import com.grudus.planshboard.tables.Tags.TAGS
 import com.grudus.planshboard.utils.randomText
@@ -186,6 +186,6 @@ constructor(private val tagDao: TagDao,
 
     private fun createPlayForUser(user: Id): Id {
         val boardGameId = boardGameDao.create(user, randomText())
-        return playDao.savePlayAlone(CreatePlayRequest(boardGameId, emptyList(), emptyList()))
+        return playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList()))
     }
 }

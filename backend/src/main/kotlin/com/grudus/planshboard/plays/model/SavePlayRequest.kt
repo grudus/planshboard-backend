@@ -4,7 +4,7 @@ import com.grudus.planshboard.commons.Id
 import java.time.LocalDateTime
 
 
-data class CreatePlayRequest(
+data class SavePlayRequest(
     val boardGameId: Id,
     val results: List<PlayResult>,
     val tags: List<String>,
