@@ -1,31 +1,48 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Pikaday from "pikaday";
 import Input from "library/input/Input";
 import IconButton from "library/icon-button/IconButton";
 import Icons from "library/icons/Icons";
 import "./datepicker.scss";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import { formatFullDate } from "utils/dateUtils";
+import { connect } from "react-redux";
+import { Store } from "store/rootReducer";
+import { Translations } from "app/locale/__store/localeStore";
+import { memoizedTranslation } from "app/locale/__hooks/useTranslations";
 
 interface DatePickerProps {
     initialValue?: Date;
     onSelect: (date: Date) => void;
+    translations?: Translations;
 }
 
-const DatePicker: React.FC<DatePickerProps> = props => {
-    const { translate } = useTranslations();
-    const pickadayRef: any = useRef();
-    const [date, setDate] = useState(props.initialValue ?? new Date());
-    const [picker, setPicker] = useState(null as Pikaday | null);
+interface DatePickerState {
+    date: Date;
+    pikadayInstance?: Pikaday;
+}
 
-    useEffect(() => {
-        const pickerTemp = new Pikaday({
-            field: pickadayRef.current,
-            defaultDate: date,
+class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
+    private readonly pickadayRef: React.RefObject<HTMLInputElement>;
+
+    state: DatePickerState = {
+        date: new Date(),
+    };
+
+    constructor(props: DatePickerProps) {
+        super(props);
+        this.pickadayRef = React.createRef();
+    }
+
+    componentDidMount() {
+        const translate = (key: string) => memoizedTranslation(key, this.props.translations ?? {});
+
+        const pikadayInstance = new Pikaday({
+            field: this.pickadayRef.current,
+            defaultDate: this.state.date,
             setDefaultDate: true,
-            onSelect(date: Date) {
-                setDate(date);
-                props.onSelect(date);
+            onSelect: (date: Date) => {
+                this.setState({ date });
+                this.props.onSelect(date);
             },
             i18n: {
                 previousMonth: "",
@@ -35,25 +52,28 @@ const DatePicker: React.FC<DatePickerProps> = props => {
                 weekdaysShort: translate("DATEPICKER.WEEKDAYS_SHORT")?.split(","),
             },
         });
-        setPicker(pickerTemp);
-        // eslint-disable-next-line
-    }, []);
-
-    function showPicker() {
-        picker?.show?.();
+        this.setState({ pikadayInstance });
     }
 
-    return (
-        <div>
-            <Input
-                label="Data"
-                name="date"
-                initialValue={formatFullDate(date)}
-                actionIcon={<IconButton svgIcon={Icons.CalendarIcon} onClick={showPicker} />}
-                inputExtra={{ readOnly: true, ref: pickadayRef }}
-            />
-        </div>
-    );
-};
+    showDialog = () => {
+        this.state.pikadayInstance?.show();
+    };
 
-export default React.memo(DatePicker);
+    render() {
+        return (
+            <div>
+                <Input
+                    label="Data"
+                    name="date"
+                    initialValue={formatFullDate(this.state.date)}
+                    actionIcon={<IconButton svgIcon={Icons.CalendarIcon} onClick={this.showDialog} />}
+                    inputExtra={{ readOnly: true, ref: this.pickadayRef }}
+                />
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = (state: Store) => ({ translations: state.locale.translations });
+
+export default connect(mapStateToProps)(DatePicker);

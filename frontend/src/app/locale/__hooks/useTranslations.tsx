@@ -7,7 +7,7 @@ import { Translations } from "app/locale/__store/localeStore";
 const performTranslate = (key: string, translations: Translations): string =>
     key && getNestedTranslation(key, translations);
 
-const memoizedTranslation = memoize(performTranslate);
+export const memoizedTranslation = memoize(performTranslate);
 
 const useTranslations = (): { translate: Function } => {
     const { translations } = useRedux(state => state.locale);
