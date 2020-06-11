@@ -22,7 +22,7 @@ const PlayForm: React.FC<PlayFormProps> = props => {
     const frequent: Opponent[] = useRedux(state => state.opponent.frequentOpponents);
     const [frequentOpponents, setFrequentOpponents] = useState(frequent);
     const [results, setResults] = useState(props.results);
-    const [meta, setMeta] = useState(props.meta ?? {});
+    const [meta, setMeta] = useState(props.meta ?? { date: new Date() });
 
     useEffect(() => {
         setResults(props.results);

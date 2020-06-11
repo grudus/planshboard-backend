@@ -46,6 +46,9 @@ export const apiRoutes = {
         update: (id: number) => `/api/opponents/${id}`,
         single: (id: number) => `/api/opponents/${id}`,
     },
+    play: {
+        create: "/api/plays",
+    },
 };
 
 export const routesWithoutNav = [appRoutes.auth.base];
