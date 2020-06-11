@@ -15,12 +15,4 @@ export const playReducer = createReducer<PlayStore>(initialState, {
         ...state,
         tags: action.payload,
     }),
-    APP_INITIALIZED: state => ({
-        ...state,
-        tags: [
-            { name: "Koronawirus", count: 13 },
-            { name: "kwarantanna", count: 256 },
-            { name: "uro golca", count: 12 },
-        ],
-    }),
 });

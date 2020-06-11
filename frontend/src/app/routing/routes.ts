@@ -49,6 +49,9 @@ export const apiRoutes = {
     play: {
         create: "/api/plays",
     },
+    tags: {
+        getWithPlaysCount: "/api/tags",
+    },
 };
 
 export const routesWithoutNav = [appRoutes.auth.base];
