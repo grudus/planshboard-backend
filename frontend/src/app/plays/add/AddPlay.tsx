@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CardForm from "library/card-form/CardForm";
 import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
@@ -9,13 +9,17 @@ import { useRedux } from "store/rootReducer";
 import { PlayMeta, PlayResultRow, SavePlayRequest } from "app/plays/__models/PlayModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { createPlayRequest } from "app/plays/PlayApi";
+import { createPlayRequest, getTagsRequest } from "app/plays/PlayApi";
 
 const AddPlay: React.FC = () => {
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
     const currentUser = useRedux(s => s.opponent.currentUser);
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
+
+    useEffect(() => {
+        getTagsRequest(dispatch);
+    }, [dispatch]);
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
         const request: SavePlayRequest = {
