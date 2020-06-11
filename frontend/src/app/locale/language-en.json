@@ -132,6 +132,9 @@
         "POINTS": "Points"
       }
     },
+    "ADD": {
+      "TITLE": "Add play"
+    },
     "TAGS": {
       "DROPDOWN_LABEL": "Tags"
     }

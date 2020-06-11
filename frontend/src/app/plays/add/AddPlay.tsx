@@ -6,19 +6,30 @@ import PlayForm from "app/plays/form/PlayForm";
 import css from "./add-play.module.scss";
 import { Opponent } from "app/opponents/__models/OpponentModels";
 import { useRedux } from "store/rootReducer";
-import { PlayMeta, PlayResultRow } from "app/plays/__models/PlayModels";
+import { PlayMeta, PlayResultRow, SavePlayRequest } from "app/plays/__models/PlayModels";
+import useTranslations from "app/locale/__hooks/useTranslations";
+import { useHttpDispatch } from "app/shared/store/httpRequestActions";
+import { createPlayRequest } from "app/plays/PlayApi";
 
 const AddPlay: React.FC = () => {
+    const { translate } = useTranslations();
+    const dispatch = useHttpDispatch();
     const currentUser = useRedux(s => s.opponent.currentUser);
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
-        console.log("@@@ On submit form", results, meta);
+        const request: SavePlayRequest = {
+            boardGameId: 1,
+            results: results.map(r => ({ ...r, opponentId: r.opponent.id })),
+            tags: meta.tags ?? [],
+            ...meta,
+        };
+        await createPlayRequest(dispatch, request);
     };
 
     return (
         <CardForm className={css.formWrapper}>
-            <CardFormTitle>Dodaj rozgrywkę</CardFormTitle>
+            <CardFormTitle>{translate("PLAYS.ADD.TITLE")}</CardFormTitle>
             <CardFormContent>
                 <PlayForm
                     results={selectedOpponents.map(o => ({ opponent: o }))}

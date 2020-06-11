@@ -132,6 +132,9 @@
         "POINTS": "Punkty"
       }
     },
+    "ADD": {
+      "TITLE": "Dodaj grę"
+    },
     "TAGS": {
       "DROPDOWN_LABEL": "Dodaj tagi"
     }
