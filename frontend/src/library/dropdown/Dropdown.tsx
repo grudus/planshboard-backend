@@ -54,6 +54,11 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
     };
 
     const customStyles: StylesConfig = {
+        menu: (provided: CSSProperties) => ({
+            ...provided,
+            zIndex: 20,
+        }),
+
         menuList: (provided: CSSProperties) => ({
             ...provided,
             background: theme["--card-background"],
