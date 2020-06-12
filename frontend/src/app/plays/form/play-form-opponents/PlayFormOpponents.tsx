@@ -4,7 +4,7 @@ import css from "./play-form-opponents.module.scss";
 import Chip from "library/chip/Chip";
 import FlipMove from "react-flip-move";
 import OpponentsDropdown from "app/opponents/dropdown/OpponentsDropdown";
-import { cssIf, merge } from "utils/cssUtils";
+import { merge } from "utils/cssUtils";
 import useTranslations from "app/locale/__hooks/useTranslations";
 
 interface PlayFormOpponentsProps {
@@ -28,24 +28,23 @@ const PlayFormOpponents: React.FC<PlayFormOpponentsProps> = props => {
                 </a>
             </div>
 
-            <FlipMove
-                typeName="ul"
-                className={merge(css.frequentOpponentsWrapper, cssIf(css.hidden, showMoreOpponents))}
-            >
-                {props.frequentOpponents
-                    .filter(op => !props.alreadyUsedOpponents.has(op.id))
-                    .map(op => (
-                        <li key={op.id}>
-                            <Chip text={op.name} onClick={() => props.onSelect(op)} />
-                        </li>
-                    ))}
-            </FlipMove>
+            {!showMoreOpponents && (
+                <FlipMove typeName="ul" className={css.frequentOpponentsWrapper}>
+                    {props.frequentOpponents
+                        .filter(op => !props.alreadyUsedOpponents.has(op.id))
+                        .map(op => (
+                            <li key={op.id}>
+                                <Chip text={op.name} onClick={() => props.onSelect(op)} />
+                            </li>
+                        ))}
+                </FlipMove>
+            )}
 
             {showMoreOpponents && (
                 <OpponentsDropdown
                     onSelect={props.onSelect}
                     autoFocus
-                    defaultMenuIsOpen
+                    openMenuOnFocus
                     alreadyUsedOpponents={props.alreadyUsedOpponents}
                 />
             )}

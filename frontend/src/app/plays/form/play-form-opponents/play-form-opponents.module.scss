@@ -26,15 +26,8 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     transition: all .2s ease-in-out;
-    opacity: 1;
-    max-height: 300px;
 
     & > *:not(:last-child) {
         margin-right: 8px;
-    }
-
-    &.hidden {
-        opacity: 0;
-        max-height: 0;
     }
 }
