@@ -40,6 +40,6 @@ export interface SingleOpponentStats {
 
 export interface SaveOpponentRequest {
     opponentName: string;
-    existingUserName: string;
+    existingUserName?: string;
     id?: number;
 }

@@ -5,7 +5,11 @@ import {
     SingleOpponentStats,
 } from "app/opponents/__models/OpponentModels";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { getAllOpponentsSuccessAction, getSingleOpponentSuccessAction } from "app/opponents/__store/opponentActions";
+import {
+    createOpponentSuccessAction,
+    getAllOpponentsSuccessAction,
+    getSingleOpponentSuccessAction,
+} from "app/opponents/__store/opponentActions";
 
 export interface OpponentStore {
     list: OpponentListItem[];
@@ -31,6 +35,10 @@ export const opponentReducer = createReducer<OpponentStore>(initialState, {
     [getSingleOpponentSuccessAction.type]: (state, action: PayloadAction<OpponentWithStats>) => ({
         ...state,
         single: action.payload,
+    }),
+    [createOpponentSuccessAction.type]: (state, action: PayloadAction<Opponent>) => ({
+        ...state,
+        list: [...state.list, { ...action.payload, numberOfPlays: 0, numberOfWins: 0 }],
     }),
     APP_INITIALIZED: state => ({
         ...state,

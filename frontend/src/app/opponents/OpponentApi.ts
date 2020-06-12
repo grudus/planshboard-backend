@@ -6,7 +6,8 @@ import {
 } from "app/opponents/__store/opponentActions";
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
-import { SaveOpponentRequest } from "app/opponents/__models/OpponentModels";
+import { Opponent, SaveOpponentRequest } from "app/opponents/__models/OpponentModels";
+import { IdResponse } from "app/shared/models/Response";
 
 export function getAllOpponentsRequest(dispatch: HttpDispatch): Promise<any> {
     return dispatch({
@@ -19,6 +20,7 @@ export function getAllOpponentsRequest(dispatch: HttpDispatch): Promise<any> {
 interface GetSingleOpponentRequest {
     id: number;
 }
+
 export function getSingleOpponent(dispatch: HttpDispatch, request: GetSingleOpponentRequest): Promise<any> {
     return dispatch({
         type: "get",
@@ -27,12 +29,12 @@ export function getSingleOpponent(dispatch: HttpDispatch, request: GetSingleOppo
     });
 }
 
-export function createOpponentRequest(dispatch: HttpDispatch, request: SaveOpponentRequest) {
+export function createOpponentRequest(dispatch: HttpDispatch, request: SaveOpponentRequest): Promise<Opponent> {
     return dispatch({
         type: "post",
         path: apiRoutes.opponent.create,
         body: request,
-        successAction: createOpponentSuccessAction,
+        successAction: ({ id }: IdResponse) => createOpponentSuccessAction({ id, name: request.opponentName }),
     });
 }
 
