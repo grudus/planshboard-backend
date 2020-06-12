@@ -6,7 +6,7 @@ import AddPlay from "app/plays/add/AddPlay";
 
 const PlayRoutes: React.FC = () => (
     <Switch>
-        <Route path={appRoutes.plays.list}>
+        <Route path={appRoutes.plays.add}>
             <AddPlay />
         </Route>
         <Route path={appRoutes.plays.edit}>
