@@ -10,6 +10,7 @@ import useTranslations from "app/locale/__hooks/useTranslations";
 interface PlayFormOpponentsProps {
     frequentOpponents: Opponent[];
     onSelect: (op: Opponent) => void;
+    alreadyUsedOpponents: Set<number>;
 }
 
 const PlayFormOpponents: React.FC<PlayFormOpponentsProps> = props => {
@@ -31,14 +32,23 @@ const PlayFormOpponents: React.FC<PlayFormOpponentsProps> = props => {
                 typeName="ul"
                 className={merge(css.frequentOpponentsWrapper, cssIf(css.hidden, showMoreOpponents))}
             >
-                {props.frequentOpponents.map(op => (
-                    <li key={op.id}>
-                        <Chip text={op.name} onClick={() => props.onSelect(op)} />
-                    </li>
-                ))}
+                {props.frequentOpponents
+                    .filter(op => !props.alreadyUsedOpponents.has(op.id))
+                    .map(op => (
+                        <li key={op.id}>
+                            <Chip text={op.name} onClick={() => props.onSelect(op)} />
+                        </li>
+                    ))}
             </FlipMove>
 
-            {showMoreOpponents && <OpponentsDropdown onSelect={props.onSelect} autoFocus defaultMenuIsOpen />}
+            {showMoreOpponents && (
+                <OpponentsDropdown
+                    onSelect={props.onSelect}
+                    autoFocus
+                    defaultMenuIsOpen
+                    alreadyUsedOpponents={props.alreadyUsedOpponents}
+                />
+            )}
         </section>
     );
 };

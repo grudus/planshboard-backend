@@ -23,6 +23,7 @@ const PlayForm: React.FC<PlayFormProps> = props => {
     const [frequentOpponents, setFrequentOpponents] = useState(frequent);
     const [results, setResults] = useState(props.results);
     const [meta, setMeta] = useState(props.meta ?? { date: new Date() });
+    const alreadyUsedOpponents = new Set(results.map(result => result.opponent.id));
 
     useEffect(() => {
         setResults(props.results);
@@ -35,7 +36,11 @@ const PlayForm: React.FC<PlayFormProps> = props => {
 
     return (
         <main>
-            <PlayFormOpponents frequentOpponents={frequentOpponents} onSelect={selectOpponent} />
+            <PlayFormOpponents
+                frequentOpponents={frequentOpponents}
+                onSelect={selectOpponent}
+                alreadyUsedOpponents={alreadyUsedOpponents}
+            />
             <form className={css.opponentsForm}>
                 <PlayResultsTable
                     onChange={setResults}
