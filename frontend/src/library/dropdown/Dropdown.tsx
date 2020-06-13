@@ -101,7 +101,11 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         <CreatableSelect
             options={props.options}
             onChange={props.onSelect}
-            formatCreateLabel={value => `${translate(props.createTextKey ?? "DROPDOWN.CREATE_LABEL")} "${value}"`}
+            formatCreateLabel={value => (
+                <span className={css.createLabelDefault}>
+                    {`${translate(props.createTextKey ?? "DROPDOWN.CREATE_LABEL")} "${value}"`}
+                </span>
+            )}
             styles={customStyles}
             placeholder=""
             onCreateOption={props.onCreateOption}

@@ -35,11 +35,7 @@ const TagsInput: React.FC<TagsInputProps> = props => {
         const tagOption = option as BaseDropdownItem & TagCounts;
         const { label, count, __isNew__ } = tagOption;
         if (__isNew__) {
-            return (
-                <div className={css.tagOptionWrapper}>
-                    <div>{label}</div>
-                </div>
-            );
+            return <span>{label}</span>;
         }
         return (
             <div className={css.tagOptionWrapper}>

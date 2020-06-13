@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRedux } from "store/rootReducer";
 import Dropdown, { DropdownProps } from "library/dropdown/Dropdown";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
@@ -10,11 +10,14 @@ interface OpponentsDropdownProps extends Partial<DropdownProps<any>> {
 }
 
 const OpponentsDropdown: React.FC<OpponentsDropdownProps> = props => {
+    const [isCreatingNew, setCreatingNew] = useState(false);
     const opponents = useRedux(state => state.opponent.list);
     const dispatch = useHttpDispatch();
 
     const createOpponent = async (opponentName: string) => {
+        setCreatingNew(true);
         const response = await createOpponentRequest(dispatch, { opponentName });
+        setCreatingNew(false);
         const { id } = response;
         props.onSelect?.({ id, name: opponentName });
     };
@@ -27,7 +30,16 @@ const OpponentsDropdown: React.FC<OpponentsDropdownProps> = props => {
         .filter(op => !props.alreadyUsedOpponents?.has(op.id))
         .map(op => ({ label: op.name, value: op }));
 
-    return <Dropdown options={options} {...props} onSelect={onSelect} onCreateOption={createOpponent} />;
+    return (
+        <Dropdown
+            options={options}
+            {...props}
+            onSelect={onSelect}
+            onCreateOption={createOpponent}
+            isLoading={isCreatingNew}
+            blurInputOnSelect
+        />
+    );
 };
 
 export default OpponentsDropdown;
