@@ -17,34 +17,26 @@ import org.springframework.stereotype.Repository
 @Repository
 class OpponentDao
 @Autowired
-constructor(private val dsl: DSLContext) {
+constructor(private val dsl: DSLContext,
+            private val helper: OpponentDaoHelper) {
 
     fun creteInitial(name: String, userId: Id): Id =
         createAndLinkToUser(name, userId, userId, LINKED_WITH_CREATOR)
 
     // TODO mocked until plays implemented
     fun findListItems(userId: Id): List<OpponentListItem> =
-        dsl.select(OPPONENTS.ID, OPPONENTS.NAME, USERS.ID, USERS.NAME, LINKED_OPPONENTS.INTEGRATION_STATUS)
-            .from(OPPONENTS)
-            .leftJoin(LINKED_OPPONENTS).on(LINKED_OPPONENTS.OPPONENT_ID.eq(OPPONENTS.ID))
-            .leftJoin(USERS).on(USERS.ID.eq(LINKED_OPPONENTS.LINKED_USER_ID))
+        helper.selectOpponentWithLinkedUser()
             .where(OPPONENTS.CREATOR_ID.eq(userId))
             .orderBy(OPPONENTS.ID)
             .fetch { (id, opponentName, userId, userName, status) ->
-                val linked = userId?.let { UserLinkedToOpponent(userId, userName, convert(status)) }
+                val linked = userId?.let { UserLinkedToOpponent(userId, userName, helper.convert(status)) }
                 OpponentListItem(id, opponentName, linked, 0, 0)
             }
 
     fun findById(opponentId: Id): OpponentDto? =
-        dsl.select(OPPONENTS.ID, OPPONENTS.NAME, USERS.ID, USERS.NAME, LINKED_OPPONENTS.INTEGRATION_STATUS)
-            .from(OPPONENTS)
-            .leftJoin(LINKED_OPPONENTS).on(LINKED_OPPONENTS.OPPONENT_ID.eq(OPPONENTS.ID))
-            .leftJoin(USERS).on(USERS.ID.eq(LINKED_OPPONENTS.LINKED_USER_ID))
+        helper.selectOpponentWithLinkedUser()
             .where(OPPONENTS.ID.eq(opponentId))
-            .fetchOne { (id, opponentName, userId, userName, status) ->
-                val linked = userId?.let { UserLinkedToOpponent(userId, userName, convert(status)) }
-                OpponentDto(id, opponentName, linked)
-            }
+            .fetchOne(helper.opponentDtoMapper())
 
 
     fun createNew(name: String, userId: Id): Id =
@@ -67,11 +59,12 @@ constructor(private val dsl: DSLContext) {
         dsl.insertInto(LINKED_OPPONENTS)
             .set(LINKED_OPPONENTS.OPPONENT_ID, opponentId)
             .set(LINKED_OPPONENTS.LINKED_USER_ID, linkedTo)
-            .set(LINKED_OPPONENTS.INTEGRATION_STATUS, convert(status))
+            .set(LINKED_OPPONENTS.INTEGRATION_STATUS, helper.convert(status))
             .execute()
 
         return opponentId
     }
+
 
     fun updateName(id: Id, name: String) {
         dsl.update(OPPONENTS)
@@ -90,7 +83,7 @@ constructor(private val dsl: DSLContext) {
         dsl.insertInto(LINKED_OPPONENTS)
             .set(LINKED_OPPONENTS.OPPONENT_ID, opponentId)
             .set(LINKED_OPPONENTS.LINKED_USER_ID, linkedTo)
-            .set(LINKED_OPPONENTS.INTEGRATION_STATUS, convert(status))
+            .set(LINKED_OPPONENTS.INTEGRATION_STATUS, helper.convert(status))
             .execute()
     }
 
@@ -127,12 +120,4 @@ constructor(private val dsl: DSLContext) {
                 .where(OPPONENTS.CREATOR_ID.eq(creatorId))
                 .and(OPPONENTS.ID.`in`(opponentIds))
         ) == opponentIds.size
-
-
-    private fun convert(status: LinkedOpponentStatus): com.grudus.planshboard.enums.LinkedOpponentStatus =
-        com.grudus.planshboard.enums.LinkedOpponentStatus.valueOf(status.name)
-
-    private fun convert(status: com.grudus.planshboard.enums.LinkedOpponentStatus): LinkedOpponentStatus  =
-        LinkedOpponentStatus.valueOf(status.name)
-
 }

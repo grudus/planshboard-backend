@@ -4,6 +4,7 @@ import com.grudus.planshboard.auth.UserAuthentication
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.responses.idOf
+import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.OpponentListItem
 import com.grudus.planshboard.opponents.model.OpponentWithStats
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
@@ -25,6 +26,10 @@ constructor(private val opponentService: OpponentService,
     @GetMapping
     fun findListItems(authentication: UserAuthentication): List<OpponentListItem> =
         opponentService.findListItems(authentication.id)
+
+    @GetMapping("/frequent")
+    fun findFrequentOpponents(authentication: UserAuthentication): List<OpponentDto> =
+        opponentService.findFrequentOpponents(authentication.id)
 
     @GetMapping("/{id}")
     fun getSingleOpponentWithStats(@PathVariable("id") opponentId: Id,

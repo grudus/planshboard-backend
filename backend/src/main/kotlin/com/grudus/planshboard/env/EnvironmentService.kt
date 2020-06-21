@@ -20,4 +20,7 @@ constructor(private val environment: Environment) {
 
     fun getLong(key: String): Long =
         environment.getProperty(key, Long::class.java) ?: throw CannotFindKeyException(key)
+
+    fun getInt(key: String): Int =
+        environment.getProperty(key, Int::class.java) ?: throw CannotFindKeyException(key)
 }
