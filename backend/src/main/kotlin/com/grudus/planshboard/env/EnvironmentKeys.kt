@@ -8,4 +8,5 @@ object EnvironmentKeys {
     const val SPRING_DATASOURCE_DRIVER_CLASS_NAME = "spring.datasource.driver-class-name"
     const val JWT_EXPIRE_SECONDS = "jwt.expire.seconds"
     const val JWT_KEY = "jwt.key"
+    const val MAX_NUMBER_OF_FREQUENT_OPPONENTS = "opponents.frequent.max-number"
 }

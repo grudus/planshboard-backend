@@ -1,6 +1,7 @@
 package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
+import com.grudus.planshboard.env.EnvironmentService
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
@@ -10,6 +11,8 @@ import com.grudus.planshboard.user.UserService
 import com.grudus.planshboard.utils.TestUtils.any
 import com.grudus.planshboard.utils.TestUtils.eq
 import com.grudus.planshboard.utils.randomText
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -31,11 +34,17 @@ class OpponentServiceTest {
     @Mock
     private lateinit var currentUserService: CurrentUserService
 
+    @Mock
+    private lateinit var opponentStatsDao: OpponentStatsDao
+
+    @Mock
+    private lateinit var environmentService: EnvironmentService
+
     private lateinit var opponentService: OpponentService
 
     @BeforeEach
     fun init() {
-        opponentService = OpponentService(opponentDao, userService, currentUserService)
+        opponentService = OpponentService(opponentDao, opponentStatsDao, userService, currentUserService, environmentService)
     }
 
     @Test
@@ -118,5 +127,61 @@ class OpponentServiceTest {
 
         verify(opponentDao, never()).removeLinkedUser(anyLong())
         verify(opponentDao, never()).linkToUser(anyLong(), anyLong(), any())
+    }
+
+    @Test
+    fun `should return distinct frequent opponents`() {
+        val opponent1 = OpponentDto(nextLong(), randomText())
+        val opponent2 = OpponentDto(nextLong(), randomText())
+        val opponent3 = OpponentDto(nextLong(), randomText())
+
+        `when`(opponentStatsDao.findMostFrequentOpponents(anyLong(), anyInt())).thenReturn(
+            listOf(opponent1, opponent2)
+        )
+        `when`(opponentStatsDao.findOpponentsWithMostRecentPlays(anyLong(), anyInt())).thenReturn(
+            listOf(opponent2, opponent3)
+        )
+
+        val frequentOpponents = opponentService.findFrequentOpponents(nextLong())
+
+        assertEquals(3, frequentOpponents.size)
+        listOf(opponent1, opponent2, opponent3).forEach {
+            assertTrue(frequentOpponents.contains(it)) { "Cannot find $it in frequent opponent list" }
+        }
+    }
+
+    @Test
+    fun `should sort recently played opponents first`() {
+        val opponent1 = OpponentDto(nextLong(), randomText())
+        val opponent2 = OpponentDto(nextLong(), randomText())
+        val opponent3 = OpponentDto(nextLong(), randomText())
+
+        `when`(opponentStatsDao.findMostFrequentOpponents(anyLong(), anyInt())).thenReturn(
+            listOf(opponent1, opponent2)
+        )
+        `when`(opponentStatsDao.findOpponentsWithMostRecentPlays(anyLong(), anyInt())).thenReturn(
+            listOf(opponent2, opponent3)
+        )
+
+        val frequentOpponents = opponentService.findFrequentOpponents(nextLong())
+
+        assertEquals(3, frequentOpponents.size)
+        assertEquals(opponent2, frequentOpponents[0])
+        assertEquals(opponent3, frequentOpponents[1])
+        assertEquals(opponent1, frequentOpponents[2])
+    }
+
+    @Test
+    fun `should return empty list when finding frequent opponents without plays`() {
+        `when`(opponentStatsDao.findMostFrequentOpponents(anyLong(), anyInt())).thenReturn(
+            listOf()
+        )
+        `when`(opponentStatsDao.findOpponentsWithMostRecentPlays(anyLong(), anyInt())).thenReturn(
+            listOf()
+        )
+
+        val frequentOpponents = opponentService.findFrequentOpponents(nextLong())
+
+        assertTrue(frequentOpponents.isEmpty())
     }
 }
