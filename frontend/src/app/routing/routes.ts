@@ -42,6 +42,7 @@ export const apiRoutes = {
     },
     opponent: {
         list: "/api/opponents",
+        frequent: "/api/opponents/frequent",
         create: "/api/opponents",
         update: (id: number) => `/api/opponents/${id}`,
         single: (id: number) => `/api/opponents/${id}`,

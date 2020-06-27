@@ -1,6 +1,7 @@
 import {
     createOpponentSuccessAction,
     getAllOpponentsSuccessAction,
+    getFrequentOpponentsSuccessAction,
     getSingleOpponentSuccessAction,
     updateOpponentSuccessAction,
 } from "app/opponents/__store/opponentActions";
@@ -14,6 +15,13 @@ export function getAllOpponentsRequest(dispatch: HttpDispatch): Promise<any> {
         type: "get",
         path: apiRoutes.opponent.list,
         successAction: getAllOpponentsSuccessAction,
+    });
+}
+export function getFrequentOpponentsRequest(dispatch: HttpDispatch): Promise<any> {
+    return dispatch({
+        type: "get",
+        path: apiRoutes.opponent.frequent,
+        successAction: getFrequentOpponentsSuccessAction,
     });
 }
 

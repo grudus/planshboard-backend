@@ -10,7 +10,7 @@ import { PlayMeta, PlayResultRow, SavePlayRequest } from "app/plays/__models/Pla
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { createPlayRequest, getTagsRequest } from "app/plays/PlayApi";
-import { getAllOpponentsRequest } from "app/opponents/OpponentApi";
+import { getAllOpponentsRequest, getFrequentOpponentsRequest } from "app/opponents/OpponentApi";
 
 const AddPlay: React.FC = () => {
     const { translate } = useTranslations();
@@ -21,6 +21,7 @@ const AddPlay: React.FC = () => {
     useEffect(() => {
         getTagsRequest(dispatch);
         getAllOpponentsRequest(dispatch);
+        getFrequentOpponentsRequest(dispatch);
     }, [dispatch]);
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
