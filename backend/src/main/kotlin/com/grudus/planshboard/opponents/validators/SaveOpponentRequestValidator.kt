@@ -21,14 +21,14 @@ constructor(private val opponentService: OpponentService,
 
     fun validate(request: SaveOpponentRequest, opponentId: Id? = null): ValidationResult {
         val oldOpponent: OpponentDto? = opponentId?.let { opponentService.findById(it) }
-        val nameChanged = if (oldOpponent == null) true else oldOpponent.name != request.opponentName
-        val userChanged = if (oldOpponent?.linkedUser == null) true else oldOpponent.linkedUser.userName != request.existingUserName
+        val shouldCheckOpponentName = if (oldOpponent == null) true else oldOpponent.name != request.opponentName
+        val shouldCheckLinkedUser = if (oldOpponent?.linkedUser == null) true else oldOpponent.linkedUser.userName != request.existingUserName
 
         return when {
             emptyFields(request) -> ValidationError(ValidationKeys.EMPTY_FIELD)
-            nameChanged && opponentExists(request) -> ValidationError(ValidationKeys.OPPONENT_ALREADY_EXISTS)
-            userChanged && existingUserDoesNotExists(request) -> ValidationError(ValidationKeys.UNKNOWN_USER)
-            userChanged && userAlreadyLinked(request) -> ValidationError(ValidationKeys.USER_ALREADY_LINKED)
+            shouldCheckOpponentName && opponentExists(request) -> ValidationError(ValidationKeys.OPPONENT_ALREADY_EXISTS)
+            shouldCheckLinkedUser && existingUserDoesNotExists(request) -> ValidationError(ValidationKeys.UNKNOWN_USER)
+            shouldCheckLinkedUser && userAlreadyLinked(request) -> ValidationError(ValidationKeys.USER_ALREADY_LINKED)
             else -> ValidationSuccess
         }
     }
