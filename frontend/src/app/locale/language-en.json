@@ -120,7 +120,8 @@
         "TITLE": "Choose players",
         "MORE": "More",
         "LESS": "Less",
-        "DROPDOWN_LABEL": "Opponent"
+        "DROPDOWN_LABEL": "Opponent",
+        "NO_OPTIONS_DROPDOWN": "Start writing to add opponent"
       },
       "META": {
         "NOTE": "Note",
@@ -136,7 +137,8 @@
       "TITLE": "Add play"
     },
     "TAGS": {
-      "DROPDOWN_LABEL": "Tags"
+      "DROPDOWN_LABEL": "Tags",
+      "NO_OPTIONS_DROPDOWN": "Start writing to add tag"
     }
   },
   "ERRORS": {
