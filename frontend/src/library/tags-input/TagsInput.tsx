@@ -4,6 +4,7 @@ import { SelectComponents } from "react-select/src/components";
 import Tag from "library/tags/Tag";
 import css from "./tags-input.module.scss";
 import { TagCounts } from "app/plays/__models/TagModels";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 export interface TagsInputProps {
     selectedTags?: string[];
@@ -14,6 +15,7 @@ export interface TagsInputProps {
 const TagsInput: React.FC<TagsInputProps> = props => {
     const options = props.allTags?.map(tag => ({ label: tag.name, value: tag.name, count: tag.count })) ?? [];
     const selected = props.selectedTags?.map(tag => ({ label: tag, value: tag })) ?? [];
+    const { translate } = useTranslations();
 
     const onSelect = (tagValues: any) => {
         const tags = (tagValues as BaseDropdownItem[])?.map(tag => tag.value);
@@ -55,6 +57,7 @@ const TagsInput: React.FC<TagsInputProps> = props => {
             components={components}
             menuPlacement="top"
             selectTextKey="PLAYS.TAGS.DROPDOWN_LABEL"
+            noOptionsMessage={() => translate("PLAYS.TAGS.NO_OPTIONS_DROPDOWN")}
         />
     );
 };

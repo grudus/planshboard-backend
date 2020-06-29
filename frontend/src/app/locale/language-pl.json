@@ -120,7 +120,8 @@
         "TITLE": "Wybierz graczy",
         "MORE": "Więcej",
         "LESS": "Mniej",
-        "DROPDOWN_LABEL": "Wybierz przeciwnika"
+        "DROPDOWN_LABEL": "Wybierz przeciwnika",
+        "NO_OPTIONS_DROPDOWN": "Zacznij pisać, aby dodać gracza"
       },
       "META": {
         "NOTE": "Notatka",
@@ -136,7 +137,8 @@
       "TITLE": "Dodaj grę"
     },
     "TAGS": {
-      "DROPDOWN_LABEL": "Dodaj tagi"
+      "DROPDOWN_LABEL": "Dodaj tagi",
+      "NO_OPTIONS_DROPDOWN": "Zacznij pisać, aby dodać tag"
     }
   },
   "ERRORS": {
