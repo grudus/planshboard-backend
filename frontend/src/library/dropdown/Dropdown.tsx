@@ -41,7 +41,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         ValueContainer: container => {
             const shouldFloatLabel = container.selectProps.menuIsOpen || container.hasValue;
             return (
-                <components.ValueContainer {...container}>
+                <components.ValueContainer {...container} className={container.className}>
                     <label className={merge(css.dropdownLabel, cssIf(css.floating, shouldFloatLabel))}>
                         {placeholder}
                     </label>
@@ -84,6 +84,8 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             "&:hover": {
                 border: `1px solid ${theme["--input-border-normal"]}`,
             },
+            margin: "16px 0",
+            height: "40px",
         }),
         noOptionsMessage: (provided: CSSProperties) => ({
             ...provided,
@@ -95,9 +97,9 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         }),
         valueContainer: base => ({
             ...base,
-            minHeight: "52px",
-            paddingLeft: "16px",
-            paddingTop: "16px",
+            minHeight: "40px",
+            paddingLeft: "12px",
+            position: "initial",
         }),
     };
 
