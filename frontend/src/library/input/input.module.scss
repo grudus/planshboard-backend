@@ -6,10 +6,16 @@
     margin-bottom: 16px;
     margin-top: 16px;
 
+    &.small {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
     &.error {
         & .label {
             color: var(--error-color) !important;
         }
+
         & .input {
             border: 1px solid var(--error-color) !important;
             animation: shake 0.5s ease-in-out;
@@ -82,7 +88,7 @@ $iconMargin: 12px;
     padding-left: $iconSize + $iconMargin * 2;
 }
 
-.actionIcon ~.input {
+.actionIcon ~ .input {
     padding-right: $iconSize + $iconMargin * 2;
 }
 
