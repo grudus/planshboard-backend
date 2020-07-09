@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import css from "./select-opponent-position.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 import { PlayResultRow } from "app/plays/__models/PlayModels";
@@ -10,11 +10,17 @@ interface SelectOpponentPositionProps {
 }
 
 const SelectOpponentPosition: React.FC<SelectOpponentPositionProps> = props => {
-    const onChange = (a: ChangeEvent<HTMLInputElement>) => {
-        const { value } = a.target;
-        const copy = { ...props.result, position: parseInt(value, 10) };
+    const onClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+        const { value } = event.currentTarget;
+        const selectedPosition = parseInt(value, 10);
+        const currentPosition = props.result.position;
+        const newPosition = currentPosition === selectedPosition ? undefined : selectedPosition;
+
+        const copy = { ...props.result, position: newPosition };
         props.onChange(copy);
     };
+
+    const ignoreBecauseOnClickIsUsedToAllowDeselect = () => false;
 
     return (
         <div className={css.wrapper}>
@@ -30,7 +36,8 @@ const SelectOpponentPosition: React.FC<SelectOpponentPositionProps> = props => {
                             type="radio"
                             name={`position-${props.result.opponent.id}`}
                             value={value}
-                            onChange={onChange}
+                            onChange={ignoreBecauseOnClickIsUsedToAllowDeselect}
+                            onClick={onClick}
                         />
                     </label>
                 );
