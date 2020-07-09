@@ -17,6 +17,7 @@ export interface DropdownProps<T> extends Props<T> {
     createTextKey?: string;
     selectTextKey?: string;
     isLoading?: boolean;
+    hideLabel?: boolean;
 }
 
 export interface BaseDropdownItem {
@@ -40,11 +41,14 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         ),
         ValueContainer: container => {
             const shouldFloatLabel = container.selectProps.menuIsOpen || container.hasValue;
+            const shouldHideLabel = props.hideLabel && shouldFloatLabel;
             return (
                 <components.ValueContainer {...container} className={container.className}>
-                    <label className={merge(css.dropdownLabel, cssIf(css.floating, shouldFloatLabel))}>
-                        {placeholder}
-                    </label>
+                    {!shouldHideLabel && (
+                        <label className={merge(css.dropdownLabel, cssIf(css.floating, shouldFloatLabel))}>
+                            {placeholder}
+                        </label>
+                    )}
                     {container.children}
                 </components.ValueContainer>
             );
