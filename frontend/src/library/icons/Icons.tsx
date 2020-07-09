@@ -7,6 +7,7 @@ import { ReactComponent as AlertIcon } from "./alert.svg";
 import { ReactComponent as CheckIcon } from "./check.svg";
 import { ReactComponent as CalendarIcon } from "./calendar.svg";
 import { ReactComponent as CloseIcon } from "./close.svg";
+import { ReactComponent as DeleteIcon } from "./delete.svg";
 
 const Icons = {
     PlusIcon: <PlusIcon />,
@@ -17,6 +18,7 @@ const Icons = {
     CheckIcon: <CheckIcon />,
     CalendarIcon: <CalendarIcon />,
     CloseIcon: <CloseIcon />,
+    DeleteIcon: <DeleteIcon />,
 };
 
 export default Icons;

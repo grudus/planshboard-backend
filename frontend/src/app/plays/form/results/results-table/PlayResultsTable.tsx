@@ -10,6 +10,7 @@ interface PlayResultsTableProps {
     results: PlayResultRow[];
     gameOptions: BoardGamePlayResultsOptions;
     onChange: (results: PlayResultRow[]) => void;
+    onDeleteRow: (row: PlayResultRow) => void;
 }
 
 const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
@@ -28,6 +29,7 @@ const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
         <table className={css.table}>
             <thead>
                 <tr>
+                    <th className={css.actionsHeader} />
                     <th>{translate("PLAYS.FORM.RESULTS_TABLE.OPPONENT")}</th>
                     {showPosition && <th>{translate("PLAYS.FORM.RESULTS_TABLE.POSITION")}</th>}
                     {showPoints && <th className={css.pointsHeader}>{translate("PLAYS.FORM.RESULTS_TABLE.POINTS")}</th>}
@@ -43,6 +45,7 @@ const PlayResultsTable: React.FC<PlayResultsTableProps> = props => {
                             result={result}
                             gameOptions={props.gameOptions}
                             numberOfResults={props.results.length}
+                            deleteResult={props.onDeleteRow}
                         />
                     ))}
             </FlipMove>

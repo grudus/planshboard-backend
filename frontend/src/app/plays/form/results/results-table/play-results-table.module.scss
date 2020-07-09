@@ -1,10 +1,9 @@
 @import "src/variables";
 
 .table {
-    border-collapse:collapse;
+    border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
-
 
     & thead {
         & th {
@@ -14,23 +13,35 @@
         .pointsHeader {
             width: 80px;
         }
+
+        .actionsHeader {
+            width: 32px;
+        }
     }
 
-
     & tbody {
-
         & tr {
             border-top: 1px solid var(--card-form-header-backgrund);
         }
 
         & td {
-            height: 96px;
+            min-height: 96px;
             vertical-align: center;
             width: 100%;
             text-align: center;
             padding: 8px 8px;
         }
+
+        .actionsCell {
+            padding: 0;
+        }
     }
+}
+
+.opponentInfoCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pointsInput {
@@ -39,7 +50,6 @@
 
 @media (min-width: $medium) {
     .table {
-
         & thead {
             & th {
                 padding-bottom: 16px;
