@@ -1,6 +1,7 @@
 @import "src/utils";
 
 $cardPadding: 24px;
+$mobileCardPadding: 16px;
 $borderRadius: 8px;
 
 .section {
@@ -26,5 +27,11 @@ $borderRadius: 8px;
     h1 {
         margin: 0;
         font-size: 16px;
+    }
+}
+
+@media (max-width: $medium) {
+    .content {
+        padding: 0 $mobileCardPadding $mobileCardPadding $mobileCardPadding;
     }
 }

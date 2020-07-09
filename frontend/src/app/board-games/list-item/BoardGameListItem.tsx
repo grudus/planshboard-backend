@@ -3,8 +3,8 @@ import css from "./board-game-list-item.module.scss";
 import { appRoutes } from "app/routing/routes";
 import MediumTitle from "library/text/MediumTitle";
 import { Link } from "react-router-dom";
-import { ReactComponent as DeleteIcon } from "./delete.svg";
 import IconButton from "library/icon-button/IconButton";
+import Icons from "library/icons/Icons";
 
 interface BoardGameListItemProps {
     onDeleteIconClick: (id: number) => void;
@@ -22,7 +22,7 @@ const BoardGameListItem: React.FC<BoardGameListItemProps> = props => {
         <Link className={css.linkWrapper} to={appRoutes.boardGame.edit.replace(":id", props.game.id.toString())}>
             <section className={css.item} title={props.game.name}>
                 <MediumTitle className={css.boardGameName}>{props.game.name}</MediumTitle>
-                <IconButton svgIcon={<DeleteIcon />} onClick={onDeleteClick} className={css.deleteButton} />
+                <IconButton svgIcon={Icons.DeleteIcon} onClick={onDeleteClick} className={css.deleteButton} />
             </section>
         </Link>
     );

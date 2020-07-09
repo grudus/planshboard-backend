@@ -34,6 +34,28 @@ const PlayForm: React.FC<PlayFormProps> = props => {
         setResults([...results, { opponent }]);
     };
 
+    const addDeletedOpponentToFrequentIfNecessary = (row: PlayResultRow) => {
+        const initialFrequentIds = frequent.map(({ id }) => id);
+        if (initialFrequentIds.includes(row.opponent.id)) {
+            setFrequentOpponents([...frequentOpponents, row.opponent]);
+        }
+    };
+
+    const fixOverflowedPositions = (results: PlayResultRow[]): PlayResultRow[] => {
+        const maxPossiblePosition = results.length;
+        return results.map(result => {
+            const newPosition = (result.position ?? 0) > maxPossiblePosition ? undefined : result.position;
+            return { ...result, position: newPosition };
+        });
+    };
+
+    const deleteRow = (row: PlayResultRow) => {
+        let updatedResults = results.filter(result => result.opponent.id !== row.opponent.id);
+        updatedResults = fixOverflowedPositions(updatedResults);
+        setResults(updatedResults);
+        addDeletedOpponentToFrequentIfNecessary(row);
+    };
+
     return (
         <main>
             <PlayFormOpponents
@@ -46,6 +68,7 @@ const PlayForm: React.FC<PlayFormProps> = props => {
                     onChange={setResults}
                     gameOptions={defaultBoardGamePlayResultsOptions}
                     results={results}
+                    onDeleteRow={deleteRow}
                 />
                 <PlayMetaFields onChange={setMeta} meta={meta} gameOptions={defaultBoardGamePlayResultsOptions} />
 
