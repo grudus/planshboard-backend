@@ -41,7 +41,7 @@
 
 .radio {
     opacity: 0;
-    width: 0;
+    width: 0 !important;
     height: 0;
     position: fixed;
 }
