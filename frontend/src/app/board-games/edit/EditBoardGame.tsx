@@ -42,7 +42,9 @@ const EditBoardGame: React.FC = () => {
 
     return (
         <CardForm className={css.formWrapper}>
-            <CardFormTitle>{translate("BOARD_GAMES.EDIT.TITLE") + ` '${boardGame?.name}'`}</CardFormTitle>
+            <CardFormTitle>
+                <h1>{translate("BOARD_GAMES.EDIT.TITLE") + ` '${boardGame?.name}'`}</h1>
+            </CardFormTitle>
             <CardFormContent>
                 <BoardGameForm onSubmit={onSubmit} onCancel={onCancel} error={error} initialValue={boardGame?.name} />
             </CardFormContent>

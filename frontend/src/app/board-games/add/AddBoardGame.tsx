@@ -32,7 +32,9 @@ const AddBoardGame: React.FC = () => {
     };
     return (
         <CardForm className={css.formWrapper}>
-            <CardFormTitle>{translate("BOARD_GAMES.ADD.TITLE")}</CardFormTitle>
+            <CardFormTitle>
+                <h1>{translate("BOARD_GAMES.ADD.TITLE")}</h1>
+            </CardFormTitle>
             <CardFormContent>
                 <BoardGameForm onSubmit={onSubmit} onCancel={onCancel} error={error} />
             </CardFormContent>

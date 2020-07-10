@@ -38,7 +38,9 @@ const AddOpponent: React.FC = () => {
 
     return (
         <CardForm className={css.formWrapper}>
-            <CardFormTitle>{translate("OPPONENTS.ADD.TITLE")}</CardFormTitle>
+            <CardFormTitle>
+                <h1>{translate("OPPONENTS.ADD.TITLE")}</h1>
+            </CardFormTitle>
             <CardFormContent>
                 <OpponentForm
                     onSubmit={onSubmit}

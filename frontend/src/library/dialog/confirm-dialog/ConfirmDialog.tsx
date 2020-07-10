@@ -18,7 +18,9 @@ interface ConfirmDialogProps extends DialogProps {
 const ConfirmDialog: React.FC<ConfirmDialogProps> = props => {
     return (
         <Dialog {...props}>
-            <CardFormTitle>{props.title}</CardFormTitle>
+            <CardFormTitle>
+                <h1>{props.title}</h1>
+            </CardFormTitle>
             <DialogContent>
                 <p>{props.text}</p>
             </DialogContent>
