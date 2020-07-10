@@ -11,10 +11,12 @@ import useTranslations from "app/locale/__hooks/useTranslations";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { createPlayRequest, getTagsRequest } from "app/plays/PlayApi";
 import { getAllOpponentsRequest, getFrequentOpponentsRequest } from "app/opponents/OpponentApi";
+import { useQueryParams } from "app/shared/hooks/useQueryParams";
 
 const AddPlay: React.FC = () => {
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
+    const { boardGameId } = useQueryParams();
     const currentUser = useRedux(s => s.opponent.currentUser);
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
 
@@ -26,7 +28,7 @@ const AddPlay: React.FC = () => {
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
         const request: SavePlayRequest = {
-            boardGameId: 1,
+            boardGameId: parseInt(boardGameId, 10),
             results: results.map(r => ({ ...r, opponentId: r.opponent.id })),
             tags: meta.tags ?? [],
             ...meta,
