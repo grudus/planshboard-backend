@@ -38,7 +38,9 @@ const AddPlay: React.FC = () => {
 
     return (
         <CardForm className={css.formWrapper}>
-            <CardFormTitle>{translate("PLAYS.ADD.TITLE")}</CardFormTitle>
+            <CardFormTitle>
+                <h1>{translate("PLAYS.ADD.TITLE")}</h1>
+            </CardFormTitle>
             <CardFormContent>
                 <PlayForm
                     results={selectedOpponents.map(o => ({ opponent: o }))}

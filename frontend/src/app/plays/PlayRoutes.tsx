@@ -13,7 +13,7 @@ const PlayRoutes: React.FC = () => (
             <AddPlay />
         </Route>
         <Route path={appRoutes.plays.list}>
-            <PlayList />
+            <AddPlay />
         </Route>
     </Switch>
 );
