@@ -19,6 +19,7 @@ export interface InputProps {
     onBlur?: ((event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void) | undefined;
     multiline?: boolean;
     inputExtra?: React.HTMLProps<HTMLInputElement>;
+    hideLabel?: boolean;
 }
 
 const Input: React.FC<InputProps> = props => {
@@ -64,10 +65,21 @@ const Input: React.FC<InputProps> = props => {
     );
 
     return (
-        <div className={merge(css.wrapper, cssIf(css.error, isError()), css[props.size ?? "normal"], props.className)}>
+        <div
+            className={merge(
+                css.wrapper,
+                cssIf(css.error, isError()),
+                cssIf(css.hideLabel, !!props.hideLabel),
+                css[props.size ?? "normal"],
+                props.className,
+            )}
+        >
             {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
             {inputElement}
-            <label className={merge(css.label, cssIf(css.labelUp, !!text))} htmlFor={props.name}>
+            <label
+                className={merge(css.label, cssIf(css.labelUp, !!text), cssIf(css.hideLabel, !!props.hideLabel))}
+                htmlFor={props.name}
+            >
                 {props.label}
             </label>
             {isError() && (

@@ -6,6 +6,10 @@
     margin-bottom: 16px;
     margin-top: 16px;
 
+    &.hideLabel {
+        margin-top: 0;
+    }
+
     &.small {
         margin-top: 0;
         margin-bottom: 0;
@@ -114,6 +118,10 @@ $iconMargin: 12px;
     transform: none;
     font-weight: bold;
     color: var(--input-text);
+
+    &.hideLabel {
+        display: none;
+    }
 }
 
 .frontIcon ~ .labelUp {
