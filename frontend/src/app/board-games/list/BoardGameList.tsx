@@ -40,7 +40,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
     return (
         <div>
             <div className={css.searchWrapper}>
-                <SearchInput onTextChange={setFilter} />
+                <SearchInput onTextChange={setFilter} hideLabel />
             </div>
             <FlipMove className={css.list} typeName="ul">
                 {boardGames
