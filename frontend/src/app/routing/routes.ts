@@ -49,6 +49,7 @@ export const apiRoutes = {
     },
     play: {
         create: "/api/plays",
+        list: "/api/plays",
     },
     tags: {
         getWithPlaysCount: "/api/tags",

@@ -4,6 +4,7 @@ import com.grudus.planshboard.auth.UserAuthentication
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.responses.idOf
+import com.grudus.planshboard.plays.model.PlayListItem
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.plays.validators.SavePlayRequestValidator
 import org.slf4j.LoggerFactory
@@ -41,5 +42,9 @@ constructor(
         log.info("User[${user.id}] updates play[$playId]: $request")
         playService.updatePlay(playId, request)
     }
+
+    @GetMapping
+    fun getPlays(user: UserAuthentication): List<PlayListItem> =
+        playService.getPlays(user.id)
 
 }

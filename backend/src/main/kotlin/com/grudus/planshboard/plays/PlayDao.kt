@@ -2,6 +2,7 @@ package com.grudus.planshboard.plays
 
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.plays.model.PlayListItem
 import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.tables.BoardGames.BOARD_GAMES
@@ -61,4 +62,11 @@ constructor(private val dsl: DSLContext,
             .where(PLAY_RESULTS.PLAY_ID.eq(playId))
             .execute()
     }
+
+    fun getPlays(userId: Id): List<PlayListItem> =
+        dsl.select(PLAYS.ID, PLAYS.BOARD_GAME_ID)
+            .from(PLAYS)
+            .join(BOARD_GAMES).on(BOARD_GAMES.ID.eq(PLAYS.BOARD_GAME_ID))
+            .where(BOARD_GAMES.CREATOR_ID.eq(userId))
+            .fetchInto(PlayListItem::class.java)
 }

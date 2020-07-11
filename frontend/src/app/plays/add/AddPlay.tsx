@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CardForm from "library/card-form/CardForm";
 import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
@@ -14,11 +14,13 @@ import { getAllOpponentsRequest, getFrequentOpponentsRequest } from "app/opponen
 import { useQueryParams } from "app/shared/hooks/useQueryParams";
 import { getSingleBoardGame } from "app/board-games/BoardGameApi";
 import Chip from "library/chip/Chip";
+import { appRoutes } from "app/routing/routes";
 
 const AddPlay: React.FC = () => {
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
-    const { boardGameId } = useQueryParams();
+    const { boardGameId, history } = useQueryParams();
+    const [loading, setLoading] = useState(false);
     const boardGame = useRedux(state => state.boardGame.single);
     const currentUser = useRedux(s => s.opponent.currentUser);
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
@@ -31,6 +33,7 @@ const AddPlay: React.FC = () => {
     }, [boardGameId, dispatch]);
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
+        setLoading(true);
         const request: SavePlayRequest = {
             boardGameId: parseInt(boardGameId, 10),
             results: results.map(r => ({ ...r, opponentId: r.opponent.id })),
@@ -38,6 +41,12 @@ const AddPlay: React.FC = () => {
             ...meta,
         };
         await createPlayRequest(dispatch, request);
+        setLoading(false);
+        goBack();
+    };
+
+    const goBack = () => {
+        history.push(appRoutes.plays.list);
     };
 
     return (
@@ -52,7 +61,8 @@ const AddPlay: React.FC = () => {
                 <PlayForm
                     results={selectedOpponents.map(o => ({ opponent: o }))}
                     onSubmit={onSubmit}
-                    onCancel={() => onSubmit([], {})}
+                    onCancel={goBack}
+                    loading={loading}
                 />
             </CardFormContent>
         </CardForm>

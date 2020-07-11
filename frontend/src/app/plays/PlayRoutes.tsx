@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
-import PlayList from "app/plays/list/PlayList";
 import AddPlay from "app/plays/add/AddPlay";
+import PlayList from "app/plays/list/PlayList";
 
 const PlayRoutes: React.FC = () => (
     <Switch>
@@ -13,7 +13,7 @@ const PlayRoutes: React.FC = () => (
             <AddPlay />
         </Route>
         <Route path={appRoutes.plays.list}>
-            <AddPlay />
+            <PlayList />
         </Route>
     </Switch>
 );
