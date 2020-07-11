@@ -3,3 +3,15 @@
 .formWrapper {
     @include mobileFullScreen;
 }
+
+.headerWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.headerBoardGame {
+    margin-left: 16px;
+    max-width: 50%;
+    font-weight: bold;
+    @include ellipsis;
+}

@@ -7,10 +7,16 @@ interface ChipProps {
     onClick?: () => void;
     color?: "normal";
     disabled?: boolean;
+    className?: string;
 }
 
 const Chip: React.FC<ChipProps> = props => {
-    const classes = merge(css.chip, css[props.color ?? "normal"], cssIf(css.clickable, !props.onClick));
+    const classes = merge(
+        css.chip,
+        css[props.color ?? "normal"],
+        cssIf(css.clickable, !!props.onClick),
+        props.className,
+    );
     return (
         <button disabled={props.disabled} className={classes} onClick={props.onClick}>
             {props.text}

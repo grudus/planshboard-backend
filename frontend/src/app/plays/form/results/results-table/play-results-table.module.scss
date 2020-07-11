@@ -34,6 +34,10 @@
 
         .actionsCell {
             padding: 0;
+
+            & svg {
+                color: var(--secondary-text-on-card) !important
+            }
         }
     }
 }
