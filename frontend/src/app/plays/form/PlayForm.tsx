@@ -15,6 +15,7 @@ interface PlayFormProps {
     meta?: PlayMeta;
     onSubmit: (results: PlayResultRow[], meta: PlayMeta) => Promise<any>;
     onCancel: () => void;
+    loading: boolean;
 }
 
 const PlayForm: React.FC<PlayFormProps> = props => {
@@ -74,7 +75,11 @@ const PlayForm: React.FC<PlayFormProps> = props => {
 
                 <div className={css.buttonsWrapper}>
                     <Button text={translate("CANCEL")} decoration="outlined" onClick={props.onCancel} />
-                    <Button text={translate("SAVE")} onClick={() => props.onSubmit(results, meta)} />
+                    <Button
+                        text={translate("SAVE")}
+                        loading={props.loading}
+                        onClick={() => props.onSubmit(results, meta)}
+                    />
                 </div>
             </form>
         </main>

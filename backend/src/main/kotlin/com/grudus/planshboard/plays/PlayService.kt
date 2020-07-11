@@ -1,7 +1,7 @@
 package com.grudus.planshboard.plays
 
 import com.grudus.planshboard.commons.Id
-import com.grudus.planshboard.commons.responses.IdResponse
+import com.grudus.planshboard.plays.model.PlayListItem
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.plays.tags.TagService
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,5 +28,8 @@ constructor(private val playDao: PlayDao,
         playDao.savePlayResults(playId, request.results)
         tagService.resetTagsForPlay(request.tags, playId)
     }
+
+    fun getPlays(userId: Id): List<PlayListItem> =
+        playDao.getPlays(userId)
 
 }
