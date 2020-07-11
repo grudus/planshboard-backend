@@ -24,6 +24,10 @@
     position: absolute;
     bottom: 8px;
     right: 8px;
+
+    & svg {
+        color: var(--secondary-text-on-card);
+    }
 }
 
 .boardGameName {
