@@ -12,11 +12,14 @@ import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { createPlayRequest, getTagsRequest } from "app/plays/PlayApi";
 import { getAllOpponentsRequest, getFrequentOpponentsRequest } from "app/opponents/OpponentApi";
 import { useQueryParams } from "app/shared/hooks/useQueryParams";
+import { getSingleBoardGame } from "app/board-games/BoardGameApi";
+import Chip from "library/chip/Chip";
 
 const AddPlay: React.FC = () => {
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
     const { boardGameId } = useQueryParams();
+    const boardGame = useRedux(state => state.boardGame.single);
     const currentUser = useRedux(s => s.opponent.currentUser);
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
 
@@ -24,7 +27,8 @@ const AddPlay: React.FC = () => {
         getTagsRequest(dispatch);
         getAllOpponentsRequest(dispatch);
         getFrequentOpponentsRequest(dispatch);
-    }, [dispatch]);
+        getSingleBoardGame(dispatch, { id: parseInt(boardGameId, 10) });
+    }, [boardGameId, dispatch]);
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
         const request: SavePlayRequest = {
@@ -39,7 +43,10 @@ const AddPlay: React.FC = () => {
     return (
         <CardForm className={css.formWrapper}>
             <CardFormTitle>
-                <h1>{translate("PLAYS.ADD.TITLE")}</h1>
+                <div className={css.headerWrapper}>
+                    <h1>{translate("PLAYS.ADD.TITLE")}</h1>
+                    {boardGame && <Chip text={boardGame.name} className={css.headerBoardGame} onClick={() => true} />}
+                </div>
             </CardFormTitle>
             <CardFormContent>
                 <PlayForm

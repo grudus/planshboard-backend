@@ -89,7 +89,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
                 border: `1px solid ${theme["--input-border-normal"]}`,
             },
             margin: "16px 0",
-            height: "40px",
+            minHeight: "40px",
         }),
         noOptionsMessage: (provided: CSSProperties) => ({
             ...provided,
