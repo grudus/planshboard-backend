@@ -20,7 +20,7 @@ const OpponentList: React.FC = () => {
     return (
         <div>
             <div className={css.searchWrapper}>
-                <SearchInput onTextChange={setFilter} />
+                <SearchInput onTextChange={setFilter} hideLabel />
             </div>
             <FlipMove typeName="ul" className={css.list}>
                 {opponents
