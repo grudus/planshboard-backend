@@ -86,7 +86,7 @@
     },
     "FORM": {
       "NAME_LABEL": "Nazwa przeciwnika",
-      "EXISTING_USER_LABEL":  "Nazwa użytkownika",
+      "EXISTING_USER_LABEL": "Nazwa użytkownika",
       "NEW_OPPONENT_VALUE": "Nowy przeciwnik",
       "NEW_OPPONENT_SECONDARY": "Tylko ty zobaczysz jego wyniki",
       "EXISTING_USER_VALUE": "Istniejący użytkownik",
@@ -131,6 +131,11 @@
         "OPPONENT": "Przeciwnik",
         "POSITION": "Pozycja",
         "POINTS": "Punkty"
+      },
+      "FINAL_RESULT": {
+        "TITLE": "Wynik rozgrywki",
+        "WIN": "Zwycięstwo",
+        "DEFEAT": "Przegrana"
       }
     },
     "ADD": {

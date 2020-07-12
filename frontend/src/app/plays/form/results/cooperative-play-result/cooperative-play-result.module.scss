@@ -1,0 +1,121 @@
+@import "src/variables";
+
+.wrapper {
+    margin: 16px 0;
+}
+
+.buttonsWrapper {
+    display: flex;
+}
+
+.button {
+    color: var(--text-on-card-background);
+    margin: 0;
+    border: 2px solid var(--input-border-normal);
+    border-radius: 8px;
+    background: transparent;
+    padding: 8px;
+    height: 52px;
+    width: 160px;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+
+    &:focus-within {
+        border: 2px dotted;
+    }
+
+    &:hover {
+        background: var(--card-form-header-backgrund);
+    }
+
+    & svg {
+        transition: all .3s ease-in-out;
+        fill: var(--secondary-text-on-card)
+    }
+
+    &.selected {
+
+        &.WIN {
+            border-color: var(--win-color);
+
+            & svg {
+                animation: winAnimation .3s;
+                fill: var(--win-color);
+            }
+        }
+
+        &.DEFEAT {
+            border-color: var(--defeat-color);
+
+            & svg {
+                animation: defeatAnimation .3s;
+                fill: var(--defeat-color);
+            }
+        }
+
+    }
+
+
+    & + .button {
+        margin-left: 16px;
+    }
+}
+
+.radio {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+
+.buttonText {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+@media (max-width: $small) {
+    .button {
+        width: 50%;
+    }
+}
+
+@keyframes winAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-5deg) scale(1.3);
+    }
+    50% {
+        transform: rotate(-5deg) scale(1.2);
+    }
+    75% {
+        transform: rotate(5deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+@keyframes defeatAnimation {
+    0% {
+        transform: translateX(0px);
+    }
+    25% {
+        transform: translateX(-2px);
+    }
+    50% {
+        transform: translateX(2px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}

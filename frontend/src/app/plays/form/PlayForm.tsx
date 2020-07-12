@@ -4,11 +4,12 @@ import css from "./play-form.module.scss";
 import PlayResultsTable from "app/plays/form/results/results-table/PlayResultsTable";
 import { defaultBoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
 import PlayFormOpponents from "app/plays/form/play-form-opponents/PlayFormOpponents";
-import { PlayMeta, PlayResultRow } from "app/plays/__models/PlayModels";
+import { FinalResult, PlayMeta, PlayResultRow } from "app/plays/__models/PlayModels";
 import { useRedux } from "store/rootReducer";
 import PlayMetaFields from "app/plays/form/play-meta/PlayMetaFields";
 import Button from "library/button/Button";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import CooperativePlayResult from "app/plays/form/results/cooperative-play-result/CooperativePlayResult";
 
 interface PlayFormProps {
     results: PlayResultRow[];
@@ -25,6 +26,7 @@ const PlayForm: React.FC<PlayFormProps> = props => {
     const [results, setResults] = useState(props.results);
     const [meta, setMeta] = useState(props.meta ?? { date: new Date() });
     const alreadyUsedOpponents = new Set(results.map(result => result.opponent.id));
+    const gameOptions = defaultBoardGamePlayResultsOptions;
 
     useEffect(() => {
         setResults(props.results);
@@ -57,6 +59,10 @@ const PlayForm: React.FC<PlayFormProps> = props => {
         addDeletedOpponentToFrequentIfNecessary(row);
     };
 
+    const changeFinalResult = (result: FinalResult) => {
+        setMeta({ ...meta, finalResult: result });
+    };
+
     return (
         <main>
             <PlayFormOpponents
@@ -67,11 +73,15 @@ const PlayForm: React.FC<PlayFormProps> = props => {
             <form className={css.opponentsForm}>
                 <PlayResultsTable
                     onChange={setResults}
-                    gameOptions={defaultBoardGamePlayResultsOptions}
+                    gameOptions={gameOptions}
                     results={results}
                     onDeleteRow={deleteRow}
                 />
-                <PlayMetaFields onChange={setMeta} meta={meta} gameOptions={defaultBoardGamePlayResultsOptions} />
+                {gameOptions.type === "COOPERATIVE" && (
+                    <CooperativePlayResult onChange={changeFinalResult} initialResult={meta.finalResult} />
+                )}
+
+                <PlayMetaFields onChange={setMeta} meta={meta} gameOptions={gameOptions} />
 
                 <div className={css.buttonsWrapper}>
                     <Button text={translate("CANCEL")} decoration="outlined" onClick={props.onCancel} />

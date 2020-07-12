@@ -6,10 +6,16 @@ export interface PlayResultRow {
     points?: number;
 }
 
+export enum FinalResult {
+    WIN = "WIN",
+    DEFEAT = "DEFEAT",
+}
+
 export interface PlayMeta {
     note?: string;
     tags?: string[];
     date?: Date;
+    finalResult?: FinalResult;
 }
 
 export interface PlayResult {

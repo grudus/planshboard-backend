@@ -13,7 +13,7 @@ export interface BasicBoardGame {
 export interface BoardGamePlayResultsOptions {
     showPosition: boolean;
     showPoints: boolean;
-    type: "COOPERATIVE" | "TRADITIONAL";
+    type: "COOPERATIVE" | "REGULAR";
     showNote: boolean;
     showDate: boolean;
     showTags: boolean;
@@ -22,7 +22,7 @@ export interface BoardGamePlayResultsOptions {
 export const defaultBoardGamePlayResultsOptions: BoardGamePlayResultsOptions = {
     showPoints: true,
     showPosition: true,
-    type: "TRADITIONAL",
+    type: "REGULAR",
     showNote: true,
     showDate: true,
     showTags: true,
