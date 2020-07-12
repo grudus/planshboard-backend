@@ -1,5 +1,6 @@
 package com.grudus.planshboard.opponents
 
+import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
@@ -18,7 +19,8 @@ import org.springframework.stereotype.Repository
 class OpponentDao
 @Autowired
 constructor(private val dsl: DSLContext,
-            private val helper: OpponentDaoHelper) {
+            private val helper: OpponentDaoHelper,
+            private val currentTimeProvider: CurrentTimeProvider) {
 
     fun creteInitial(name: String, userId: Id): Id =
         createAndLinkToUser(name, userId, userId, LINKED_WITH_CREATOR)
@@ -43,6 +45,7 @@ constructor(private val dsl: DSLContext,
         dsl.insertInto(OPPONENTS)
             .set(OPPONENTS.NAME, name)
             .set(OPPONENTS.CREATOR_ID, userId)
+            .set(OPPONENTS.CREATED_AT, currentTimeProvider.now())
             .returning()
             .fetchOne()
             .id
@@ -52,6 +55,7 @@ constructor(private val dsl: DSLContext,
         val opponentId = dsl.insertInto(OPPONENTS)
             .set(OPPONENTS.NAME, name)
             .set(OPPONENTS.CREATOR_ID, creatorId)
+            .set(OPPONENTS.CREATED_AT, currentTimeProvider.now())
             .returning()
             .fetchOne()
             .id

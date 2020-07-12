@@ -1,5 +1,6 @@
 package com.grudus.planshboard.opponents
 
+import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.ENABLED
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
@@ -41,4 +42,5 @@ constructor(private val dsl: DSLContext,
             .groupBy(helper.opponentDtoFields)
             .orderBy(DSL.max(PLAYS.CREATED_AT).desc(), DSL.max(OPPONENTS.CREATED_AT).desc())
             .limit(limit)
-            .fetch(helper.opponentDtoMapper())}
+            .fetch(helper.opponentDtoMapper())
+}
