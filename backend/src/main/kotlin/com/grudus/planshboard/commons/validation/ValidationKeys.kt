@@ -1,7 +1,5 @@
 package com.grudus.planshboard.commons.validation
 
-import com.grudus.planshboard.commons.ErrorKey
-
 object ValidationKeys {
     const val GAME_ALREADY_EXISTS = "BOARD_GAME.EXISTS"
     const val USER_ALREADY_EXISTS = "USER.EXISTS"

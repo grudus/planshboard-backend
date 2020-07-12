@@ -9,5 +9,6 @@ data class SavePlayRequest(
     val results: List<PlayResult>,
     val tags: List<String>,
     val date: LocalDateTime? = null,
-    val note: String? = null
+    val note: String? = null,
+    val finalResult: FinalResult? = null
 )

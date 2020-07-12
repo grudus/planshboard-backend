@@ -2,6 +2,7 @@ package com.grudus.planshboard.plays
 
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.enums.FinalResult
 import com.grudus.planshboard.plays.model.PlayListItem
 import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
@@ -25,6 +26,7 @@ constructor(private val dsl: DSLContext,
             .set(PLAYS.CREATED_AT, currentTimeProvider.now())
             .set(PLAYS.DATE, request.date)
             .set(PLAYS.NOTE, request.note)
+            .set(PLAYS.FINAL_RESULT, request.finalResult?.name?.let { FinalResult.valueOf(it) })
             .returning()
             .fetchOne()
             .id!!
