@@ -1,0 +1,21 @@
+@import "src/variables";
+
+.gameTypeWrapper {
+    display: flex;
+}
+
+.selectedType {
+    border-color: var(--primary-color) !important;
+
+    & svg {
+        fill: var(--primary-color) !important;
+    }
+}
+
+@media (max-width: $small) {
+    .gameTypeWrapper {
+        & > * {
+            flex: 1;
+        }
+    }
+}
