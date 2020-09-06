@@ -1,13 +1,14 @@
 @import "src/variables";
 @import "src/utils";
 
-.cardWrapper {
+.formWrapper {
     @include mobileFullScreen;
 }
 
-@media (min-width: $large) {
-    .cardWrapper {
+@media (min-width: $medium) {
+    .formWrapper {
         width: 50%;
+        margin-top: 0;
+        margin-left: 0;
     }
 }
-

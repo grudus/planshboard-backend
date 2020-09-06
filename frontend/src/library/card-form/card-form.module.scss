@@ -19,7 +19,7 @@ $borderRadius: 8px;
     padding: $cardPadding;
     color: var(--card-form-header-text);
     background: var(--card-form-header-backgrund);
-    margin: 0 0 $cardPadding 0;
+    margin: 0 0 $cardPadding + 8px 0;
     font-size: 16px;
     font-weight: 900;
     border-top-left-radius: $borderRadius;
