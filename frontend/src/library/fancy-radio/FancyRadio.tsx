@@ -1,13 +1,12 @@
 import React from "react";
-import { FinalResult } from "app/plays/__models/PlayModels";
 import { cssIf, merge } from "utils/cssUtils";
 import css from "./fancy-radio.module.scss";
 
 interface FancyRadioProps {
     text: string;
     icon: React.ReactElement;
-    value: FinalResult;
-    selectedValue?: FinalResult;
+    value: any;
+    selectedValue?: any;
     inputName: string;
     selectedClassName?: string;
 }

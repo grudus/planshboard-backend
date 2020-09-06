@@ -10,6 +10,9 @@ import { ReactComponent as CloseIcon } from "./close.svg";
 import { ReactComponent as DeleteIcon } from "./delete.svg";
 import { ReactComponent as TrophyIcon } from "./trophy.svg";
 import { ReactComponent as GhostIcon } from "./ghost.svg";
+import { ReactComponent as HiveIcon } from "./hive.svg";
+import { ReactComponent as GridIcon } from "./grid.svg";
+import { ReactComponent as PolygonIcon } from "./polygon.svg";
 
 const Icons = {
     PlusIcon: <PlusIcon />,
@@ -23,6 +26,9 @@ const Icons = {
     DeleteIcon: <DeleteIcon />,
     TrophyIcon: <TrophyIcon />,
     GhostIcon: <GhostIcon />,
+    HiveIcon: <HiveIcon />,
+    GridIcon: <GridIcon />,
+    PolygonIcon: <PolygonIcon />,
 };
 
 export default Icons;
