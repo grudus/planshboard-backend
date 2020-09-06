@@ -3,6 +3,7 @@ import Input from "library/input/Input";
 import Button from "library/button/Button";
 import css from "./board-game-form.module.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import BoardGameOptions from "app/board-games/form/board-game-options/BoardGameOptions";
 
 interface BoardGameFormProps {
     onSubmit: (name: string) => Promise<void>;
@@ -40,6 +41,9 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
                 error={props.error}
                 initialValue={props.initialValue}
             />
+
+            <BoardGameOptions />
+
             <div className={css.buttonsWrapper}>
                 <Button
                     text={translate("BOARD_GAMES.FORM.CANCEL")}

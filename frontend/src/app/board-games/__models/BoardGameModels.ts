@@ -22,7 +22,7 @@ export interface BoardGamePlayResultsOptions {
 export const defaultBoardGamePlayResultsOptions: BoardGamePlayResultsOptions = {
     showPoints: true,
     showPosition: true,
-    type: "REGULAR",
+    type: "COOPERATIVE",
     showNote: true,
     showDate: true,
     showTags: true,
