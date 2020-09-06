@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from "react";
 import css from "./cooperative-play-result.module.scss";
 import Icons from "library/icons/Icons";
-import CooperativeResultRadio from "app/plays/form/results/cooperative-play-result/CooperativeResultRadio";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { FinalResult } from "app/plays/__models/PlayModels";
+import FancyRadio from "library/fancy-radio/FancyRadio";
 
 export interface CooperativePlayResult {
     onChange: (result: FinalResult) => void;
@@ -24,17 +24,21 @@ const CooperativePlayResult: React.FC<CooperativePlayResult> = props => {
         <div className={css.wrapper}>
             <h6>{translate("PLAYS.FORM.FINAL_RESULT.TITLE")}</h6>
             <div className={css.buttonsWrapper} onChange={changeFinalResult}>
-                <CooperativeResultRadio
+                <FancyRadio
                     icon={Icons.TrophyIcon}
                     text={translate("PLAYS.FORM.FINAL_RESULT.WIN")}
                     value={FinalResult.WIN}
                     selectedValue={finalResult}
+                    inputName="final_result"
+                    selectedClassName={css.WIN}
                 />
-                <CooperativeResultRadio
+                <FancyRadio
                     icon={Icons.GhostIcon}
                     text={translate("PLAYS.FORM.FINAL_RESULT.DEFEAT")}
                     value={FinalResult.DEFEAT}
                     selectedValue={finalResult}
+                    inputName="final_result"
+                    selectedClassName={css.DEFEAT}
                 />
             </div>
         </div>
