@@ -63,6 +63,17 @@
       "CANCEL": "Cofnij",
       "SAVE": "Zapisz"
     },
+    "OPTIONS": {
+      "GAME_TYPE": "Rodzaj gry",
+      "TRADITIONAL": "Tradycyjna",
+      "COOPERATIVE": "Kooperacyjna",
+      "SHOW_WHEN_CREATING_PLAY": "Pokaż podczas dodawania rozgrywki",
+      "SHOW_POSITION": "Zajęte miejsca",
+      "SHOW_POINTS": "Zdobyte punkty",
+      "SHOW_NOTE": "Notatka",
+      "SHOW_DATE": "Data",
+      "SHOW_TAGS": "Tagi"
+    },
     "ADD": {
       "TITLE": "Dodaj grę"
     },
@@ -149,6 +160,7 @@
   "ERRORS": {
     "BOARD_GAME": {
       "EXISTS": "Istnieje już gra o takiej nazwie"
-    }
+    },
+    "UNKNOWN": "Nieznany błąd"
   }
 }

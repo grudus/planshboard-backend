@@ -63,6 +63,17 @@
       "CANCEL": "Cancel",
       "SAVE": "Save"
     },
+    "OPTIONS": {
+      "GAME_TYPE": "Game type",
+      "TRADITIONAL": "Traditional",
+      "COOPERATIVE": "Cooperative",
+      "SHOW_WHEN_CREATING_PLAY": "Show when creating play",
+      "SHOW_POSITION": "Position",
+      "SHOW_POINTS": "Points",
+      "SHOW_NOTE": "Note",
+      "SHOW_DATE": "Date",
+      "SHOW_TAGS": "Tags"
+    },
     "ADD": {
       "TITLE": "Add game"
     },
@@ -144,6 +155,7 @@
   "ERRORS": {
     "BOARD_GAME": {
       "EXISTS": "Game already exists"
-    }
+    },
+    "UNKNOWN": "Unknown error"
   }
 }

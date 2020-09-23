@@ -4,6 +4,7 @@ import Button from "library/button/Button";
 import css from "./board-game-form.module.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import BoardGameOptions from "app/board-games/form/board-game-options/BoardGameOptions";
+import { defaultRegularGameOptions } from "app/board-games/__models/BoardGameModels";
 
 interface BoardGameFormProps {
     onSubmit: (name: string) => Promise<void>;
@@ -14,6 +15,7 @@ interface BoardGameFormProps {
 
 const BoardGameForm: React.FC<BoardGameFormProps> = props => {
     const [name, setName] = useState("");
+    const [options, setOptions] = useState(defaultRegularGameOptions);
     const [loading, setLoading] = useState(false);
     const { translate } = useTranslations();
 
@@ -42,7 +44,7 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
                 initialValue={props.initialValue}
             />
 
-            <BoardGameOptions />
+            <BoardGameOptions options={options} onChangeOptions={setOptions} />
 
             <div className={css.buttonsWrapper}>
                 <Button
