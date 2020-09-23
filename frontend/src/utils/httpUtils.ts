@@ -42,7 +42,14 @@ export async function fetchRequest(request: HttpRequestPayload, headers?: Header
     return response;
 }
 
-export const getErrorCode = (errorString: string): string | undefined => JSON.parse(errorString)?.code;
+export const getErrorCode = (errorString: string): string | undefined => {
+    try {
+        return JSON.parse(errorString)?.code;
+    } catch (e) {
+        console.error("Cannot parse error", errorString, e);
+        return "UNKNOWN";
+    }
+};
 
 function normalizePath(request: HttpRequestPayload) {
     if (request.path.startsWith("http")) return request.path;
