@@ -5,9 +5,10 @@ import css from "./board-game-form.module.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import BoardGameOptions from "app/board-games/form/board-game-options/BoardGameOptions";
 import { defaultRegularGameOptions } from "app/board-games/__models/BoardGameModels";
+import { AddBoardGameRequest, EditBoardGameRequest } from "app/board-games/BoardGameApi";
 
 interface BoardGameFormProps {
-    onSubmit: (name: string) => Promise<void>;
+    onSubmit: (request: AddBoardGameRequest | EditBoardGameRequest) => Promise<void>;
     onCancel: () => void;
     error?: string;
     initialValue?: string;
@@ -30,7 +31,7 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
     const submitForm = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        await props.onSubmit(name);
+        await props.onSubmit({ name, ...options });
     };
 
     return (

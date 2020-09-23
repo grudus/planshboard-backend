@@ -3,7 +3,7 @@ import BoardGameForm from "app/board-games/form/BoardGameForm";
 import { useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { addBoardGameRequest } from "app/board-games/BoardGameApi";
+import { AddBoardGameRequest, addBoardGameRequest } from "app/board-games/BoardGameApi";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { getErrorCode } from "utils/httpUtils";
 import CardForm from "library/card-form/CardForm";
@@ -17,10 +17,10 @@ const AddBoardGame: React.FC = () => {
     const { translate } = useTranslations();
     const [error, setError] = useState("");
 
-    const onSubmit = async (name: string) => {
+    const onSubmit = async (request: AddBoardGameRequest) => {
         try {
             setError("");
-            await addBoardGameRequest(dispatch, { name });
+            await addBoardGameRequest(dispatch, request);
             onCancel();
         } catch (e) {
             const code = getErrorCode(e);
