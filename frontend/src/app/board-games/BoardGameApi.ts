@@ -8,6 +8,7 @@ import {
     getSingleBoardGameSuccessAction,
 } from "app/board-games/__store/boardGameActions";
 import { IdResponse } from "app/shared/models/Response";
+import { BoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
 
 export function getBoardGamesRequest(dispatch: HttpDispatch): Promise<any> {
     return dispatch({
@@ -29,7 +30,7 @@ export function getSingleBoardGame(dispatch: HttpDispatch, request: GetSingleBoa
     });
 }
 
-interface AddBoardGameRequest {
+export interface AddBoardGameRequest extends BoardGamePlayResultsOptions {
     name: string;
 }
 

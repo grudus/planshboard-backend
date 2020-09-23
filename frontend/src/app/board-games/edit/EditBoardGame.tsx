@@ -4,7 +4,12 @@ import { useHistory, useParams } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import useTranslations from "app/locale/__hooks/useTranslations";
-import { editBoardGameRequest, getSingleBoardGame } from "app/board-games/BoardGameApi";
+import {
+    AddBoardGameRequest,
+    EditBoardGameRequest,
+    editBoardGameRequest,
+    getSingleBoardGame,
+} from "app/board-games/BoardGameApi";
 import { useRedux } from "store/rootReducer";
 import { getErrorCode } from "utils/httpUtils";
 import CardForm from "library/card-form/CardForm";
@@ -24,12 +29,10 @@ const EditBoardGame: React.FC = () => {
         getSingleBoardGame(dispatch, { id: +id!! });
     }, [dispatch, id]);
 
-    const onSubmit = async (name: string) => {
+    const onSubmit = async (request: AddBoardGameRequest | EditBoardGameRequest) => {
         try {
             setError("");
-            if (name !== boardGame?.name) {
-                await editBoardGameRequest(dispatch, { name, id: +id!! });
-            }
+            await editBoardGameRequest(dispatch, { ...request, id: +id!! });
             onCancel();
         } catch (e) {
             const code = getErrorCode(e);
