@@ -1,6 +1,5 @@
 package com.grudus.planshboard.user
 
-import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.tables.Users.USERS
 import com.grudus.planshboard.user.model.User
 import org.jooq.DSLContext

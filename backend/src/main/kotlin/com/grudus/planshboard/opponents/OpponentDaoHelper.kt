@@ -26,7 +26,7 @@ constructor(private val dsl: DSLContext) {
             .leftJoin(Users.USERS).on(Users.USERS.ID.eq(LinkedOpponents.LINKED_OPPONENTS.LINKED_USER_ID)) as SelectOnConditionStep<Record5<Long, String, Long, String, LinkedOpponentStatus>>
     }
 
-    fun opponentDtoMapper(): (Record5<Long, String, Long, String, com.grudus.planshboard.enums.LinkedOpponentStatus>) -> OpponentDto {
+    fun opponentDtoMapper(): (Record5<Long, String, Long, String, LinkedOpponentStatus>) -> OpponentDto {
         return { (id, opponentName, userId, userName, status) ->
             val linked = userId?.let { UserLinkedToOpponent(userId, userName, convert(status)) }
             OpponentDto(id, opponentName, linked)
@@ -36,11 +36,11 @@ constructor(private val dsl: DSLContext) {
 
 
     @Suppress("RemoveRedundantQualifierName")
-    fun convert(status: com.grudus.planshboard.opponents.model.LinkedOpponentStatus): com.grudus.planshboard.enums.LinkedOpponentStatus =
-        com.grudus.planshboard.enums.LinkedOpponentStatus.valueOf(status.name)
+    fun convert(status: com.grudus.planshboard.opponents.model.LinkedOpponentStatus): LinkedOpponentStatus =
+        LinkedOpponentStatus.valueOf(status.name)
 
     @Suppress("RemoveRedundantQualifierName")
-    fun convert(status: com.grudus.planshboard.enums.LinkedOpponentStatus): com.grudus.planshboard.opponents.model.LinkedOpponentStatus =
+    fun convert(status: LinkedOpponentStatus): com.grudus.planshboard.opponents.model.LinkedOpponentStatus =
         com.grudus.planshboard.opponents.model.LinkedOpponentStatus.valueOf(status.name)
 
 

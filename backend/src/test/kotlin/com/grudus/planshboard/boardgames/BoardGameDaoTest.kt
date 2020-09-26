@@ -157,7 +157,7 @@ constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
 
     @Test
     fun `should find by id`() {
-        val name = randomText();
+        val name = randomText()
         boardGameDao.create(addUser(), randomText())
         val id = boardGameDao.create(addUser(), name)
         boardGameDao.create(addUser(), randomText())
@@ -170,7 +170,7 @@ constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
 
     @Test
     fun `should return null when cannot find by id`() {
-        val name = randomText();
+        val name = randomText()
         val id = boardGameDao.create(addUser(), name)
 
         val boardGame = boardGameDao.findById(id + 1)
@@ -181,7 +181,7 @@ constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
     @Test
     fun `should delete board game by id`() {
         val id = boardGameDao.create(addUser(), randomText())
-        boardGameDao.create(addUser(), randomText());
+        boardGameDao.create(addUser(), randomText())
 
         boardGameDao.remove(id)
 
@@ -194,7 +194,7 @@ constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
     fun `should not delete anything when id does not match`() {
         val creatorId = addUser()
         boardGameDao.create(creatorId, randomText())
-        boardGameDao.create(creatorId, randomText());
+        boardGameDao.create(creatorId, randomText())
 
         boardGameDao.remove(nextLong())
 

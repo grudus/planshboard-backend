@@ -2,13 +2,11 @@ package com.grudus.planshboard.opponents.validators
 
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.OpponentService
-import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
 import com.grudus.planshboard.opponents.model.UserLinkedToOpponent
 import com.grudus.planshboard.user.UserService
-import com.grudus.planshboard.utils.TestUtils.eq
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
