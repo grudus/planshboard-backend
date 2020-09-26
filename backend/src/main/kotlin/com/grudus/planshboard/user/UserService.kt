@@ -1,7 +1,6 @@
 package com.grudus.planshboard.user
 
 import com.grudus.planshboard.commons.Id
-import com.grudus.planshboard.user.model.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

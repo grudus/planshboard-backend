@@ -4,7 +4,6 @@ import com.grudus.planshboard.AbstractControllerTest
 import com.grudus.planshboard.auth.UserAuthenticationService
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.utils.randomText
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.notNullValue
 import org.junit.jupiter.api.Assertions.assertFalse
