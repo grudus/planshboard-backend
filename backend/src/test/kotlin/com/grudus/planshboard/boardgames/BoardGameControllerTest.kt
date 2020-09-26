@@ -1,8 +1,9 @@
 package com.grudus.planshboard.boardgames
 
 import com.grudus.planshboard.AuthenticatedControllerTest
+import com.grudus.planshboard.boardgames.model.BoardGameOptions
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
-import com.grudus.planshboard.boardgames.model.RenameBoardGameRequest
+import com.grudus.planshboard.boardgames.model.EditBoardGameRequest
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
@@ -20,7 +21,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should create board game and return id`() {
-        val request = CreateBoardGameRequest(randomText())
+        val request = CreateBoardGameRequest(randomText(), BoardGameOptions.default())
         postRequest(baseUrl, request)
             .andExpect(status().isCreated)
             .andExpect(jsonPath("$.id", notNullValue()))
@@ -28,7 +29,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should validate creating board game`() {
-        val request = CreateBoardGameRequest("")
+        val request = CreateBoardGameRequest("", BoardGameOptions.default())
         postRequest(baseUrl, request)
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.code", Matchers.`is`(ValidationKeys.EMPTY_FIELD)))
@@ -36,8 +37,8 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should be able to get created board game`() {
-        postRequest(baseUrl, CreateBoardGameRequest(randomText()))
-        postRequest(baseUrl, CreateBoardGameRequest(randomText()))
+        postRequest(baseUrl, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
+        postRequest(baseUrl, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
 
         getRequest(baseUrl)
             .andExpect(status().isOk)
@@ -53,9 +54,9 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should get only games created current by user`() {
-        postRequest(baseUrl, CreateBoardGameRequest(randomText()))
+        postRequest(baseUrl, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
         setupAuthContextForAnotherUser()
-        postRequest(baseUrl, CreateBoardGameRequest(randomText()))
+        postRequest(baseUrl, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
 
         getRequest(baseUrl)
             .andExpect(status().isOk)
@@ -68,7 +69,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
         val newName = randomText()
         val id = addBoardGame(oldName)
 
-        putRequest("$baseUrl/$id", RenameBoardGameRequest(newName))
+        putRequest("$baseUrl/$id", EditBoardGameRequest(newName, BoardGameOptions.default()))
             .andExpect(status().isOk)
 
         getRequest(baseUrl)
@@ -83,7 +84,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
         val id = addBoardGame(oldName)
         addBoardGame(newName)
 
-        putRequest("$baseUrl/$id", RenameBoardGameRequest(newName))
+        putRequest("$baseUrl/$id", EditBoardGameRequest(newName, BoardGameOptions.default()))
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.code").value(ValidationKeys.GAME_ALREADY_EXISTS))
     }
@@ -95,19 +96,19 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
         val id = addBoardGame(oldName)
         setupAuthContextForAnotherUser()
 
-        putRequest("$baseUrl/$id", RenameBoardGameRequest(newName))
+        putRequest("$baseUrl/$id", EditBoardGameRequest(newName, BoardGameOptions.default()))
             .andExpect(status().isForbidden)
     }
 
     @Test
     fun `should not be able to rename not existing board game`() {
-        putRequest("$baseUrl/${nextLong()}", RenameBoardGameRequest(randomText()))
+        putRequest("$baseUrl/${nextLong()}", EditBoardGameRequest(randomText(), BoardGameOptions.default()))
             .andExpect(status().isForbidden)
     }
 
     @Test
     fun `should be able to find game by id`() {
-        val name = randomText();
+        val name = randomText()
         addBoardGame(randomText())
         val id = addBoardGame(name)
         addBoardGame(randomText())
@@ -120,7 +121,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
 
     @Test
     fun `should not be able to find someone else's board game`() {
-        val name = randomText();
+        val name = randomText()
         val id = addBoardGame(name)
         setupAuthContextForAnotherUser()
 
@@ -161,7 +162,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
     }
 
     private fun addBoardGame(name: String): Id =
-        postRequest(baseUrl, CreateBoardGameRequest(name))
+        postRequest(baseUrl, CreateBoardGameRequest(name, BoardGameOptions.default()))
             .getResponse(IdResponse::class.java).id
 
 }

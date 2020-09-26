@@ -2,6 +2,7 @@ package com.grudus.planshboard.plays.tags
 
 import com.grudus.planshboard.AuthenticatedControllerTest
 import com.grudus.planshboard.boardgames.BoardGameService
+import com.grudus.planshboard.boardgames.model.BoardGameOptions
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
 import com.grudus.planshboard.opponents.OpponentService
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
@@ -46,7 +47,7 @@ constructor(private val playService: PlayService,
     }
 
     private fun createPlay(tags: List<String>) {
-        val boardGameId = boardGameService.createBoardGame(authentication.id, CreateBoardGameRequest(randomText()))
+        val boardGameId = boardGameService.createBoardGame(authentication.id, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
         val opponentId = opponentService.create(SaveOpponentRequest(randomText()), authentication.id)
         playService.createPlay(SavePlayRequest(boardGameId,
             listOf(PlayResult(opponentId)),
