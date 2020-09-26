@@ -1,6 +1,7 @@
 package com.grudus.planshboard.boardgames
 
 import com.grudus.planshboard.boardgames.model.BoardGame
+import com.grudus.planshboard.boardgames.options.BoardGameOptionsDao
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -19,11 +20,14 @@ class BoardGameServiceTest {
     @Mock
     private lateinit var boardGameDao: BoardGameDao
 
+    @Mock
+    private lateinit var boardGameOptionsDao: BoardGameOptionsDao
+
     private lateinit var boardGameService: BoardGameService
 
     @BeforeEach
     fun init() {
-        boardGameService = BoardGameService(boardGameDao)
+        boardGameService = BoardGameService(boardGameDao, boardGameOptionsDao)
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.grudus.planshboard.plays
 
 import com.grudus.planshboard.AuthenticatedControllerTest
+import com.grudus.planshboard.boardgames.model.BoardGameOptions
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
@@ -62,8 +63,8 @@ constructor() : AuthenticatedControllerTest() {
     fun `should create new tags when saving plays`() {
         val boardGameId = addBoardGame()
         val opponentId = addOpponent()
-        val tag1 = "a" + randomText();
-        val tag2 = "b" + randomText();
+        val tag1 = "a" + randomText()
+        val tag2 = "b" + randomText()
 
         val request = SavePlayRequest(
             boardGameId,
@@ -88,8 +89,8 @@ constructor() : AuthenticatedControllerTest() {
     fun `should add new tag when update play`() {
         val boardGameId = addBoardGame()
         val opponentId = addOpponent()
-        val tag1 = "a" + randomText();
-        val tag2 = "b" + randomText();
+        val tag1 = "a" + randomText()
+        val tag2 = "b" + randomText()
 
         val saveRequest = SavePlayRequest(
             boardGameId,
@@ -119,8 +120,8 @@ constructor() : AuthenticatedControllerTest() {
     fun `should remove tag assigned to play when updating play without that tag`() {
         val boardGameId = addBoardGame()
         val opponentId = addOpponent()
-        val tag1 = "a" + randomText();
-        val tag2 = "b" + randomText();
+        val tag1 = "a" + randomText()
+        val tag2 = "b" + randomText()
 
         val saveRequest = SavePlayRequest(
             boardGameId,
@@ -199,7 +200,7 @@ constructor() : AuthenticatedControllerTest() {
             .id
 
     private fun addBoardGame() =
-        postRequest("/api/board-games", CreateBoardGameRequest(randomText()))
+        postRequest("/api/board-games", CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
             .getResponse(IdResponse::class.java)
             .id
 }

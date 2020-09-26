@@ -2,6 +2,7 @@ package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.AbstractDatabaseTest
 import com.grudus.planshboard.boardgames.BoardGameService
+import com.grudus.planshboard.boardgames.model.BoardGameOptions
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.plays.PlayService
@@ -34,7 +35,7 @@ class OpponentStatsDaoTest : AbstractDatabaseTest() {
     @BeforeEach
     fun init() {
         user = addUser()
-        boardGame = boardGameService.createBoardGame(user, CreateBoardGameRequest(randomText()))
+        boardGame = boardGameService.createBoardGame(user, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
     }
 
 

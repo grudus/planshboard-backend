@@ -15,6 +15,8 @@ object JooqCommons {
 
         val idField: Field<*> = table.field("id")
         val maxIndex = dslContext.select(DSL.max(idField)).from(table).fetchOneInto(Id::class.java) ?: 0
+
+        @Suppress("UNCHECKED_CAST")
         val withId = { record: R, id: Id -> record.set(idField as Field<Id>, maxIndex + id); record }
 
         var insertStep: InsertSetStep<R> = dslContext.insertInto(table)

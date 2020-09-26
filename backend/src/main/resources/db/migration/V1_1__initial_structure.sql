@@ -18,6 +18,20 @@ CREATE TABLE IF NOT EXISTS board_games
 CREATE INDEX ON board_games (name);
 CREATE INDEX ON board_games (creator_id);
 
+
+CREATE TYPE board_game_type AS ENUM ('REGULAR', 'COOPERATIVE');
+
+CREATE TABLE IF NOT EXISTS board_game_options
+(
+    board_game_id BIGINT          NOT NULL REFERENCES board_games (id) ON DELETE CASCADE,
+    game_type     board_game_type NOT NULL DEFAULT 'REGULAR',
+    show_points   BOOLEAN         NOT NULL DEFAULT TRUE,
+    show_position BOOLEAN         NOT NULL DEFAULT TRUE,
+    show_note     BOOLEAN         NOT NULL DEFAULT TRUE,
+    show_date     BOOLEAN         NOT NULL DEFAULT TRUE,
+    show_tags     BOOLEAN         NOT NULL DEFAULT TRUE
+);
+
 CREATE TABLE IF NOT EXISTS linked_board_games
 (
     board_game_id  BIGINT  NOT NULL REFERENCES board_games (id) ON DELETE CASCADE,

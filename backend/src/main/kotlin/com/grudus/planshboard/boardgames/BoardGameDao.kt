@@ -67,7 +67,7 @@ constructor(private val dsl: DSLContext) {
     fun remove(boardGameId: Id) {
         dsl.deleteFrom(BOARD_GAMES)
             .where(BOARD_GAMES.ID.eq(boardGameId))
-            .execute();
+            .execute()
     }
 
 }

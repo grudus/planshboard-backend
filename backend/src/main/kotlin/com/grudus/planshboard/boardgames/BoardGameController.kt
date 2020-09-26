@@ -3,9 +3,9 @@ package com.grudus.planshboard.boardgames
 import com.grudus.planshboard.auth.UserAuthentication
 import com.grudus.planshboard.boardgames.model.BoardGame
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
-import com.grudus.planshboard.boardgames.model.RenameBoardGameRequest
+import com.grudus.planshboard.boardgames.model.EditBoardGameRequest
 import com.grudus.planshboard.boardgames.validators.CreateBoardGameRequestValidator
-import com.grudus.planshboard.boardgames.validators.RenameBoardGameRequestValidator
+import com.grudus.planshboard.boardgames.validators.EditBoardGameRequestValidator
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.responses.idOf
@@ -21,7 +21,7 @@ class BoardGameController
 constructor(private val boardGameService: BoardGameService,
             private val boardGameSecurityService: BoardGameSecurityService,
             private val createBoardGameRequestValidator: CreateBoardGameRequestValidator,
-            private val renameBoardGameRequestValidator: RenameBoardGameRequestValidator) {
+            private val editBoardGameRequestValidator: EditBoardGameRequestValidator) {
     private val log = LoggerFactory.getLogger(javaClass.simpleName)
 
     @GetMapping
@@ -56,11 +56,11 @@ constructor(private val boardGameService: BoardGameService,
 
     @PutMapping("/{boardGameId}")
     fun renameBoardGame(user: UserAuthentication,
-                        @RequestBody request: RenameBoardGameRequest,
+                        @RequestBody request: EditBoardGameRequest,
                         @PathVariable boardGameId: Id) {
         boardGameSecurityService.checkAccess(boardGameId)
-        renameBoardGameRequestValidator.validate(request).throwOnError()
-        log.info("User[${user.id}] renames board game[$boardGameId]: $request")
-        boardGameService.rename(boardGameId, request.name)
+        editBoardGameRequestValidator.validate(request).throwOnError()
+        log.info("User[${user.id}] edits board game[$boardGameId]: $request")
+        boardGameService.edit(boardGameId, request)
     }
 }

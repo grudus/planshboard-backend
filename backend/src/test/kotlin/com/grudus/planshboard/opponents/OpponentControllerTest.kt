@@ -2,6 +2,7 @@ package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.AuthenticatedControllerTest
 import com.grudus.planshboard.boardgames.BoardGameService
+import com.grudus.planshboard.boardgames.model.BoardGameOptions
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
@@ -271,7 +272,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
             .andExpect(jsonPath("$.[2].id").value(opponent1))
     }
 
-    private fun addBoardGame() = boardGameService.createBoardGame(authentication.id, CreateBoardGameRequest(randomText()))
+    private fun addBoardGame() = boardGameService.createBoardGame(authentication.id, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
 
     private fun addOpponent(saveOpponentRequest: SaveOpponentRequest): Id =
         postRequest(baseUrl, saveOpponentRequest)
