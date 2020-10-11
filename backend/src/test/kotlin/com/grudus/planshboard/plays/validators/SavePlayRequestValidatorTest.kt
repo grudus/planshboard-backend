@@ -4,6 +4,7 @@ import com.grudus.planshboard.boardgames.BoardGameSecurityService
 import com.grudus.planshboard.commons.exceptions.UserHasNoAccessToResourceException
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.OpponentSecurityService
+import com.grudus.planshboard.plays.model.FinalResult
 import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.utils.TestUtils.eq

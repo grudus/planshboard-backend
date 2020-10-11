@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 class JooqCommonsTest : AbstractDatabaseTest() {
 
     @Test
-    fun `should save multiple items and return their's ids`() {
+    fun `should save multiple items and return theirs ids`() {
         val numberOfUsers = 3
         JooqCommons.insertMultipleAndReturnIds(dsl, USERS, listOf(UsersRecord(null, randomText(), randomText(), LocalDateTime.now())))
 
