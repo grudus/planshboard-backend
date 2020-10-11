@@ -216,13 +216,13 @@ class OpponentDaoTest : AbstractDatabaseTest() {
     fun `should link existing opponent with user`() {
         val id = opponentDao.createNew(randomText(), addUser())
         val linkedUserId = addUser()
-        opponentDao.linkToUser(id, linkedUserId, LinkedOpponentStatus.ENABLED)
+        opponentDao.linkToUser(id, linkedUserId, LinkedOpponentStatus.DISABLED)
 
         val opponent = opponentDao.findById(id)!!
 
         assertNotNull(opponent.linkedUser)
         assertEquals(linkedUserId, opponent.linkedUser!!.userId)
-        assertEquals(LinkedOpponentStatus.ENABLED, opponent.linkedUser!!.status)
+        assertEquals(LinkedOpponentStatus.DISABLED, opponent.linkedUser!!.status)
     }
 
 }
