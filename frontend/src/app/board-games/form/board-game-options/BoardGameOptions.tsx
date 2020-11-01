@@ -16,7 +16,7 @@ export interface BoardGameOptionsProps {
 }
 
 const BoardGameOptions: React.FC<BoardGameOptionsProps> = props => {
-    const [userChangedData, setUserChangedData] = useState(props.options.isDefault);
+    const [userChangedData, setUserChangedData] = useState(!props.options.isDefault);
 
     const { translate } = useTranslations();
 

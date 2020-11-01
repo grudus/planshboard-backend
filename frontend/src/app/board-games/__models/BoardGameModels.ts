@@ -1,8 +1,13 @@
-export interface BoardGameListItem {
+export interface BoardGame {
     id: number;
     name: string;
     creatorId?: number;
     createdAt: Date;
+}
+
+export interface SingleBoardGame {
+    boardGame: BoardGame;
+    options: BoardGamePlayResultsOptions;
 }
 
 export interface BasicBoardGame {

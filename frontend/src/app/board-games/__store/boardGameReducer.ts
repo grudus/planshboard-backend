@@ -1,5 +1,5 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { BasicBoardGame, BoardGameListItem } from "app/board-games/__models/BoardGameModels";
+import { BasicBoardGame, BoardGame, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
 import {
     addBoardGameSuccessAction,
     deleteBoardGameSuccessAction,
@@ -7,11 +7,11 @@ import {
     getBoardGamesSuccessAction,
     getSingleBoardGameSuccessAction,
 } from "app/board-games/__store/boardGameActions";
-import { DeleteBoardGameRequest } from "app/board-games/BoardGameApi";
+import { AddBoardGameRequest, DeleteBoardGameRequest } from "app/board-games/BoardGameApi";
 
 export interface BoardGameStore {
-    list: BoardGameListItem[];
-    single?: BoardGameListItem;
+    list: BoardGame[];
+    single?: SingleBoardGame;
 }
 
 const initialState: BoardGameStore = {
@@ -19,15 +19,15 @@ const initialState: BoardGameStore = {
 };
 
 export const boardGamesReducer = createReducer<BoardGameStore>(initialState, {
-    [getBoardGamesSuccessAction.type]: (state, action: PayloadAction<BoardGameListItem[]>) => ({
+    [getBoardGamesSuccessAction.type]: (state, action: PayloadAction<BoardGame[]>) => ({
         ...state,
         list: action.payload,
     }),
-    [addBoardGameSuccessAction.type]: (state, action: PayloadAction<BasicBoardGame>) => ({
-        ...state,
-        list: [...state.list, { ...action.payload, createdAt: new Date() }],
-    }),
-    [getSingleBoardGameSuccessAction.type]: (state, action: PayloadAction<BoardGameListItem>) => ({
+    [addBoardGameSuccessAction.type]: (state, action: PayloadAction<{ id: number; request: AddBoardGameRequest }>) => {
+        const { id, request } = action.payload;
+        return { ...state, list: [...state.list, { id, name: request.name, createdAt: new Date() }] };
+    },
+    [getSingleBoardGameSuccessAction.type]: (state, action: PayloadAction<SingleBoardGame>) => ({
         ...state,
         single: action.payload,
     }),

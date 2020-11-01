@@ -19,7 +19,7 @@ import css from "./edit-board-game.module.scss";
 
 const EditBoardGame: React.FC = () => {
     const history = useHistory();
-    const boardGame = useRedux(state => state.boardGame.single);
+    const currentGame = useRedux(state => state.boardGame.single);
     const { id } = useParams();
     const dispatch = useHttpDispatch();
     const { translate } = useTranslations();
@@ -43,13 +43,15 @@ const EditBoardGame: React.FC = () => {
         history.push(appRoutes.boardGame.list);
     };
 
+    if (!currentGame) return <></>;
+
     return (
         <CardForm className={css.formWrapper}>
             <CardFormTitle>
-                <h1>{translate("BOARD_GAMES.EDIT.TITLE") + ` '${boardGame?.name}'`}</h1>
+                <h1>{translate("BOARD_GAMES.EDIT.TITLE") + ` '${currentGame?.boardGame.name}'`}</h1>
             </CardFormTitle>
             <CardFormContent>
-                <BoardGameForm onSubmit={onSubmit} onCancel={onCancel} error={error} initialValue={boardGame?.name} />
+                <BoardGameForm onSubmit={onSubmit} onCancel={onCancel} error={error} initialValue={currentGame} />
             </CardFormContent>
         </CardForm>
     );

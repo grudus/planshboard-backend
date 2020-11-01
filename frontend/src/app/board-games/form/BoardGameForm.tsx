@@ -4,19 +4,19 @@ import Button from "library/button/Button";
 import css from "./board-game-form.module.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import BoardGameOptions from "app/board-games/form/board-game-options/BoardGameOptions";
-import { defaultRegularGameOptions } from "app/board-games/__models/BoardGameModels";
+import { defaultRegularGameOptions, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
 import { AddBoardGameRequest, EditBoardGameRequest } from "app/board-games/BoardGameApi";
 
 interface BoardGameFormProps {
     onSubmit: (request: AddBoardGameRequest | EditBoardGameRequest) => Promise<void>;
     onCancel: () => void;
     error?: string;
-    initialValue?: string;
+    initialValue?: SingleBoardGame;
 }
 
 const BoardGameForm: React.FC<BoardGameFormProps> = props => {
-    const [name, setName] = useState("");
-    const [options, setOptions] = useState(defaultRegularGameOptions);
+    const [name, setName] = useState(props.initialValue?.boardGame.name ?? "");
+    const [options, setOptions] = useState(props.initialValue?.options ?? defaultRegularGameOptions);
     const [loading, setLoading] = useState(false);
     const { translate } = useTranslations();
 
@@ -25,13 +25,14 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
     }, [props.error]);
 
     useEffect(() => {
-        setName(props.initialValue ?? "");
+        setName(props.initialValue?.boardGame.name ?? "");
+        setOptions(props.initialValue?.options ?? defaultRegularGameOptions);
     }, [props.initialValue]);
 
     const submitForm = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        await props.onSubmit({ name, ...options });
+        await props.onSubmit({ name, options });
     };
 
     return (
@@ -42,7 +43,7 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
                 onTextChange={setName}
                 autoFocus
                 error={props.error}
-                initialValue={props.initialValue}
+                initialValue={props.initialValue?.boardGame.name}
             />
 
             <BoardGameOptions options={options} onChangeOptions={setOptions} />

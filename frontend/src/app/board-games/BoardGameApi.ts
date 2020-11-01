@@ -30,15 +30,16 @@ export function getSingleBoardGame(dispatch: HttpDispatch, request: GetSingleBoa
     });
 }
 
-export interface AddBoardGameRequest extends BoardGamePlayResultsOptions {
+export interface AddBoardGameRequest {
     name: string;
+    options: BoardGamePlayResultsOptions;
 }
 
 export function addBoardGameRequest(dispatch: HttpDispatch, request: AddBoardGameRequest): Promise<any> {
     return dispatch({
         type: "post",
         path: apiRoutes.boardGame.list,
-        successAction: (response: IdResponse) => addBoardGameSuccessAction({ ...request, ...response }),
+        successAction: ({ id }: IdResponse) => addBoardGameSuccessAction({ id, request }),
         body: request,
     });
 }

@@ -115,8 +115,8 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
 
         getRequest("$baseUrl/$id")
             .andExpect(status().isOk)
-            .andExpect(jsonPath("$.id").value(id))
-            .andExpect(jsonPath("$.name").value(name))
+            .andExpect(jsonPath("$.boardGame.id").value(id))
+            .andExpect(jsonPath("$.boardGame.name").value(name))
     }
 
     @Test

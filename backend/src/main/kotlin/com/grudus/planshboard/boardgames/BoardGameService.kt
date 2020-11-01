@@ -3,6 +3,7 @@ package com.grudus.planshboard.boardgames
 import com.grudus.planshboard.boardgames.model.BoardGame
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
 import com.grudus.planshboard.boardgames.model.EditBoardGameRequest
+import com.grudus.planshboard.boardgames.model.SingleBoardGameResponse
 import com.grudus.planshboard.boardgames.options.BoardGameOptionsDao
 import com.grudus.planshboard.commons.Id
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,8 +39,9 @@ constructor(private val boardGameDao: BoardGameDao,
         boardGameDao.rename(boardGameId, editBoardGameRequest.name)
     }
 
-    fun findById(boardGameId: Id): BoardGame? =
-        boardGameDao.findById(boardGameId)
+    fun findById(boardGameId: Id): SingleBoardGameResponse? {
+        return boardGameDao.findWithOptions(boardGameId)
+    }
 
     fun remove(boardGameId: Id) {
         boardGameDao.remove(boardGameId)

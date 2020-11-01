@@ -1,10 +1,14 @@
 package com.grudus.planshboard.boardgames
 
 import com.grudus.planshboard.boardgames.model.BoardGame
+import com.grudus.planshboard.boardgames.model.SingleBoardGameResponse
+import com.grudus.planshboard.boardgames.options.BoardGameOptionsDao.Companion.optionsFromRecord
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.tables.BoardGameOptions.BOARD_GAME_OPTIONS
 import com.grudus.planshboard.tables.BoardGames.BOARD_GAMES
 import com.grudus.planshboard.tables.LinkedBoardGames.LINKED_BOARD_GAMES
 import org.jooq.DSLContext
+import org.jooq.Record
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
@@ -64,10 +68,31 @@ constructor(private val dsl: DSLContext) {
             .where(BOARD_GAMES.ID.eq(boardGameId))
             .fetchOneInto(BoardGame::class.java)
 
+    fun findWithOptions(boardGameId: Id): SingleBoardGameResponse? =
+        dsl.select(BOARD_GAMES.fields().asList())
+            .select(BOARD_GAME_OPTIONS.fields().asList())
+            .from(BOARD_GAMES)
+            .join(BOARD_GAME_OPTIONS).on(BOARD_GAMES.ID.eq(BOARD_GAME_OPTIONS.BOARD_GAME_ID))
+            .where(BOARD_GAMES.ID.eq(boardGameId))
+            .fetchOne { record ->
+                SingleBoardGameResponse(gameFromRecord(record), optionsFromRecord(record))
+            }
+
     fun remove(boardGameId: Id) {
         dsl.deleteFrom(BOARD_GAMES)
             .where(BOARD_GAMES.ID.eq(boardGameId))
             .execute()
+    }
+
+    companion object {
+        fun gameFromRecord(record: Record): BoardGame =
+            BoardGame(
+                record[BOARD_GAMES.ID],
+                record[BOARD_GAMES.NAME],
+                record[BOARD_GAMES.CREATOR_ID],
+                record[BOARD_GAMES.CREATED_AT]
+            )
+
     }
 
 }

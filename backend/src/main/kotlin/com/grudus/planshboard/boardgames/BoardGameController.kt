@@ -4,6 +4,7 @@ import com.grudus.planshboard.auth.UserAuthentication
 import com.grudus.planshboard.boardgames.model.BoardGame
 import com.grudus.planshboard.boardgames.model.CreateBoardGameRequest
 import com.grudus.planshboard.boardgames.model.EditBoardGameRequest
+import com.grudus.planshboard.boardgames.model.SingleBoardGameResponse
 import com.grudus.planshboard.boardgames.validators.CreateBoardGameRequestValidator
 import com.grudus.planshboard.boardgames.validators.EditBoardGameRequestValidator
 import com.grudus.planshboard.commons.Id
@@ -30,7 +31,7 @@ constructor(private val boardGameService: BoardGameService,
     }
 
     @GetMapping("/{boardGameId}")
-    fun getSingleBoardGame(user: UserAuthentication, @PathVariable boardGameId: Id): BoardGame? {
+    fun getSingleBoardGame(user: UserAuthentication, @PathVariable boardGameId: Id): SingleBoardGameResponse? {
         boardGameSecurityService.checkAccess(boardGameId)
         return boardGameService.findById(boardGameId)
     }
