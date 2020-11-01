@@ -1,6 +1,9 @@
 package com.grudus.planshboard.boardgames
 
 import com.grudus.planshboard.AbstractDatabaseTest
+import com.grudus.planshboard.boardgames.model.BoardGameOptions
+import com.grudus.planshboard.boardgames.model.BoardGameType
+import com.grudus.planshboard.boardgames.options.BoardGameOptionsDao
 import com.grudus.planshboard.utils.randomText
 import org.jooq.exception.DataAccessException
 import org.junit.jupiter.api.Assertions.*
@@ -12,7 +15,8 @@ import kotlin.random.Random.Default.nextLong
 
 class BoardGameDaoTest
 @Autowired
-constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
+constructor(private val boardGameDao: BoardGameDao,
+            private val boardGameOptionsDao: BoardGameOptionsDao) : AbstractDatabaseTest() {
 
     @Test
     fun `should create board game and return id`() {
@@ -166,6 +170,34 @@ constructor(private val boardGameDao: BoardGameDao) : AbstractDatabaseTest() {
 
         assertNotNull(boardGame)
         assertEquals(name, boardGame!!.name)
+    }
+
+    @Test
+    fun `should find by id with options`() {
+        val name = randomText()
+        val id = boardGameDao.create(addUser(), name)
+        boardGameOptionsDao.createOptions(id, BoardGameOptions.default())
+
+        val gameWithOptions = boardGameDao.findWithOptions(id)
+
+        assertNotNull(gameWithOptions)
+        assertEquals(name, gameWithOptions!!.boardGame.name)
+        assertEquals(id, gameWithOptions.options.boardGameId)
+    }
+
+    @Test
+    fun `should find correct options`() {
+        val id = boardGameDao.create(addUser(), randomText())
+        boardGameOptionsDao.createOptions(id, BoardGameOptions(gameType = BoardGameType.REGULAR, showDate = false, showNote = true, showPoints = false, showPosition = true, showTags = false, boardGameId = id))
+
+        val gameWithOptions = boardGameDao.findWithOptions(id)
+
+        assertNotNull(gameWithOptions)
+        assertFalse(gameWithOptions!!.options.showDate)
+        assertFalse(gameWithOptions.options.showPoints)
+        assertFalse(gameWithOptions.options.showTags)
+        assertTrue(gameWithOptions.options.showNote)
+        assertTrue(gameWithOptions.options.showPosition)
     }
 
     @Test

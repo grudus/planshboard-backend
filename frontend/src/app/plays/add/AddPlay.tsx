@@ -21,7 +21,7 @@ const AddPlay: React.FC = () => {
     const dispatch = useHttpDispatch();
     const { boardGameId, history } = useQueryParams();
     const [loading, setLoading] = useState(false);
-    const boardGame = useRedux(state => state.boardGame.single);
+    const currentGame = useRedux(state => state.boardGame.single);
     const currentUser = useRedux(s => s.opponent.currentUser);
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
 
@@ -54,7 +54,9 @@ const AddPlay: React.FC = () => {
             <CardFormTitle>
                 <div className={css.headerWrapper}>
                     <h1>{translate("PLAYS.ADD.TITLE")}</h1>
-                    {boardGame && <Chip text={boardGame.name} className={css.headerBoardGame} onClick={() => true} />}
+                    {currentGame && (
+                        <Chip text={currentGame.boardGame.name} className={css.headerBoardGame} onClick={() => true} />
+                    )}
                 </div>
             </CardFormTitle>
             <CardFormContent>

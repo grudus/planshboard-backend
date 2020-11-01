@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Opponent } from "app/opponents/__models/OpponentModels";
 import css from "./play-form.module.scss";
 import PlayResultsTable from "app/plays/form/results/results-table/PlayResultsTable";
-import { BoardGameType, defaultRegularGameOptions } from "app/board-games/__models/BoardGameModels";
+import {
+    BoardGamePlayResultsOptions,
+    BoardGameType,
+    defaultRegularGameOptions,
+} from "app/board-games/__models/BoardGameModels";
 import PlayFormOpponents from "app/plays/form/play-form-opponents/PlayFormOpponents";
 import { FinalResult, PlayMeta, PlayResultRow } from "app/plays/__models/PlayModels";
 import { useRedux } from "store/rootReducer";
@@ -22,11 +26,11 @@ interface PlayFormProps {
 const PlayForm: React.FC<PlayFormProps> = props => {
     const { translate } = useTranslations();
     const frequent: Opponent[] = useRedux(state => state.opponent.frequentOpponents);
+    const gameOptions = useRedux(state => state.boardGame.single?.options ?? defaultRegularGameOptions);
     const [frequentOpponents, setFrequentOpponents] = useState(frequent);
     const [results, setResults] = useState(props.results);
     const [meta, setMeta] = useState(props.meta ?? { date: new Date() });
     const alreadyUsedOpponents = new Set(results.map(result => result.opponent.id));
-    const gameOptions = defaultRegularGameOptions;
 
     useEffect(() => {
         setResults(props.results);
