@@ -1,0 +1,15 @@
+@import "src/variables";
+@import "src/utils";
+
+.addButton {
+    @include largeShadow;
+    @include floatingItem;
+}
+
+
+@media (min-width: $medium) {
+    .addButton {
+        @include noShadow;
+        @include topSpaceItem;
+    }
+}

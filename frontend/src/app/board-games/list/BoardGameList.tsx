@@ -14,7 +14,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
     const [idToDelete, setIdToDelete] = useState(null as number | null);
     const [filter, setFilter] = useState("");
     const dispatch = useHttpDispatch();
-    const boardGames = useRedux(state => state.boardGame.list);
+    const { list: boardGames, boardGameExists } = useRedux(state => state.boardGame);
 
     const confirmDeleteItem = async () => {
         await deleteBoardGameRequest(dispatch, { id: idToDelete!! });
@@ -28,7 +28,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
         getBoardGamesRequest(dispatch);
     }, [dispatch]);
 
-    if (boardGames?.length === 0) {
+    if (!boardGameExists) {
         return (
             <>
                 <EmptyListPlaceholder />

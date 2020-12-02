@@ -5,7 +5,7 @@ import { appRoutes } from "app/routing/routes";
 import Icons from "library/icons/Icons";
 
 interface AddBoardGameButtonProps {
-    className: string;
+    className?: string;
 }
 
 const AddBoardGameButton: React.FC<AddBoardGameButtonProps> = props => {
