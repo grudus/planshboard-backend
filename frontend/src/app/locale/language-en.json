@@ -150,6 +150,13 @@
     "TAGS": {
       "DROPDOWN_LABEL": "Tags",
       "NO_OPTIONS_DROPDOWN": "Start writing to add tag"
+    },
+    "LIST": {
+      "EMPTY": {
+        "TOP": "You don't have any plays yet",
+        "BOTTOM": "Add some, to follow your progress"
+      },
+      "ADD_BUTTON": "Add play"
     }
   },
   "ERRORS": {

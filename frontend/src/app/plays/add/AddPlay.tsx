@@ -26,6 +26,9 @@ const AddPlay: React.FC = () => {
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
 
     useEffect(() => {
+        if (!boardGameId) {
+            return;
+        }
         getTagsRequest(dispatch);
         getAllOpponentsRequest(dispatch);
         getFrequentOpponentsRequest(dispatch);
@@ -48,6 +51,10 @@ const AddPlay: React.FC = () => {
     const goBack = () => {
         history.push(appRoutes.plays.list);
     };
+
+    if (!boardGameId) {
+        return <p>TODO: Handle no board game passed as query param ?boardGameId=id</p>;
+    }
 
     return (
         <CardForm className={css.formWrapper}>
