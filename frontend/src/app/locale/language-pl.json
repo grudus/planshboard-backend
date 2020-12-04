@@ -155,6 +155,13 @@
     "TAGS": {
       "DROPDOWN_LABEL": "Dodaj tagi",
       "NO_OPTIONS_DROPDOWN": "Zacznij pisać, aby dodać tag"
+    },
+    "LIST": {
+      "EMPTY": {
+        "TOP": "Nie zapisałeś jeszcze żadnej rozgrywki.",
+        "BOTTOM": "Utwórz ją, aby móc śledzić swoje postępy!"
+      },
+      "ADD_BUTTON": "Dodaj rozgrywkę"
     }
   },
   "ERRORS": {
