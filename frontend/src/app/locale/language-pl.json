@@ -85,6 +85,9 @@
       "CONTENT": "Czy na pewno chcesz usunąc grę? Spowoduje to usunięcie wszystkich powiązanych z nią rozgrywek.",
       "CONFIRM_TEXT": "Usuń grę",
       "CANCEL_TEXT": "Cofnij"
+    },
+    "SELECT": {
+      "TITLE": "Wybierz grę"
     }
   },
   "OPPONENTS": {

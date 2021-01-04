@@ -15,18 +15,21 @@ import { useQueryParams } from "app/shared/hooks/useQueryParams";
 import { getSingleBoardGame } from "app/board-games/BoardGameApi";
 import Chip from "library/chip/Chip";
 import { appRoutes } from "app/routing/routes";
+import SelectBoardGameDialog from "app/plays/select-board-game-dialog/SelectBoardGameDialog";
 
 const AddPlay: React.FC = () => {
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
     const { boardGameId, history } = useQueryParams();
     const [loading, setLoading] = useState(false);
+    const [boardGameDialogOpen, setBoardGameDialogOpen] = useState(false);
     const currentGame = useRedux(state => state.boardGame.single);
     const currentUser = useRedux(s => s.opponent.currentUser);
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
 
     useEffect(() => {
         if (!boardGameId) {
+            setBoardGameDialogOpen(true);
             return;
         }
         getTagsRequest(dispatch);
@@ -52,29 +55,44 @@ const AddPlay: React.FC = () => {
         history.push(appRoutes.plays.list);
     };
 
-    if (!boardGameId) {
-        return <p>TODO: Handle no board game passed as query param ?boardGameId=id</p>;
-    }
+    const updateBoardGame = (id: number | null = null) => {
+        setBoardGameDialogOpen(!id);
+        history.push({
+            pathname: appRoutes.plays.add,
+            search: id ? `?boardGameId=${id}` : "",
+        });
+    };
 
     return (
-        <CardForm className={css.formWrapper}>
-            <CardFormTitle>
-                <div className={css.headerWrapper}>
-                    <h1>{translate("PLAYS.ADD.TITLE")}</h1>
-                    {currentGame && (
-                        <Chip text={currentGame.boardGame.name} className={css.headerBoardGame} onClick={() => true} />
-                    )}
-                </div>
-            </CardFormTitle>
-            <CardFormContent>
-                <PlayForm
-                    results={selectedOpponents.map(o => ({ opponent: o }))}
-                    onSubmit={onSubmit}
-                    onCancel={goBack}
-                    loading={loading}
-                />
-            </CardFormContent>
-        </CardForm>
+        <>
+            <CardForm className={css.formWrapper}>
+                <CardFormTitle>
+                    <div className={css.headerWrapper}>
+                        <h1>{translate("PLAYS.ADD.TITLE")}</h1>
+                        {currentGame && (
+                            <Chip
+                                text={currentGame.boardGame.name}
+                                className={css.headerBoardGame}
+                                onClick={() => setBoardGameDialogOpen(true)}
+                            />
+                        )}
+                    </div>
+                </CardFormTitle>
+                <CardFormContent>
+                    <PlayForm
+                        results={selectedOpponents.map(o => ({ opponent: o }))}
+                        onSubmit={onSubmit}
+                        onCancel={goBack}
+                        loading={loading}
+                    />
+                </CardFormContent>
+            </CardForm>
+            <SelectBoardGameDialog
+                onSelect={updateBoardGame}
+                open={boardGameDialogOpen}
+                onClose={() => setBoardGameDialogOpen(false)}
+            />
+        </>
     );
 };
 
