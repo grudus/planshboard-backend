@@ -21,11 +21,11 @@ const PlayFormOpponents: React.FC<PlayFormOpponentsProps> = props => {
         <section>
             <div className={merge(css.titleMoreWrapper)}>
                 <h6 className={css.title}>{translate("PLAYS.FORM.OPPONENTS.TITLE")}</h6>
-                <a href="#" className={css.more} onClick={() => setShowMoreOpponents(!showMoreOpponents)}>
+                <button className={css.more} onClick={() => setShowMoreOpponents(!showMoreOpponents)}>
                     {showMoreOpponents
                         ? translate("PLAYS.FORM.OPPONENTS.LESS")
                         : translate("PLAYS.FORM.OPPONENTS.MORE")}
-                </a>
+                </button>
             </div>
 
             {!showMoreOpponents && (
