@@ -1,4 +1,5 @@
 @import "src/utils";
+@import "src/variables";
 
 $hideAnimationTime: 125;
 
@@ -63,4 +64,17 @@ $hideAnimationTime: 125;
 
 .dialogFooter {
     margin: 8px 4px;
+}
+
+
+@media (max-width: $medium)  {
+    .mobileFull {
+        &.dialogWrapper {
+            padding-bottom: 54px;
+        }
+        & .dialog {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
 }

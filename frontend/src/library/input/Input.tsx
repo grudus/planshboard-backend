@@ -20,6 +20,7 @@ export interface InputProps {
     multiline?: boolean;
     inputExtra?: React.HTMLProps<HTMLInputElement>;
     hideLabel?: boolean;
+    onEnter?: (text: string) => void;
 }
 
 const Input: React.FC<InputProps> = props => {
@@ -29,6 +30,13 @@ const Input: React.FC<InputProps> = props => {
         const { value } = e.target;
         setText(value);
         props?.onTextChange?.(value);
+    };
+
+    const handleKey = (e: React.KeyboardEvent<any>) => {
+        const { key } = e;
+        if (key === "Enter") {
+            props.onEnter?.(text);
+        }
     };
 
     useEffect(() => {
@@ -48,6 +56,7 @@ const Input: React.FC<InputProps> = props => {
             onBlur={props.onBlur}
             aria-invalid={isError()}
             rows={1}
+            onKeyDown={handleKey}
         />
     ) : (
         <input
@@ -60,6 +69,7 @@ const Input: React.FC<InputProps> = props => {
             type={props.type || "text"}
             onBlur={props.onBlur}
             aria-invalid={isError()}
+            onKeyDown={handleKey}
             {...props.inputExtra}
         />
     );

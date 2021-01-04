@@ -9,10 +9,11 @@ import AddBoardGameButton from "app/board-games/list/add-button/AddBoardGameButt
 import DeleteBoardGameDialog from "app/board-games/list/dialog/DeleteBoardGameDialog";
 import FlipMove from "react-flip-move";
 import SearchInput from "library/search-input/SearchInput";
+import useFilter from "app/shared/hooks/useFilter";
 
 const BoardGameList: React.FunctionComponent<any> = () => {
     const [idToDelete, setIdToDelete] = useState(null as number | null);
-    const [filter, setFilter] = useState("");
+    const { setFilter, filterCondition } = useFilter();
     const dispatch = useHttpDispatch();
     const { list: boardGames, boardGameExists } = useRedux(state => state.boardGame);
 
@@ -44,7 +45,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
             </div>
             <FlipMove className={css.list} typeName="ul">
                 {boardGames
-                    .filter(game => !filter || game.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
+                    .filter(game => filterCondition(game.name))
                     .map(boardGame => (
                         <li key={boardGame.id} className={css.singleItem}>
                             <BoardGameListItem game={boardGame} onDeleteIconClick={setIdToDelete} />

@@ -44,6 +44,8 @@ const PlayList: React.FC = () => {
                     <li key={play.id}>{JSON.stringify(play)}</li>
                 ))}
             </ul>
+
+            <AddPlayButton className={css.addButton} />
         </>
     );
 };
