@@ -49,4 +49,18 @@ class JooqCommonsTest : AbstractDatabaseTest() {
             JooqCommons.insertMultipleAndReturnIds(dsl, TAGS, tagRecords)
         }
     }
+
+    @Test
+    fun `should return ids in the collection's order`() {
+        val users = (0 until 10).map {
+            UsersRecord(null, randomText(), randomText(), LocalDateTime.now())
+        }
+        val ids = JooqCommons.insertMultipleAndReturnIds(dsl, USERS, users)
+
+        ids.forEachIndexed { index, id ->
+            val user = dsl.selectFrom(USERS).where(USERS.ID.eq(id)).fetchOne()
+            assertEquals(user.name, users[index].name)
+            assertEquals(user.password, users[index].password)
+        }
+    }
 }

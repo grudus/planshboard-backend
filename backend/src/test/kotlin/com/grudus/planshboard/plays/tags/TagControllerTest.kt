@@ -49,7 +49,7 @@ constructor(private val playService: PlayService,
     private fun createPlay(tags: List<String>) {
         val boardGameId = boardGameService.createBoardGame(authentication.id, CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
         val opponentId = opponentService.create(SaveOpponentRequest(randomText()), authentication.id)
-        playService.createPlay(SavePlayRequest(boardGameId,
+        playService.createPlayAndNotify(SavePlayRequest(boardGameId,
             listOf(PlayResult(opponentId)),
             tags
         ))

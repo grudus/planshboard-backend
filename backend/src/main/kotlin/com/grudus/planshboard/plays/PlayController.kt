@@ -29,7 +29,7 @@ constructor(
                    user: UserAuthentication): IdResponse {
         savePlayRequestValidator.validate(request).throwOnError()
         log.info("User[${user.id}] creates play: $request")
-        return idOf(playService.createPlay(request))
+        return idOf(playService.createPlayAndNotify(request))
     }
 
     // TODO Write tests when getPlay implemented

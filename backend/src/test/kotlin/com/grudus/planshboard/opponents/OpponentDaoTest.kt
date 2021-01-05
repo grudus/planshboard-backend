@@ -225,4 +225,27 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         assertEquals(LinkedOpponentStatus.DISABLED, opponent.linkedUser!!.status)
     }
 
+    @Test
+    fun `should return empty list when no opponent is linked with real user`() {
+        val user = addUser()
+        repeat(4) { opponentDao.createNew(randomText(), user) }
+
+        val opponents = opponentDao.findOpponentsLinkedWithRealUsers(user)
+
+        assertTrue(opponents.isEmpty())
+    }
+
+    @Test
+    fun `should return only enabled opponents linked with real users`() {
+        val user = addUser()
+        opponentDao.createAndLinkToUser(randomText(), user, addUser(), LinkedOpponentStatus.WAITING_FOR_CONFIRMATION)
+        val opponentId = opponentDao.createAndLinkToUser(randomText(), user, addUser(), LinkedOpponentStatus.ENABLED)
+        opponentDao.createAndLinkToUser(randomText(), user, addUser(), LinkedOpponentStatus.DISABLED)
+
+        val opponents = opponentDao.findOpponentsLinkedWithRealUsers(user)
+
+        assertEquals(1, opponents.size)
+        assertEquals(opponentId, opponents[0].id)
+    }
+
 }

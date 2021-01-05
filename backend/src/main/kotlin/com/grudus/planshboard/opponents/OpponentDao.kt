@@ -3,11 +3,11 @@ package com.grudus.planshboard.opponents
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
-import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
-import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
+import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.*
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.OpponentListItem
 import com.grudus.planshboard.opponents.model.UserLinkedToOpponent
+import com.grudus.planshboard.tables.LinkedOpponents
 import com.grudus.planshboard.tables.LinkedOpponents.LINKED_OPPONENTS
 import com.grudus.planshboard.tables.Opponents.OPPONENTS
 import com.grudus.planshboard.tables.Users.USERS
@@ -39,6 +39,13 @@ constructor(private val dsl: DSLContext,
         helper.selectOpponentWithLinkedUser()
             .where(OPPONENTS.ID.eq(opponentId))
             .fetchOne(helper.opponentDtoMapper())
+
+    fun findOpponentsLinkedWithRealUsers(userId: Id): List<OpponentDto> =
+        helper.selectOpponentWithLinkedUser()
+            .where(OPPONENTS.CREATOR_ID.eq(userId))
+            .and(LINKED_OPPONENTS.OPPONENT_ID.isNotNull)
+            .and(LINKED_OPPONENTS.INTEGRATION_STATUS.eq(helper.convert(ENABLED)))
+            .fetch(helper.opponentDtoMapper())
 
 
     fun createNew(name: String, userId: Id): Id =
