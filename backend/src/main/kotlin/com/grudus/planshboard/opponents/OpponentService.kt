@@ -81,4 +81,7 @@ constructor(private val opponentDao: OpponentDao,
         val recentlyPlayedOpponents = opponentStatsDao.findOpponentsWithMostRecentPlays(userId, maxNumberOfOpponents)
         return (recentlyPlayedOpponents + mostFrequentOpponents).distinct()
     }
+
+    fun findOpponentsLinkedWithRealUsers(): List<OpponentDto> =
+        opponentDao.findOpponentsLinkedWithRealUsers(currentUserService.currentUserId())
 }

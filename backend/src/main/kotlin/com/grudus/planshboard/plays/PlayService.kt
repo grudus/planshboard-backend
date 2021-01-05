@@ -12,13 +12,22 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class PlayService
 @Autowired
-constructor(private val playDao: PlayDao,
-            private val tagService: TagService) {
+constructor(
+    private val playDao: PlayDao,
+    private val tagService: TagService,
+    private val playNotificationService: PlayNotificationService
+) {
 
-    fun createPlay(request: SavePlayRequest): Id {
+    fun createPlayAndNotify(request: SavePlayRequest): Id {
+        val playId = createPlayWithResults(request)
+        tagService.addTagsToPlay(request.tags, playId)
+        playNotificationService.notifyPlayCreated(request, playId)
+        return playId
+    }
+
+    fun createPlayWithResults(request: SavePlayRequest): Id {
         val playId = playDao.savePlayAlone(request)
         playDao.savePlayResults(playId, request.results)
-        tagService.addTagsToPlay(request.tags, playId)
         return playId
     }
 

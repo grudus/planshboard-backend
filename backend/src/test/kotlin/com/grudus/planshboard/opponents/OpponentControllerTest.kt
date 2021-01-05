@@ -244,9 +244,9 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
         val opponent2 = addOpponent(SaveOpponentRequest(randomText()))
 
         val boardGame = addBoardGame()
-        playService.createPlay(SavePlayRequest(boardGame, listOf(PlayResult(opponent1)), emptyList()))
-        playService.createPlay(SavePlayRequest(boardGame, listOf(PlayResult(opponent2)), emptyList()))
-        playService.createPlay(SavePlayRequest(boardGame, listOf(PlayResult(opponent1), PlayResult(opponent2)), emptyList()))
+        playService.createPlayAndNotify(SavePlayRequest(boardGame, listOf(PlayResult(opponent1)), emptyList()))
+        playService.createPlayAndNotify(SavePlayRequest(boardGame, listOf(PlayResult(opponent2)), emptyList()))
+        playService.createPlayAndNotify(SavePlayRequest(boardGame, listOf(PlayResult(opponent1), PlayResult(opponent2)), emptyList()))
 
         getRequest("$baseUrl/frequent")
             .andExpect(status().isOk)
@@ -260,9 +260,9 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
         val opponent3 = addOpponent(SaveOpponentRequest(randomText()))
 
         val boardGame = addBoardGame()
-        playService.createPlay(SavePlayRequest(boardGame, listOf(PlayResult(opponent3)), emptyList()))
-        playService.createPlay(SavePlayRequest(boardGame, listOf(PlayResult(opponent3)), emptyList()))
-        playService.createPlay(SavePlayRequest(boardGame, listOf(PlayResult(opponent2)), emptyList()))
+        playService.createPlayAndNotify(SavePlayRequest(boardGame, listOf(PlayResult(opponent3)), emptyList()))
+        playService.createPlayAndNotify(SavePlayRequest(boardGame, listOf(PlayResult(opponent3)), emptyList()))
+        playService.createPlayAndNotify(SavePlayRequest(boardGame, listOf(PlayResult(opponent2)), emptyList()))
 
         getRequest("$baseUrl/frequent")
             .andExpect(status().isOk)

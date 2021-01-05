@@ -41,7 +41,7 @@ constructor(private val userAuthenticationService: UserAuthenticationService,
         val auth = authResult as UserAuthentication
         val token: String = tokenAuthService.generateToken(auth)
 
-        log.info("User [${auth.id}] successfully authenticated")
+        log.info("User[${auth.id}] successfully authenticated")
         SecurityContextHolder.getContext().authentication = auth
         response.setHeader(AUTH_HEADER_NAME, "$AUTH_TOKEN_PREFIX$token")
     }

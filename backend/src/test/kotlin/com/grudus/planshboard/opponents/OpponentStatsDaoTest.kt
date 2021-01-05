@@ -195,7 +195,7 @@ class OpponentStatsDaoTest : AbstractDatabaseTest() {
 
 
     private fun addPlay(opponents: List<Id>) {
-        playService.createPlay(SavePlayRequest(
+        playService.createPlayWithResults(SavePlayRequest(
             boardGame,
             opponents.map { PlayResult(it) },
             listOf()
