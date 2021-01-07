@@ -41,12 +41,22 @@ abstract class AbstractControllerTest : SpringBasedTest() {
     }
 
     protected fun <T> postRequest(url: String, requestBody: T): ResultActions =
-        mockMvc.perform(MockMvcRequestBuilders.post(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(toJson(requestBody)))
+        mockMvc.perform(
+            MockMvcRequestBuilders.post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(requestBody))
+        )
 
     protected fun getRequest(url: String, vararg uriArgs: String): ResultActions =
         mockMvc.perform(MockMvcRequestBuilders.get(url, uriArgs))
+
+    protected fun getRequest(url: String, uriArgs: Map<String, Any>): ResultActions {
+        val queryString = uriArgs.keys.joinToString("&", "?") { "$it={$it}" }
+        return mockMvc.perform(MockMvcRequestBuilders.get("$url$queryString", *uriArgs.values.toTypedArray()))
+    }
+
+    protected fun getRequest(url: String, vararg uriArgs: Pair<String, Any>): ResultActions =
+        getRequest(url, uriArgs.toMap())
 
     protected fun <T> toJson(o: T): ByteArray =
         objectMapper.writeValueAsBytes(o)
