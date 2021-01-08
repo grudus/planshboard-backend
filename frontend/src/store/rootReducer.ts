@@ -8,6 +8,7 @@ import { boardGamesReducer } from "app/board-games/__store/boardGameReducer";
 import { opponentReducer } from "app/opponents/__store/opponentReducer";
 import { History, LocationState } from "history";
 import { playReducer } from "app/plays/__store/playReducer";
+import { notificationReducer } from "app/notifications/__store/notificationReducer";
 
 const rootReducer = (history: History<LocationState>) =>
     combineReducers({
@@ -17,11 +18,12 @@ const rootReducer = (history: History<LocationState>) =>
         boardGame: boardGamesReducer,
         opponent: opponentReducer,
         play: playReducer,
+        notification: notificationReducer,
         router: connectRouter(history),
     });
 
 export default rootReducer;
-// @ts-ignore tet only
+// @ts-ignore test only
 export const testTypeRootReducer = rootReducer({});
 
 export type Store = ReturnType<typeof testTypeRootReducer>;
