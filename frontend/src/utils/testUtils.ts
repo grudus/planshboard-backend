@@ -25,4 +25,5 @@ export const emptyTestState: Store = {
     boardGame: expect.anything(),
     opponent: expect.anything(),
     play: expect.anything(),
+    notification: expect.anything(),
 };

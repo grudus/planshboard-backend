@@ -36,6 +36,10 @@ export const apiRoutes = {
     user: {
         current: "/api/users/me",
     },
+    notifications: {
+        paginated: (limitPerPage: number, dateToLookAfter: Date = new Date()) =>
+            `/api/notifications?limitPerPage=${limitPerPage}&dateToLookAfter=${dateToLookAfter.toISOString()}`,
+    },
     boardGame: {
         list: "/api/board-games",
         single: (id: number) => `/api/board-games/${id}`,
