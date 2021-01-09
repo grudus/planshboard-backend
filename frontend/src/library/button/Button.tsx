@@ -7,7 +7,7 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
     text: string;
     onClick?: () => void;
     type?: "button" | "submit" | "reset";
-    color?: "primary" | "accent";
+    color?: "primary" | "accent" | "normal";
     decoration?: "solid" | "outlined";
     fullWidth?: boolean;
     loading?: boolean;

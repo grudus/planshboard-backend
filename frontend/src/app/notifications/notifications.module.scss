@@ -1,0 +1,42 @@
+@import "src/variables";
+@import "src/utils";
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.markAsReadButton {
+    align-self: flex-end;
+    margin-bottom: 8px;
+}
+
+.notificationList {
+    width: 100%;
+
+    padding: 0 24px;
+    background: var(--card-background);
+    border-radius: 8px;
+    @include softShadow;
+}
+
+
+.singleNotification {
+    width: 100%;
+
+    padding: 24px 0;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid var(--input-border-normal);
+    }
+
+    position: relative;
+}
+
+.notificationDate {
+    font-size: 11px;
+    position: absolute;
+    right: 0;
+}
+

@@ -95,6 +95,28 @@
     }
 }
 
+.normal {
+
+    &.solid {
+        background: #f0f0f0;
+        color: var(--text-on-card-background);
+
+        &:focus, &:hover {
+            background: #e7e7e7;
+        }
+    }
+
+    &.outlined {
+        background: transparent;
+        color: var(--text-on-card-background);
+
+        &:focus, &:hover {
+            background: #f0f0f0;
+        }
+    }
+}
+
+
 .fullWidth {
     width: 100%;
 }
