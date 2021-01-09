@@ -2,11 +2,13 @@ package com.grudus.planshboard.plays.validators
 
 import com.grudus.planshboard.boardgames.BoardGameSecurityService
 import com.grudus.planshboard.commons.exceptions.UserHasNoAccessToResourceException
+import com.grudus.planshboard.commons.security.AccessAllowed
+import com.grudus.planshboard.commons.security.AccessForbidden
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.OpponentSecurityService
-import com.grudus.planshboard.plays.model.FinalResult
 import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
+import com.grudus.planshboard.utils.TestUtils
 import com.grudus.planshboard.utils.TestUtils.eq
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions.*
@@ -33,11 +35,18 @@ class SavePlayRequestValidatorTest {
     @BeforeEach
     fun init() {
         validator = SavePlayRequestValidator(boardGameSecurityService, opponentSecurityService)
+        Mockito.lenient().`when`(opponentSecurityService.checkAccess(TestUtils.anyList())).thenReturn(AccessAllowed)
     }
 
     @Test
     fun `should validate properly`() {
-        val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf(randomText()), now().minusDays(1), randomText())
+        val request = SavePlayRequest(
+            nextLong(),
+            listOf(PlayResult(nextLong())),
+            listOf(randomText()),
+            now().minusDays(1),
+            randomText()
+        )
 
         val result = validator.validate(request)
         assertTrue(result.isSuccess())
@@ -45,7 +54,8 @@ class SavePlayRequestValidatorTest {
 
     @Test
     fun `should validate properly when no tags`() {
-        val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf(), now().minusDays(1), randomText())
+        val request =
+            SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf(), now().minusDays(1), randomText())
 
         val result = validator.validate(request)
         assertTrue(result.isSuccess())
@@ -53,7 +63,8 @@ class SavePlayRequestValidatorTest {
 
     @Test
     fun `should validate properly when no date`() {
-        val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf(randomText()), null, randomText())
+        val request =
+            SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf(randomText()), null, randomText())
 
         val result = validator.validate(request)
         assertTrue(result.isSuccess())
@@ -69,7 +80,8 @@ class SavePlayRequestValidatorTest {
 
     @Test
     fun `should validate properly when date is in the future`() {
-        val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf(randomText()), now().plusYears(12))
+        val request =
+            SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf(randomText()), now().plusYears(12))
 
         val result = validator.validate(request)
         assertTrue(result.isSuccess())
@@ -86,7 +98,11 @@ class SavePlayRequestValidatorTest {
 
     @Test
     fun `should not pass validation when result's position is greater than number of results`() {
-        val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong(), position = 3), PlayResult(nextLong())), listOf(randomText()))
+        val request = SavePlayRequest(
+            nextLong(),
+            listOf(PlayResult(nextLong(), position = 3), PlayResult(nextLong())),
+            listOf(randomText())
+        )
 
         val result = validator.validate(request)
         assertFalse(result.isSuccess())
@@ -95,7 +111,11 @@ class SavePlayRequestValidatorTest {
 
     @Test
     fun `should not pass validation when result's position is below zero`() {
-        val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong(), position = -1), PlayResult(nextLong())), listOf(randomText()))
+        val request = SavePlayRequest(
+            nextLong(),
+            listOf(PlayResult(nextLong(), position = -1), PlayResult(nextLong())),
+            listOf(randomText())
+        )
 
         val result = validator.validate(request)
         assertFalse(result.isSuccess())
@@ -105,7 +125,8 @@ class SavePlayRequestValidatorTest {
     @Test
     fun `should not pass validation when board game does not exist`() {
         val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf())
-        Mockito.doThrow(UserHasNoAccessToResourceException::class.java).`when`(boardGameSecurityService).checkAccess(eq(request.boardGameId))
+        Mockito.doThrow(UserHasNoAccessToResourceException::class.java).`when`(boardGameSecurityService)
+            .checkAccess(eq(request.boardGameId))
 
         val result = validator.validate(request)
         assertFalse(result.isSuccess())
@@ -115,7 +136,7 @@ class SavePlayRequestValidatorTest {
     @Test
     fun `should not pass validation when opponent does not exist`() {
         val request = SavePlayRequest(nextLong(), listOf(PlayResult(nextLong())), listOf())
-        Mockito.doThrow(UserHasNoAccessToResourceException::class.java).`when`(opponentSecurityService).checkAccessForMultipleOpponents(eq(request.results.map { it.opponentId }))
+        Mockito.`when`(opponentSecurityService.checkAccess(TestUtils.anyList())).thenReturn(AccessForbidden(""))
 
         val result = validator.validate(request)
         assertFalse(result.isSuccess())

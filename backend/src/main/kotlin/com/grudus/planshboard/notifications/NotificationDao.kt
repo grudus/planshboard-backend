@@ -3,6 +3,7 @@ package com.grudus.planshboard.notifications
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.jooq.JooqCommons
+import com.grudus.planshboard.commons.security.AccessToResourceChecker
 import com.grudus.planshboard.enums.NotificationEventType
 import com.grudus.planshboard.notifications.model.Notification
 import com.grudus.planshboard.tables.Notifications.NOTIFICATIONS
@@ -20,7 +21,7 @@ class NotificationDao
 constructor(
     private val dsl: DSLContext,
     private val objectMapper: ObjectMapper
-) {
+) : AccessToResourceChecker {
 
     fun saveMultiple(notifications: List<Notification<*>>): List<Notification<*>> {
         val records = notifications.map {
@@ -51,6 +52,15 @@ constructor(
             .seek(dateToLookAfter)
             .limit(limit)
             .fetch(intoNotification())
+
+
+    override fun canBeAccessedByUser(userId: Id, entityIds: List<Id>): Boolean =
+        dsl.fetchCount(
+            dsl.select(NOTIFICATIONS.ID)
+                .from(NOTIFICATIONS)
+                .where(NOTIFICATIONS.DISPLAY_USER_ID.eq(userId))
+                .and(NOTIFICATIONS.ID.`in`(entityIds))
+        ) == entityIds.size
 
 
     private fun intoNotification(): RecordMapper<NotificationsRecord, Notification<*>> = RecordMapper {

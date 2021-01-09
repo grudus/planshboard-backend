@@ -106,7 +106,7 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         opponentDao.createNew(randomText(), creatorId)
         val id = opponentDao.createNew(randomText(), creatorId)
 
-        val createdByUser = opponentDao.isCreatedByUser(id, creatorId)
+        val createdByUser = opponentDao.canBeAccessedByUser(creatorId, listOf(id))
 
         assertTrue(createdByUser)
     }
@@ -120,7 +120,7 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         }
         opponentDao.createNew(randomText(), creatorId)
 
-        val allCreatedByUser = opponentDao.areAllCreatedByUser(ids, creatorId)
+        val allCreatedByUser = opponentDao.canBeAccessedByUser(creatorId, ids)
 
         assertTrue(allCreatedByUser)
     }
@@ -134,7 +134,7 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         }
         opponentDao.createNew(randomText(), creatorId)
 
-        val allCreatedByUser = opponentDao.areAllCreatedByUser(ids + nextLong(), creatorId)
+        val allCreatedByUser = opponentDao.canBeAccessedByUser(creatorId, ids + nextLong())
 
         assertFalse(allCreatedByUser)
     }
@@ -146,7 +146,7 @@ class OpponentDaoTest : AbstractDatabaseTest() {
 
         val opponentFromUser1Id = opponentDao.createNew(randomText(), user1Id)
 
-        val allCreatedByUser = opponentDao.areAllCreatedByUser(listOf(opponentFromUser1Id), user2Id)
+        val allCreatedByUser = opponentDao.canBeAccessedByUser(user2Id, listOf(opponentFromUser1Id))
 
         assertFalse(allCreatedByUser)
     }
@@ -158,7 +158,7 @@ class OpponentDaoTest : AbstractDatabaseTest() {
         val id = opponentDao.createNew(randomText(), addUser())
         opponentDao.createAndLinkToUser(randomText(), addUser(), creatorId)
 
-        val createdByUser = opponentDao.isCreatedByUser(id, creatorId)
+        val createdByUser = opponentDao.canBeAccessedByUser(creatorId, listOf(id))
 
         assertFalse(createdByUser)
     }

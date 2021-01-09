@@ -1,5 +1,6 @@
 package com.grudus.planshboard.utils
 
+import com.grudus.planshboard.commons.Id
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 import org.mockito.ArgumentCaptor
@@ -13,6 +14,8 @@ object TestUtils {
      * null is returned.
      */
     fun <T> any(): T = Mockito.any<T>()
+    fun <T> anyList(): List<T> = Mockito.anyList<T>()
+    fun anyId(): Id = Mockito.anyLong()
 
     /**
      * Returns ArgumentCaptor.capture() as nullable type to avoid java.lang.IllegalStateException

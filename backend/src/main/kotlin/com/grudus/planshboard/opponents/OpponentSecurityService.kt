@@ -1,30 +1,21 @@
 package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.commons.Id
-import com.grudus.planshboard.commons.exceptions.UserHasNoAccessToResourceException
+import com.grudus.planshboard.commons.security.SecurityGuard
 import com.grudus.planshboard.user.CurrentUserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class OpponentSecurityService
-
 @Autowired
-constructor(private val opponentDao: OpponentDao,
-            private val currentUserService: CurrentUserService) {
+constructor(
+    opponentDao: OpponentDao,
+    currentUserService: CurrentUserService
+) : SecurityGuard(currentUserService, opponentDao) {
 
-    fun checkAccess(opponentId: Id) {
-        val currentUserId = currentUserService.currentUserId()
-        val hasAccess = opponentDao.isCreatedByUser(opponentId, currentUserId)
-        if (!hasAccess)
-            throw UserHasNoAccessToResourceException("User $currentUserId has no access to the opponent $opponentId")
-    }
+    override fun formatMessage(userId: Id, resourceIds: List<Id>) =
+        "User $userId has no access to the opponents: $resourceIds"
 
-    fun checkAccessForMultipleOpponents(opponentIds: List<Id>) {
-        val currentUserId = currentUserService.currentUserId()
-        val hasAccessForEach = opponentDao.areAllCreatedByUser(opponentIds, currentUserId)
-        if (!hasAccessForEach)
-            throw UserHasNoAccessToResourceException("User $currentUserId has no access to the opponents $opponentIds")
-    }
 }
 
