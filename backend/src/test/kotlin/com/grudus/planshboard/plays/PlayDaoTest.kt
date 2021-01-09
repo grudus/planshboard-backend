@@ -7,6 +7,7 @@ import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.tables.PlayResults.PLAY_RESULTS
 import com.grudus.planshboard.tables.Plays.PLAYS
+import com.grudus.planshboard.utils.randomId
 import com.grudus.planshboard.utils.randomText
 import org.jooq.DSLContext
 import org.jooq.exception.DataAccessException
@@ -19,15 +20,25 @@ import kotlin.random.Random.Default.nextLong
 
 class PlayDaoTest
 @Autowired
-constructor(private val playDao: PlayDao,
-            private val boardGameDao: BoardGameDao,
-            private val opponentDao: OpponentDao,
-            private val dslContext: DSLContext) : AbstractDatabaseTest() {
+constructor(
+    private val playDao: PlayDao,
+    private val boardGameDao: BoardGameDao,
+    private val opponentDao: OpponentDao,
+    private val dslContext: DSLContext
+) : AbstractDatabaseTest() {
 
     @Test
     fun `should save play`() {
         val boardGameId = boardGameDao.create(addUser(), randomText())
-        val id = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val id = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
 
         assertNotNull(id)
         assertEquals(1, dslContext.fetchCount(PLAYS))
@@ -44,7 +55,15 @@ constructor(private val playDao: PlayDao,
     fun `should save play results`() {
         val creatorId = addUser()
         val boardGameId = boardGameDao.create(creatorId, randomText())
-        val playId = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val playId = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
         val opponentId = opponentDao.createNew(randomText(), creatorId)
 
         playDao.savePlayResults(playId, listOf(PlayResult(opponentId, 12, 12)))
@@ -66,7 +85,15 @@ constructor(private val playDao: PlayDao,
     fun `should not be able to save results with non existing opponent`() {
         val creatorId = addUser()
         val boardGameId = boardGameDao.create(creatorId, randomText())
-        val playId = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val playId = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
 
         assertThrows<DataAccessException> {
             playDao.savePlayResults(playId, listOf(PlayResult(1L)))
@@ -77,7 +104,15 @@ constructor(private val playDao: PlayDao,
     fun `should update play alone`() {
         val creatorId = addUser()
         val boardGameId = boardGameDao.create(creatorId, randomText())
-        val playId = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val playId = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
 
         playDao.updatePlayAlone(playId, LocalDateTime.now(), "abc")
 
@@ -89,9 +124,17 @@ constructor(private val playDao: PlayDao,
     fun `should detect play is created by user`() {
         val creatorId = addUser()
         val boardGameId = boardGameDao.create(creatorId, randomText())
-        val id = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val id = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
 
-        val createdByUser = playDao.isCreatedByUser(id, creatorId)
+        val createdByUser = playDao.canBeAccessedByUser(creatorId, listOf(id))
         assertTrue(createdByUser)
     }
 
@@ -99,9 +142,17 @@ constructor(private val playDao: PlayDao,
     fun `should detect play is not created by user`() {
         val notCreatorId = addUser()
         val boardGameId = boardGameDao.create(addUser(), randomText())
-        val id = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val id = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
 
-        val createdByUser = playDao.isCreatedByUser(id, notCreatorId)
+        val createdByUser = playDao.canBeAccessedByUser(notCreatorId, listOf(id))
         assertFalse(createdByUser)
     }
 
@@ -111,7 +162,7 @@ constructor(private val playDao: PlayDao,
         val boardGameId = boardGameDao.create(userId, randomText())
         playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
 
-        val createdByUser = playDao.isCreatedByUser(nextLong(), userId)
+        val createdByUser = playDao.canBeAccessedByUser(userId, listOf(randomId()))
         assertFalse(createdByUser)
     }
 
@@ -119,8 +170,24 @@ constructor(private val playDao: PlayDao,
     fun `should remove play results`() {
         val creatorId = addUser()
         val boardGameId = boardGameDao.create(creatorId, randomText())
-        val playId = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
-        val playId2 = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val playId = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
+        val playId2 = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
         val opponentId = opponentDao.createNew(randomText(), creatorId)
 
         playDao.savePlayResults(playId, listOf(PlayResult(opponentId, 12, 12)))
@@ -135,7 +202,15 @@ constructor(private val playDao: PlayDao,
     fun `should not remove play results when play doesn't exist`() {
         val creatorId = addUser()
         val boardGameId = boardGameDao.create(creatorId, randomText())
-        val playId = playDao.savePlayAlone(SavePlayRequest(boardGameId, emptyList(), emptyList(), LocalDateTime.now(), randomText()))
+        val playId = playDao.savePlayAlone(
+            SavePlayRequest(
+                boardGameId,
+                emptyList(),
+                emptyList(),
+                LocalDateTime.now(),
+                randomText()
+            )
+        )
         val opponentId = opponentDao.createNew(randomText(), creatorId)
 
         playDao.savePlayResults(playId, listOf(PlayResult(opponentId, 12, 12)))

@@ -2,12 +2,12 @@ package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.security.AccessToResourceChecker
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.*
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.OpponentListItem
 import com.grudus.planshboard.opponents.model.UserLinkedToOpponent
-import com.grudus.planshboard.tables.LinkedOpponents
 import com.grudus.planshboard.tables.LinkedOpponents.LINKED_OPPONENTS
 import com.grudus.planshboard.tables.Opponents.OPPONENTS
 import com.grudus.planshboard.tables.Users.USERS
@@ -18,9 +18,11 @@ import org.springframework.stereotype.Repository
 @Repository
 class OpponentDao
 @Autowired
-constructor(private val dsl: DSLContext,
-            private val helper: OpponentDaoHelper,
-            private val currentTimeProvider: CurrentTimeProvider) {
+constructor(
+    private val dsl: DSLContext,
+    private val helper: OpponentDaoHelper,
+    private val currentTimeProvider: CurrentTimeProvider
+) : AccessToResourceChecker {
 
     fun creteInitial(name: String, userId: Id): Id =
         createAndLinkToUser(name, userId, userId, LINKED_WITH_CREATOR)
@@ -58,7 +60,12 @@ constructor(private val dsl: DSLContext,
             .id
 
 
-    fun createAndLinkToUser(name: String, creatorId: Id, linkedTo: Id, status: LinkedOpponentStatus = WAITING_FOR_CONFIRMATION): Id {
+    fun createAndLinkToUser(
+        name: String,
+        creatorId: Id,
+        linkedTo: Id,
+        status: LinkedOpponentStatus = WAITING_FOR_CONFIRMATION
+    ): Id {
         val opponentId = dsl.insertInto(OPPONENTS)
             .set(OPPONENTS.NAME, name)
             .set(OPPONENTS.CREATOR_ID, creatorId)
@@ -116,19 +123,11 @@ constructor(private val dsl: DSLContext,
                 .and(USERS.NAME.eq(userName))
         )
 
-    fun isCreatedByUser(opponentId: Id, creatorId: Id): Boolean =
-        dsl.fetchExists(
-            dsl.select(OPPONENTS.ID)
-                .from(OPPONENTS)
-                .where(OPPONENTS.CREATOR_ID.eq(creatorId))
-                .and(OPPONENTS.ID.eq(opponentId))
-        )
-
-    fun areAllCreatedByUser(opponentIds: List<Id>, creatorId: Id): Boolean =
+    override fun canBeAccessedByUser(userId: Id, entityIds: List<Id>): Boolean =
         dsl.fetchCount(
             dsl.select(OPPONENTS.ID)
                 .from(OPPONENTS)
-                .where(OPPONENTS.CREATOR_ID.eq(creatorId))
-                .and(OPPONENTS.ID.`in`(opponentIds))
-        ) == opponentIds.size
+                .where(OPPONENTS.CREATOR_ID.eq(userId))
+                .and(OPPONENTS.ID.`in`(entityIds))
+        ) == entityIds.size
 }

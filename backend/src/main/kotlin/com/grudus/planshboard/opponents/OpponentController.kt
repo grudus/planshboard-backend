@@ -34,7 +34,7 @@ constructor(private val opponentService: OpponentService,
     @GetMapping("/{id}")
     fun getSingleOpponentWithStats(@PathVariable("id") opponentId: Id,
                                    authentication: UserAuthentication): OpponentWithStats {
-        opponentSecurityService.checkAccess(opponentId)
+        opponentSecurityService.checkAccess(opponentId).throwWhenAccessForbidden()
         return opponentService.getWithStats(opponentId, authentication.id)
     }
 
@@ -52,7 +52,7 @@ constructor(private val opponentService: OpponentService,
     fun update(@RequestBody request: SaveOpponentRequest,
                @PathVariable("id") opponentId: Id,
                user: UserAuthentication) {
-        opponentSecurityService.checkAccess(opponentId)
+        opponentSecurityService.checkAccess(opponentId).throwWhenAccessForbidden()
         saveOpponentRequestValidator.validate(request, opponentId).throwOnError()
         log.info("User[${user.id}] updates opponent[$opponentId]: $request")
         opponentService.update(opponentId, request)

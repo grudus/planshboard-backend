@@ -1,8 +1,7 @@
 package com.grudus.planshboard.notifications
 
 import com.grudus.planshboard.AbstractDatabaseTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.LocalDateTime
@@ -78,5 +77,34 @@ constructor(
         )
 
         assertTrue(notifications.isEmpty())
+    }
+
+    @Test
+    fun `should allow to access notifications displayed for given user`() {
+        val notifications = dataProvider.saveRandomNotifications(10, userId = firstUserId)
+        dataProvider.saveRandomNotifications(5, userId = addUser())
+
+        val hasAccess = notificationDao.canBeAccessedByUser(firstUserId, notifications.map { it.id!! })
+
+        assertTrue(hasAccess)
+    }
+
+    @Test
+    fun `should detect that user has no access to the notifications if any of them should be displayed by another user`() {
+        val notifications = dataProvider.saveRandomNotifications(10, userId = firstUserId)
+        val notifications2 = dataProvider.saveRandomNotifications(5, userId = addUser())
+
+        val hasAccess = notificationDao.canBeAccessedByUser(firstUserId, (notifications + notifications2).map { it.id!! })
+
+        assertFalse(hasAccess)
+    }
+
+    @Test
+    fun `should detect that user has no access to the notifications if all of them should be displayed by another user`() {
+        val notifications = dataProvider.saveRandomNotifications(10, userId = firstUserId)
+
+        val hasAccess = notificationDao.canBeAccessedByUser(addUser(), notifications.map { it.id!! })
+
+        assertFalse(hasAccess)
     }
 }

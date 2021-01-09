@@ -37,7 +37,7 @@ constructor(
     fun updatePlay(@RequestBody request: SavePlayRequest,
                    @PathVariable playId: Id,
                    user: UserAuthentication) {
-        playSecurityService.checkAccess(playId)
+        playSecurityService.checkAccess(playId).throwWhenAccessForbidden()
         savePlayRequestValidator.validate(request).throwOnError()
         log.info("User[${user.id}] updates play[$playId]: $request")
         playService.updatePlay(playId, request)

@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component
 @Component
 class SavePlayRequestValidator
 @Autowired
-constructor(private val boardGameSecurityService: BoardGameSecurityService,
-            private val opponentSecurityService: OpponentSecurityService) {
+constructor(
+    private val boardGameSecurityService: BoardGameSecurityService,
+    private val opponentSecurityService: OpponentSecurityService
+) {
 
     fun validate(request: SavePlayRequest): ValidationResult =
         when {
@@ -43,12 +45,8 @@ constructor(private val boardGameSecurityService: BoardGameSecurityService,
             true
         }
 
-    private fun opponentsDoesNotExists(request: SavePlayRequest): Boolean =
-        try {
-            val opponentIds = request.results.map { it.opponentId }
-            opponentSecurityService.checkAccessForMultipleOpponents(opponentIds)
-            false
-        } catch (e: UserHasNoAccessToResourceException) {
-            true
-        }
+    private fun opponentsDoesNotExists(request: SavePlayRequest): Boolean {
+        val opponentIds = request.results.map { it.opponentId }
+        return !opponentSecurityService.checkAccess(opponentIds).hasAccess()
+    }
 }
