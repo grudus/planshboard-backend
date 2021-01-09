@@ -8,3 +8,12 @@ export interface NotificationItem<T = any> {
     eventType: NotificationEventType;
     eventData: T;
 }
+
+export interface PlayNotification {
+    creatorId: number;
+    creatorDisplayName: string;
+    playId: number;
+    boardGameId: number;
+    position?: number;
+    points?: number;
+}
