@@ -1,6 +1,7 @@
 package com.grudus.planshboard.notifications
 
 import com.grudus.planshboard.messagesender.MessageSender
+import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
 import com.grudus.planshboard.user.CurrentUserService
 import org.slf4j.LoggerFactory
@@ -30,5 +31,9 @@ constructor(
 
     fun findNotifications(limitPerPage: Int, dateToLookAfter: LocalDateTime?): List<Notification<*>> {
         return notificationDao.findNotificationsForUser(currentUserService.currentUserId(), limitPerPage, dateToLookAfter ?: now())
+    }
+
+    fun markAsRead(request: MarkAsReadRequest) {
+        notificationDao.markAsRead(request.ids)
     }
 }

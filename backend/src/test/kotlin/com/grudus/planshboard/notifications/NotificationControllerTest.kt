@@ -1,7 +1,9 @@
 package com.grudus.planshboard.notifications
 
 import com.grudus.planshboard.AuthenticatedControllerTest
+import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.utils.TestUtils.hasSize
+import org.hamcrest.Matchers.notNullValue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -51,12 +53,34 @@ constructor(private val dataProvider: NotificationTestDataProvider) : Authentica
         }
 
         getRequest(baseUrl, "limitPerPage" to 10, "dateToLookAfter" to now.minusHours(5))
-            .debug()
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.[*]", hasSize(4)))
             .andExpect(jsonPath("$.[0].id").value(notifications[6].id.toString()))
             .andExpect(jsonPath("$.[1].id").value(notifications[7].id.toString()))
             .andExpect(jsonPath("$.[2].id").value(notifications[8].id.toString()))
             .andExpect(jsonPath("$.[3].id").value(notifications[9].id.toString()))
+    }
+
+    @Test
+    fun `should mark notifications as read`() {
+        val notifications = dataProvider.saveRandomNotifications(2, userId = authentication.id)
+
+        putRequest("$baseUrl/mark-as-read", MarkAsReadRequest(notifications.map { it.id!! }))
+            .andExpect(status().isOk)
+
+        getRequest(baseUrl, "limitPerPage" to 10)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*].displayedAt", notNullValue()))
+    }
+
+    @Test
+    fun `should not be able to mark as read notifications from another user`() {
+        val notifications = dataProvider.saveRandomNotifications(2, userId = authentication.id)
+
+        super.setupAuthContextForAnotherUser()
+
+        putRequest("$baseUrl/mark-as-read", MarkAsReadRequest(notifications.map { it.id!! }))
+            .andExpect(status().isForbidden)
+
     }
 }
