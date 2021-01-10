@@ -18,9 +18,8 @@ constructor(
     fun `should save multiple notifications and return their ids`() {
         val now = LocalDateTime.now()
         val notifications =
-            (0 until 4).flatMap { i ->
-                dataProvider.saveRandomNotifications(
-                    1,
+            (0 until 4).map { i ->
+                dataProvider.saveRandomNotification(
                     createdAt = now.minusMinutes(i.toLong()),
                     userId = firstUserId
                 )
@@ -60,21 +59,18 @@ constructor(
 
     @Test
     fun `should allow to seek notifications by date`() {
-        val notification1 = dataProvider.saveRandomNotifications(
-            1,
+        val notification1 = dataProvider.saveRandomNotification(
             createdAt = LocalDateTime.now().minusSeconds(100),
             userId = firstUserId
-        )[0]
-        val notification2 = dataProvider.saveRandomNotifications(
-            1,
+        )
+        val notification2 = dataProvider.saveRandomNotification(
             createdAt = LocalDateTime.now().minusSeconds(300),
             userId = firstUserId
-        )[0]
-        val notification3 = dataProvider.saveRandomNotifications(
-            1,
+        )
+        val notification3 = dataProvider.saveRandomNotification(
             createdAt = LocalDateTime.now().minusSeconds(50),
             userId = firstUserId
-        )[0]
+        )
 
         val notifications = notificationDao.findNotificationsForUser(
             firstUserId,
@@ -89,21 +85,18 @@ constructor(
 
     @Test
     fun `should return empty list when cannot find any more notifications`() {
-        dataProvider.saveRandomNotifications(
-            1,
+        dataProvider.saveRandomNotification(
             createdAt = LocalDateTime.now().minusSeconds(100),
             userId = firstUserId
-        )[0]
-        val notification = dataProvider.saveRandomNotifications(
-            1,
+        )
+        val notification = dataProvider.saveRandomNotification(
             createdAt = LocalDateTime.now().minusSeconds(300),
             userId = firstUserId
-        )[0]
-        dataProvider.saveRandomNotifications(
-            1,
+        )
+        dataProvider.saveRandomNotification(
             createdAt = LocalDateTime.now().minusSeconds(50),
             userId = firstUserId
-        )[0]
+        )
 
         val notifications = notificationDao.findNotificationsForUser(
             firstUserId,
@@ -178,6 +171,31 @@ constructor(
         val dbNotifications1 = notificationDao.findNotificationsForUser(firstUserId, 10)
         val dbNotifications2 = notificationDao.findNotificationsForUser(firstUserId, 10)
 
-        (dbNotifications1 + dbNotifications2).forEach { not -> assertNotNull(not.displayedAt, "Invalid displayedAt on $not") }
+        (dbNotifications1 + dbNotifications2).forEach { not ->
+            assertNotNull(
+                not.displayedAt,
+                "Invalid displayedAt on $not"
+            )
+        }
+    }
+
+    @Test
+    fun `should mark all notifications as read`() {
+        dataProvider.saveRandomNotifications(3, userId = firstUserId)
+        notificationDao.markAllAsRead(firstUserId)
+
+        val dbNotifications = notificationDao.findNotificationsForUser(firstUserId, 10)
+
+        dbNotifications.forEach { not -> assertNotNull(not.displayedAt, "Invalid displayedAt on $not") }
+    }
+
+    @Test
+    fun `should mark all notifications as read only for given user`() {
+        dataProvider.saveRandomNotifications(3, userId = firstUserId)
+        notificationDao.markAllAsRead(addUser())
+
+        val dbNotifications = notificationDao.findNotificationsForUser(firstUserId, 10)
+
+        dbNotifications.forEach { not -> assertNull(not.displayedAt, "Invalid displayedAt on $not") }
     }
 }

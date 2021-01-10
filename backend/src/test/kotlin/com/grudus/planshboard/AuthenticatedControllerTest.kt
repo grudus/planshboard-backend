@@ -25,31 +25,45 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
     private lateinit var tokenService: TokenAuthService
 
     protected lateinit var authentication: UserAuthentication
-    protected lateinit var token: String
+    private lateinit var token: String
 
     @BeforeEach
     fun createInitialAuthentication() {
-        login()
+        setupAuthContextForAnotherUser()
     }
 
-    protected fun setupAuthContextForAnotherUser() {
-        login()
+    protected fun setupAuthContextForAnotherUser(authentication: UserAuthentication = createNewAuthentication()) {
+        setupTokenAuthentication(authentication)
     }
 
-    private fun login() {
-        val username = randomText()
-        val password = randomText()
-        addUser(username, password)
-        authentication = authService.tryToLogin(username, password) as UserAuthentication
+
+    protected fun runWithAnotherUserContext(func: (UserAuthentication) -> Unit) {
+        val initialAuth = authentication
+        setupAuthContextForAnotherUser()
+        func(authentication)
+        setupAuthContextForAnotherUser(initialAuth)
+    }
+
+    private fun setupTokenAuthentication(authentication: UserAuthentication) {
+        this.authentication = authentication
         token = tokenService.generateToken(authentication)
         setupContext()
     }
 
+    private fun createNewAuthentication(): UserAuthentication {
+        val username = randomText()
+        val password = randomText()
+        addUser(username, password)
+        return authService.tryToLogin(username, password) as UserAuthentication
+    }
+
     override fun <T> postRequest(url: String, requestBody: T): ResultActions =
-        performRequestWithAuth(MockMvcRequestBuilders.post(url)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .characterEncoding(UTF_8.name())
-            .content(toJson(requestBody)))
+        performRequestWithAuth(
+            MockMvcRequestBuilders.post(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .characterEncoding(UTF_8.name())
+                .content(toJson(requestBody))
+        )
 
     fun getRequest(url: String): ResultActions =
         performRequestWithAuth(MockMvcRequestBuilders.get(url))
@@ -58,9 +72,11 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
         performRequestWithAuth(MockMvcRequestBuilders.delete(url))
 
     fun <T> putRequest(url: String, requestBody: T): ResultActions =
-        performRequestWithAuth(MockMvcRequestBuilders.put(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(toJson(requestBody)))
+        performRequestWithAuth(
+            MockMvcRequestBuilders.put(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(requestBody))
+        )
 
     private fun setupContext() {
         val context = SecurityContextHolder.createEmptyContext()

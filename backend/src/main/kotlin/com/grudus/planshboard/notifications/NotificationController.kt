@@ -1,5 +1,6 @@
 package com.grudus.planshboard.notifications
 
+import com.grudus.planshboard.auth.UserAuthentication
 import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
 import org.slf4j.LoggerFactory
@@ -27,9 +28,15 @@ constructor(
     }
 
     @PutMapping("mark-as-read")
-    fun markNotificationsAsRead(@RequestBody request: MarkAsReadRequest) {
+    fun markNotificationsAsRead(@RequestBody request: MarkAsReadRequest, user: UserAuthentication) {
         notificationSecurityService.checkAccess(request.ids).throwWhenAccessForbidden()
-        log.info("Marking notifications as read", request)
+        log.info("User[${user.id}] marks notifications as read", request)
         notificationService.markAsRead(request)
+    }
+
+    @PutMapping("mark-all-as-read")
+    fun markAllNotificationsAsRead(user: UserAuthentication) {
+        log.info("User[${user.id}] marks all notifications as read")
+        notificationService.markAllAsRead()
     }
 }

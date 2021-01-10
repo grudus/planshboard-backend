@@ -77,10 +77,37 @@ constructor(private val dataProvider: NotificationTestDataProvider) : Authentica
     fun `should not be able to mark as read notifications from another user`() {
         val notifications = dataProvider.saveRandomNotifications(2, userId = authentication.id)
 
-        super.setupAuthContextForAnotherUser()
+        setupAuthContextForAnotherUser()
 
         putRequest("$baseUrl/mark-as-read", MarkAsReadRequest(notifications.map { it.id!! }))
             .andExpect(status().isForbidden)
+    }
 
+
+    @Test
+    fun `should mark all notifications as read`() {
+        dataProvider.saveRandomNotifications(2, userId = authentication.id)
+        dataProvider.saveRandomNotifications(6, userId = authentication.id)
+
+        putRequest("$baseUrl/mark-all-as-read", Unit)
+            .andExpect(status().isOk)
+
+        getRequest(baseUrl, "limitPerPage" to 10)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*].displayedAt", notNullValue()))
+    }
+
+    @Test
+    fun `should mark all notifications as read only for given user`() {
+        dataProvider.saveRandomNotifications(2, userId = authentication.id)
+
+        runWithAnotherUserContext {
+            putRequest("$baseUrl/mark-all-as-read", Unit)
+                .andExpect(status().isOk)
+        }
+
+        getRequest(baseUrl, "limitPerPage" to 10)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*].displayedAt", notNullValue()))
     }
 }

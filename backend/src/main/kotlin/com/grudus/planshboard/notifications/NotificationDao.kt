@@ -9,6 +9,7 @@ import com.grudus.planshboard.enums.NotificationEventType
 import com.grudus.planshboard.notifications.model.Notification
 import com.grudus.planshboard.tables.Notifications.NOTIFICATIONS
 import com.grudus.planshboard.tables.records.NotificationsRecord
+import org.jooq.Condition
 import org.jooq.DSLContext
 import org.jooq.JSON
 import org.jooq.RecordMapper
@@ -77,9 +78,13 @@ constructor(
         )
     }
 
-    fun markAsRead(ids: List<Id>) =
+    fun markAsRead(ids: List<Id>) = updateMarkAs(NOTIFICATIONS.ID.`in`(ids), currentTimeProvider.now())
+    fun markAllAsRead(userId: Id) = updateMarkAs(NOTIFICATIONS.DISPLAY_USER_ID.eq(userId), currentTimeProvider.now())
+
+    private fun updateMarkAs(condition: Condition, value: LocalDateTime?) =
         dsl.update(NOTIFICATIONS)
-            .set(NOTIFICATIONS.DISPLAYED_AT, currentTimeProvider.now())
-            .where(NOTIFICATIONS.ID.`in`(ids))
+            .set(NOTIFICATIONS.DISPLAYED_AT, value)
+            .where(condition)
             .execute()
+
 }
