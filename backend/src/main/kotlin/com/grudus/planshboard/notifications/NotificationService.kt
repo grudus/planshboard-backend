@@ -36,4 +36,8 @@ constructor(
     fun markAsRead(request: MarkAsReadRequest) {
         notificationDao.markAsRead(request.ids)
     }
+
+    fun markAllAsRead() {
+        notificationDao.markAllAsRead(currentUserService.currentUserId())
+    }
 }

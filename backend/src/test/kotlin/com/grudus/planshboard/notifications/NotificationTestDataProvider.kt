@@ -29,4 +29,12 @@ constructor(private val notificationDao: NotificationDao) {
         }
         return notificationDao.saveMultiple(notifications)
     }
+
+    fun saveRandomNotification(
+        userId: Id,
+        createdAt: LocalDateTime = LocalDateTime.now()
+    ): Notification<*> {
+        return saveRandomNotifications(1, userId, createdAt)[0]
+    }
 }
+
