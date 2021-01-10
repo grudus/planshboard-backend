@@ -1,6 +1,7 @@
 package com.grudus.planshboard.notifications
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.jooq.JooqCommons
 import com.grudus.planshboard.commons.security.AccessToResourceChecker
@@ -20,7 +21,8 @@ class NotificationDao
 @Autowired
 constructor(
     private val dsl: DSLContext,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val currentTimeProvider: CurrentTimeProvider
 ) : AccessToResourceChecker {
 
     fun saveMultiple(notifications: List<Notification<*>>): List<Notification<*>> {
@@ -74,4 +76,10 @@ constructor(
             objectMapper.readValue(it.eventData.data(), eventType.eventDataClass)
         )
     }
+
+    fun markAsRead(ids: List<Id>) =
+        dsl.update(NOTIFICATIONS)
+            .set(NOTIFICATIONS.DISPLAYED_AT, currentTimeProvider.now())
+            .where(NOTIFICATIONS.ID.`in`(ids))
+            .execute()
 }

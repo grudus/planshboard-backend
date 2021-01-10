@@ -30,5 +30,6 @@ constructor(
     fun markNotificationsAsRead(@RequestBody request: MarkAsReadRequest) {
         notificationSecurityService.checkAccess(request.ids).throwWhenAccessForbidden()
         log.info("Marking notifications as read", request)
+        notificationService.markAsRead(request)
     }
 }
