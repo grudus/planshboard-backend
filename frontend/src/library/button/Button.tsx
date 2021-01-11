@@ -12,6 +12,7 @@ export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
     fullWidth?: boolean;
     loading?: boolean;
     leftIcon?: ReactElement;
+    textSize?: "normalSize" | "smallSize";
 }
 
 const Button: React.FC<ButtonProps> = props => {
@@ -25,6 +26,7 @@ const Button: React.FC<ButtonProps> = props => {
         loading,
         leftIcon,
         decoration,
+        textSize,
         ...buttonProps
     } = props;
     const classes = merge(
@@ -34,6 +36,7 @@ const Button: React.FC<ButtonProps> = props => {
         cssIf(css.loading, !!loading),
         cssIf(css.solid, !decoration || decoration === "solid"),
         cssIf(css.outlined, decoration === "outlined"),
+        css[textSize || "normalSize"],
         className,
     );
     return (
@@ -47,7 +50,7 @@ const Button: React.FC<ButtonProps> = props => {
             <span className={css.insideButton}>
                 {leftIcon}
                 {props.text}
-                {loading && <RingLoading className={merge(css.loader, css[props.color || "primary"])} />}
+                {loading && <RingLoading className={merge(css.loader, css[props.color || "primary"])}/>}
             </span>
         </button>
     );

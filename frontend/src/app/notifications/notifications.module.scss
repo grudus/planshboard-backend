@@ -15,7 +15,7 @@
 .notificationList {
     width: 100%;
 
-    padding: 0 24px;
+    padding: 0 8px;
     background: var(--card-background);
     border-radius: 8px;
     @include softShadow;
@@ -24,8 +24,9 @@
 
 .singleNotification {
     width: 100%;
-
-    padding: 24px 0;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
 
     &:not(:last-child) {
         border-bottom: 1px solid var(--input-border-normal);
@@ -38,5 +39,15 @@
     font-size: 11px;
     position: absolute;
     right: 0;
+    bottom: 8px;
+    color: var(--secondary-text-on-card);
 }
 
+@media (min-width: $medium) {
+    .notificationList {
+        padding: 0 24px;
+    }
+    .singleNotification {
+        padding: 24px 0;
+    }
+}

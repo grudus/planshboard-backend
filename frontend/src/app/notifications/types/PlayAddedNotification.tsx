@@ -2,6 +2,8 @@ import React from "react";
 import { PlayNotification } from "app/notifications/__models/NotificationModels";
 import css from "./notification-types.module.scss";
 import Button from "library/button/Button";
+import Icons from "library/icons/Icons";
+import Avatar from "library/avatar/Avatar";
 
 export interface PlayAddedNotificationProps {
     data: PlayNotification;
@@ -11,18 +13,27 @@ export interface PlayAddedNotificationProps {
 const PlayAddedNotification: React.FC<PlayAddedNotificationProps> = props => {
     return (
         <div className={css.playAdded}>
-            <div className={css.info}>
-                <span>
-                    Użytkownik <span className={css.bold}>{props.data.creatorDisplayName}</span> dodał grę z Twoim
-                    udziałem.
-                </span>
-                {props.data.position !== null && <span> Jesteś na {props.data.position}. miejscu. </span>}
-                {props.data.points !== null && <span> Twój wynik to {props.data.points} punktów. </span>}
-            </div>
+            <Avatar
+                image={Icons.NoImageUserIcon}
+                name={props.data.creatorDisplayName}
+                className={css.avatar}
+                size={32}
+                color="neutral"
+            />
 
-            <div className={css.actionButtons}>
-                <Button text="Akceptuj" decoration="outlined" />
-                <Button text="Odrzuć" decoration="outlined" color="normal" />
+            <div className={css.infoActionsWrapper}>
+                <div className={css.info}>
+                    <span className={css.user}>{props.data.creatorDisplayName}</span>
+                    <h5 className={css.title}>Nowa gra z Twoim udziałem</h5>
+                    <div className={css.metaInfo}>
+                        {props.data.position !== null && <span>Zajęte miejsce: {props.data.position}. </span>}
+                        {props.data.position !== null && <span>Liczba punktów: {props.data.position}. </span>}
+                    </div>
+                </div>
+
+                <div className={css.actionButtons}>
+                    <Button text="Akceptuj" decoration="outlined" textSize="smallSize" />
+                </div>
             </div>
         </div>
     );

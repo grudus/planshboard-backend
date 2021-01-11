@@ -4,6 +4,9 @@ import { NotificationEventType } from "app/notifications/__models/NotificationMo
 import PlayAddedNotification from "app/notifications/types/PlayAddedNotification";
 import css from "./notifications.module.scss";
 import Button from "library/button/Button";
+import { useDateTime } from "app/shared/hooks/useDateTime";
+import IconButton from "library/icon-button/IconButton";
+import Icons from "library/icons/Icons";
 
 const notificationTypesFactory: Map<NotificationEventType, React.ComponentType<any>> = new Map([
     ["PLAY_ADDED", PlayAddedNotification],
@@ -12,6 +15,7 @@ const notificationTypesFactory: Map<NotificationEventType, React.ComponentType<a
 // TODO add translations
 const Notifications: React.FC = () => {
     const notifications = useRedux(state => state.notification.list);
+    const { formatTime } = useDateTime();
 
     console.log("NOTIFICATIONS component ", notifications);
 
@@ -38,7 +42,8 @@ const Notifications: React.FC = () => {
                     return (
                         <li key={notification.id} className={css.singleNotification}>
                             <NotificationComponent data={notification.eventData} />
-                            <span className={css.notificationDate}>{notification.createdAt}</span>
+                            <span className={css.notificationDate}>{formatTime(notification.createdAt)}</span>
+                            <IconButton svgIcon={Icons.MoreVertical} onClick={console.log} />
                         </li>
                     );
                 })}

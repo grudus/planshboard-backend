@@ -14,6 +14,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.5",
     "connected-react-router": "^6.8.0",
+    "date-fns": "^2.16.1",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.15",
     "pikaday": "^1.8.0",

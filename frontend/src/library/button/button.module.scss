@@ -5,7 +5,6 @@
     display: block;
     cursor: pointer;
     padding: 0 16px;
-    font-size: 14px;
     letter-spacing: .5px;
     border-radius: 4px;
     font-weight: 500;
@@ -26,6 +25,13 @@
         cursor: not-allowed;
         pointer-events: none;
     }
+}
+
+.normalSize {
+    font-size: 14px;
+}
+.smallSize {
+    font-size: 12px;
 }
 
 .insideButton {
@@ -99,7 +105,7 @@
 
     &.solid {
         background: #f0f0f0;
-        color: var(--text-on-card-background);
+        color: var(--primary-text-on-card);
 
         &:focus, &:hover {
             background: #e7e7e7;
@@ -108,7 +114,7 @@
 
     &.outlined {
         background: transparent;
-        color: var(--text-on-card-background);
+        color: var(--primary-text-on-card);
 
         &:focus, &:hover {
             background: #f0f0f0;
