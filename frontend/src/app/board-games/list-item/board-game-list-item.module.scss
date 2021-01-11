@@ -10,7 +10,7 @@
     @include shadow;
     @include shadowFocus;
     background: var(--card-background);
-    color: var(--text-on-card-background);
+    color: var(--primary-text-on-card);
     display: flex;
     align-items: center;
     justify-content: center;

@@ -13,6 +13,8 @@ import { ReactComponent as GhostIcon } from "./ghost.svg";
 import { ReactComponent as HiveIcon } from "./hive.svg";
 import { ReactComponent as GridIcon } from "./grid.svg";
 import { ReactComponent as PolygonIcon } from "./polygon.svg";
+import { ReactComponent as MoreHorizontal } from "./more-horizontal.svg";
+import { ReactComponent as MoreVertical } from "./more-vertical.svg";
 
 const Icons = {
     PlusIcon: <PlusIcon />,
@@ -29,6 +31,8 @@ const Icons = {
     HiveIcon: <HiveIcon />,
     GridIcon: <GridIcon />,
     PolygonIcon: <PolygonIcon />,
+    MoreHorizontal: <MoreHorizontal />,
+    MoreVertical: <MoreVertical />,
 };
 
 export default Icons;
