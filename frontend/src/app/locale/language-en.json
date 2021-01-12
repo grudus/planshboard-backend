@@ -167,5 +167,15 @@
       "EXISTS": "Game already exists"
     },
     "UNKNOWN": "Unknown error"
+  },
+  "NOTIFICATIONS": {
+    "DELETE": "Delete",
+    "MARK_AS_READ": "Mark as read",
+
+    "PLAY_ADDED": {
+      "ACCEPT": "Accept",
+      "ACCEPT_ALL": "Accept all",
+      "REJECT": "Reject"
+    }
   }
 }

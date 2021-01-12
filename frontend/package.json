@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.5",
+    "@szhsin/react-menu": "^1.5.0",
     "connected-react-router": "^6.8.0",
     "date-fns": "^2.16.1",
     "immutable": "^4.0.0-rc.12",

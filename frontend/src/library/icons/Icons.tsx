@@ -15,6 +15,9 @@ import { ReactComponent as GridIcon } from "./grid.svg";
 import { ReactComponent as PolygonIcon } from "./polygon.svg";
 import { ReactComponent as MoreHorizontal } from "./more-horizontal.svg";
 import { ReactComponent as MoreVertical } from "./more-vertical.svg";
+import { ReactComponent as XIcon } from "./x.svg";
+import { ReactComponent as MarkAsReadIcon } from "./mark-as-read.svg";
+import { ReactComponent as CheckDouble } from "./check-double.svg";
 
 const Icons = {
     PlusIcon: <PlusIcon />,
@@ -33,6 +36,9 @@ const Icons = {
     PolygonIcon: <PolygonIcon />,
     MoreHorizontal: <MoreHorizontal />,
     MoreVertical: <MoreVertical />,
+    XIcon: <XIcon />,
+    MarkAsReadIcon: <MarkAsReadIcon />,
+    CheckDouble: <CheckDouble />,
 };
 
 export default Icons;

@@ -3,9 +3,8 @@ import { useRedux } from "store/rootReducer";
 import css from "./notifications.module.scss";
 import Button from "library/button/Button";
 import { useDateTime } from "app/shared/hooks/useDateTime";
-import IconButton from "library/icon-button/IconButton";
-import Icons from "library/icons/Icons";
 import { getNotificationByType } from "./NotificationTypesFactory";
+import NotificationMenu from "./menu/NotificationMenu";
 
 // TODO add translations
 const Notifications: React.FC = () => {
@@ -20,8 +19,6 @@ const Notifications: React.FC = () => {
         alert("Mark all as read");
     };
 
-    const commonActions = ["DELETE", "MARK_AS_READ"];
-
     return (
         <section className={css.wrapper}>
             <Button
@@ -34,12 +31,11 @@ const Notifications: React.FC = () => {
                 {notifications.map(notification => {
                     const notificationEntry = getNotificationByType(notification.eventType);
 
-                    const action = [...commonActions, ...notificationEntry.extraActions];
                     return (
                         <li key={notification.id} className={css.singleNotification}>
                             <notificationEntry.component data={notification.eventData} />
                             <span className={css.notificationDate}>{formatTime(notification.createdAt)}</span>
-                            <IconButton svgIcon={Icons.MoreVertical} onClick={() => alert(JSON.stringify(action))} />
+                            <NotificationMenu extraActions={notificationEntry.extraActions} />
                         </li>
                     );
                 })}

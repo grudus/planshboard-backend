@@ -22,7 +22,8 @@
 
 .childrenWrapper {
     height: 100%;
-    overflow-y: auto;
+    overflow: visible;
+
     padding: $appWrapperPadding $appWrapperPadding $bottomBarHeight $appWrapperPadding ;
     z-index: 1;
     position: relative;
