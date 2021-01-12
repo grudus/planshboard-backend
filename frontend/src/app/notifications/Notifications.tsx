@@ -5,6 +5,7 @@ import Button from "library/button/Button";
 import { useDateTime } from "app/shared/hooks/useDateTime";
 import { getNotificationByType } from "./NotificationTypesFactory";
 import NotificationMenu from "./menu/NotificationMenu";
+import { cssIf, merge } from "utils/cssUtils";
 
 // TODO add translations
 const Notifications: React.FC = () => {
@@ -32,10 +33,16 @@ const Notifications: React.FC = () => {
                     const notificationEntry = getNotificationByType(notification.eventType);
 
                     return (
-                        <li key={notification.id} className={css.singleNotification}>
+                        <li
+                            key={notification.id}
+                            className={merge(css.singleNotification, cssIf(css.notSeen, !notification.displayedAt))}
+                        >
                             <notificationEntry.component data={notification.eventData} />
                             <span className={css.notificationDate}>{formatTime(notification.createdAt)}</span>
-                            <NotificationMenu extraActions={notificationEntry.extraActions} />
+                            <NotificationMenu
+                                extraActions={notificationEntry.extraActions}
+                                notification={notification}
+                            />
                         </li>
                     );
                 })}
