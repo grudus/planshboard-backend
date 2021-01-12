@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRedux } from "store/rootReducer";
 import css from "./notifications.module.scss";
 import Button from "library/button/Button";
@@ -6,18 +6,24 @@ import { useDateTime } from "app/shared/hooks/useDateTime";
 import { getNotificationByType } from "./NotificationTypesFactory";
 import NotificationMenu from "./menu/NotificationMenu";
 import { cssIf, merge } from "utils/cssUtils";
+import { useHttpDispatch } from "app/shared/store/httpRequestActions";
+import { markAllAsReadRequest } from "app/notifications/NotificationApi";
 
 // TODO add translations
 const Notifications: React.FC = () => {
     const notifications = useRedux(state => state.notification.list);
     const { formatTime } = useDateTime();
+    const dispatch = useHttpDispatch();
+    const [loading, setLoading] = useState(false);
 
     if (!notifications?.length) {
         return <p>Brak notyfikacji</p>;
     }
 
-    const markAllAsRead = () => {
-        alert("Mark all as read");
+    const markAllAsRead = async () => {
+        setLoading(true);
+        await markAllAsReadRequest(dispatch);
+        setLoading(false);
     };
 
     return (
@@ -25,6 +31,7 @@ const Notifications: React.FC = () => {
             <Button
                 text="Oznacz wszystkie jako przeczytane"
                 decoration="outlined"
+                loading={loading}
                 className={css.markAsReadButton}
                 onClick={markAllAsRead}
             />
