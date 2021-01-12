@@ -27,12 +27,16 @@
     padding: 20px 0;
     display: flex;
     align-items: center;
+    border-left: 3px solid transparent;
+    position: relative;
 
     &:not(:last-child) {
         border-bottom: 1px solid var(--input-border-normal);
     }
 
-    position: relative;
+    &.notSeen {
+        border-left: 3px solid var(--accent-color);
+    }
 }
 
 .notificationDate {

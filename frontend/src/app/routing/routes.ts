@@ -37,6 +37,9 @@ export const apiRoutes = {
         current: "/api/users/me",
     },
     notifications: {
+        markAsRead: "/api/notifications/mark-as-read",
+        markAllAsRead: "/api/notifications/mark-all-as-read",
+        delete: (id: number) => `/api/notifications/${id}`,
         paginated: (limitPerPage: number, dateToLookAfter: Date = new Date()) =>
             `/api/notifications?limitPerPage=${limitPerPage}&dateToLookAfter=${dateToLookAfter.toISOString()}`,
     },
