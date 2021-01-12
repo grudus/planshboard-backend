@@ -198,4 +198,30 @@ constructor(
 
         dbNotifications.forEach { not -> assertNull(not.displayedAt, "Invalid displayedAt on $not") }
     }
+
+    @Test
+    fun `should delete notification`() {
+        val idToDelete = dataProvider.saveRandomNotification(userId = firstUserId).id!!
+        dataProvider.saveRandomNotifications(3, userId = firstUserId)
+
+        notificationDao.delete(idToDelete)
+
+        val dbNotifications = notificationDao.findNotificationsForUser(firstUserId, 10)
+
+        assertEquals(3, dbNotifications.size)
+        dbNotifications.forEach { not ->
+            assertTrue(not.id != idToDelete, "Found deleted notification $not")
+        }
+    }
+
+    @Test
+    fun `should do nothing when deleting non existing notification`() {
+        dataProvider.saveRandomNotifications(3, userId = firstUserId)
+
+        notificationDao.delete(randomId())
+
+        val dbNotifications = notificationDao.findNotificationsForUser(firstUserId, 10)
+
+        assertEquals(3, dbNotifications.size)
+    }
 }
