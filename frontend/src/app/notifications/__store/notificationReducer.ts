@@ -3,6 +3,7 @@ import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
     deleteNotificationSuccess,
     fetchInitialNotificationsSuccess,
+    loadMoreNotificationsSuccess,
     markAllAsReadSuccess,
     markAsReadSuccess,
 } from "app/notifications/__store/notificationActions";
@@ -35,6 +36,10 @@ export const notificationReducer = createReducer<NotificationStore>(initialState
     },
     [deleteNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
         const list = state.list.filter(n => n.id !== action.payload);
+        return { ...state, list, unreadNotificationsCount: countUnread(list) };
+    },
+    [loadMoreNotificationsSuccess.type]: (state, action: PayloadAction<NotificationItem[]>) => {
+        const list = [...state.list, ...action.payload];
         return { ...state, list, unreadNotificationsCount: countUnread(list) };
     },
 });

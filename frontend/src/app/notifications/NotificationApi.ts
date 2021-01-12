@@ -2,6 +2,7 @@ import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 import {
     deleteNotificationSuccess,
+    loadMoreNotificationsSuccess,
     markAllAsReadSuccess,
     markAsReadSuccess,
 } from "app/notifications/__store/notificationActions";
@@ -32,5 +33,16 @@ export function deleteRequest(dispatch: HttpDispatch, request: { id: number }): 
         type: "delete",
         path: apiRoutes.notifications.delete(request.id),
         successAction: () => deleteNotificationSuccess(request.id),
+    });
+}
+
+export function loadMoreNotificationsRequest(
+    dispatch: HttpDispatch,
+    request: { count: number; dateToLookAfter: Date },
+): Promise<any> {
+    return dispatch({
+        type: "get",
+        path: apiRoutes.notifications.paginated(request.count, request.dateToLookAfter),
+        successAction: loadMoreNotificationsSuccess,
     });
 }

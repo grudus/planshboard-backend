@@ -7,12 +7,12 @@ import { getNotificationByType } from "./NotificationTypesFactory";
 import NotificationMenu from "./menu/NotificationMenu";
 import { cssIf, merge } from "utils/cssUtils";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { markAllAsReadRequest } from "app/notifications/NotificationApi";
+import { loadMoreNotificationsRequest, markAllAsReadRequest } from "app/notifications/NotificationApi";
 
 // TODO add translations
 const Notifications: React.FC = () => {
     const notifications = useRedux(state => state.notification.list);
-    const { formatTime } = useDateTime();
+    const { formatTime, getUtcDate } = useDateTime();
     const dispatch = useHttpDispatch();
     const [loading, setLoading] = useState(false);
 
@@ -23,6 +23,13 @@ const Notifications: React.FC = () => {
     const markAllAsRead = async () => {
         setLoading(true);
         await markAllAsReadRequest(dispatch);
+        setLoading(false);
+    };
+
+    const loadMore = async () => {
+        setLoading(true);
+        const lastVisibleDate = notifications[notifications.length - 1].createdAt;
+        await loadMoreNotificationsRequest(dispatch, { count: 10, dateToLookAfter: getUtcDate(lastVisibleDate) });
         setLoading(false);
     };
 
@@ -54,6 +61,8 @@ const Notifications: React.FC = () => {
                     );
                 })}
             </ul>
+
+            <Button text="Pokaż więcej" decoration="outlined" loading={loading} onClick={loadMore} />
         </section>
     );
 };

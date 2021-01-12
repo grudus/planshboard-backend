@@ -20,5 +20,8 @@ export const useDateTime = () => {
         formatTime(_date: string) {
             return format(dateFromServerString(_date), "HH:mm");
         },
+        getUtcDate(_date: string): Date {
+            return dateFromServerString(_date);
+        },
     };
 };
