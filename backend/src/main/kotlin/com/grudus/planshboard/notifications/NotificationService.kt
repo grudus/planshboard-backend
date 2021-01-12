@@ -1,5 +1,6 @@
 package com.grudus.planshboard.notifications
 
+import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.messagesender.MessageSender
 import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
@@ -30,7 +31,11 @@ constructor(
     }
 
     fun findNotifications(limitPerPage: Int, dateToLookAfter: LocalDateTime?): List<Notification<*>> {
-        return notificationDao.findNotificationsForUser(currentUserService.currentUserId(), limitPerPage, dateToLookAfter ?: now())
+        return notificationDao.findNotificationsForUser(
+            currentUserService.currentUserId(),
+            limitPerPage,
+            dateToLookAfter ?: now()
+        )
     }
 
     fun markAsRead(request: MarkAsReadRequest) {
@@ -40,4 +45,7 @@ constructor(
     fun markAllAsRead() {
         notificationDao.markAllAsRead(currentUserService.currentUserId())
     }
+
+    fun delete(id: Id) = notificationDao.delete(id)
+
 }

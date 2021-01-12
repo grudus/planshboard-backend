@@ -6,7 +6,7 @@ import { NotificationAction } from "app/notifications/NotificationTypesFactory";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import css from "./notification-menu.module.scss";
 import { NotificationItem } from "app/notifications/__models/NotificationModels";
-import { markAsReadRequest } from "app/notifications/NotificationApi";
+import { deleteRequest, markAsReadRequest } from "app/notifications/NotificationApi";
 import { HttpDispatch, useHttpDispatch } from "app/shared/store/httpRequestActions";
 
 interface NotificationMenuProps {
@@ -24,6 +24,8 @@ const defaultActions: NotificationAction[] = [
     {
         translateKey: "NOTIFICATIONS.DELETE",
         svgIcon: Icons.DeleteIcon,
+        clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
+            deleteRequest(dispatch, { id: notification.id }),
     },
 ];
 

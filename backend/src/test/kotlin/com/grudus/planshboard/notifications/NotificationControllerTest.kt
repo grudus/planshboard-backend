@@ -110,4 +110,32 @@ constructor(private val dataProvider: NotificationTestDataProvider) : Authentica
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.[*].displayedAt", notNullValue()))
     }
+
+    @Test
+    fun `should delete notification`() {
+        dataProvider.saveRandomNotifications(2, userId = authentication.id)
+        val idToDelete = dataProvider.saveRandomNotification(userId = authentication.id).id!!
+
+        deleteRequest("$baseUrl/$idToDelete")
+            .andExpect(status().isOk)
+
+        getRequest(baseUrl, "limitPerPage" to 10)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*]", hasSize(2)))
+    }
+
+    @Test
+    fun `should not be able to delete someone else's notification`() {
+        dataProvider.saveRandomNotifications(2, userId = authentication.id)
+        val idToDelete = dataProvider.saveRandomNotification(userId = authentication.id).id!!
+
+        runWithAnotherUserContext {
+            deleteRequest("$baseUrl/$idToDelete")
+                .andExpect(status().isForbidden)
+        }
+
+        getRequest(baseUrl, "limitPerPage" to 10)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.[*]", hasSize(3)))
+    }
 }

@@ -1,6 +1,7 @@
 package com.grudus.planshboard.notifications
 
 import com.grudus.planshboard.auth.UserAuthentication
+import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
 import org.slf4j.LoggerFactory
@@ -39,4 +40,15 @@ constructor(
         log.info("User[${user.id}] marks all notifications as read")
         notificationService.markAllAsRead()
     }
+
+    @DeleteMapping("/{id}")
+    fun deleteNotification(
+        @PathVariable id: Id,
+        user: UserAuthentication
+    ) {
+        notificationSecurityService.checkAccess(id).throwWhenAccessForbidden()
+        log.info("User[${user.id}] deletes notification[${id}]")
+        notificationService.delete(id)
+    }
 }
+

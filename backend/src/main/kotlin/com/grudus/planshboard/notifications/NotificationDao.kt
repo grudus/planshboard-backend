@@ -78,6 +78,11 @@ constructor(
         )
     }
 
+    fun delete(id: Id) =
+        dsl.deleteFrom(NOTIFICATIONS)
+            .where(NOTIFICATIONS.ID.eq(id))
+            .execute()
+
     fun markAsRead(ids: List<Id>) = updateMarkAs(NOTIFICATIONS.ID.`in`(ids), currentTimeProvider.now())
     fun markAllAsRead(userId: Id) = updateMarkAs(NOTIFICATIONS.DISPLAY_USER_ID.eq(userId), currentTimeProvider.now())
 
