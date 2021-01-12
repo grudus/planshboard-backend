@@ -27,7 +27,7 @@ const PlayAddedNotification: React.FC<PlayAddedNotificationProps> = props => {
                     <h5 className={css.title}>Nowa gra z Twoim udziałem</h5>
                     <div className={css.metaInfo}>
                         {props.data.position !== null && <span>Zajęte miejsce: {props.data.position}. </span>}
-                        {props.data.position !== null && <span>Liczba punktów: {props.data.position}. </span>}
+                        {props.data.points !== null && <span>Liczba punktów: {props.data.points}. </span>}
                     </div>
                 </div>
 

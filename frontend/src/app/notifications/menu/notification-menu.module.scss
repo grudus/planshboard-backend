@@ -1,0 +1,34 @@
+@import "src/variables";
+@import "src/utils";
+
+
+.notificationMenu {
+    background: var(--card-background);
+    color: var(--secondary-text-on-card);
+    @include shadow;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.menuItem {
+    transition: all .3s ease-in-out;
+    padding: 12px 12px;
+    border-radius: 8px;
+
+    svg {
+        transition: color .3s ease-in-out;
+        width: 16px;
+        height: 16px;
+        color: var(--secondary-text-on-card);
+        margin-right: 12px;
+    }
+
+    &:hover, &:focus {
+        background: var(--main-background);
+        color: var(--text-on-main-background);
+
+        svg {
+            color: var(--text-on-main-background);
+        }
+    }
+}

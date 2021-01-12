@@ -172,5 +172,15 @@
       "EXISTS": "Istnieje już gra o takiej nazwie"
     },
     "UNKNOWN": "Nieznany błąd"
+  },
+  "NOTIFICATIONS": {
+    "DELETE": "Usuń",
+    "MARK_AS_READ": "Oznacz jako przeczytane",
+
+    "PLAY_ADDED": {
+      "ACCEPT": "Akceptuj",
+      "ACCEPT_ALL": "Akceptuj wszystkie",
+      "REJECT": "Odrzuć"
+    }
   }
 }
