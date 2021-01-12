@@ -8,7 +8,7 @@ function* initNotifications() {
     yield put(
         httpRequestAction({
             type: "get",
-            path: apiRoutes.notifications.paginated(20),
+            path: apiRoutes.notifications.paginated(10),
             successAction: fetchInitialNotificationsSuccess,
         }),
     );
