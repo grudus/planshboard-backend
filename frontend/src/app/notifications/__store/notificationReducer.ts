@@ -3,6 +3,7 @@ import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
     deleteNotificationSuccess,
     fetchInitialNotificationsSuccess,
+    markAllAsReadSuccess,
     markAsReadSuccess,
 } from "app/notifications/__store/notificationActions";
 
@@ -27,6 +28,10 @@ export const notificationReducer = createReducer<NotificationStore>(initialState
             action.payload.includes(n.id) ? { ...n, displayedAt: new Date().toISOString() } : n,
         );
         return { ...state, list, unreadNotificationsCount: countUnread(list) };
+    },
+    [markAllAsReadSuccess.type]: state => {
+        const list = state.list.map(n => (!n.displayedAt ? { ...n, displayedAt: new Date().toISOString() } : n));
+        return { ...state, list, unreadNotificationsCount: 0 };
     },
     [deleteNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
         const list = state.list.filter(n => n.id !== action.payload);
