@@ -35,10 +35,10 @@ pipeline {
         }
 
 
-        stage("Build") {
+        stage("Prepare environment") {
             parallel {
 
-                stage("Build backend") {
+                stage("Load backend dependencies") {
                     agent {
                         docker {
                             reuseNode true
@@ -54,7 +54,7 @@ pipeline {
 
                 }
 
-                stage("Build frontend") {
+                stage("Load frontend dependencies") {
                     agent {
                         docker {
                             reuseNode true
@@ -107,6 +107,24 @@ pipeline {
                         }
                     }
 
+                }
+            }
+        }
+
+        stage("Build for deploymeny") {
+            parallel {
+                stage("Build frontend") {
+                    agent {
+                        docker {
+                            reuseNode true
+                            image "node:12.2.0-alpine"
+                        }
+                    }
+                    steps {
+                        dir("frontend") {
+                            sh 'CI= npm run build'
+                        }
+                    }
                 }
             }
         }
