@@ -118,6 +118,7 @@ pipeline {
                         docker {
                             reuseNode true
                             image "node:12.2.0-alpine"
+                            args '-v ./build'
                         }
                     }
                     steps {
