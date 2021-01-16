@@ -110,5 +110,22 @@ pipeline {
                 }
             }
         }
+
+        stage("Final thoughts") {
+            agent any
+            steps {
+                sh "pwd"
+                sh "ls -alt"
+                sh "docker ps -a"
+
+                dir("frontend") {
+                    sh "ls -alt"
+                    dir("build") {
+                        sh "ls -alt"
+                    }
+                }
+
+            }
+        }
     }
 }
