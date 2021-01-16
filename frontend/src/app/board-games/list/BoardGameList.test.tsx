@@ -15,6 +15,7 @@ test("Should display all items", () => {
                 { id: 1, name: "Item1" },
                 { id: 2, name: "Item2" },
             ],
+            boardGameExists: true,
         },
         locale: {},
     });
