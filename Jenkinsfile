@@ -118,12 +118,25 @@ pipeline {
                         docker {
                             reuseNode true
                             image "node:12.2.0-alpine"
-                            args '-v ./build'
                         }
                     }
                     steps {
                         dir("frontend") {
                             sh 'CI= npm run build'
+                        }
+                    }
+                }
+
+                stage("Build backend") {
+                    agent {
+                        docker {
+                            reuseNode true
+                            image "maven:3.6.3-jdk-8-slim"
+                        }
+                    }
+                    steps {
+                        dir("backend") {
+                            sh "mvn package -Ddb.url=$DATABASE_URL -Ddb.username=$DATABASE_USER -Ddb.password=$DATABASE_PASSWORD -Dspring.datasource.username=$DATABASE_USER -Dspring.datasource.password=$DATABASE_PASSWORD -Dspring.datasource.url=$DATABASE_URL"
                         }
                     }
                 }
@@ -140,6 +153,13 @@ pipeline {
                 dir("frontend") {
                     sh "ls -alt"
                     dir("build") {
+                        sh "ls -alt"
+                    }
+                }
+
+                dir("backend") {
+                    sh "ls -alt"
+                    dir("target") {
                         sh "ls -alt"
                     }
                 }
