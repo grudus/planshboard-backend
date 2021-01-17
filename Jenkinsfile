@@ -132,6 +132,7 @@ pipeline {
                         docker {
                             reuseNode true
                             image "maven:3.6.3-jdk-8-slim"
+                            args "--add-host host.docker.internal:host-gateway"
                         }
                     }
                     steps {
