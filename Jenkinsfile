@@ -78,7 +78,7 @@ pipeline {
 
         stage("Run tests") {
             parallel {
-                stage("Run test frontend") {
+                stage("Run frontend tests") {
                     agent {
                         docker {
                             reuseNode true
@@ -93,7 +93,7 @@ pipeline {
 
                 }
 
-                stage("Run test backend") {
+                stage("Run backend tests") {
                     agent {
                         docker {
                             reuseNode true
@@ -136,7 +136,7 @@ pipeline {
                     }
                     steps {
                         dir("backend") {
-                            sh "mvn package -Ddb.url=$DATABASE_URL -Ddb.username=$DATABASE_USER -Ddb.password=$DATABASE_PASSWORD -Dspring.datasource.username=$DATABASE_USER -Dspring.datasource.password=$DATABASE_PASSWORD -Dspring.datasource.url=$DATABASE_URL"
+                            sh "mvn package -Ddb.url=$DATABASE_URL -Ddb.username=$DATABASE_USER -Ddb.password=$DATABASE_PASSWORD -Dspring.datasource.username=$DATABASE_USER -Dspring.datasource.password=$DATABASE_PASSWORD -Dspring.datasource.url=$DATABASE_URL  -Dspring.flyway.enabled='false'"
                         }
                     }
                 }
