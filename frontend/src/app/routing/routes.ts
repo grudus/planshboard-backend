@@ -43,6 +43,9 @@ export const apiRoutes = {
         paginated: (limitPerPage: number, dateToLookAfter: Date = new Date()) =>
             `/api/notifications?limitPerPage=${limitPerPage}&dateToLookAfter=${dateToLookAfter.toISOString()}`,
     },
+    playNotifications: {
+        accept: "/api/play-notifications/accept",
+    },
     boardGame: {
         list: "/api/board-games",
         single: (id: number) => `/api/board-games/${id}`,

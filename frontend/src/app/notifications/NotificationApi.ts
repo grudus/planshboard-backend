@@ -1,6 +1,7 @@
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 import {
+    acceptPlayNotificationSuccess,
     deleteNotificationSuccess,
     loadMoreNotificationsSuccess,
     markAllAsReadSuccess,
@@ -25,6 +26,19 @@ export function markAllAsReadRequest(dispatch: HttpDispatch): Promise<any> {
         type: "put",
         path: apiRoutes.notifications.markAllAsRead,
         successAction: markAllAsReadSuccess,
+    });
+}
+
+interface AcceptPlayNotificationRequest {
+    notificationId: number;
+}
+
+export function acceptPlayNotification(dispatch: HttpDispatch, request: AcceptPlayNotificationRequest): Promise<any> {
+    return dispatch({
+        type: "post",
+        path: apiRoutes.playNotifications.accept,
+        body: request,
+        successAction: () => acceptPlayNotificationSuccess(request.notificationId),
     });
 }
 

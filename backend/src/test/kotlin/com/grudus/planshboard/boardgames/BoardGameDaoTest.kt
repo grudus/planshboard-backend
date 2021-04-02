@@ -94,15 +94,6 @@ constructor(private val boardGameDao: BoardGameDao,
     }
 
     @Test
-    fun `should return empty list when user is not linked to any board game`() {
-        boardGameDao.create(firstUserId, randomText())
-
-        val boardGames = boardGameDao.findBoardGamesLinkedFroUser(firstUserId)
-
-        assertTrue(boardGames.isEmpty())
-    }
-
-    @Test
     fun `should be able to rename board game`() {
         val oldName = randomText()
         val newName = randomText()

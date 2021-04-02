@@ -41,4 +41,6 @@ constructor(
     fun getPlays(userId: Id): List<PlayListItem> =
         playDao.getPlays(userId)
 
+    fun userParticipatedInPlay(userId: Id, playId: Id): Boolean =
+        playDao.userParticipatedInPlay(userId, playId)
 }

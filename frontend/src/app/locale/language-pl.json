@@ -180,7 +180,10 @@
     "PLAY_ADDED": {
       "ACCEPT": "Akceptuj",
       "ACCEPT_ALL": "Akceptuj wszystkie",
-      "REJECT": "Odrzuć"
+      "REJECT": "Odrzuć",
+      "TITLE": "Nowa gra z Twoim udziałem",
+      "POSITION": "Zajęte miejsce: ",
+      "POINTS": "Liczba punktów: "
     }
   }
 }

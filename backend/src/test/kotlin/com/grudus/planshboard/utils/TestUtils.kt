@@ -15,6 +15,7 @@ object TestUtils {
      */
     fun <T> any(): T = Mockito.any<T>()
     fun <T> anyList(): List<T> = Mockito.anyList<T>()
+    fun <T> anyClass(aClass: Class<T>): Class<T> = any()
     fun anyId(): Id = Mockito.anyLong()
 
     /**
