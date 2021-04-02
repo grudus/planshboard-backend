@@ -6,7 +6,6 @@ import com.grudus.planshboard.boardgames.options.BoardGameOptionsDao.Companion.o
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.tables.BoardGameOptions.BOARD_GAME_OPTIONS
 import com.grudus.planshboard.tables.BoardGames.BOARD_GAMES
-import com.grudus.planshboard.tables.LinkedBoardGames.LINKED_BOARD_GAMES
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,15 +19,8 @@ constructor(private val dsl: DSLContext) {
     fun findBoardGamesCreatedByUser(userId: Id): List<BoardGame> =
         dsl.selectFrom(BOARD_GAMES)
             .where(BOARD_GAMES.CREATOR_ID.eq(userId))
+            .orderBy(BOARD_GAMES.NAME)
             .fetchInto(BoardGame::class.java)
-
-
-    fun findBoardGamesLinkedFroUser(userId: Id): List<BoardGame> =
-        dsl.selectFrom(BOARD_GAMES.join(LINKED_BOARD_GAMES).on(BOARD_GAMES.ID.eq(LINKED_BOARD_GAMES.BOARD_GAME_ID)))
-            .where(LINKED_BOARD_GAMES.LINKED_USER_ID.eq(userId))
-            .and(LINKED_BOARD_GAMES.HIDDEN.isFalse)
-            .fetchInto(BoardGame::class.java)
-
 
     fun create(creatorId: Id, name: String): Id =
         dsl.insertInto(BOARD_GAMES)

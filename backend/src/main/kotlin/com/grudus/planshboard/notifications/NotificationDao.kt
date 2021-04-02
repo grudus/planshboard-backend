@@ -56,6 +56,11 @@ constructor(
             .limit(limit)
             .fetch(intoNotification())
 
+    fun findById(id: Id): Notification<*>? =
+        dsl.selectFrom(NOTIFICATIONS)
+            .where(NOTIFICATIONS.ID.eq(id))
+            .fetchOne(intoNotification())
+
 
     override fun canBeAccessedByUser(userId: Id, entityIds: List<Id>): Boolean =
         dsl.fetchCount(

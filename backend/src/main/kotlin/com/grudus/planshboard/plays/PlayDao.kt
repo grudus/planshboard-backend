@@ -4,10 +4,14 @@ import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.security.AccessToResourceChecker
 import com.grudus.planshboard.enums.FinalResult
+import com.grudus.planshboard.enums.LinkedOpponentStatus
+import com.grudus.planshboard.enums.LinkedOpponentStatus.ENABLED
 import com.grudus.planshboard.plays.model.PlayListItem
 import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.tables.BoardGames.BOARD_GAMES
+import com.grudus.planshboard.tables.LinkedOpponents.LINKED_OPPONENTS
+import com.grudus.planshboard.tables.Opponents.OPPONENTS
 import com.grudus.planshboard.tables.PlayResults.PLAY_RESULTS
 import com.grudus.planshboard.tables.Plays.PLAYS
 import org.jooq.DSLContext
@@ -80,4 +84,16 @@ constructor(
             .join(BOARD_GAMES).on(BOARD_GAMES.ID.eq(PLAYS.BOARD_GAME_ID))
             .where(BOARD_GAMES.CREATOR_ID.eq(userId))
             .fetchInto(PlayListItem::class.java)
+
+
+    fun userParticipatedInPlay(userId: Id, playId: Id): Boolean =
+        dsl.fetchExists(
+            dsl.select(PLAYS.ID)
+                .from(PLAYS)
+                .join(PLAY_RESULTS).on(PLAY_RESULTS.PLAY_ID.eq(PLAYS.ID))
+                .join(LINKED_OPPONENTS).on(LINKED_OPPONENTS.OPPONENT_ID.eq(PLAY_RESULTS.OPPONENT_ID))
+                .where(PLAYS.ID.eq(playId))
+                .and(LINKED_OPPONENTS.LINKED_USER_ID.eq(userId))
+                .and(LINKED_OPPONENTS.INTEGRATION_STATUS.eq(ENABLED))
+        )
 }

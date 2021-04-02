@@ -14,15 +14,13 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class BoardGameService
 @Autowired
-constructor(private val boardGameDao: BoardGameDao,
-            private val boardGameOptionsDao: BoardGameOptionsDao) {
+constructor(
+    private val boardGameDao: BoardGameDao,
+    private val boardGameOptionsDao: BoardGameOptionsDao
+) {
 
     fun findBoardGamesForUser(userId: Id): List<BoardGame> {
-        val userBoardGames = boardGameDao.findBoardGamesCreatedByUser(userId)
-        val linkedBoardGames = boardGameDao.findBoardGamesLinkedFroUser(userId)
-
-        return (userBoardGames + linkedBoardGames)
-            .sortedBy { it.name }
+        return boardGameDao.findBoardGamesCreatedByUser(userId)
     }
 
     fun createBoardGame(userId: Id, createBoardGameRequest: CreateBoardGameRequest): Id {

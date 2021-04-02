@@ -175,7 +175,10 @@
     "PLAY_ADDED": {
       "ACCEPT": "Accept",
       "ACCEPT_ALL": "Accept all",
-      "REJECT": "Reject"
+      "REJECT": "Reject",
+      "TITLE": "New game with your participation",
+      "POSITION": "Position: ",
+      "POINTS": "Points: "
     }
   }
 }

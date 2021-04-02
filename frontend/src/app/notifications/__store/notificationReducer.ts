@@ -1,6 +1,7 @@
 import { NotificationItem } from "app/notifications/__models/NotificationModels";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
+    acceptPlayNotificationSuccess,
     deleteNotificationSuccess,
     fetchInitialNotificationsSuccess,
     loadMoreNotificationsSuccess,
@@ -25,14 +26,13 @@ export const notificationReducer = createReducer<NotificationStore>(initialState
         unreadNotificationsCount: countUnread(action.payload),
     }),
     [markAsReadSuccess.type]: (state, action: PayloadAction<number[]>) => {
-        const list = state.list.map(n =>
-            action.payload.includes(n.id) ? { ...n, displayedAt: new Date().toISOString() } : n,
-        );
-        return { ...state, list, unreadNotificationsCount: countUnread(list) };
+        return markAsRead(state, n => action.payload.includes(n.id));
     },
     [markAllAsReadSuccess.type]: state => {
-        const list = state.list.map(n => (!n.displayedAt ? { ...n, displayedAt: new Date().toISOString() } : n));
-        return { ...state, list, unreadNotificationsCount: 0 };
+        return markAsRead(state, n => !n.displayedAt);
+    },
+    [acceptPlayNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
+        return markAsRead(state, n => n.id === action.payload);
     },
     [deleteNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
         const list = state.list.filter(n => n.id !== action.payload);
@@ -43,6 +43,14 @@ export const notificationReducer = createReducer<NotificationStore>(initialState
         return { ...state, list, unreadNotificationsCount: countUnread(list) };
     },
 });
+
+const markAsRead = (
+    state: NotificationStore,
+    itemToBeReadPredicate: (_: NotificationItem) => boolean,
+): NotificationStore => {
+    const list = state.list.map(n => (itemToBeReadPredicate(n) ? { ...n, displayedAt: new Date().toISOString() } : n));
+    return { ...state, list, unreadNotificationsCount: countUnread(list) };
+};
 
 const countUnread = (list: NotificationItem[]): number =>
     list.filter(notification => !!notification.displayedAt).length;

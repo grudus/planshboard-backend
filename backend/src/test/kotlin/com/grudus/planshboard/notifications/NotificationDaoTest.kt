@@ -224,4 +224,27 @@ constructor(
 
         assertEquals(3, dbNotifications.size)
     }
+
+    @Test
+    fun `should find by id`() {
+        dataProvider.saveRandomNotifications(3, userId = firstUserId)
+        val notification = dataProvider.saveRandomNotification(firstUserId)
+        dataProvider.saveRandomNotifications(3, userId = firstUserId)
+
+        val dbNotification = notificationDao.findById(notification.id!!)
+
+        assertNotNull(dbNotification)
+        assertEquals(notification.id!!, dbNotification!!.id)
+        assertEquals(notification.eventType, dbNotification.eventType)
+        assertEquals(notification.eventData, dbNotification.eventData)
+    }
+
+    @Test
+    fun `should return null when cannot find by id`() {
+        dataProvider.saveRandomNotifications(3, userId = firstUserId)
+
+        val dbNotification = notificationDao.findById(randomId())
+
+        assertNull(dbNotification)
+    }
 }

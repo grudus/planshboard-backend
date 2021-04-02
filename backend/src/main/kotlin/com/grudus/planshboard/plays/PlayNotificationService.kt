@@ -1,12 +1,16 @@
 package com.grudus.planshboard.plays
 
+import com.grudus.planshboard.boardgames.linked.LinkedBoardGameService
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
 import com.grudus.planshboard.notifications.NotificationService
+import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
 import com.grudus.planshboard.notifications.model.NotificationEventType
 import com.grudus.planshboard.notifications.model.PlayNotification
 import com.grudus.planshboard.opponents.OpponentService
 import com.grudus.planshboard.plays.model.SavePlayRequest
+import com.grudus.planshboard.plays.notifications.AcceptPlayParticipationRequest
 import com.grudus.planshboard.user.CurrentUserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +22,8 @@ class PlayNotificationService
 constructor(
     private val notificationService: NotificationService,
     private val opponentService: OpponentService,
-    private val currentUserService: CurrentUserService
+    private val currentUserService: CurrentUserService,
+    private val linkedBoardGameService: LinkedBoardGameService
 ) {
     private val log = LoggerFactory.getLogger(javaClass.simpleName)
 
@@ -54,6 +59,20 @@ constructor(
             }
 
         return notificationService.notifyMultiple(notifications)
+    }
+
+    fun acceptPlayParticipationAndLinkEntities(request: AcceptPlayParticipationRequest) {
+        val notification: PlayNotification =
+            notificationService.findNotificationData(request.notificationId, PlayNotification::class.java)
+                ?: throw ResourceNotFoundException("Cannot find notification with id [${request.notificationId}]")
+
+        val newGameLinked =
+            linkedBoardGameService.linkBoardGame(currentUserService.currentUserId(), notification.boardGameId) > 0
+        if (newGameLinked) {
+            log.info("Board game[${notification.boardGameId}] linked with user[${currentUserService.currentUserId()}]")
+        }
+
+        notificationService.markAsRead(MarkAsReadRequest(request.notificationId))
     }
 
 }

@@ -33,15 +33,12 @@ class BoardGameServiceTest {
     @Test
     fun `should return linked and owned board games`() {
         val userBoardGames = listOf(randomBoardGame(), randomBoardGame())
-        val linkedBoardGames = listOf(randomBoardGame())
-        val allBoardGames = (userBoardGames + linkedBoardGames).sortedBy { it.name }
 
         Mockito.`when`(boardGameDao.findBoardGamesCreatedByUser(anyLong())).thenReturn(userBoardGames)
-        Mockito.`when`(boardGameDao.findBoardGamesLinkedFroUser(anyLong())).thenReturn(linkedBoardGames)
 
         val boardGames = boardGameService.findBoardGamesForUser(nextLong())
 
-        assertEquals(allBoardGames, boardGames)
+        assertEquals(userBoardGames, boardGames)
     }
 
     private fun randomBoardGame() = BoardGame(null, randomText(), nextLong(), now())

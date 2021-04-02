@@ -1,5 +1,6 @@
 package com.grudus.planshboard.plays
 
+import com.grudus.planshboard.boardgames.linked.LinkedBoardGameService
 import com.grudus.planshboard.notifications.NotificationService
 import com.grudus.planshboard.notifications.model.NotificationEventType.PLAY_ADDED
 import com.grudus.planshboard.notifications.model.PlayNotification
@@ -34,13 +35,16 @@ class PlayNotificationServiceTest {
     @Mock
     private lateinit var currentUserService: CurrentUserService
 
+    @Mock
+    private lateinit var linkedBoardGameService: LinkedBoardGameService
+
     private lateinit var playNotificationService: PlayNotificationService
 
     private val currentUserId by lazy { randomId() }
 
     @BeforeEach
     fun init() {
-        playNotificationService = PlayNotificationService(notificationService, opponentService, currentUserService)
+        playNotificationService = PlayNotificationService(notificationService, opponentService, currentUserService, linkedBoardGameService)
     }
 
     @Test

@@ -51,7 +51,7 @@ const Notifications: React.FC = () => {
                             key={notification.id}
                             className={merge(css.singleNotification, cssIf(css.notSeen, !notification.displayedAt))}
                         >
-                            <notificationEntry.component data={notification.eventData} />
+                            <notificationEntry.component data={notification.eventData} notification={notification} />
                             <span className={css.notificationDate}>{formatTime(notification.createdAt)}</span>
                             <NotificationMenu
                                 extraActions={notificationEntry.extraActions}
