@@ -30,7 +30,7 @@ cd "${MIGRATIONS_DIR}" || {
     exit 2
 }
 
-mvn clean install -DskipTests -T4 || {
+mvn generate-sources -T4 || {
     >&2 echo "Cannot install maven project"
     cd "${CURR_DIR}"
     exit 2

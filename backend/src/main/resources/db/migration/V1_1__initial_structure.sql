@@ -58,11 +58,9 @@ CREATE TYPE linked_opponent_status AS ENUM ('WAITING_FOR_CONFIRMATION', 'ENABLED
 
 CREATE TABLE IF NOT EXISTS linked_opponents
 (
-    opponent_id        BIGINT                 NOT NULL REFERENCES opponents (id) ON DELETE CASCADE,
+    opponent_id        BIGINT PRIMARY KEY     NOT NULL REFERENCES opponents (id) ON DELETE CASCADE,
     linked_user_id     BIGINT                 NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    integration_status linked_opponent_status NOT NULL DEFAULT 'WAITING_FOR_CONFIRMATION',
-
-    CONSTRAINT UNIQUE_LINKED_OPPONENT UNIQUE (opponent_id)
+    integration_status linked_opponent_status NOT NULL DEFAULT 'WAITING_FOR_CONFIRMATION'
 );
 
 CREATE TYPE final_result AS ENUM ('WIN', 'DEFEAT');

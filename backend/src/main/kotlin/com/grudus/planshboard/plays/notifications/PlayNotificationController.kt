@@ -1,7 +1,6 @@
 package com.grudus.planshboard.plays.notifications
 
 import com.grudus.planshboard.auth.UserAuthentication
-import com.grudus.planshboard.plays.PlayNotificationService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping

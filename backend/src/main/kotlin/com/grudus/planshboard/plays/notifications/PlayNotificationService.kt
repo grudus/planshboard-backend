@@ -1,4 +1,4 @@
-package com.grudus.planshboard.plays
+package com.grudus.planshboard.plays.notifications
 
 import com.grudus.planshboard.boardgames.linked.LinkedBoardGameService
 import com.grudus.planshboard.commons.Id
@@ -10,7 +10,6 @@ import com.grudus.planshboard.notifications.model.NotificationEventType
 import com.grudus.planshboard.notifications.model.PlayNotification
 import com.grudus.planshboard.opponents.OpponentService
 import com.grudus.planshboard.plays.model.SavePlayRequest
-import com.grudus.planshboard.plays.notifications.AcceptPlayParticipationRequest
 import com.grudus.planshboard.user.CurrentUserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

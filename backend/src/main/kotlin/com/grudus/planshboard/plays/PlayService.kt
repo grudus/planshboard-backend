@@ -3,6 +3,7 @@ package com.grudus.planshboard.plays
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.plays.model.PlayListItem
 import com.grudus.planshboard.plays.model.SavePlayRequest
+import com.grudus.planshboard.plays.notifications.PlayNotificationService
 import com.grudus.planshboard.plays.tags.TagService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
