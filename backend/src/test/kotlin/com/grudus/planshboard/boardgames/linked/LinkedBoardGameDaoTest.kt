@@ -2,8 +2,7 @@ package com.grudus.planshboard.boardgames.linked
 
 import com.grudus.planshboard.AbstractDatabaseTest
 import com.grudus.planshboard.boardgames.BoardGameDao
-import com.grudus.planshboard.opponents.OpponentDao
-import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
+import com.grudus.planshboard.opponents.OpponentService
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.ENABLED
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -16,13 +15,18 @@ class LinkedBoardGameDaoTest
 constructor(
     private val boardGameDao: BoardGameDao,
     private val linkedBoardGameDao: LinkedBoardGameDao,
-    private val opponentDao: OpponentDao
+    private val opponentService: OpponentService
 ) : AbstractDatabaseTest() {
 
     @Test
     fun `should link board game`() {
         val linkedUser = addUser()
-        opponentDao.createAndLinkToUser(randomText(), creatorId = linkedUser, linkedTo = firstUserId, status = ENABLED)
+        opponentService.createAndLinkWithUser(
+            randomText(),
+            creatorId = linkedUser,
+            linkedTo = firstUserId,
+            status = ENABLED
+        )
         val boardGameId = boardGameDao.create(firstUserId, randomText())
 
         linkedBoardGameDao.linkBoardGame(linkedUser, boardGameId)
@@ -35,7 +39,12 @@ constructor(
     @Test
     fun `should ignore linked board game second time`() {
         val linkedUser = addUser()
-        opponentDao.createAndLinkToUser(randomText(), creatorId = linkedUser, linkedTo = firstUserId, status = ENABLED)
+        opponentService.createAndLinkWithUser(
+            randomText(),
+            creatorId = linkedUser,
+            linkedTo = firstUserId,
+            status = ENABLED
+        )
         val boardGameId = boardGameDao.create(firstUserId, randomText())
 
         linkedBoardGameDao.linkBoardGame(linkedUser, boardGameId)
@@ -49,7 +58,12 @@ constructor(
     @Test
     fun `should find board games linked with user`() {
         val linkedUser = addUser()
-        opponentDao.createAndLinkToUser(randomText(), creatorId = linkedUser, linkedTo = firstUserId, status = ENABLED)
+        opponentService.createAndLinkWithUser(
+            randomText(),
+            creatorId = linkedUser,
+            linkedTo = firstUserId,
+            status = ENABLED
+        )
         val boardGameName = randomText()
         val boardGameId = boardGameDao.create(firstUserId, boardGameName)
         boardGameDao.create(linkedUser, boardGameName)
@@ -70,14 +84,22 @@ constructor(
         val creator2 = addUser(randomText())
         val linkedUser = addUser(randomText())
 
-        opponentDao.createAndLinkToUser("Opp1", creatorId = linkedUser, linkedTo = creator1, status = ENABLED)
-        opponentDao.createAndLinkToUser("Opp2", creatorId = linkedUser, linkedTo = creator2, status = ENABLED)
-        opponentDao.createAndLinkToUser("Opp3", creatorId = firstUserId, linkedTo = creator1, status = ENABLED) // chaos
+        opponentService.createAndLinkWithUser("Opp1", creatorId = linkedUser, linkedTo = creator1, status = ENABLED)
+        opponentService.createAndLinkWithUser("Opp2", creatorId = linkedUser, linkedTo = creator2, status = ENABLED)
+        opponentService.createAndLinkWithUser(
+            "Opp3",
+            creatorId = firstUserId,
+            linkedTo = creator1,
+            status = ENABLED
+        ) // chaos
 
         linkedBoardGameDao.linkBoardGame(linkedUser, boardGameDao.create(creator1, "aGame"))
         linkedBoardGameDao.linkBoardGame(linkedUser, boardGameDao.create(creator1, "bGame"))
         linkedBoardGameDao.linkBoardGame(linkedUser, boardGameDao.create(creator2, "cGame"))
-        linkedBoardGameDao.linkBoardGame(linkedUser, boardGameDao.create(firstUserId, "dGame")) // shouldn't find, because not linked
+        linkedBoardGameDao.linkBoardGame(
+            linkedUser,
+            boardGameDao.create(firstUserId, "dGame")
+        ) // shouldn't find, because not linked
 
         val games = linkedBoardGameDao.findBoardGamesLinkedWithUser(linkedUser)
             .sortedBy { it.game.name }
@@ -97,8 +119,18 @@ constructor(
         val notLinkedUser = addUser("Not linked")
         val creator1 = addUser("Creator")
 
-        opponentDao.createAndLinkToUser("Opp nl-cr", creatorId = notLinkedUser, linkedTo = creator1, status = ENABLED)
-        opponentDao.createAndLinkToUser("Opp fu-nl", creatorId = firstUserId, linkedTo = notLinkedUser, status = ENABLED)
+        opponentService.createAndLinkWithUser(
+            "Opp nl-cr",
+            creatorId = notLinkedUser,
+            linkedTo = creator1,
+            status = ENABLED
+        )
+        opponentService.createAndLinkWithUser(
+            "Opp fu-nl",
+            creatorId = firstUserId,
+            linkedTo = notLinkedUser,
+            status = ENABLED
+        )
 
         linkedBoardGameDao.linkBoardGame(firstUserId, boardGameDao.create(creator1, "Game fu-c1"))
         linkedBoardGameDao.linkBoardGame(creator1, boardGameDao.create(firstUserId, "Game c1-fu"))

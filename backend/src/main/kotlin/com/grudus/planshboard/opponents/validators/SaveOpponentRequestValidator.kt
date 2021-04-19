@@ -6,6 +6,7 @@ import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.commons.validation.ValidationResult
 import com.grudus.planshboard.commons.validation.ValidationSuccess
 import com.grudus.planshboard.opponents.OpponentService
+import com.grudus.planshboard.opponents.linked.LinkedOpponentService
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.user.UserService
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component
 class SaveOpponentRequestValidator
 @Autowired
 constructor(private val opponentService: OpponentService,
+            private val linkedOpponentService: LinkedOpponentService,
             private val userService: UserService) {
 
     fun validate(request: SaveOpponentRequest, opponentId: Id? = null): ValidationResult {
@@ -35,7 +37,7 @@ constructor(private val opponentService: OpponentService,
 
     private fun userAlreadyLinked(request: SaveOpponentRequest): Boolean =
         if (!request.isLinkedToUser()) false
-        else opponentService.userAlreadyLinked(request.existingUserName!!)
+        else linkedOpponentService.userAlreadyLinked(request.existingUserName!!)
 
     private fun existingUserDoesNotExists(request: SaveOpponentRequest): Boolean =
         if (!request.isLinkedToUser()) false
