@@ -2,6 +2,7 @@ package com.grudus.planshboard.opponents.validators
 
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.OpponentService
+import com.grudus.planshboard.opponents.linked.LinkedOpponentService
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
@@ -26,11 +27,14 @@ class SaveOpponentRequestValidatorTest {
     @Mock
     private lateinit var opponentService: OpponentService
 
+    @Mock
+    private lateinit var linkedOpponentService: LinkedOpponentService
+
     private lateinit var validatorSave: SaveOpponentRequestValidator
 
     @BeforeEach
     fun init() {
-        validatorSave = SaveOpponentRequestValidator(opponentService, userService)
+        validatorSave = SaveOpponentRequestValidator(opponentService, linkedOpponentService, userService)
     }
 
     @Test
@@ -76,7 +80,7 @@ class SaveOpponentRequestValidatorTest {
 
     @Test
     fun `should not pass validation when linking with already linked user`() {
-        Mockito.`when`(opponentService.userAlreadyLinked(anyString())).thenReturn(true)
+        Mockito.`when`(linkedOpponentService.userAlreadyLinked(anyString())).thenReturn(true)
         val request = SaveOpponentRequest(randomText(), randomText())
 
         val validationResult = validatorSave.validate(request)
@@ -100,7 +104,7 @@ class SaveOpponentRequestValidatorTest {
     @Test
     fun `should allow the same linked user if updating existing opponent`() {
         val userName = randomText()
-        Mockito.lenient().`when`(opponentService.userAlreadyLinked(anyString())).thenReturn(true)
+        Mockito.lenient().`when`(linkedOpponentService.userAlreadyLinked(anyString())).thenReturn(true)
         Mockito.`when`(opponentService.findById(anyLong())).thenReturn(OpponentDto(1, randomText(), UserLinkedToOpponent(1, userName, WAITING_FOR_CONFIRMATION)))
         val request = SaveOpponentRequest(randomText(), userName)
 

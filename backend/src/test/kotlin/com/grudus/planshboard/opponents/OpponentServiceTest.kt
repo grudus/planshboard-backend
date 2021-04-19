@@ -2,6 +2,7 @@ package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
 import com.grudus.planshboard.env.EnvironmentService
+import com.grudus.planshboard.opponents.linked.LinkedOpponentService
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
@@ -9,6 +10,7 @@ import com.grudus.planshboard.opponents.model.UserLinkedToOpponent
 import com.grudus.planshboard.user.CurrentUserService
 import com.grudus.planshboard.user.UserService
 import com.grudus.planshboard.utils.TestUtils.any
+import com.grudus.planshboard.utils.TestUtils.anyId
 import com.grudus.planshboard.utils.TestUtils.eq
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.ArgumentMatchers
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -40,11 +43,14 @@ class OpponentServiceTest {
     @Mock
     private lateinit var environmentService: EnvironmentService
 
+    @Mock
+    private lateinit var linkedOpponentService: LinkedOpponentService
+
     private lateinit var opponentService: OpponentService
 
     @BeforeEach
     fun init() {
-        opponentService = OpponentService(opponentDao, opponentStatsDao, userService, currentUserService, environmentService)
+        opponentService = OpponentService(opponentDao, linkedOpponentService, opponentStatsDao, userService, currentUserService, environmentService)
     }
 
     @Test
@@ -65,7 +71,8 @@ class OpponentServiceTest {
 
         opponentService.create(request, creatorId)
 
-        verify(opponentDao).createAndLinkToUser(eq(request.opponentName), eq(creatorId), eq(linkedUserId), any())
+        verify(opponentDao).createNew(eq(request.opponentName), eq(creatorId))
+        verify(linkedOpponentService).linkWithUser(anyId(), ArgumentMatchers.eq(linkedUserId), any())
     }
 
     @Test
@@ -96,7 +103,7 @@ class OpponentServiceTest {
 
         opponentService.update(opponentId, request)
 
-        verify(opponentDao).removeLinkedUser(eq(opponentId))
+        verify(linkedOpponentService).removeLinkedUser(eq(opponentId))
     }
 
     @Test
@@ -110,8 +117,8 @@ class OpponentServiceTest {
 
         opponentService.update(opponentId, request)
 
-        verify(opponentDao).removeLinkedUser(eq(opponentId))
-        verify(opponentDao).linkToUser(eq(opponentId), eq(linkedUserId), any())
+        verify(linkedOpponentService).removeLinkedUser(eq(opponentId))
+        verify(linkedOpponentService).linkWithUser(eq(opponentId), eq(linkedUserId), any())
     }
 
     @Test
@@ -125,8 +132,8 @@ class OpponentServiceTest {
 
         opponentService.update(opponentId, request)
 
-        verify(opponentDao, never()).removeLinkedUser(anyLong())
-        verify(opponentDao, never()).linkToUser(anyLong(), anyLong(), any())
+        verify(linkedOpponentService, never()).removeLinkedUser(anyLong())
+        verify(linkedOpponentService, never()).linkWithUser(anyLong(), anyLong(), any())
     }
 
     @Test

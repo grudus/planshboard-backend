@@ -3,8 +3,9 @@ package com.grudus.planshboard.plays
 import com.grudus.planshboard.AbstractDatabaseTest
 import com.grudus.planshboard.boardgames.BoardGameDao
 import com.grudus.planshboard.commons.Id
-import com.grudus.planshboard.opponents.OpponentDao
+import com.grudus.planshboard.opponents.OpponentService
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
+import com.grudus.planshboard.opponents.model.SaveOpponentRequest
 import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.tables.PlayResults.PLAY_RESULTS
@@ -25,7 +26,7 @@ class PlayDaoTest
 constructor(
     private val playDao: PlayDao,
     private val boardGameDao: BoardGameDao,
-    private val opponentDao: OpponentDao,
+    private val opponentService: OpponentService,
     private val dslContext: DSLContext
 ) : AbstractDatabaseTest() {
 
@@ -209,8 +210,8 @@ constructor(
         linkedToUser: Id? = null,
         linkedStatus: LinkedOpponentStatus = LinkedOpponentStatus.ENABLED
     ) =
-        if (linkedToUser == null) opponentDao.createNew(randomText(), creatorId)
-        else opponentDao.createAndLinkToUser(randomText(), creatorId, linkedToUser, linkedStatus)
+        if (linkedToUser == null) opponentService.create(SaveOpponentRequest(randomText()), creatorId)
+        else opponentService.createAndLinkWithUser(randomText(), creatorId, linkedToUser, linkedStatus)
 
     private fun addRandomBoardGame(creatorId: Id) =
         boardGameDao.create(creatorId, randomText())

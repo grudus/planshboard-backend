@@ -4,7 +4,9 @@ import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
 import com.grudus.planshboard.env.EnvironmentKeys.MAX_NUMBER_OF_FREQUENT_OPPONENTS
 import com.grudus.planshboard.env.EnvironmentService
+import com.grudus.planshboard.opponents.linked.LinkedOpponentService
 import com.grudus.planshboard.opponents.model.*
+import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
 import com.grudus.planshboard.user.CurrentUserService
 import com.grudus.planshboard.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,14 +17,18 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class OpponentService
 @Autowired
-constructor(private val opponentDao: OpponentDao,
-            private val opponentStatsDao: OpponentStatsDao,
-            private val userService: UserService,
-            private val currentUserService: CurrentUserService,
-            private val environmentService: EnvironmentService) {
+constructor(
+    private val opponentDao: OpponentDao,
+    private val linkedOpponentService: LinkedOpponentService,
+    private val opponentStatsDao: OpponentStatsDao,
+    private val userService: UserService,
+    private val currentUserService: CurrentUserService,
+    private val environmentService: EnvironmentService
+) {
 
-    fun createInitial(userName: String, userId: Id) {
-        opponentDao.creteInitial(userName, userId)
+    fun createInitial(userName: String, userCreatorId: Id) {
+        val opponentId = opponentDao.createNew(userName, userCreatorId)
+        linkedOpponentService.linkWithCreator(opponentId, userCreatorId)
     }
 
     fun findListItems(userId: Id): List<OpponentListItem> {
@@ -48,20 +54,28 @@ constructor(private val opponentDao: OpponentDao,
         val userId = userService.findIdByName(request.existingUserName!!)
             ?: throw ResourceNotFoundException("Cannot find user[${request.existingUserName}]")
 
-        return opponentDao.createAndLinkToUser(request.opponentName, currentUserId, userId)
+        return createAndLinkWithUser(request.opponentName, currentUserId, userId, WAITING_FOR_CONFIRMATION)
+    }
+
+    fun createAndLinkWithUser(
+        name: String,
+        creatorId: Id,
+        linkedTo: Id,
+        status: LinkedOpponentStatus = WAITING_FOR_CONFIRMATION
+    ): Id {
+        val opponentId = opponentDao.createNew(name, creatorId)
+        linkedOpponentService.linkWithUser(opponentId, linkedTo, status)
+        return opponentId
     }
 
     fun existsForCurrentUser(name: String): Boolean =
         opponentDao.exists(name, currentUserService.currentUserId())
 
-    fun userAlreadyLinked(existingUserName: String): Boolean =
-        opponentDao.userAlreadyLinked(existingUserName, currentUserService.currentUserId())
-
     fun update(opponentId: Id, request: SaveOpponentRequest) {
         opponentDao.updateName(opponentId, request.opponentName)
 
         if (!request.isLinkedToUser()) {
-            opponentDao.removeLinkedUser(opponentId)
+            linkedOpponentService.removeLinkedUser(opponentId)
             return
         }
         val currentOpponent = findById(opponentId)
@@ -70,8 +84,8 @@ constructor(private val opponentDao: OpponentDao,
         if (currentOpponent.linkedUser == null || currentOpponent.linkedUser.userName != request.existingUserName) {
             val userId = userService.findIdByName(request.existingUserName!!)
                 ?: throw ResourceNotFoundException("Cannot find user with name ${request.existingUserName}")
-            opponentDao.removeLinkedUser(opponentId)
-            opponentDao.linkToUser(opponentId, userId)
+            linkedOpponentService.removeLinkedUser(opponentId)
+            linkedOpponentService.linkWithUser(opponentId, userId, WAITING_FOR_CONFIRMATION)
         }
     }
 
@@ -81,7 +95,4 @@ constructor(private val opponentDao: OpponentDao,
         val recentlyPlayedOpponents = opponentStatsDao.findOpponentsWithMostRecentPlays(userId, maxNumberOfOpponents)
         return (recentlyPlayedOpponents + mostFrequentOpponents).distinct()
     }
-
-    fun findOpponentsLinkedWithRealUsers(): List<OpponentDto> =
-        opponentDao.findOpponentsLinkedWithRealUsers(currentUserService.currentUserId())
 }

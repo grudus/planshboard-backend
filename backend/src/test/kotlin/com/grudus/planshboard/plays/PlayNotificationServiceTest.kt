@@ -4,7 +4,7 @@ import com.grudus.planshboard.boardgames.linked.LinkedBoardGameService
 import com.grudus.planshboard.notifications.NotificationService
 import com.grudus.planshboard.notifications.model.NotificationEventType.PLAY_ADDED
 import com.grudus.planshboard.notifications.model.PlayNotification
-import com.grudus.planshboard.opponents.OpponentService
+import com.grudus.planshboard.opponents.linked.LinkedOpponentService
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.UserLinkedToOpponent
@@ -31,7 +31,7 @@ class PlayNotificationServiceTest {
     private lateinit var notificationService: NotificationService
 
     @Mock
-    private lateinit var opponentService: OpponentService
+    private lateinit var linkedOpponentService: LinkedOpponentService
 
     @Mock
     private lateinit var currentUserService: CurrentUserService
@@ -45,7 +45,12 @@ class PlayNotificationServiceTest {
 
     @BeforeEach
     fun init() {
-        playNotificationService = PlayNotificationService(notificationService, opponentService, currentUserService, linkedBoardGameService)
+        playNotificationService = PlayNotificationService(
+            notificationService,
+            linkedOpponentService,
+            currentUserService,
+            linkedBoardGameService
+        )
     }
 
     @Test
@@ -53,7 +58,7 @@ class PlayNotificationServiceTest {
         val opponents = listOf(randomOpponentWithUser(), randomOpponentWithUser())
         val playId = randomId()
         val boardGameId = randomId()
-        Mockito.`when`(opponentService.findOpponentsLinkedWithRealUsers()).thenReturn(opponents)
+        Mockito.`when`(linkedOpponentService.findOpponentsLinkedWithRealUsers()).thenReturn(opponents)
         Mockito.`when`(notificationService.notifyMultiple(anyList())).thenAnswer { it.getArgument(0, List::class.java) }
         Mockito.`when`(currentUserService.currentUser()).thenReturn(CurrentUser(currentUserId, "Janek"))
 
@@ -67,13 +72,17 @@ class PlayNotificationServiceTest {
         assertEquals(1, notifications.size)
         assertEquals(opponents[0].linkedUser!!.userId, notifications[0].displayUserId)
         assertEquals(PLAY_ADDED, notifications[0].eventType)
-        assertEquals(PlayNotification(currentUserId, "Janek", playId, boardGameId), (notifications[0].eventData as PlayNotification))
+        assertEquals(
+            PlayNotification(currentUserId, "Janek", playId, boardGameId),
+            (notifications[0].eventData as PlayNotification)
+        )
     }
 
     @Test
     fun `should not create any notification when no opponent in created play is assigned to the real user`() {
         val playId = randomId()
-        Mockito.`when`(opponentService.findOpponentsLinkedWithRealUsers()).thenReturn(listOf(randomOpponentWithUser()))
+        Mockito.`when`(linkedOpponentService.findOpponentsLinkedWithRealUsers())
+            .thenReturn(listOf(randomOpponentWithUser()))
         Mockito.lenient().`when`(notificationService.notifyMultiple(anyList()))
             .thenAnswer { it.getArgument(0, List::class.java) }
 
