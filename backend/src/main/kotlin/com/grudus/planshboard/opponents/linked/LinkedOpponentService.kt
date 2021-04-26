@@ -5,6 +5,7 @@ import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
 import com.grudus.planshboard.opponents.model.OpponentDto
+import com.grudus.planshboard.opponents.notifications.OpponentNotificationService
 import com.grudus.planshboard.user.CurrentUserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +18,8 @@ class LinkedOpponentService
 @Autowired
 constructor(
     private val linkedOpponentDao: LinkedOpponentDao,
-    private val currentUserService: CurrentUserService
+    private val currentUserService: CurrentUserService,
+    private val opponentNotificationService: OpponentNotificationService
 ) {
     private val log = LoggerFactory.getLogger(javaClass.simpleName)
 
@@ -32,6 +34,9 @@ constructor(
     ) {
         log.info("About to link opponent[$opponentId] with user[$userId] with status $status")
         linkedOpponentDao.linkWithUser(opponentId, userId, status)
+        if (status == WAITING_FOR_CONFIRMATION) {
+            opponentNotificationService.notifyOpponentLinked(opponentId, userId)
+        }
     }
 
     fun findOpponentsLinkedWithRealUsers(): List<OpponentDto> =

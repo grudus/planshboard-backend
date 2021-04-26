@@ -30,6 +30,11 @@ constructor(
         return savedNotifications
     }
 
+    @Suppress("UNCHECKED_CAST")
+    fun <T> notify(notification: Notification<T>): Notification<T> =
+        notifyMultiple(listOf(notification)).first() as Notification<T>
+
+
     fun findNotifications(limitPerPage: Int, dateToLookAfter: LocalDateTime?): List<Notification<*>> {
         return notificationDao.findNotificationsForUser(
             currentUserService.currentUserId(),
