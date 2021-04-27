@@ -37,9 +37,12 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
     }
 
 
-    protected fun runWithAnotherUserContext(func: (UserAuthentication) -> Unit) {
+    protected fun runWithAnotherUserContext(func: (UserAuthentication) -> Unit) =
+        runWithAnotherUserContext(createNewAuthentication(), func)
+
+    protected fun runWithAnotherUserContext(user: UserAuthentication, func: (UserAuthentication) -> Unit) {
         val initialAuth = authentication
-        setupAuthContextForAnotherUser()
+        setupAuthContextForAnotherUser(user)
         func(authentication)
         setupAuthContextForAnotherUser(initialAuth)
     }

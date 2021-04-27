@@ -14,4 +14,5 @@ object ValidationKeys {
     const val INVALID_OPPONENT = "INVALID_OPPONENT"
 
     const val CANNOT_PARTICIPE_IN_PLAY = "CANNOT_PARTICIPE_IN_PLAY"
+    const val CANNOT_BE_LINKED = "CANNOT_BE_LINKED"
 }

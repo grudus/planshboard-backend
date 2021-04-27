@@ -2,9 +2,9 @@ package com.grudus.planshboard.opponents.linked
 
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
-import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.LINKED_WITH_CREATOR
-import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
+import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.*
 import com.grudus.planshboard.opponents.model.OpponentDto
+import com.grudus.planshboard.opponents.notifications.AcceptOpponentLinkedRequest
 import com.grudus.planshboard.opponents.notifications.OpponentNotificationService
 import com.grudus.planshboard.user.CurrentUserService
 import org.slf4j.LoggerFactory
@@ -48,5 +48,11 @@ constructor(
     fun removeLinkedUser(opponentId: Id) {
         log.info("About to remove linked opponent[$opponentId]")
         linkedOpponentDao.removeLinkedUser(opponentId)
+    }
+
+    fun acceptLinking(request: AcceptOpponentLinkedRequest) {
+        val notification = opponentNotificationService.findNotificationData(request.notificationId)
+        linkWithUser(notification.linkedOpponentId, currentUserService.currentUserId(), ENABLED)
+        opponentNotificationService.finishLinkingOpponent(request.notificationId)
     }
 }

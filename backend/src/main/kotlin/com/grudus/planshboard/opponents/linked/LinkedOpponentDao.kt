@@ -4,12 +4,9 @@ import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.opponents.OpponentDaoHelper
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.OpponentDto
-import com.grudus.planshboard.tables.LinkedOpponents
-import com.grudus.planshboard.tables.LinkedOpponents.*
-import com.grudus.planshboard.tables.Opponents
-import com.grudus.planshboard.tables.Opponents.*
-import com.grudus.planshboard.tables.Users
-import com.grudus.planshboard.tables.Users.*
+import com.grudus.planshboard.tables.LinkedOpponents.LINKED_OPPONENTS
+import com.grudus.planshboard.tables.Opponents.OPPONENTS
+import com.grudus.planshboard.tables.Users.USERS
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
@@ -27,6 +24,9 @@ constructor(
     ) {
         dsl.insertInto(LINKED_OPPONENTS)
             .set(LINKED_OPPONENTS.OPPONENT_ID, opponentId)
+            .set(LINKED_OPPONENTS.LINKED_USER_ID, linkedTo)
+            .set(LINKED_OPPONENTS.INTEGRATION_STATUS, helper.convert(status))
+            .onDuplicateKeyUpdate()
             .set(LINKED_OPPONENTS.LINKED_USER_ID, linkedTo)
             .set(LINKED_OPPONENTS.INTEGRATION_STATUS, helper.convert(status))
             .execute()

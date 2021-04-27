@@ -1,7 +1,9 @@
 package com.grudus.planshboard.opponents.notifications
 
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
 import com.grudus.planshboard.notifications.NotificationService
+import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
 import com.grudus.planshboard.notifications.model.NotificationEventType
 import com.grudus.planshboard.notifications.model.OpponentLinkedNotification
@@ -30,6 +32,15 @@ constructor(
             )
         )
 
+    }
+
+    fun findNotificationData(notificationId: Id): OpponentLinkedNotification {
+        return notificationService.findNotificationData(notificationId, OpponentLinkedNotification::class.java)
+            ?: throw ResourceNotFoundException("Cannot find notification with id [${notificationId}]")
+    }
+
+    fun finishLinkingOpponent(notificationId: Id) {
+        notificationService.markAsRead(MarkAsReadRequest(notificationId))
     }
 
 }
