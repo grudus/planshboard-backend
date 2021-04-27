@@ -4,6 +4,7 @@ import com.grudus.planshboard.AbstractDatabaseTest
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.opponents.OpponentDao
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
+import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.*
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -57,9 +58,9 @@ class LinkedOpponentDaoTest : AbstractDatabaseTest() {
     @Test
     fun `should return only enabled opponents linked with real users`() {
         val user = addUser()
-        createAndLinkWithUser(randomText(), user, addUser(), LinkedOpponentStatus.WAITING_FOR_CONFIRMATION)
-        val opponentId = createAndLinkWithUser(randomText(), user, addUser(), LinkedOpponentStatus.ENABLED)
-        createAndLinkWithUser(randomText(), user, addUser(), LinkedOpponentStatus.DISABLED)
+        createAndLinkWithUser(randomText(), user, addUser(), WAITING_FOR_CONFIRMATION)
+        val opponentId = createAndLinkWithUser(randomText(), user, addUser(), ENABLED)
+        createAndLinkWithUser(randomText(), user, addUser(), DISABLED)
 
         val opponents = linkedOpponentDao.findOpponentsLinkedWithRealUsers(user)
 
@@ -78,11 +79,23 @@ class LinkedOpponentDaoTest : AbstractDatabaseTest() {
         assertTrue(opponents.isEmpty())
     }
 
+    @Test
+    fun `should be able to override status when linking same opponent twice`() {
+        val opponentId = opponentDao.createNew(randomText(), addUser())
+        linkedOpponentDao.linkWithUser(opponentId, addUser(), WAITING_FOR_CONFIRMATION)
+
+        assertEquals(WAITING_FOR_CONFIRMATION, opponentDao.findById(opponentId)!!.linkedUser!!.status)
+
+        linkedOpponentDao.linkWithUser(opponentId, addUser(), ENABLED)
+
+        assertEquals(ENABLED, opponentDao.findById(opponentId)!!.linkedUser!!.status)
+    }
+
     private fun createAndLinkWithUser(
         name: String,
         creatorId: Id,
         linkedUser: Id,
-        status: LinkedOpponentStatus = LinkedOpponentStatus.WAITING_FOR_CONFIRMATION
+        status: LinkedOpponentStatus = WAITING_FOR_CONFIRMATION
     ): Id {
         val opponentId = opponentDao.createNew(name, creatorId)
         linkedOpponentDao.linkWithUser(opponentId, linkedUser, status)
