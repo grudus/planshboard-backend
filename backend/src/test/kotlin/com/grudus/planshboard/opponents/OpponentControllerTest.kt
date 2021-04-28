@@ -55,8 +55,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
     fun `should perform validation when creating opponent`() {
         val request = SaveOpponentRequest(" ")
         postRequest(baseUrl, request)
-            .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.code", Matchers.`is`(ValidationKeys.EMPTY_FIELD)))
+            .andExpectValidationError(ValidationKeys.EMPTY_FIELD)
     }
 
     @Test
@@ -102,8 +101,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
         addOpponent(SaveOpponentRequest(randomText(), anotherUser))
 
         postRequest(baseUrl, SaveOpponentRequest(randomText(), anotherUser))
-            .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.code").value(ValidationKeys.USER_ALREADY_LINKED))
+            .andExpectValidationError(ValidationKeys.USER_ALREADY_LINKED)
     }
 
     @Test
@@ -208,8 +206,7 @@ class OpponentControllerTest : AuthenticatedControllerTest() {
         val id = addOpponent(SaveOpponentRequest(randomText(), linkedUserName))
 
         putRequest("$baseUrl/$id", SaveOpponentRequest(randomText(), randomText()))
-            .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.code").value(ValidationKeys.UNKNOWN_USER))
+            .andExpectValidationError(ValidationKeys.UNKNOWN_USER)
     }
 
     @Test

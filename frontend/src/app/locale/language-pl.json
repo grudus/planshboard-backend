@@ -184,6 +184,11 @@
       "TITLE": "Nowa gra z Twoim udziałem",
       "POSITION": "Zajęte miejsce: ",
       "POINTS": "Liczba punktów: "
+    },
+    "OPPONENT_LINKED": {
+      "ACCEPT": "Akceptuj",
+      "TITLE": "Zostałeś oznaczony jako przeciwnik",
+      "META_INFO": "Zaakceptuj, aby móc śledzić wasze wspólne rozgrywki"
     }
   }
 }

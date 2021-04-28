@@ -31,8 +31,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
     fun `should validate creating board game`() {
         val request = CreateBoardGameRequest("", BoardGameOptions.default())
         postRequest(baseUrl, request)
-            .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.code", Matchers.`is`(ValidationKeys.EMPTY_FIELD)))
+            .andExpectValidationError(ValidationKeys.EMPTY_FIELD)
     }
 
     @Test
@@ -85,8 +84,7 @@ class BoardGameControllerTest : AuthenticatedControllerTest() {
         addBoardGame(newName)
 
         putRequest("$baseUrl/$id", EditBoardGameRequest(newName, BoardGameOptions.default()))
-            .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.code").value(ValidationKeys.GAME_ALREADY_EXISTS))
+            .andExpectValidationError(ValidationKeys.GAME_ALREADY_EXISTS)
     }
 
     @Test
