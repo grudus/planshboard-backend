@@ -1,6 +1,7 @@
 import { NotificationItem } from "app/notifications/__models/NotificationModels";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
+    acceptOpponentLinkedNotificationSuccess,
     acceptPlayNotificationSuccess,
     deleteNotificationSuccess,
     fetchInitialNotificationsSuccess,
@@ -32,6 +33,9 @@ export const notificationReducer = createReducer<NotificationStore>(initialState
         return markAsRead(state, n => !n.displayedAt);
     },
     [acceptPlayNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
+        return markAsRead(state, n => n.id === action.payload);
+    },
+    [acceptOpponentLinkedNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
         return markAsRead(state, n => n.id === action.payload);
     },
     [deleteNotificationSuccess.type]: (state, action: PayloadAction<number>) => {

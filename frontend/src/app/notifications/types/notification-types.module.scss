@@ -1,12 +1,16 @@
 @import "src/variables";
 
-.playAdded {
+.baseWrapper {
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
 
-    .infoActionsWrapper {
+    .avatar {
+        margin: 0 16px 0 8px;
+    }
+
+    .content {
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -14,54 +18,27 @@
         align-items: flex-start;
     }
 
-    .info {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-    }
-
-    .actionButtons {
-        display: flex;
-        margin-left: -16px; // button's padding
-    }
-
     .user {
         font-size: 12px;
         color: var(--secondary-text-on-card);
     }
-
-    .avatar {
-        margin: 0 16px 0 8px;
-    }
-
-    .title {
-        font-size: 16px;
-        color: var(--primary-text-on-card);
-        margin: 4px 0;
-        font-weight: 500;
-    }
-
-    .metaInfo {
-        color: var(--secondary-text-on-card);
-        font-size: 12px;
-    }
 }
 
+.title {
+    font-size: 16px;
+    color: var(--primary-text-on-card);
+    margin: 4px 0;
+    font-weight: 500;
+}
+
+.metaInfo {
+    color: var(--secondary-text-on-card);
+    font-size: 12px;
+}
+
+
 @media (min-width: $medium) {
-    .playAdded {
+    .baseWrapper {
         align-items: center;
-
-        .actionButtons {
-            align-self: center;
-            margin-left: 0;
-        }
-
-        .infoActionsWrapper {
-            justify-content: space-between;
-            align-items: center;
-            flex-direction: row;
-        }
     }
 }

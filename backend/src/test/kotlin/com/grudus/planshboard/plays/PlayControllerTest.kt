@@ -54,9 +54,7 @@ constructor() : AuthenticatedControllerTest() {
         )
 
         postRequest(baseUrl, request)
-            .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.code").value(ValidationKeys.INVALID_OPPONENT))
-
+            .andExpectValidationError(ValidationKeys.INVALID_OPPONENT)
     }
 
     @Test

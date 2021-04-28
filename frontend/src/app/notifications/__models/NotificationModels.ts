@@ -17,3 +17,9 @@ export interface PlayNotification {
     position?: number;
     points?: number;
 }
+
+export interface OpponentNotification {
+    creatorId: number;
+    creatorDisplayName: string;
+    linkedOpponentId: number;
+}

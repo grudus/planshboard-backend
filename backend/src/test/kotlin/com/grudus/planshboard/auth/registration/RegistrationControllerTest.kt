@@ -44,8 +44,7 @@ constructor(private val userAuthenticationService: UserAuthenticationService) : 
         val registerUserRequest = RegisterUserRequest(randomText(), randomText(), randomText())
 
         postRequest("/api/auth/registration", registerUserRequest)
-            .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.code", `is`(ValidationKeys.PASSWORD_MISMATCH)))
+            .andExpectValidationError(ValidationKeys.PASSWORD_MISMATCH)
             .andExpect(jsonPath("$.message", notNullValue()))
     }
 

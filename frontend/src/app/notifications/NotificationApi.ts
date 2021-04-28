@@ -1,6 +1,7 @@
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 import {
+    acceptOpponentLinkedNotificationSuccess,
     acceptPlayNotificationSuccess,
     deleteNotificationSuccess,
     loadMoreNotificationsSuccess,
@@ -39,6 +40,22 @@ export function acceptPlayNotification(dispatch: HttpDispatch, request: AcceptPl
         path: apiRoutes.playNotifications.accept,
         body: request,
         successAction: () => acceptPlayNotificationSuccess(request.notificationId),
+    });
+}
+
+interface AcceptOpponentLinkedNotificationRequest {
+    notificationId: number;
+}
+
+export function acceptOpponentLinkedNotification(
+    dispatch: HttpDispatch,
+    request: AcceptOpponentLinkedNotificationRequest,
+): Promise<any> {
+    return dispatch({
+        type: "post",
+        path: apiRoutes.opponentNotifications.accept,
+        body: request,
+        successAction: () => acceptOpponentLinkedNotificationSuccess(request.notificationId),
     });
 }
 

@@ -4,7 +4,8 @@ import PlayAddedNotification from "app/notifications/types/PlayAddedNotification
 import UnknownNotification from "app/notifications/types/UnknownNotification";
 import Icons from "library/icons/Icons";
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
-import { acceptPlayNotification } from "app/notifications/NotificationApi";
+import { acceptOpponentLinkedNotification, acceptPlayNotification } from "app/notifications/NotificationApi";
+import OpponentLinkedNotification from "app/notifications/types/OpponentLinkedNotification";
 
 export interface NotificationAction {
     translateKey: string;
@@ -31,6 +32,20 @@ const notificationEntryByType: Map<NotificationEventType, NotificationEntry> = n
                 },
                 { translateKey: "NOTIFICATIONS.PLAY_ADDED.ACCEPT_ALL", svgIcon: Icons.CheckDouble },
                 { translateKey: "NOTIFICATIONS.PLAY_ADDED.REJECT", svgIcon: Icons.XIcon },
+            ],
+        },
+    ],
+    [
+        "OPPONENT_LINKED",
+        {
+            component: OpponentLinkedNotification,
+            extraActions: [
+                {
+                    translateKey: "NOTIFICATIONS.OPPONENT_LINKED.ACCEPT",
+                    svgIcon: Icons.CheckIcon,
+                    clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
+                        acceptOpponentLinkedNotification(dispatch, { notificationId: notification.id }),
+                },
             ],
         },
     ],

@@ -46,6 +46,9 @@ export const apiRoutes = {
     playNotifications: {
         accept: "/api/play-notifications/accept",
     },
+    opponentNotifications: {
+        accept: "/api/opponent-notifications/accept",
+    },
     boardGame: {
         list: "/api/board-games",
         single: (id: number) => `/api/board-games/${id}`,
