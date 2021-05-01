@@ -118,9 +118,10 @@ function createOpponent(opponentName, existingUserName = null) {
 }
 
 function createPlay(boardGameId, opponentIds, tags = [], date = new Date(), note, finalResult) {
+    const results = opponentIds.map(opponentId => ({ opponentId }));
     const data = {
         boardGameId,
-        results: opponentIds.map(opponentId => ({ opponentId })),
+        results,
         tags,
         date,
         note,

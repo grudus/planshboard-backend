@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { deleteBoardGameRequest, getBoardGamesRequest } from "app/board-games/BoardGameApi";
 import css from "./board-game-list.module.scss";
@@ -10,20 +10,20 @@ import DeleteBoardGameDialog from "app/board-games/list/dialog/DeleteBoardGameDi
 import FlipMove from "react-flip-move";
 import SearchInput from "library/search-input/SearchInput";
 import useFilter from "app/shared/hooks/useFilter";
+import useDialog from "library/dialog/context/useDialog";
 
 const BoardGameList: React.FunctionComponent<any> = () => {
-    const [idToDelete, setIdToDelete] = useState(null as number | null);
+    const { showDialog } = useDialog();
     const { setFilter, filterCondition } = useFilter();
     const dispatch = useHttpDispatch();
     const { list: boardGames, boardGameExists } = useRedux(state => state.boardGame);
 
-    const confirmDeleteItem = async () => {
-        await deleteBoardGameRequest(dispatch, { id: idToDelete!! });
-        cancelDeleteItem();
-    };
-    const cancelDeleteItem = () => {
-        setIdToDelete(null);
-    };
+    const confirmDeleteItem = useCallback((id: number) => deleteBoardGameRequest(dispatch, { id }), [dispatch]);
+
+    const deleteGameRequest = useCallback(
+        (id: number) => showDialog(<DeleteBoardGameDialog onConfirm={() => confirmDeleteItem(id)} />),
+        [confirmDeleteItem, showDialog],
+    );
 
     useEffect(() => {
         getBoardGamesRequest(dispatch);
@@ -48,13 +48,11 @@ const BoardGameList: React.FunctionComponent<any> = () => {
                     .filter(game => filterCondition(game.name))
                     .map(boardGame => (
                         <li key={boardGame.id} className={css.singleItem}>
-                            <BoardGameListItem game={boardGame} onDeleteIconClick={setIdToDelete} />
+                            <BoardGameListItem game={boardGame} onDeleteIconClick={deleteGameRequest} />
                         </li>
                     ))}
             </FlipMove>
             <AddBoardGameButton className={css.addButton} />
-
-            <DeleteBoardGameDialog open={!!idToDelete} onConfirm={confirmDeleteItem} onCancel={cancelDeleteItem} />
         </div>
     );
 };

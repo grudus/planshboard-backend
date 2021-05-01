@@ -5,7 +5,7 @@ export function useAnimatedVisibility(open: boolean, time: number, classWhenVisi
     const [visibleClass, setVisibleClass] = useState("");
 
     useEffect(() => {
-        let timeoutId: any;
+        let timeoutId: NodeJS.Timeout;
         if (open) {
             setVisible(true);
             timeoutId = setTimeout(() => {

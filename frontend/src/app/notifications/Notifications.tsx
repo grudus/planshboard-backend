@@ -3,7 +3,7 @@ import { useRedux } from "store/rootReducer";
 import css from "./notifications.module.scss";
 import Button from "library/button/Button";
 import { useDateTime } from "app/shared/hooks/useDateTime";
-import { getNotificationByType } from "./NotificationTypesFactory";
+import { getNotificationByType } from "app/notifications/NotificationTypesFactory";
 import NotificationMenu from "./menu/NotificationMenu";
 import { cssIf, merge } from "utils/cssUtils";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";

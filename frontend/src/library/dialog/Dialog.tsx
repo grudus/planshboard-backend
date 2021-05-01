@@ -4,15 +4,16 @@ import { cssIf, merge } from "utils/cssUtils";
 import { useAnimatedVisibility } from "utils/hooks/useAnimatedVisibility";
 
 export interface DialogProps {
-    open: boolean;
-    onCancel: () => void;
+    open?: boolean;
+    onCancel?: () => void;
     children?: React.ReactNode;
     mobileFull?: boolean;
 }
 
 const Dialog: React.FC<DialogProps> = props => {
     const animationTime = parseInt(css.hideAnimationTime, 10);
-    const { visible, visibleClass } = useAnimatedVisibility(props.open, animationTime, css.visible);
+    const open = props.open === undefined ? true : props.open;
+    const { visible, visibleClass } = useAnimatedVisibility(open, animationTime, css.visible);
 
     if (!visible) {
         return <></>;
