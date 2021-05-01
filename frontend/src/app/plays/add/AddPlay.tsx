@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CardForm from "library/card-form/CardForm";
 import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
@@ -16,27 +16,42 @@ import { getSingleBoardGame } from "app/board-games/BoardGameApi";
 import Chip from "library/chip/Chip";
 import { appRoutes } from "app/routing/routes";
 import SelectBoardGameDialog from "app/plays/select-board-game-dialog/SelectBoardGameDialog";
+import useDialog from "library/dialog/context/useDialog";
 
 const AddPlay: React.FC = () => {
-    const { translate } = useTranslations();
-    const dispatch = useHttpDispatch();
-    const { boardGameId, history } = useQueryParams();
     const [loading, setLoading] = useState(false);
-    const [boardGameDialogOpen, setBoardGameDialogOpen] = useState(false);
     const currentGame = useRedux(state => state.boardGame.single);
     const currentUser = useRedux(s => s.opponent.currentUser);
+
+    const { boardGameId, history } = useQueryParams();
+    const { translate } = useTranslations();
+    const dispatch = useHttpDispatch();
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
+    const { showDialog } = useDialog();
+
+    const selectBoardGame = useCallback(
+        (id: number) =>
+            history.push({
+                pathname: appRoutes.plays.add,
+                search: id ? `?boardGameId=${id}` : "",
+            }),
+        [history],
+    );
+
+    const showBoardGameDialog = useCallback(() => {
+        showDialog(<SelectBoardGameDialog onSelect={selectBoardGame} />);
+    }, [showDialog, selectBoardGame]);
 
     useEffect(() => {
         if (!boardGameId) {
-            setBoardGameDialogOpen(true);
+            showBoardGameDialog();
             return;
         }
         getTagsRequest(dispatch);
         getAllOpponentsRequest(dispatch);
         getFrequentOpponentsRequest(dispatch);
         getSingleBoardGame(dispatch, { id: parseInt(boardGameId, 10) });
-    }, [boardGameId, dispatch]);
+    }, [boardGameId, dispatch, showBoardGameDialog]);
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
         setLoading(true);
@@ -55,14 +70,6 @@ const AddPlay: React.FC = () => {
         history.push(appRoutes.plays.list);
     };
 
-    const updateBoardGame = (id: number | null = null) => {
-        setBoardGameDialogOpen(!id);
-        history.push({
-            pathname: appRoutes.plays.add,
-            search: id ? `?boardGameId=${id}` : "",
-        });
-    };
-
     return (
         <>
             <CardForm className={css.formWrapper}>
@@ -73,7 +80,7 @@ const AddPlay: React.FC = () => {
                             <Chip
                                 text={currentGame.boardGame.name}
                                 className={css.headerBoardGame}
-                                onClick={() => setBoardGameDialogOpen(true)}
+                                onClick={showBoardGameDialog}
                             />
                         )}
                     </div>
@@ -87,11 +94,6 @@ const AddPlay: React.FC = () => {
                     />
                 </CardFormContent>
             </CardForm>
-            <SelectBoardGameDialog
-                onSelect={updateBoardGame}
-                open={boardGameDialogOpen}
-                onClose={() => setBoardGameDialogOpen(false)}
-            />
         </>
     );
 };

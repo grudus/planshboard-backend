@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "library/dialog/Dialog";
+import Dialog, { DialogProps } from "library/dialog/Dialog";
 import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
 import { useRedux } from "store/rootReducer";
@@ -10,13 +10,11 @@ import useFilter from "app/shared/hooks/useFilter";
 import { BoardGame } from "app/board-games/__models/BoardGameModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
 
-export interface SelectBoardGame {
+interface SelectBoardGameDialogProps extends DialogProps {
     onSelect: (id: number) => void;
-    open: boolean;
-    onClose: () => void;
 }
 
-const SelectBoardGameDialog: React.FC<SelectBoardGame> = props => {
+const SelectBoardGameDialog: React.FC<SelectBoardGameDialogProps> = props => {
     const boardGames = useRedux(state => state.boardGame.list);
     const { setFilter, filterCondition } = useFilter();
     const { translate } = useTranslations();
@@ -24,18 +22,18 @@ const SelectBoardGameDialog: React.FC<SelectBoardGame> = props => {
     const selectGame = (game: BoardGame) => {
         props.onSelect(game.id);
         setFilter("");
+        props.onCancel?.();
     };
 
     const selectFirstValue = () => {
         const game = boardGames.find(game => filterCondition(game.name));
         if (game) {
-            props.onSelect(game.id);
-            setFilter("");
+            selectGame(game);
         }
     };
 
     return (
-        <Dialog open={props.open} onCancel={props.onClose} mobileFull>
+        <Dialog open={props.open} mobileFull {...props}>
             <CardFormTitle>{translate("BOARD_GAMES.SELECT.TITLE")}</CardFormTitle>
             <CardFormContent className={css.content}>
                 <SearchInput hideLabel onTextChange={setFilter} autoFocus onEnter={selectFirstValue} />
@@ -62,4 +60,4 @@ const SelectBoardGameDialog: React.FC<SelectBoardGame> = props => {
     );
 };
 
-export default SelectBoardGameDialog;
+export default React.memo(SelectBoardGameDialog);
