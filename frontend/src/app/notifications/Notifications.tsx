@@ -8,16 +8,17 @@ import NotificationMenu from "./menu/NotificationMenu";
 import { cssIf, merge } from "utils/cssUtils";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { loadMoreNotificationsRequest, markAllAsReadRequest } from "app/notifications/NotificationApi";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
-// TODO add translations
 const Notifications: React.FC = () => {
     const notifications = useRedux(state => state.notification.list);
+    const { translate } = useTranslations();
     const { formatTime, getUtcDate } = useDateTime();
     const dispatch = useHttpDispatch();
     const [loading, setLoading] = useState(false);
 
     if (!notifications?.length) {
-        return <p>Brak notyfikacji</p>;
+        return <p>TODO: Empty state</p>;
     }
 
     const markAllAsRead = async () => {
@@ -36,7 +37,7 @@ const Notifications: React.FC = () => {
     return (
         <section className={css.wrapper}>
             <Button
-                text="Oznacz wszystkie jako przeczytane"
+                text={translate("NOTIFICATIONS.MARK_ALL_AS_READ")}
                 decoration="outlined"
                 loading={loading}
                 className={css.markAsReadButton}
@@ -62,7 +63,7 @@ const Notifications: React.FC = () => {
                 })}
             </ul>
 
-            <Button text="Pokaż więcej" decoration="outlined" loading={loading} onClick={loadMore} />
+            <Button text={translate("SHOW_MORE")} decoration="outlined" loading={loading} onClick={loadMore} />
         </section>
     );
 };

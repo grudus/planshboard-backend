@@ -3,6 +3,7 @@
   "SEARCH": "Search",
   "CANCEL": "Cancel",
   "SAVE": "Save",
+  "SHOW_MORE": "Show more",
   "DATEPICKER": {
     "MONTHS": "January,February,March,April,May,June,July,August,September,October,November,December",
     "WEEKDAYS": "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
@@ -171,6 +172,7 @@
   "NOTIFICATIONS": {
     "DELETE": "Delete",
     "MARK_AS_READ": "Mark as read",
+    "MARK_ALL_AS_READ": "Mark all as read",
 
     "PLAY_ADDED": {
       "ACCEPT": "Accept",
@@ -183,7 +185,7 @@
     "OPPONENT_LINKED": {
       "ACCEPT": "Accept",
       "TITLE": "You are linked with opponent",
-      "META_INFO": "Accept, to follow your common games"
+      "META_INFO": "Accept, to follow your common games",
     }
   }
 }
