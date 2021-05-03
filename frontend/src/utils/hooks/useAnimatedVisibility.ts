@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 
-export function useAnimatedVisibility(open: boolean, time: number, classWhenVisible: string) {
+export function useAnimatedVisibility(shouldOpen: boolean, time: number, classWhenVisible: string) {
     const [visible, setVisible] = useState(false);
     const [visibleClass, setVisibleClass] = useState("");
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
-        if (open) {
+        if (shouldOpen) {
             setVisible(true);
+
             timeoutId = setTimeout(() => {
                 setVisibleClass(classWhenVisible);
-            }, time);
+            }, 10);
         } else {
             setVisibleClass("");
             timeoutId = setTimeout(() => {
@@ -19,7 +20,7 @@ export function useAnimatedVisibility(open: boolean, time: number, classWhenVisi
         }
 
         return () => clearTimeout(timeoutId);
-    }, [open, time, classWhenVisible]);
+    }, [shouldOpen, time, classWhenVisible]);
 
     return { visible, visibleClass };
 }
