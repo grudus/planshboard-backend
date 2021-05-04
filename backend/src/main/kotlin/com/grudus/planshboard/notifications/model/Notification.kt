@@ -10,5 +10,6 @@ data class Notification<T>(
     val createdAt: LocalDateTime = now(),
     val displayedAt: LocalDateTime? = null,
     val eventType: NotificationEventType,
-    val eventData: T
+    val eventData: T,
+    val possibleActions: List<String>,
 )

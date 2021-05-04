@@ -7,6 +7,7 @@ export interface NotificationItem<T = any> {
     displayedAt?: string;
     eventType: NotificationEventType;
     eventData: T;
+    possibleActions: string[];
 }
 
 export interface PlayNotification {

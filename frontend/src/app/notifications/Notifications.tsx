@@ -3,12 +3,12 @@ import { useRedux } from "store/rootReducer";
 import css from "./notifications.module.scss";
 import Button from "library/button/Button";
 import { useDateTime } from "app/shared/hooks/useDateTime";
-import { getNotificationByType } from "app/notifications/NotificationTypesFactory";
 import NotificationMenu from "./menu/NotificationMenu";
 import { cssIf, merge } from "utils/cssUtils";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { loadMoreNotificationsRequest, markAllAsReadRequest } from "app/notifications/NotificationApi";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import { getNotificationEntry, NotificationEntry } from "app/notifications/NotificationTypesFactory";
 
 const Notifications: React.FC = () => {
     const notifications = useRedux(state => state.notification.list);
@@ -45,7 +45,7 @@ const Notifications: React.FC = () => {
             />
             <ul className={css.notificationList}>
                 {notifications.map(notification => {
-                    const notificationEntry = getNotificationByType(notification.eventType);
+                    const notificationEntry: NotificationEntry = getNotificationEntry(notification);
 
                     return (
                         <li
@@ -55,7 +55,7 @@ const Notifications: React.FC = () => {
                             <notificationEntry.component data={notification.eventData} notification={notification} />
                             <span className={css.notificationDate}>{formatTime(notification.createdAt)}</span>
                             <NotificationMenu
-                                extraActions={notificationEntry.extraActions}
+                                actionsDescriptor={notificationEntry.actionsDescriptor}
                                 notification={notification}
                             />
                         </li>

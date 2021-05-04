@@ -6,4 +6,9 @@ data class OpponentLinkedNotification(
     val creatorId: Id,
     val creatorDisplayName: String,
     val linkedOpponentId: Id
-)
+) {
+    enum class PossibleActions {
+        ACCEPT,
+        REJECT,
+    }
+}

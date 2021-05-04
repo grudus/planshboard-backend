@@ -35,8 +35,12 @@ export const notificationReducer = createReducer<NotificationStore>(initialState
     [acceptPlayNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
         return markAsRead(state, n => n.id === action.payload);
     },
-    [acceptOpponentLinkedNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
-        return markAsRead(state, n => n.id === action.payload);
+    [acceptOpponentLinkedNotificationSuccess.type]: (state, action: PayloadAction<NotificationItem>) => {
+        return replaceNotification(
+            state,
+            notification => notification.id === action.payload.id,
+            () => action.payload,
+        );
     },
     [deleteNotificationSuccess.type]: (state, action: PayloadAction<number>) => {
         const list = state.list.filter(n => n.id !== action.payload);
@@ -48,11 +52,18 @@ export const notificationReducer = createReducer<NotificationStore>(initialState
     },
 });
 
-const markAsRead = (
+const markAsRead = (state: NotificationStore, shouldMarkAsRead: (_: NotificationItem) => boolean): NotificationStore =>
+    replaceNotification(state, shouldMarkAsRead, notification => ({
+        ...notification,
+        displayedAt: new Date().toISOString(),
+    }));
+
+const replaceNotification = (
     state: NotificationStore,
-    itemToBeReadPredicate: (_: NotificationItem) => boolean,
+    filter: (_: NotificationItem) => boolean,
+    mapper: (_: NotificationItem) => NotificationItem,
 ): NotificationStore => {
-    const list = state.list.map(n => (itemToBeReadPredicate(n) ? { ...n, displayedAt: new Date().toISOString() } : n));
+    const list = state.list.map(item => (filter(item) ? mapper(item) : item));
     return { ...state, list, unreadNotificationsCount: countUnread(list) };
 };
 

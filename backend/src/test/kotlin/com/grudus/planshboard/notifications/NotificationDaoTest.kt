@@ -247,4 +247,25 @@ constructor(
 
         assertNull(dbNotification)
     }
+
+    @Test
+    fun `should be able to update possible actions`() {
+        val id = dataProvider.saveRandomNotification(userId = firstUserId, possibleActions = listOf("ACTION")).id!!
+        notificationDao.updatePossibleActions(id, listOf("REACTION_1", "REACTION_2"))
+
+        val dbNotification = notificationDao.findById(id)!!
+
+        assertEquals(2, dbNotification.possibleActions.size)
+        assertTrue(dbNotification.possibleActions.containsAll(listOf("REACTION_1", "REACTION_2")))
+    }
+
+    @Test
+    fun `should be able to set empty possible actions`() {
+        val id = dataProvider.saveRandomNotification(userId = firstUserId, possibleActions = listOf("ACTION")).id!!
+        notificationDao.updatePossibleActions(id, emptyList())
+
+        val dbNotification = notificationDao.findById(id)!!
+
+        assertTrue(dbNotification.possibleActions.isEmpty())
+    }
 }
