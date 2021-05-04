@@ -1,4 +1,4 @@
-FROM maven:3.6.3-jdk-8-slim
+FROM maven:3.8.1-jdk-11-slim
 WORKDIR /workspace/app
 
 COPY backend/pom.xml .
