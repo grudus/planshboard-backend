@@ -42,7 +42,7 @@ pipeline {
                     agent {
                         docker {
                             reuseNode true
-                            image "maven:3.6.3-jdk-8-slim"
+                            image "maven:3.8.1-jdk-11-slim"
                         }
                     }
                     steps {
@@ -97,7 +97,7 @@ pipeline {
                     agent {
                         docker {
                             reuseNode true
-                            image "maven:3.6.3-jdk-8-slim"
+                            image "maven:3.8.1-jdk-11-slim"
                             args "--add-host host.docker.internal:host-gateway"
                         }
                     }
@@ -131,7 +131,7 @@ pipeline {
                     agent {
                         docker {
                             reuseNode true
-                            image "maven:3.6.3-jdk-8-slim"
+                            image "maven:3.8.1-jdk-11-slim"
                             args "--add-host host.docker.internal:host-gateway"
                         }
                     }

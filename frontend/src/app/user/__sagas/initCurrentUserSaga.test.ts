@@ -5,13 +5,6 @@ import { getCurrentUserSuccessAction } from "app/user/__store/userActions";
 import { testTypeRootReducer } from "store/rootReducer";
 import httpRequestSaga from "app/shared/sagas/httpRequestSaga";
 
-test("Should listen to app initialized and token obtained actions", () => {
-    const saga = initCurrentUserSaga();
-    const next = saga.next();
-
-    expect(next.value.payload.args[0]).toStrictEqual(["APP_INITIALIZED", authTokenObtainedAction.type]);
-});
-
 test("Should set current user after successful http request", async () => {
     const sagaTester = new SagaTester({ initialState: undefined, reducers: testTypeRootReducer });
     sagaTester.start(initCurrentUserSaga);
