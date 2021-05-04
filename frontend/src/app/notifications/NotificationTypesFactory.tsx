@@ -7,15 +7,20 @@ import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import { acceptOpponentLinkedNotification, acceptPlayNotification } from "app/notifications/NotificationApi";
 import OpponentLinkedNotification from "app/notifications/types/OpponentLinkedNotification";
 
+export interface NotificationActionsDescriptor {
+    translateBase: string;
+    actions: NotificationAction[];
+}
+
 export interface NotificationAction {
-    translateKey: string;
+    key: string;
     svgIcon?: ReactElement;
-    clickAction?: Function;
+    clickAction?: (notification: NotificationItem, dispatch: HttpDispatch) => Promise<any>;
 }
 
 export interface NotificationEntry {
     component: React.ComponentType<any>;
-    extraActions: NotificationAction[];
+    actionsDescriptor: NotificationActionsDescriptor;
 }
 
 const notificationEntryByType: Map<NotificationEventType, NotificationEntry> = new Map([
@@ -23,35 +28,50 @@ const notificationEntryByType: Map<NotificationEventType, NotificationEntry> = n
         "PLAY_ADDED",
         {
             component: PlayAddedNotification,
-            extraActions: [
-                {
-                    translateKey: "NOTIFICATIONS.PLAY_ADDED.ACCEPT",
-                    svgIcon: Icons.CheckIcon,
-                    clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
-                        acceptPlayNotification(dispatch, { notificationId: notification.id }),
-                },
-                { translateKey: "NOTIFICATIONS.PLAY_ADDED.ACCEPT_ALL", svgIcon: Icons.CheckDouble },
-                { translateKey: "NOTIFICATIONS.PLAY_ADDED.REJECT", svgIcon: Icons.XIcon },
-            ],
+            actionsDescriptor: {
+                translateBase: "NOTIFICATIONS.PLAY_ADDED",
+                actions: [
+                    {
+                        key: "ACCEPT",
+                        svgIcon: Icons.CheckIcon,
+                        clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
+                            acceptPlayNotification(dispatch, { notificationId: notification.id }),
+                    },
+                    { key: "ACCEPT_ALL", svgIcon: Icons.CheckDouble },
+                    { key: "REJECT", svgIcon: Icons.XIcon },
+                ],
+            },
         },
     ],
     [
         "OPPONENT_LINKED",
         {
             component: OpponentLinkedNotification,
-            extraActions: [
-                {
-                    translateKey: "NOTIFICATIONS.OPPONENT_LINKED.ACCEPT",
-                    svgIcon: Icons.CheckIcon,
-                    clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
-                        acceptOpponentLinkedNotification(dispatch, { notificationId: notification.id }),
-                },
-            ],
+            actionsDescriptor: {
+                translateBase: "NOTIFICATIONS.OPPONENT_LINKED",
+                actions: [
+                    {
+                        key: "ACCEPT",
+                        svgIcon: Icons.CheckIcon,
+                        clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
+                            acceptOpponentLinkedNotification(dispatch, { notificationId: notification.id }),
+                    },
+                ],
+            },
         },
     ],
 ]);
 
-const unknownNotification = { extraActions: [], component: UnknownNotification };
+const unknownNotification: NotificationEntry = {
+    actionsDescriptor: { translateBase: "", actions: [] },
+    component: UnknownNotification,
+};
 
-export const getNotificationByType = (type: NotificationEventType): NotificationEntry =>
-    notificationEntryByType.get(type) || unknownNotification;
+export const getNotificationEntry = (notification: NotificationItem): NotificationEntry => {
+    const entry = notificationEntryByType.get(notification.eventType) || unknownNotification;
+
+    const possibleActions = entry.actionsDescriptor.actions.filter(({ key }) =>
+        notification.possibleActions.includes(key),
+    );
+    return { ...entry, actionsDescriptor: { ...entry.actionsDescriptor, actions: possibleActions } };
+};

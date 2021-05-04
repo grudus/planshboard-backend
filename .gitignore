@@ -12,6 +12,7 @@
 
 **/target/
 /lib
+/out
 backend/lib/
 **/build
 **/coverage
@@ -24,3 +25,4 @@ frontend/build
 **/.env.production.local
 
 jenkins-sources
+

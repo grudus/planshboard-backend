@@ -34,7 +34,8 @@ constructor(
                 it.createdAt,
                 it.displayedAt,
                 NotificationEventType.valueOf(it.eventType.name),
-                JSON.valueOf(objectMapper.writeValueAsString(it.eventData))
+                JSON.valueOf(objectMapper.writeValueAsString(it.eventData)),
+                it.possibleActions.toTypedArray(),
             )
         }
         val ids = JooqCommons.insertMultipleAndReturnIds(dsl, NOTIFICATIONS, records)
@@ -71,6 +72,19 @@ constructor(
         ) == entityIds.size
 
 
+    fun updatePossibleActions(notificationId: Id, possibleActions: List<String>) {
+        dsl.update(NOTIFICATIONS)
+            .set(NOTIFICATIONS.POSSIBLE_ACTIONS, possibleActions.toTypedArray())
+            .where(NOTIFICATIONS.ID.eq(notificationId))
+            .execute()
+    }
+
+    fun delete(id: Id) =
+        dsl.deleteFrom(NOTIFICATIONS)
+            .where(NOTIFICATIONS.ID.eq(id))
+            .execute()
+
+
     private fun intoNotification(): RecordMapper<NotificationsRecord, Notification<*>> = RecordMapper {
         val eventType = com.grudus.planshboard.notifications.model.NotificationEventType.valueOf(it.eventType.name)
         Notification(
@@ -79,14 +93,10 @@ constructor(
             it.createdAt,
             it.displayedAt,
             eventType,
-            objectMapper.readValue(it.eventData.data(), eventType.eventDataClass)
+            objectMapper.readValue(it.eventData.data(), eventType.eventDataClass),
+            it.possibleActions?.toList() ?: emptyList(),
         )
     }
-
-    fun delete(id: Id) =
-        dsl.deleteFrom(NOTIFICATIONS)
-            .where(NOTIFICATIONS.ID.eq(id))
-            .execute()
 
     fun markAsRead(ids: List<Id>) = updateMarkAs(NOTIFICATIONS.ID.`in`(ids), currentTimeProvider.now())
     fun markAllAsRead(userId: Id) = updateMarkAs(NOTIFICATIONS.DISPLAY_USER_ID.eq(userId), currentTimeProvider.now())

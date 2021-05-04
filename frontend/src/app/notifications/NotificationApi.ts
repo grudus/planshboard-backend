@@ -55,7 +55,7 @@ export function acceptOpponentLinkedNotification(
         type: "post",
         path: apiRoutes.opponentNotifications.accept,
         body: request,
-        successAction: () => acceptOpponentLinkedNotificationSuccess(request.notificationId),
+        successAction: acceptOpponentLinkedNotificationSuccess,
     });
 }
 

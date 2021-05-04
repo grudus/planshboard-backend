@@ -2,11 +2,14 @@ package com.grudus.planshboard.opponents.notifications
 
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
+import com.grudus.planshboard.commons.utils.toEnumNames
 import com.grudus.planshboard.notifications.NotificationService
 import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
 import com.grudus.planshboard.notifications.model.NotificationEventType
 import com.grudus.planshboard.notifications.model.OpponentLinkedNotification
+import com.grudus.planshboard.notifications.model.OpponentLinkedNotification.PossibleActions.ACCEPT
+import com.grudus.planshboard.notifications.model.OpponentLinkedNotification.PossibleActions.REJECT
 import com.grudus.planshboard.user.CurrentUserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,7 +31,8 @@ constructor(
             Notification(
                 displayUserId = linkedUserId,
                 eventType = NotificationEventType.OPPONENT_LINKED,
-                eventData = OpponentLinkedNotification(currentUser.id, currentUser.username, opponentId)
+                eventData = OpponentLinkedNotification(currentUser.id, currentUser.username, opponentId),
+                possibleActions = listOf(ACCEPT, REJECT).toEnumNames()
             )
         )
 
@@ -39,8 +43,11 @@ constructor(
             ?: throw ResourceNotFoundException("Cannot find notification with id [${notificationId}]")
     }
 
-    fun finishLinkingOpponent(notificationId: Id) {
+    fun finishLinkingOpponent(notificationId: Id): Notification<OpponentLinkedNotification> {
         notificationService.markAsRead(MarkAsReadRequest(notificationId))
+        notificationService.updatePossibleActions(notificationId, emptyList())
+        return notificationService.findNotification(notificationId, OpponentLinkedNotification::class.java)
+            ?: throw ResourceNotFoundException("Cannot find notification with id [${notificationId}]")
     }
 
 }

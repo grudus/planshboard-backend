@@ -3,11 +3,13 @@ package com.grudus.planshboard.plays.notifications
 import com.grudus.planshboard.boardgames.linked.LinkedBoardGameService
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.exceptions.ResourceNotFoundException
+import com.grudus.planshboard.commons.utils.toEnumNames
 import com.grudus.planshboard.notifications.NotificationService
 import com.grudus.planshboard.notifications.model.MarkAsReadRequest
 import com.grudus.planshboard.notifications.model.Notification
 import com.grudus.planshboard.notifications.model.NotificationEventType
 import com.grudus.planshboard.notifications.model.PlayNotification
+import com.grudus.planshboard.notifications.model.PlayNotification.PossibleActions.*
 import com.grudus.planshboard.opponents.linked.LinkedOpponentService
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.user.CurrentUserService
@@ -53,7 +55,8 @@ constructor(
                         request.boardGameId,
                         userResult?.position,
                         userResult?.points
-                    )
+                    ),
+                    possibleActions = listOf(ACCEPT, ACCEPT_ALL, REJECT).toEnumNames()
                 )
             }
 

@@ -9,4 +9,11 @@ data class PlayNotification(
     val boardGameId: Id,
     val position: Int? = null,
     val points: Int? = null
-)
+) {
+
+    enum class PossibleActions {
+        ACCEPT,
+        ACCEPT_ALL,
+        REJECT,
+    }
+}

@@ -6,8 +6,10 @@ import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.commons.responses.IdResponse
 import com.grudus.planshboard.commons.validation.ValidationKeys
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
+import com.grudus.planshboard.utils.TestUtils.hasSize
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class OpponentNotificationControllerTest : AuthenticatedControllerTest() {
@@ -23,6 +25,21 @@ class OpponentNotificationControllerTest : AuthenticatedControllerTest() {
 
         postRequest("$baseUrl/accept", AcceptOpponentLinkedRequest(getLatestNotificationId()!!))
             .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `should return notification after accepting opponent request`() {
+        val currentUsername = authentication.username
+
+        runWithAnotherUserContext {
+            addOpponent(SaveOpponentRequest(randomText(), currentUsername))
+        }
+
+        val id = getLatestNotificationId()!!
+        postRequest("$baseUrl/accept", AcceptOpponentLinkedRequest(id))
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id").value(id))
+            .andExpect(jsonPath("$.possibleActions", hasSize(0)))
     }
 
     @Test

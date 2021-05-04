@@ -1,6 +1,8 @@
 package com.grudus.planshboard.opponents.notifications
 
 import com.grudus.planshboard.auth.UserAuthentication
+import com.grudus.planshboard.notifications.model.Notification
+import com.grudus.planshboard.notifications.model.OpponentLinkedNotification
 import com.grudus.planshboard.opponents.linked.LinkedOpponentService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,10 +25,10 @@ constructor(
     fun acceptLinkedWithUser(
         @RequestBody request: AcceptOpponentLinkedRequest,
         user: UserAuthentication
-    ) {
+    ): Notification<OpponentLinkedNotification> {
         acceptOpponentLinkedRequestValidator.validate(request).throwOnError()
         log.info("User[${user.id}] accepts linking with opponent from notification[${request.notificationId}]")
-        linkedOpponentService.acceptLinking(request)
+        return linkedOpponentService.acceptLinking(request)
     }
 
 }

@@ -43,20 +43,23 @@ constructor(
         )
     }
 
-    fun <T> findNotificationData(id: Id, aClass: Class<T>): T? {
+    fun <T> findNotificationData(id: Id, aClass: Class<T>): T? =
+        findNotification(id, aClass)?.eventData
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> findNotification(id: Id, aClass: Class<T>): Notification<T>? {
         val notification: Notification<*> = notificationDao.findById(id) ?: return null
-        if (notification.eventType.eventDataClass == null || notification.eventData == null) {
-            return null
-        }
+
         if (!aClass.isAssignableFrom(notification.eventType.eventDataClass)) {
             throw ClassCastException("Cannot cast ${notification.eventType.eventDataClass} to $aClass")
         }
 
-        if (aClass.isAssignableFrom(notification.eventData.javaClass)) {
-            @Suppress("UNCHECKED_CAST")
-            return notification.eventData as T
-        }
-        return null
+        return notification as Notification<T>
+    }
+
+
+    fun updatePossibleActions(notificationId: Id, possibleActions: List<String>) {
+        notificationDao.updatePossibleActions(notificationId, possibleActions)
     }
 
     fun markAsRead(request: MarkAsReadRequest) {

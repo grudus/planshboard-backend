@@ -1,6 +1,8 @@
 package com.grudus.planshboard.opponents.linked
 
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.notifications.model.Notification
+import com.grudus.planshboard.notifications.model.OpponentLinkedNotification
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.*
 import com.grudus.planshboard.opponents.model.OpponentDto
@@ -50,9 +52,9 @@ constructor(
         linkedOpponentDao.removeLinkedUser(opponentId)
     }
 
-    fun acceptLinking(request: AcceptOpponentLinkedRequest) {
+    fun acceptLinking(request: AcceptOpponentLinkedRequest): Notification<OpponentLinkedNotification> {
         val notification = opponentNotificationService.findNotificationData(request.notificationId)
         linkWithUser(notification.linkedOpponentId, currentUserService.currentUserId(), ENABLED)
-        opponentNotificationService.finishLinkingOpponent(request.notificationId)
+        return opponentNotificationService.finishLinkingOpponent(request.notificationId)
     }
 }
