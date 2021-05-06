@@ -15,7 +15,7 @@
     &.normal {
         border: 1px solid var(--input-border-normal);
         background: var(--input-background);
-        color: var(--input-placeholder);
+        color: var(--input-label);
 
         &:hover,&:focus {
             background: var(--input-border-normal);

@@ -24,7 +24,6 @@ const themeKeys = {
     "--input-text": "",
     "--input-text-muted": "",
     "--input-background": "",
-    "--input-placeholder": "",
     "--icon-button-hover-background": "",
     "--disabled-background": "",
     "--disabled-text-color": "",
