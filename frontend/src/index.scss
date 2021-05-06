@@ -56,15 +56,16 @@ a {
 
     --menu-icon-color: #747474;
 
-    --input-border-normal: #E9EBF4;
-    --input-border-focus: #b6b6b6;
+    --input-border-normal: #e6e8ef;
+    --input-border-focus: var(--input-label);
     --input-text: #1A3349;
     --input-text-muted: #d2d0d5;
-    --input-background: #F8F9FC;
-    --input-placeholder: #9DA2BD;
+    --input-background:#f1f3f4;
+    --input-label: #87878b;
     --input-min-height: 40px;
 
-    --icon-button-hover-background: #f5f5f5;
+    --icon-button-hover-background: #f7f7f7;
+    --control-focus-background: #f7f7f7;
 
     --disabled-background: #ccc;
     --disabled-text-color: #888;

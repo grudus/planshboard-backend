@@ -20,6 +20,7 @@ export interface InputProps {
     multiline?: boolean;
     inputExtra?: React.HTMLProps<HTMLInputElement>;
     hideLabel?: boolean;
+    placeholder?: string;
     onEnter?: (text: string) => void;
 }
 
@@ -57,6 +58,7 @@ const Input: React.FC<InputProps> = props => {
             aria-invalid={isError()}
             rows={1}
             onKeyDown={handleKey}
+            placeholder={props.placeholder}
         />
     ) : (
         <input
@@ -70,37 +72,29 @@ const Input: React.FC<InputProps> = props => {
             onBlur={props.onBlur}
             aria-invalid={isError()}
             onKeyDown={handleKey}
+            placeholder={props.placeholder}
             {...props.inputExtra}
         />
     );
 
     return (
-        <div
-            className={merge(
-                css.wrapper,
-                cssIf(css.error, isError()),
-                cssIf(css.hideLabel, !!props.hideLabel),
-                css[props.size ?? "normal"],
-                props.className,
-            )}
-        >
-            {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
-            {inputElement}
-            <label
-                className={merge(css.label, cssIf(css.labelUp, !!text), cssIf(css.hideLabel, !!props.hideLabel))}
-                htmlFor={props.name}
-            >
+        <div className={merge(css.wrapper, cssIf(css.error, isError()), css[props.size ?? "normal"], props.className)}>
+            <label className={merge(css.label, cssIf(css.hideLabel, !!props.hideLabel))} htmlFor={props.name}>
                 {props.label}
             </label>
-            {isError() && (
-                <span role="alert" className={css.errorMessage}>
-                    {props.error}
-                </span>
-            )}
-            {props.actionIcon &&
-                React.cloneElement(props.actionIcon, {
-                    className: merge(css.actionIcon, props.actionIcon.props.className),
-                })}
+
+            <div className={css.inputWithIconsWrapper}>
+                {props.frontIcon && React.cloneElement(props.frontIcon, { className: css.frontIcon })}
+                {inputElement}
+                {props.actionIcon &&
+                    React.cloneElement(props.actionIcon, {
+                        className: merge(css.actionIcon, props.actionIcon.props.className),
+                    })}
+            </div>
+
+            <span role="alert" className={merge(css.errorMessage, cssIf(css.showError, isError()))}>
+                {props.error}
+            </span>
         </div>
     );
 };
