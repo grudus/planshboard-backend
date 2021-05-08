@@ -8,7 +8,6 @@ import css from "./dropdown.module.scss";
 import { SelectComponents } from "react-select/src/components";
 import { components } from "react-select";
 import { StylesConfig } from "react-select/src/styles";
-import { cssIf, merge } from "utils/cssUtils";
 
 export interface DropdownProps<T> extends Props<T> {
     options: OptionsType<T>;
@@ -31,31 +30,24 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
     const theme = useTheme();
     const placeholder = translate(props.selectTextKey ?? "DROPDOWN.SELECT_LABEL");
 
-    const customComponents: Partial<SelectComponents<any>> = {
-        ClearIndicator: null,
-        IndicatorSeparator: null,
-        LoadingIndicator: a => (
-            <div className={css.loadingWrapper} {...a}>
-                <RingLoading borderWidth={2} size={20} />
-            </div>
-        ),
-        ValueContainer: container => {
-            const shouldFloatLabel = container.selectProps.menuIsOpen || container.hasValue;
-            const shouldHideLabel = props.hideLabel && shouldFloatLabel;
-            return (
+    const customComponents: Partial<SelectComponents<any>> = React.useMemo(
+        () => ({
+            ClearIndicator: null,
+            IndicatorSeparator: null,
+            LoadingIndicator: a => (
+                <div className={css.loadingWrapper} {...a}>
+                    <RingLoading borderWidth={2} size={20} />
+                </div>
+            ),
+            ValueContainer: container => (
                 <components.ValueContainer {...container} className={container.className}>
-                    {!shouldHideLabel && (
-                        <label className={merge(css.dropdownLabel, cssIf(css.floating, shouldFloatLabel))}>
-                            {placeholder}
-                        </label>
-                    )}
+                    <label className={css.dropdownLabel}>{placeholder}</label>
                     {container.children}
                 </components.ValueContainer>
-            );
-        },
-
-        ...props.components,
-    };
+            ),
+        }),
+        [placeholder],
+    );
 
     const customStyles: StylesConfig = {
         menu: (provided: CSSProperties) => ({
@@ -74,7 +66,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             background: state.isFocused ? theme["--input-background"] : theme["--card-background"],
 
             "&:hover": {
-                background: theme["--card-background"],
+                background: theme["--icon-button-hover-background"],
             },
             padding: "13px 16px 13px",
             fontSize: "14px",
@@ -85,11 +77,12 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             border: `1px solid ${theme["--input-border-normal"]}`,
             boxShadow: "none",
             fontSize: "14px",
+            borderRadius: "8px",
             "&:hover": {
                 border: `1px solid ${theme["--input-border-normal"]}`,
             },
-            margin: "16px 0",
-            minHeight: "40px",
+            height: "40px",
+            marginTop: "21px",
         }),
         noOptionsMessage: (provided: CSSProperties) => ({
             ...provided,
@@ -122,7 +115,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             isLoading={props.isLoading}
             isDisabled={props.isLoading}
             {...props}
-            components={customComponents}
+            components={{ ...customComponents, ...props.components }}
             openMenuOnFocus
             tabSelectsValue={false}
         />

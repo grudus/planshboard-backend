@@ -5,23 +5,19 @@
     --ring-loader-color: var(--primary-color);
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
 .dropdownLabel {
     position: absolute;
-    left: 16px;
-    z-index: 1;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: .3s all ease-in-out;
-    color: var(--input-text-muted);
-
-    &.floating {
-        font-size: 12px;
-        top: -20px;
-        left: 4px;
-        transform: none;
-        font-weight: bold;
-        color: var(--input-text);
-    }
+    font-size: 12px;
+    top: -20px;
+    left: 4px;
+    transform: none;
+    font-weight: bold;
+    color: var(--input-label);
 }
 
 .createLabelDefault {
