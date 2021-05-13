@@ -1,10 +1,10 @@
 import React from "react";
 import Dialog, { DialogProps } from "library/dialog/Dialog";
-import DialogContent from "library/dialog/DialogContent";
 import DialogFooter from "library/dialog/DialogFooter";
 import Button from "library/button/Button";
 import css from "./confirm-dialog.module.scss";
 import CardFormTitle from "library/card-form/CardFormTitle";
+import CardFormContent from "library/card-form/CardFormContent";
 
 interface ConfirmDialogProps extends DialogProps {
     onConfirm: () => void;
@@ -21,9 +21,9 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = props => {
             <CardFormTitle>
                 <h1>{props.title}</h1>
             </CardFormTitle>
-            <DialogContent>
+            <CardFormContent>
                 <p>{props.text}</p>
-            </DialogContent>
+            </CardFormContent>
             <DialogFooter className={css.actions}>
                 <Button text={props.cancelButtonText} decoration="outlined" onClick={props.onCancel} />
                 <Button text={props.confirmButtonText} onClick={props.onConfirm} autoFocus loading={props.loading} />

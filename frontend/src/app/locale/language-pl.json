@@ -2,6 +2,8 @@
   "APP_TITLE": "Planshboard Polish",
   "SEARCH": "Szukaj",
   "CANCEL": "Cofnij",
+  "REJECT": "Odrzuć",
+  "ACCEPT": "Akceptuj",
   "SAVE": "Zapisz",
   "SHOW_MORE": "Pokaż więcej",
   "DATEPICKER": {
@@ -191,6 +193,15 @@
       "ACCEPT": "Akceptuj",
       "TITLE": "Zostałeś oznaczony jako przeciwnik",
       "META_INFO": "Zaakceptuj, aby móc śledzić wasze wspólne rozgrywki"
+    },
+    "ACCEPT_LINKED": {
+      "HEADER": "Powiązanie pomiędzy użytkownikami",
+      "TITLE": "Użytkownik {{name}} powiązał Cię ze swoim przeciwnikiem.",
+      "DESCRIPTION": "Jeżeli zaakceptujesz, będziesz mieć wgląd do wszystkich przyszłych rozgrywek z Twoim udziałem dodanych przez przez tego użytkownika.",
+      "LINK_TITLE": "Powiąż użytkownika z własnym przeciwnikiem",
+      "LINK_DESCRIPTION": "Dzięki temu użytkownik {{name}} będzie mógł widzieć rozgrywki ze swoim udziałem dodane przez Ciebie",
+      "RADIO_EXISTING": "Istniejący przeciwnik",
+      "RADIO_NEW": "Dodaj nowego"
     }
   }
 }

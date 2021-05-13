@@ -8,6 +8,7 @@ import {
     markAllAsReadSuccess,
     markAsReadSuccess,
 } from "app/notifications/__store/notificationActions";
+import { SelectedOpponent } from "app/opponents/accept-invitation/AcceptInvitationDialog";
 
 interface MarkAsReadRequest {
     ids: number[];
@@ -45,6 +46,7 @@ export function acceptPlayNotification(dispatch: HttpDispatch, request: AcceptPl
 
 interface AcceptOpponentLinkedNotificationRequest {
     notificationId: number;
+    opponent: SelectedOpponent;
 }
 
 export function acceptOpponentLinkedNotification(

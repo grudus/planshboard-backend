@@ -6,8 +6,11 @@ import { OptionsType, ValueType } from "react-select/src/types";
 import RingLoading from "library/loading/RingLoading";
 import css from "./dropdown.module.scss";
 import { SelectComponents } from "react-select/src/components";
-import { components } from "react-select";
+import Select, { components } from "react-select";
 import { StylesConfig } from "react-select/src/styles";
+import { merge } from "utils/cssUtils";
+import IconButton from "library/icon-button/IconButton";
+import Icons from "library/icons/Icons";
 
 export interface DropdownProps<T> extends Props<T> {
     options: OptionsType<T>;
@@ -17,6 +20,7 @@ export interface DropdownProps<T> extends Props<T> {
     selectTextKey?: string;
     isLoading?: boolean;
     hideLabel?: boolean;
+    creationForbidden?: boolean;
 }
 
 export interface BaseDropdownItem {
@@ -39,12 +43,13 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
                     <RingLoading borderWidth={2} size={20} />
                 </div>
             ),
-            ValueContainer: container => (
-                <components.ValueContainer {...container} className={container.className}>
+            SelectContainer: container => (
+                <components.SelectContainer {...container} className={merge(container.className, css.container)}>
                     <label className={css.dropdownLabel}>{placeholder}</label>
                     {container.children}
-                </components.ValueContainer>
+                </components.SelectContainer>
             ),
+            DropdownIndicator: a => <IconButton svgIcon={Icons.Down} className={css.dropdownIcon} />,
         }),
         [placeholder],
     );
@@ -53,11 +58,15 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         menu: (provided: CSSProperties) => ({
             ...provided,
             zIndex: 20,
+            borderRadius: "8px",
+            marginTop: "-8px",
         }),
 
         menuList: (provided: CSSProperties) => ({
             ...provided,
             background: theme["--card-background"],
+            borderRadius: "8px",
+            padding: "8px",
         }),
 
         option: (provided: CSSProperties, state: any) => ({
@@ -66,10 +75,12 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             background: state.isFocused ? theme["--input-background"] : theme["--card-background"],
 
             "&:hover": {
-                background: theme["--icon-button-hover-background"],
+                background: theme["--control-focus-background"],
             },
             padding: "13px 16px 13px",
             fontSize: "14px",
+            borderRadius: "8px",
+            cursor: "pointer",
         }),
         control: (provided: CSSProperties) => ({
             ...provided,
@@ -82,7 +93,6 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
                 border: `1px solid ${theme["--input-border-normal"]}`,
             },
             height: "40px",
-            marginTop: "21px",
         }),
         noOptionsMessage: (provided: CSSProperties) => ({
             ...provided,
@@ -94,17 +104,19 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         }),
         valueContainer: base => ({
             ...base,
-            minHeight: "40px",
+            height: "40px",
             paddingLeft: "12px",
             position: "initial",
         }),
     };
 
+    const SelectComponent = (p: any) => (!p.creationForbidden ? <CreatableSelect {...p} /> : <Select {...p} />);
+
     return (
-        <CreatableSelect
+        <SelectComponent
             options={props.options}
             onChange={props.onSelect}
-            formatCreateLabel={value => (
+            formatCreateLabel={(value: string) => (
                 <span className={css.createLabelDefault}>
                     {`${translate(props.createTextKey ?? "DROPDOWN.CREATE_LABEL")} "${value}"`}
                 </span>

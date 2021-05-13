@@ -7,4 +7,4 @@ export interface CardFormTitleProps {
 
 const CardFormTitle: React.FC<CardFormTitleProps> = props => <header className={css.header}>{props.children}</header>;
 
-export default React.memo(CardFormTitle);
+export default CardFormTitle;

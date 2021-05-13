@@ -1,5 +1,6 @@
 package com.grudus.planshboard
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.grudus.planshboard.configuration.filters.StatelessAuthenticationFilter
 import org.junit.jupiter.api.AfterEach
@@ -65,6 +66,9 @@ abstract class AbstractControllerTest : SpringBasedTest() {
 
     protected fun <T> ResultActions.getResponse(aClass: Class<T>): T =
         objectMapper.readValue(this.andReturn().response.contentAsString, aClass)
+
+    protected fun <T> ResultActions.getResponse(typedReference: TypeReference<T>): T =
+        objectMapper.readValue(this.andReturn().response.contentAsString, typedReference)
 
     protected fun ResultActions.debug(): ResultActions =
         this.andDo(MockMvcResultHandlers.print())

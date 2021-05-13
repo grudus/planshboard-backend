@@ -9,7 +9,11 @@ const performTranslate = (key: string, translations: Translations): string =>
 
 export const memoizedTranslation = memoize(performTranslate);
 
-const useTranslations = (): { translate: Function } => {
+interface UseTranslationsReturn {
+    translate<T extends string>(key: T): string | T;
+}
+
+const useTranslations = (): UseTranslationsReturn => {
     const { translations } = useRedux(state => state.locale);
 
     const cachedTranslate = useCallback(key => memoizedTranslation(key, translations), [translations]);

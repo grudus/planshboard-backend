@@ -4,9 +4,10 @@ import Dropdown, { DropdownProps } from "library/dropdown/Dropdown";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { createOpponentRequest } from "app/opponents/OpponentApi";
 import { ValueType } from "react-select";
+import { Opponent } from "app/opponents/__models/OpponentModels";
 
 interface OpponentsDropdownProps extends Partial<DropdownProps<any>> {
-    alreadyUsedOpponents?: Set<number>;
+    opponentFilter: (opponent: Opponent) => boolean;
 }
 
 const OpponentsDropdown: React.FC<OpponentsDropdownProps> = props => {
@@ -26,9 +27,7 @@ const OpponentsDropdown: React.FC<OpponentsDropdownProps> = props => {
         props.onSelect?.(a.value);
     };
 
-    const options = opponents
-        .filter(op => !props.alreadyUsedOpponents?.has(op.id))
-        .map(op => ({ label: op.name, value: op }));
+    const options = opponents.filter(props.opponentFilter).map(op => ({ label: op.name, value: op }));
 
     return (
         <Dropdown

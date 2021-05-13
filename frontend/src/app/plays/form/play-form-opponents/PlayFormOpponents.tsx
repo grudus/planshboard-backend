@@ -45,8 +45,7 @@ const PlayFormOpponents: React.FC<PlayFormOpponentsProps> = props => {
                     onSelect={props.onSelect}
                     autoFocus
                     openMenuOnFocus
-                    alreadyUsedOpponents={props.alreadyUsedOpponents}
-                    hideLabel
+                    opponentFilter={op => !props.alreadyUsedOpponents?.has(op.id)}
                     noOptionsMessage={() => translate("PLAYS.FORM.OPPONENTS.NO_OPTIONS_DROPDOWN")}
                 />
             )}

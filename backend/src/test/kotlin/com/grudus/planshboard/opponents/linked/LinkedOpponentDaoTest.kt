@@ -7,8 +7,7 @@ import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.LinkedOpponentStatus.*
 import com.grudus.planshboard.utils.randomText
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -41,7 +40,7 @@ class LinkedOpponentDaoTest : AbstractDatabaseTest() {
 
         val opponent = opponentDao.findById(id)!!
 
-        Assertions.assertNull(opponent.linkedUser)
+        assertNull(opponent.linkedUser)
     }
 
     @Test
@@ -89,6 +88,36 @@ class LinkedOpponentDaoTest : AbstractDatabaseTest() {
         linkedOpponentDao.linkWithUser(opponentId, addUser(), ENABLED)
 
         assertEquals(ENABLED, opponentDao.findById(opponentId)!!.linkedUser!!.status)
+    }
+
+    @Test
+    fun `should be able to link not-linked opponent by its creator`() {
+        val user = addUser()
+        val opponentId = opponentDao.createNew(randomText(), user)
+
+        val canBeLinked = linkedOpponentDao.canBeLinkedByUser(opponentId, user)
+
+        assertTrue(canBeLinked)
+    }
+
+    @Test
+    fun `should not be able to link not-linked opponent by another user`() {
+        val opponentId = opponentDao.createNew(randomText(), addUser())
+
+        val canBeLinked = linkedOpponentDao.canBeLinkedByUser(opponentId, addUser())
+
+        assertFalse(canBeLinked)
+    }
+
+    @Test
+    fun `should not be able to link already linked opponent by its creator`() {
+        val user = addUser()
+        val opponentId = opponentDao.createNew(randomText(), user)
+        linkedOpponentDao.linkWithUser(opponentId, addUser(), status = ENABLED)
+
+        val canBeLinked = linkedOpponentDao.canBeLinkedByUser(opponentId, user)
+
+        assertFalse(canBeLinked)
     }
 
     private fun createAndLinkWithUser(
