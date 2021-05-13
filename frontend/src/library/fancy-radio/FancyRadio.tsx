@@ -20,7 +20,7 @@ const FancyRadio: React.FC<FancyRadioProps> = props => {
 
     return (
         <label className={labelClasses}>
-            {props.icon}
+            {props.icon && <div className={css.iconWrapper}>{props.icon}</div>}
             <span className={css.buttonText}>{props.text}</span>
             <input type="radio" className={css.radio} value={props.value} name={props.inputName} />
         </label>

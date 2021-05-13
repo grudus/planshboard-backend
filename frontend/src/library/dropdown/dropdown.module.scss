@@ -8,16 +8,20 @@
 .container {
     display: flex;
     flex-direction: column;
+    height: 80px;
+    gap: 4px;
 }
 
 .dropdownLabel {
-    position: absolute;
     font-size: 12px;
-    top: -20px;
-    left: 4px;
-    transform: none;
+    margin-left: 4px;
     font-weight: bold;
     color: var(--input-label);
+}
+
+.dropdownIcon {
+    color: var(--input-label);
+    margin-right: 8px;
 }
 
 .createLabelDefault {

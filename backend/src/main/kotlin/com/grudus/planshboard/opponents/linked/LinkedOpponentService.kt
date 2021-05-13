@@ -52,9 +52,13 @@ constructor(
         linkedOpponentDao.removeLinkedUser(opponentId)
     }
 
-    fun acceptLinking(request: AcceptOpponentLinkedRequest): Notification<OpponentLinkedNotification> {
-        val notification = opponentNotificationService.findNotificationData(request.notificationId)
+    fun canBeLinkedByCurrentUser(opponentId: Id): Boolean =
+        linkedOpponentDao.canBeLinkedByUser(opponentId, currentUserService.currentUserId())
+
+    fun acceptLinking(notificationId: Id, opponentToLinkFromTheOtherSide: Id): Notification<OpponentLinkedNotification> {
+        val notification = opponentNotificationService.findNotificationData(notificationId)
         linkWithUser(notification.linkedOpponentId, currentUserService.currentUserId(), ENABLED)
-        return opponentNotificationService.finishLinkingOpponent(request.notificationId)
+        linkWithUser(opponentToLinkFromTheOtherSide, notification.creatorId, ENABLED)
+        return opponentNotificationService.finishLinkingOpponent(notificationId)
     }
 }

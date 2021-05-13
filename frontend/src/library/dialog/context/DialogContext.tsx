@@ -5,11 +5,11 @@ import css from "../dialog.module.scss";
 type DialogElem = React.ReactElement<DialogProps>;
 
 export interface DialogContextProps {
-    showDialog: (dialog: DialogElem) => void;
+    showDialog: (dialog: DialogElem) => Promise<DialogElem>;
 }
 
 export const DialogContext = React.createContext<DialogContextProps>({
-    showDialog: () => null,
+    showDialog: () => Promise.reject("Default value - should never happened"),
 });
 
 export const DialogProvider: React.FC = props => {
@@ -39,6 +39,7 @@ export const DialogProvider: React.FC = props => {
 
         setDialogs([...dialogs, { id: newId, dialog: boundDialog }]);
         setMaxId(newId);
+        return Promise.resolve(boundDialog);
     };
 
     return (

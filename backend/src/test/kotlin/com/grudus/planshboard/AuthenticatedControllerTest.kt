@@ -36,15 +36,15 @@ abstract class AuthenticatedControllerTest : AbstractControllerTest() {
         setupTokenAuthentication(authentication)
     }
 
-
-    protected fun runWithAnotherUserContext(func: (UserAuthentication) -> Unit) =
+    protected fun <T> runWithAnotherUserContext(func: (UserAuthentication) -> T): T =
         runWithAnotherUserContext(createNewAuthentication(), func)
 
-    protected fun runWithAnotherUserContext(user: UserAuthentication, func: (UserAuthentication) -> Unit) {
+    protected fun <T> runWithAnotherUserContext(user: UserAuthentication, func: (UserAuthentication) -> T): T {
         val initialAuth = authentication
         setupAuthContextForAnotherUser(user)
-        func(authentication)
+        val result = func(authentication)
         setupAuthContextForAnotherUser(initialAuth)
+        return result
     }
 
     private fun setupTokenAuthentication(authentication: UserAuthentication) {

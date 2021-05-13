@@ -8,6 +8,7 @@ import css from "./notification-menu.module.scss";
 import { NotificationItem } from "app/notifications/__models/NotificationModels";
 import { deleteRequest, markAsReadRequest } from "app/notifications/NotificationApi";
 import { HttpDispatch, useHttpDispatch } from "app/shared/store/httpRequestActions";
+import useDialog from "library/dialog/context/useDialog";
 
 interface NotificationMenuProps {
     actionsDescriptor: NotificationActionsDescriptor;
@@ -35,9 +36,10 @@ const defaultActions: NotificationActionsDescriptor = {
 const NotificationMenu: React.FC<NotificationMenuProps> = props => {
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
+    const dialogContext = useDialog();
 
     const onItemClick = (action: NotificationAction) => {
-        action.clickAction?.(props.notification, dispatch);
+        action.clickAction?.(props.notification, dispatch, dialogContext);
     };
 
     const NotificationMenuItem = (action: NotificationAction, translateBase: string) => (

@@ -186,6 +186,15 @@
       "ACCEPT": "Accept",
       "TITLE": "You are linked with opponent",
       "META_INFO": "Accept, to follow your common games"
+    },
+    "ACCEPT_LINKED": {
+      "HEADER": "Users linking",
+      "TITLE": "User {{name}} linked you with his opponent.",
+      "DESCRIPTION": "When accepted, you will be able to see all future plays with your participation created by this user.",
+      "LINK_TITLE": "Link user with your own opponent",
+      "LINK_DESCRIPTION": "It will allow {{name}} to see plays with his participation created by you",
+      "RADIO_EXISTING": "Existing opponent",
+      "RADIO_NEW": "Add new"
     }
   }
 }

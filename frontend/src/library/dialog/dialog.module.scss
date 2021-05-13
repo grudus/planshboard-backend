@@ -50,20 +50,13 @@ $hideAnimationTime: 150;
     color: var(--primary-text-on-card);
 }
 
-.dialogTitle {
-    padding: 24px 24px 20px;
-}
-
-.dialogContent {
-    padding: 0 24px 24px;
-
-    & > p {
-        margin: 0;
-    }
-}
 
 .dialogFooter {
     margin: 8px 4px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
 }
 
 

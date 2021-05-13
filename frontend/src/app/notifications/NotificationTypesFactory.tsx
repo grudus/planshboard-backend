@@ -4,8 +4,10 @@ import PlayAddedNotification from "app/notifications/types/PlayAddedNotification
 import UnknownNotification from "app/notifications/types/UnknownNotification";
 import Icons from "library/icons/Icons";
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
-import { acceptOpponentLinkedNotification, acceptPlayNotification } from "app/notifications/NotificationApi";
+import { acceptPlayNotification } from "app/notifications/NotificationApi";
 import OpponentLinkedNotification from "app/notifications/types/OpponentLinkedNotification";
+import { DialogContextProps } from "library/dialog/context/DialogContext";
+import AcceptInvitationDialog from "app/opponents/accept-invitation/AcceptInvitationDialog";
 
 export interface NotificationActionsDescriptor {
     translateBase: string;
@@ -15,7 +17,11 @@ export interface NotificationActionsDescriptor {
 export interface NotificationAction {
     key: string;
     svgIcon?: ReactElement;
-    clickAction?: (notification: NotificationItem, dispatch: HttpDispatch) => Promise<any>;
+    clickAction?: (
+        notification: NotificationItem,
+        dispatch: HttpDispatch,
+        dialogContext: DialogContextProps,
+    ) => Promise<any>;
 }
 
 export interface NotificationEntry {
@@ -53,8 +59,11 @@ const notificationEntryByType: Map<NotificationEventType, NotificationEntry> = n
                     {
                         key: "ACCEPT",
                         svgIcon: Icons.CheckIcon,
-                        clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
-                            acceptOpponentLinkedNotification(dispatch, { notificationId: notification.id }),
+                        clickAction: (
+                            notification: NotificationItem,
+                            dispatch: HttpDispatch,
+                            dialogContext: DialogContextProps,
+                        ) => dialogContext.showDialog(<AcceptInvitationDialog notification={notification} />),
                     },
                 ],
             },

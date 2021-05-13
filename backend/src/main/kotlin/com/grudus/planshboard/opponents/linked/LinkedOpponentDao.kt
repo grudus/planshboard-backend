@@ -57,5 +57,13 @@ constructor(
             .execute()
     }
 
-
+    fun canBeLinkedByUser(opponentId: Id, userId: Id): Boolean =
+        dsl.fetchExists(
+            dsl.select(OPPONENTS.ID)
+                .from(OPPONENTS)
+                .leftJoin(LINKED_OPPONENTS).on(LINKED_OPPONENTS.OPPONENT_ID.eq(OPPONENTS.ID))
+                .where(OPPONENTS.ID.eq(opponentId))
+                .and(OPPONENTS.CREATOR_ID.eq(userId))
+                .and(LINKED_OPPONENTS.LINKED_USER_ID.isNull)
+        )
 }

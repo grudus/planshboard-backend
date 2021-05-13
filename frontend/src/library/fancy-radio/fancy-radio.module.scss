@@ -14,11 +14,8 @@
     transition: all .3s ease-in-out;
     cursor: pointer;
 
-    &:focus-within {
-        border: 2px dotted;
-    }
 
-    &:hover {
+    &:hover,&:focus-within {
         background: var(--card-form-header-backgrund);
     }
 
@@ -33,10 +30,19 @@
     }
 }
 
+.iconWrapper {
+    min-width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .buttonText {
     font-size: 14px;
     font-weight: bold;
+    text-align: center;
+    max-width: 75%;
 }
 
 .radio {
