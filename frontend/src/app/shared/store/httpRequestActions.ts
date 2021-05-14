@@ -10,7 +10,9 @@ export interface HttpRequestPayload {
 }
 
 export interface ProxyPayload {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     successAction?: Function;
+    // eslint-disable-next-line @typescript-eslint/ban-types
     errorAction?: Function;
 }
 

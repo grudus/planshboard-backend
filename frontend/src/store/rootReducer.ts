@@ -23,7 +23,8 @@ const rootReducer = (history: History<LocationState>) =>
     });
 
 export default rootReducer;
-// @ts-ignore test only
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export const testTypeRootReducer = rootReducer({});
 
 export type Store = ReturnType<typeof testTypeRootReducer>;

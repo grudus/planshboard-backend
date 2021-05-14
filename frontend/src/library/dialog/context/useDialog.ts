@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { DialogContext } from "library/dialog/context/DialogContext";
 
 const useDialog = () => {
     const { showDialog } = useContext(DialogContext);
-    return { showDialog: React.useCallback(showDialog, []) };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return { showDialog: useCallback(showDialog, []) };
 };
 
 export default useDialog;

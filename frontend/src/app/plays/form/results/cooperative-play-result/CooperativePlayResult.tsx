@@ -5,12 +5,12 @@ import useTranslations from "app/locale/__hooks/useTranslations";
 import { FinalResult } from "app/plays/__models/PlayModels";
 import FancyRadio from "library/fancy-radio/FancyRadio";
 
-export interface CooperativePlayResult {
+export interface CooperativePlayResultProps {
     onChange: (result: FinalResult) => void;
     initialResult?: FinalResult;
 }
 
-const CooperativePlayResult: React.FC<CooperativePlayResult> = props => {
+const CooperativePlayResult: React.FC<CooperativePlayResultProps> = props => {
     const [finalResult, setFinalResult] = useState(props.initialResult as FinalResult | undefined);
     const { translate } = useTranslations();
 

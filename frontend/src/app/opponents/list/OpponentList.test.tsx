@@ -56,7 +56,7 @@ test("Should filter items", async () => {
             <OpponentList />
         </MemoryRouter>,
     );
-    const inputSearch = container.querySelector("input")!!;
+    const inputSearch = container.querySelector("input")!;
     await userEvent.type(inputSearch, "alfa");
 
     const list = container.querySelectorAll("li");

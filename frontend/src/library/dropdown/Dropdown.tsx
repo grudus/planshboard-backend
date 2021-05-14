@@ -11,10 +11,12 @@ import { StylesConfig } from "react-select/src/styles";
 import { merge } from "utils/cssUtils";
 import IconButton from "library/icon-button/IconButton";
 import Icons from "library/icons/Icons";
+import { LoadingIndicatorProps } from "react-select/src/components/indicators";
+import { ContainerProps } from "react-select/src/components/containers";
 
-export interface DropdownProps<T> extends Props<T> {
+export interface DropdownProps<T> extends Props<T, any> {
     options: OptionsType<T>;
-    onSelect: (value: ValueType<T>) => void;
+    onSelect: (value: ValueType<T, any>) => void;
     onCreateOption?: (inputValue: string) => void;
     createTextKey?: string;
     selectTextKey?: string;
@@ -34,27 +36,27 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
     const theme = useTheme();
     const placeholder = translate(props.selectTextKey ?? "DROPDOWN.SELECT_LABEL");
 
-    const customComponents: Partial<SelectComponents<any>> = React.useMemo(
+    const customComponents: Partial<SelectComponents<any, false>> = React.useMemo(
         () => ({
             ClearIndicator: null,
             IndicatorSeparator: null,
-            LoadingIndicator: a => (
+            LoadingIndicator: (a: LoadingIndicatorProps<any, any>) => (
                 <div className={css.loadingWrapper} {...a}>
                     <RingLoading borderWidth={2} size={20} />
                 </div>
             ),
-            SelectContainer: container => (
+            SelectContainer: (container: ContainerProps<any, any>) => (
                 <components.SelectContainer {...container} className={merge(container.className, css.container)}>
                     <label className={css.dropdownLabel}>{placeholder}</label>
                     {container.children}
                 </components.SelectContainer>
             ),
-            DropdownIndicator: a => <IconButton svgIcon={Icons.Down} className={css.dropdownIcon} />,
+            DropdownIndicator: () => <IconButton svgIcon={Icons.Down} className={css.dropdownIcon} />,
         }),
         [placeholder],
     );
 
-    const customStyles: StylesConfig = {
+    const customStyles: StylesConfig<any, false> = {
         menu: (provided: CSSProperties) => ({
             ...provided,
             zIndex: 20,
@@ -114,7 +116,6 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
 
     return (
         <SelectComponent
-            options={props.options}
             onChange={props.onSelect}
             formatCreateLabel={(value: string) => (
                 <span className={css.createLabelDefault}>
