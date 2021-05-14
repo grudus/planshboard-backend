@@ -19,7 +19,7 @@ const OpponentProfile: React.FC = () => {
     const [opponentNameError, setOpponentNameError] = useState("");
     const [existingUserNameError, setExistingUserNameError] = useState("");
     const history = useHistory();
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const { translate } = useTranslations();
     const dispatch = useHttpDispatch();
     const { opponent, stats } = useRedux(state => state.opponent.single) ?? {};

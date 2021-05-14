@@ -4,7 +4,7 @@ import { Store } from "store/rootReducer";
 import { routesWithoutAuth } from "app/routing/routes";
 
 function* routeGuard(actionType: string, generatorToRun: () => any) {
-    const currentPath = yield select((store: Store) => store?.router?.location?.pathname);
+    const currentPath: string = yield select((store: Store) => store?.router?.location?.pathname);
     const shouldIgnoreAuthPath = currentPath && routesWithoutAuth.some(route => currentPath.startsWith(route));
     if (actionType === "APP_INITIALIZED" && shouldIgnoreAuthPath) {
         return;
