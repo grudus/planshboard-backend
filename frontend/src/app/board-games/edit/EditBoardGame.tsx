@@ -20,7 +20,7 @@ import css from "./edit-board-game.module.scss";
 const EditBoardGame: React.FC = () => {
     const history = useHistory();
     const currentGame = useRedux(state => state.boardGame.single);
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const dispatch = useHttpDispatch();
     const { translate } = useTranslations();
     const [error, setError] = useState("");
