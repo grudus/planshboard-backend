@@ -2,18 +2,18 @@ import * as rootReducer from "store/rootReducer";
 import { Store } from "store/rootReducer";
 import * as httpActions from "app/shared/store/httpRequestActions";
 
-export const mock = <T extends {}, K extends keyof T>(object: T, property: K, value: T[K]) => {
+export const mock = <T extends any, K extends keyof T>(object: T, property: K, value: T[K]) => {
     Object.defineProperty(object, property, { get: () => value });
 };
 
-export const mockRedux = <T>(response: any) => {
+export const mockRedux = (response: any) => {
     const store = "locale" in response ? response : { ...response, locale: {} };
     mock(rootReducer, "useRedux", state => state(store));
 };
-export const mockTranslations = <T>(translations: any = {}) => {
+export const mockTranslations = (translations: any = {}) => {
     mockRedux({ locale: { translations } });
 };
-export const mockHttpDispatch = <T>(response: any = {}) => {
+export const mockHttpDispatch = (response: any = {}) => {
     mock(httpActions, "useHttpDispatch", () => () => Promise.resolve(response));
 };
 

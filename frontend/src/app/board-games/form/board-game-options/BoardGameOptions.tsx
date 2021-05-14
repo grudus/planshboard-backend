@@ -22,7 +22,7 @@ const BoardGameOptions: React.FC<BoardGameOptionsProps> = props => {
 
     const changeGameType = (a: ChangeEvent<HTMLInputElement>) => {
         const result = a.target.value as BoardGameType;
-        const changedOptions = userChangedData ? props.options : defaultGameOptions.get(result)!!;
+        const changedOptions = userChangedData ? props.options : defaultGameOptions.get(result)!;
         props.onChangeOptions({ ...changedOptions, gameType: result });
     };
 

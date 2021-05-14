@@ -26,14 +26,14 @@ const OpponentProfile: React.FC = () => {
     const isCurrentUser = opponent?.linkedUser?.status === "LINKED_WITH_CREATOR" ?? false;
 
     useEffect(() => {
-        getSingleOpponent(dispatch, { id: +id!! });
+        getSingleOpponent(dispatch, { id: +id! });
     }, [dispatch, id]);
 
     const onSubmit = async (request: SaveOpponentRequest) => {
         try {
             setExistingUserNameError("");
             setOpponentNameError("");
-            await updateOpponentRequest(dispatch, +id!!, request);
+            await updateOpponentRequest(dispatch, +id!, request);
             onCancel();
         } catch (e) {
             const code = JSON.parse(e).code;

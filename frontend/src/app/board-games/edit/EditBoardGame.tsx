@@ -26,13 +26,13 @@ const EditBoardGame: React.FC = () => {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        getSingleBoardGame(dispatch, { id: +id!! });
+        getSingleBoardGame(dispatch, { id: +id! });
     }, [dispatch, id]);
 
     const onSubmit = async (request: AddBoardGameRequest | EditBoardGameRequest) => {
         try {
             setError("");
-            await editBoardGameRequest(dispatch, { ...request, id: +id!! });
+            await editBoardGameRequest(dispatch, { ...request, id: +id! });
             onCancel();
         } catch (e) {
             const code = getErrorCode(e);

@@ -23,7 +23,7 @@ const OpponentsDropdown: React.FC<OpponentsDropdownProps> = props => {
         props.onSelect?.({ id, name: opponentName });
     };
 
-    const onSelect = (a: ValueType<any>) => {
+    const onSelect = (a: ValueType<any, false>) => {
         props.onSelect?.(a.value);
     };
 
@@ -36,7 +36,6 @@ const OpponentsDropdown: React.FC<OpponentsDropdownProps> = props => {
             onSelect={onSelect}
             onCreateOption={createOpponent}
             isLoading={isCreatingNew}
-            blurInputOnSelect
         />
     );
 };

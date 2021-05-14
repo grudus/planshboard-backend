@@ -1,6 +1,9 @@
 import { HttpRequestPayload } from "app/shared/store/httpRequestActions";
 
-export async function postFormRequest(request: HttpRequestPayload, token?: string): Promise<Response | object> {
+export async function postFormRequest(
+    request: HttpRequestPayload,
+    token?: string,
+): Promise<Response | Record<string, any>> {
     const body = Object.keys(request.body)
         .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(request.body[key]))
         .join("&");
@@ -16,7 +19,7 @@ export async function postFormRequest(request: HttpRequestPayload, token?: strin
     return text ? JSON.parse(text) : response;
 }
 
-export async function fetchJson(request: HttpRequestPayload, token?: string): Promise<object> {
+export async function fetchJson(request: HttpRequestPayload, token?: string): Promise<Record<string, any>> {
     const response = await fetchRequest(
         { ...request, body: JSON.stringify(request.body) },
         {

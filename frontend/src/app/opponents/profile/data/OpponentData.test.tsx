@@ -30,7 +30,7 @@ test("Should render name of user linked to opponent", () => {
     };
     const { getByText } = render(<OpponentData opponent={opponent} />);
 
-    expect(getByText(opponent.linkedUser!!.userName)).toBeInTheDocument();
+    expect(getByText(opponent.linkedUser!.userName)).toBeInTheDocument();
 });
 
 test("Should not render linked opponent name when opponent is for current user", () => {
@@ -45,5 +45,5 @@ test("Should not render linked opponent name when opponent is for current user",
     };
     const { queryByText } = render(<OpponentData opponent={opponent} />);
 
-    expect(queryByText(opponent.linkedUser!!.userName)).not.toBeInTheDocument();
+    expect(queryByText(opponent.linkedUser!.userName)).not.toBeInTheDocument();
 });

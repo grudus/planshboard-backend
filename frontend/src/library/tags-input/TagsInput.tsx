@@ -5,6 +5,7 @@ import Tag from "library/tags/Tag";
 import css from "./tags-input.module.scss";
 import { TagCounts } from "app/plays/__models/TagModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import { MultiValueProps } from "react-select";
 
 export interface TagsInputProps {
     selectedTags?: string[];
@@ -22,8 +23,8 @@ const TagsInput: React.FC<TagsInputProps> = props => {
         props.onChange?.(tags);
     };
 
-    const components: Partial<SelectComponents<any>> = {
-        MultiValue: props => (
+    const components: Partial<SelectComponents<any, true>> = {
+        MultiValue: (props: MultiValueProps<any>) => (
             <Tag
                 text={props.data.label}
                 className={css.tag}

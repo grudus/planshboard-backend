@@ -2,7 +2,7 @@ import throttle from "lodash/throttle";
 
 const STATE_KEY = "reduxState";
 
-export const persistState = (getStateFunction: Function) => {
+export const persistState = (getStateFunction: () => any): any => {
     return throttle(() => doSaveInLocalStorage(getStateFunction()), 1000, { leading: false });
 };
 
