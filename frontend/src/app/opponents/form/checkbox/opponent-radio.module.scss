@@ -14,7 +14,7 @@
     justify-content: space-evenly;
     text-align: center;
 
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:not(:first-child) {
         margin-left: 8px;
@@ -56,8 +56,6 @@
     width: 0;
     height: 0;
 }
-
-
 
 @media (min-width: $medium) {
     .radioLabelWrapper {

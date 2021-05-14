@@ -6,7 +6,6 @@
     @include floatingItem;
 }
 
-
 @media (min-width: $medium) {
     .addButton {
         @include noShadow;

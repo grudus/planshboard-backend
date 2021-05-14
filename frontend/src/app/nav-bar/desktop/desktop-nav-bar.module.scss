@@ -20,7 +20,6 @@ $menuItemHeight: 40;
     }
 }
 
-
 .menuLink {
     padding: 0 12px 0 26px;
     height: #{$menuItemHeight}px;
@@ -29,7 +28,7 @@ $menuItemHeight: 40;
     align-items: center;
     text-decoration: none;
     color: var(--text-on-main-background);
-    transition: font-weight .2s linear;
+    transition: font-weight 0.2s linear;
 
     & svg {
         width: 20px;
@@ -59,11 +58,10 @@ $menuItemHeight: 40;
     height: #{$menuItemHeight}px;
     position: absolute;
     z-index: 0;
-    transition: top .15s ease-in-out;
+    transition: top 0.15s ease-in-out;
 }
-
 
 //noinspection CssInvalidPseudoSelector,CssUnknownProperty
 :export {
-    menuItemHeight: $menuItemHeight
+    menuItemHeight: $menuItemHeight;
 }

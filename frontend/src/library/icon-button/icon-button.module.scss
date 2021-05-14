@@ -13,7 +13,8 @@
         height: 16px;
     }
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
         background: var(--control-focus-background);
         color: var(--icon-button-hover-color);
     }
@@ -21,7 +22,6 @@
     &::-moz-focus-inner {
         border: 0;
     }
-
 }
 
 .iconWrapper {

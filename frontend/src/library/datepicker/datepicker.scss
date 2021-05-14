@@ -1,7 +1,7 @@
-@import '~pikaday/css/pikaday.css';
+@import "~pikaday/css/pikaday.css";
 @import "src/utils";
 
-.pika-single {;
+.pika-single {
     color: var(--primary-text-on-card);
     background: var(--card-background);
 
@@ -20,7 +20,6 @@
     padding: 8px;
     width: 100%;
     @include largeShadow;
-
 }
 
 .pika-title {
@@ -42,7 +41,8 @@
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADqSURBVEiJ7ZQxTgJBFIa/mVliOAAm3oACKk8gUmHiEUyk8QRQQLOJ2Y2JJ7DZwhtQ0ElhrK3cYm8gwRMQ9s3S0e7MsBXy1f/7v2Tey8CZk0fVBZ5fsi+gLSYaxZOHja9AO2QugGtjy1X8+n7ZuMBY7oAfKnpays8kebvyEdQ+EUCaZh3RrIB+BYWR3WA+f/ptTHCMxFkQKnFZ8oHZbPwnJhqiyBV0rWkt6ma8BCFEPuE0zToi5QfQq6CwWt3XzQQv2Wp1E08f140IQsudBMeUg8MORLME+ihyq6Nb3//I5Yq2wLcElJ/5J+wBq45mF+tM8q4AAAAASUVORK5CYII=");
 }
 
-.pika-prev, .pika-next {
+.pika-prev,
+.pika-next {
     width: 30px;
     height: 30px;
 }
@@ -58,7 +58,6 @@
         cursor: default;
     }
 }
-
 
 .pika-button {
     background: inherit;

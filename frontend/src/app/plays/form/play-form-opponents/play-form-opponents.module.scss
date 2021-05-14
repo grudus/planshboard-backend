@@ -23,12 +23,11 @@
     border: none;
 }
 
-
 .frequentOpponentsWrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     & > *:not(:last-child) {
         margin-right: 8px;

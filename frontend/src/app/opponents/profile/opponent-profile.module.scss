@@ -5,7 +5,8 @@
     @include mobileFullScreen;
 }
 
-.formWrapper, .statsWrapper {
+.formWrapper,
+.statsWrapper {
     min-width: initial;
     max-width: initial;
     width: 100%;
@@ -20,7 +21,6 @@
 .editButton {
     width: 100%;
 }
-
 
 .opponentName {
     font-size: 12px;
@@ -43,9 +43,9 @@
     background: #eaeaea;
 }
 
-
 @media (min-width: $large) {
-    .formWrapper, .statsWrapper {
+    .formWrapper,
+    .statsWrapper {
         min-width: 45%;
         max-width: 45%;
         width: initial;
@@ -71,4 +71,3 @@
         margin-bottom: 16px;
     }
 }
-

@@ -5,10 +5,10 @@
     display: block;
     cursor: pointer;
     padding: 0 16px;
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
     border-radius: 4px;
     font-weight: 500;
-    transition: all .2s linear;
+    transition: all 0.2s linear;
     position: relative;
 
     &::-moz-focus-inner {
@@ -60,12 +60,12 @@
 }
 
 .primary {
-
     &.solid {
         background: var(--primary-color);
         color: var(--text-on-primary);
 
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
             background: var(--primary-color-dark);
         }
     }
@@ -74,19 +74,20 @@
         background: transparent;
         color: var(--primary-color);
 
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
             background: var(--primary-color-light);
         }
     }
 }
 
 .accent {
-
     &.solid {
         background: var(--accent-color);
         color: var(--text-on-accent);
 
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
             background: var(--accent-color-dark);
         }
     }
@@ -95,19 +96,20 @@
         background: transparent;
         color: var(--accent-color);
 
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
             background: var(--accent-color-light);
         }
     }
 }
 
 .normal {
-
     &.solid {
         background: #f0f0f0;
         color: var(--primary-text-on-card);
 
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
             background: #e7e7e7;
         }
     }
@@ -116,12 +118,12 @@
         background: transparent;
         color: var(--primary-text-on-card);
 
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
             background: #f0f0f0;
         }
     }
 }
-
 
 .fullWidth {
     width: 100%;

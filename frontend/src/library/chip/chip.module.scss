@@ -9,15 +9,15 @@
     align-items: center;
     height: 32px;
     font-size: 11px;
-    transition: background-color .3s linear;
-
+    transition: background-color 0.3s linear;
 
     &.normal {
         border: 1px solid var(--input-border-normal);
         background: var(--input-background);
         color: var(--input-label);
 
-        &:hover,&:focus {
+        &:hover,
+        &:focus {
             background: var(--input-border-normal);
         }
     }

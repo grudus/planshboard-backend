@@ -1,6 +1,5 @@
 @import "src/variables";
 
-
 .navAppWrapper {
     display: flex;
     flex-direction: column-reverse;
@@ -24,7 +23,7 @@
     height: 100%;
     overflow: visible;
 
-    padding: $appWrapperPadding $appWrapperPadding $bottomBarHeight $appWrapperPadding ;
+    padding: $appWrapperPadding $appWrapperPadding $bottomBarHeight $appWrapperPadding;
     z-index: 1;
     position: relative;
 }

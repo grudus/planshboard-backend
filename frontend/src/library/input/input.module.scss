@@ -38,7 +38,6 @@
     font-weight: bold;
     color: var(--input-label);
 
-
     &.hideLabel {
         display: none;
     }
@@ -58,10 +57,10 @@
     line-height: 14px;
     color: var(--input-text);
     border-radius: 8px;
-    transition: border-color .2s ease-in-out;
+    transition: border-color 0.2s ease-in-out;
     border: 1px solid var(--input-border-normal);
     background: var(--input-background);
-    opacity: .9;
+    opacity: 0.9;
     width: 100%;
     resize: vertical;
     height: var(--input-min-height);
@@ -78,7 +77,6 @@
 
 $iconSize: 14px;
 $iconMargin: 12px;
-
 
 .icon {
     position: absolute;
@@ -120,21 +118,25 @@ $iconMargin: 12px;
     min-height: 15px;
 }
 
-
 @keyframes shake {
-    10%, 90% {
+    10%,
+    90% {
         transform: translate3d(-1px, 0, 0);
     }
 
-    20%, 80% {
+    20%,
+    80% {
         transform: translate3d(1px, 0, 0);
     }
 
-    30%, 50%, 70% {
+    30%,
+    50%,
+    70% {
         transform: translate3d(-2px, 0, 0);
     }
 
-    40%, 60% {
+    40%,
+    60% {
         transform: translate3d(2px, 0, 0);
     }
 }
