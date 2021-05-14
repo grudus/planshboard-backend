@@ -6,8 +6,7 @@
 
 body {
     margin: 0;
-    font-family: 'Lato', sans-serif,
-    sans-serif;
+    font-family: "Lato", sans-serif, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: var(--main-background);
@@ -18,8 +17,7 @@ html {
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 ul {
@@ -34,8 +32,8 @@ a {
 }
 
 :root {
-    --primary-color: #4265BD;
-    --primary-color-light: #D9E0F2;
+    --primary-color: #4265bd;
+    --primary-color-light: #d9e0f2;
     --primary-color-dark: #345097;
     --accent-color: #538688;
     --accent-color-light: #dce7e7;
@@ -45,7 +43,7 @@ a {
     --card-background: #fefefe;
     --table-background: var(--card-background);
 
-    --card-form-header-backgrund: #F8F9FC;
+    --card-form-header-backgrund: #f8f9fc;
     --card-form-header-text: #83889e;
 
     --error-color: #cc0033;
@@ -60,9 +58,9 @@ a {
 
     --input-border-normal: #e6e8ef;
     --input-border-focus: var(--input-label);
-    --input-text: #1A3349;
+    --input-text: #1a3349;
     --input-text-muted: #d2d0d5;
-    --input-background:#f1f3f4;
+    --input-background: #f1f3f4;
     --input-label: #87878b;
     --input-min-height: 40px;
 

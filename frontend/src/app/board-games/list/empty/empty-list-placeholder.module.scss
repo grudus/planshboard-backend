@@ -1,6 +1,5 @@
 @import "src/variables";
 
-
 .emptyWrapper {
     display: flex;
     flex-direction: column;
@@ -20,7 +19,7 @@
     line-height: 32px;
 }
 
-@media (min-width: $medium)  {
+@media (min-width: $medium) {
     .emptyWrapper {
         flex-direction: row-reverse;
         justify-content: space-evenly;

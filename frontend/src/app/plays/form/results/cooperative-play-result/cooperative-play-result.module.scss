@@ -12,7 +12,7 @@
     border-color: var(--win-color) !important;
 
     & svg {
-        animation: winAnimation .3s;
+        animation: winAnimation 0.3s;
         fill: var(--win-color) !important;
     }
 }
@@ -21,7 +21,7 @@
     border-color: var(--defeat-color) !important;
 
     & svg {
-        animation: defeatAnimation .3s;
+        animation: defeatAnimation 0.3s;
         fill: var(--defeat-color) !important;
     }
 }

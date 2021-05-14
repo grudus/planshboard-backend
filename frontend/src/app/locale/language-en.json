@@ -1,200 +1,200 @@
 {
-  "APP_TITLE": "Planshboard English",
-  "SEARCH": "Search",
-  "CANCEL": "Cancel",
-  "SAVE": "Save",
-  "SHOW_MORE": "Show more",
-  "DATEPICKER": {
-    "MONTHS": "January,February,March,April,May,June,July,August,September,October,November,December",
-    "WEEKDAYS": "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
-    "WEEKDAYS_SHORT": "Mon,Tue,Wed,Thu,Fri,Sat,Sun"
-  },
-  "DROPDOWN": {
-    "SELECT_LABEL": "Select",
-    "CREATE_LABEL": "Create"
-  },
-  "AUTH": {
-    "LOGIN": {
-      "TITLE": "Login",
-      "INPUT_LOGIN_LABEL": "Login",
-      "INPUT_PASSWORD_LABEL": "Password",
-      "BUTTON": "Sign in",
-      "IMAGE_TITLE": "Play with friends and analyze your progress!",
-      "BOTTOM_TEXT": {
-        "TEXT": "Don't have an account yet?",
-        "LINK": "Sign up!"
-      }
+    "APP_TITLE": "Planshboard English",
+    "SEARCH": "Search",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "SHOW_MORE": "Show more",
+    "DATEPICKER": {
+        "MONTHS": "January,February,March,April,May,June,July,August,September,October,November,December",
+        "WEEKDAYS": "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
+        "WEEKDAYS_SHORT": "Mon,Tue,Wed,Thu,Fri,Sat,Sun"
     },
-    "REGISTRATION": {
-      "TITLE": "Registration",
-      "INPUT_LOGIN_LABEL": "Login",
-      "INPUT_PASSWORD_LABEL": "Password",
-      "BUTTON": "Sign up",
-      "IMAGE_TITLE": "Play with friends and analyze your progress!",
-      "BOTTOM_TEXT": {
-        "TEXT": "Already have an account?",
-        "LINK": "Sign in!"
-      }
+    "DROPDOWN": {
+        "SELECT_LABEL": "Select",
+        "CREATE_LABEL": "Create"
+    },
+    "AUTH": {
+        "LOGIN": {
+            "TITLE": "Login",
+            "INPUT_LOGIN_LABEL": "Login",
+            "INPUT_PASSWORD_LABEL": "Password",
+            "BUTTON": "Sign in",
+            "IMAGE_TITLE": "Play with friends and analyze your progress!",
+            "BOTTOM_TEXT": {
+                "TEXT": "Don't have an account yet?",
+                "LINK": "Sign up!"
+            }
+        },
+        "REGISTRATION": {
+            "TITLE": "Registration",
+            "INPUT_LOGIN_LABEL": "Login",
+            "INPUT_PASSWORD_LABEL": "Password",
+            "BUTTON": "Sign up",
+            "IMAGE_TITLE": "Play with friends and analyze your progress!",
+            "BOTTOM_TEXT": {
+                "TEXT": "Already have an account?",
+                "LINK": "Sign in!"
+            }
+        },
+        "ERRORS": {
+            "INVALID_LOGIN": "Invalid login or password",
+            "USERNAME_EXISTS": "Username already exists"
+        }
+    },
+    "NAV_BAR": {
+        "BOARD_GAMES": "Board games",
+        "PLAYS": "Plays",
+        "STATS": "Stats",
+        "RANKING": "Ranking",
+        "OPPONENTS": "Opponents",
+        "NOTIFICATIONS": "Notifications",
+        "SETTINGS": "Settings",
+        "MORE": "More"
+    },
+    "BOARD_GAMES": {
+        "LIST": {
+            "EMPTY": {
+                "TOP": "You don't have any games yet!",
+                "BOTTOM": "Create one, to save your play results."
+            },
+            "ADD_BUTTON": "Add new board game"
+        },
+        "FORM": {
+            "INPUT": "Enter name",
+            "CANCEL": "Cancel",
+            "SAVE": "Save"
+        },
+        "OPTIONS": {
+            "GAME_TYPE": "Game type",
+            "TRADITIONAL": "Traditional",
+            "COOPERATIVE": "Cooperative",
+            "SHOW_WHEN_CREATING_PLAY": "Show when creating play",
+            "SHOW_POSITION": "Position",
+            "SHOW_POINTS": "Points",
+            "SHOW_NOTE": "Note",
+            "SHOW_DATE": "Date",
+            "SHOW_TAGS": "Tags"
+        },
+        "ADD": {
+            "TITLE": "Add game"
+        },
+        "EDIT": {
+            "TITLE": "Edit game"
+        },
+        "DELETE": {
+            "TITLE": "Confirm removal",
+            "CONTENT": "Do you really want to remove game?",
+            "CONFIRM_TEXT": "Remove game",
+            "CANCEL_TEXT": "Cancel"
+        },
+        "SELECT": {
+            "TITLE": "Select a game"
+        }
+    },
+    "OPPONENTS": {
+        "LIST": {
+            "LAST_PLAY": "Last play",
+            "NUMBER_OF_PLAYS": "No. of plays",
+            "NUMBER_OF_WINS": "No. of wins",
+            "WINS_RATION": "Wins ration",
+            "ADD_BUTTON": "Add player"
+        },
+        "FORM": {
+            "NAME_LABEL": "Opponent's name",
+            "EXISTING_USER_LABEL": "User name",
+            "NEW_OPPONENT_VALUE": "New player",
+            "NEW_OPPONENT_SECONDARY": "Only you will see it's results",
+            "EXISTING_USER_VALUE": "Existing user",
+            "EXISTING_USER_SECONDARY": "Share your plays with the others",
+            "EXISTING_USER_EXPLANATION": "Enter user's account name. It will be linked with this opponent. When you save play with him, the user will see the notification and will be able to follow the results. The integration works in both directions."
+        },
+        "ADD": {
+            "TITLE": "Add opponent",
+            "ERRORS": {
+                "OPPONENT_ALREADY_EXISTS": "Name already taken",
+                "UNKNOWN_USER": "Unknown user",
+                "USER_ALREADY_LINKED": "User is already linked"
+            }
+        },
+        "PROFILE": {
+            "TITLE": "Opponent's profile",
+            "EDIT": "Edit",
+            "LINKED_WITH_CREATOR": "Your account",
+            "STATS": {
+                "TITLE": "Stats",
+                "LAST_PLAY": "Last played",
+                "MOST_PLAYED_BOARD_GAME": "Most played",
+                "MOST_WINS_BOARD_GAME": "Most wins"
+            }
+        },
+        "WAITING_FOR_CONFIRMATION": "User doesn't accept the invitation"
+    },
+    "PLAYS": {
+        "FORM": {
+            "OPPONENTS": {
+                "TITLE": "Choose players",
+                "MORE": "More",
+                "LESS": "Less",
+                "DROPDOWN_LABEL": "Opponent",
+                "NO_OPTIONS_DROPDOWN": "Start writing to add opponent"
+            },
+            "META": {
+                "NOTE": "Note",
+                "TITLE": "Additional info"
+            },
+            "RESULTS_TABLE": {
+                "OPPONENT": "Opponent",
+                "POSITION": "Position",
+                "POINTS": "Points"
+            }
+        },
+        "ADD": {
+            "TITLE": "Add play"
+        },
+        "TAGS": {
+            "DROPDOWN_LABEL": "Tags",
+            "NO_OPTIONS_DROPDOWN": "Start writing to add tag"
+        },
+        "LIST": {
+            "EMPTY": {
+                "TOP": "You don't have any plays yet",
+                "BOTTOM": "Add some, to follow your progress"
+            },
+            "ADD_BUTTON": "Add play"
+        }
     },
     "ERRORS": {
-      "INVALID_LOGIN": "Invalid login or password",
-      "USERNAME_EXISTS": "Username already exists"
-    }
-  },
-  "NAV_BAR": {
-    "BOARD_GAMES": "Board games",
-    "PLAYS": "Plays",
-    "STATS": "Stats",
-    "RANKING": "Ranking",
-    "OPPONENTS": "Opponents",
-    "NOTIFICATIONS": "Notifications",
-    "SETTINGS": "Settings",
-    "MORE": "More"
-  },
-  "BOARD_GAMES": {
-    "LIST": {
-      "EMPTY": {
-        "TOP": "You don't have any games yet!",
-        "BOTTOM": "Create one, to save your play results."
-      },
-      "ADD_BUTTON": "Add new board game"
+        "BOARD_GAME": {
+            "EXISTS": "Game already exists"
+        },
+        "UNKNOWN": "Unknown error"
     },
-    "FORM": {
-      "INPUT": "Enter name",
-      "CANCEL": "Cancel",
-      "SAVE": "Save"
-    },
-    "OPTIONS": {
-      "GAME_TYPE": "Game type",
-      "TRADITIONAL": "Traditional",
-      "COOPERATIVE": "Cooperative",
-      "SHOW_WHEN_CREATING_PLAY": "Show when creating play",
-      "SHOW_POSITION": "Position",
-      "SHOW_POINTS": "Points",
-      "SHOW_NOTE": "Note",
-      "SHOW_DATE": "Date",
-      "SHOW_TAGS": "Tags"
-    },
-    "ADD": {
-      "TITLE": "Add game"
-    },
-    "EDIT": {
-      "TITLE": "Edit game"
-    },
-    "DELETE": {
-      "TITLE": "Confirm removal",
-      "CONTENT": "Do you really want to remove game?",
-      "CONFIRM_TEXT": "Remove game",
-      "CANCEL_TEXT": "Cancel"
-    },
-    "SELECT": {
-      "TITLE": "Select a game"
-    }
-  },
-  "OPPONENTS": {
-    "LIST": {
-      "LAST_PLAY": "Last play",
-      "NUMBER_OF_PLAYS": "No. of plays",
-      "NUMBER_OF_WINS": "No. of wins",
-      "WINS_RATION": "Wins ration",
-      "ADD_BUTTON": "Add player"
-    },
-    "FORM": {
-      "NAME_LABEL": "Opponent's name",
-      "EXISTING_USER_LABEL":  "User name",
-      "NEW_OPPONENT_VALUE": "New player",
-      "NEW_OPPONENT_SECONDARY": "Only you will see it's results",
-      "EXISTING_USER_VALUE": "Existing user",
-      "EXISTING_USER_SECONDARY": "Share your plays with the others",
-      "EXISTING_USER_EXPLANATION": "Enter user's account name. It will be linked with this opponent. When you save play with him, the user will see the notification and will be able to follow the results. The integration works in both directions."
-    },
-    "ADD": {
-      "TITLE": "Add opponent",
-      "ERRORS": {
-        "OPPONENT_ALREADY_EXISTS": "Name already taken",
-        "UNKNOWN_USER": "Unknown user",
-        "USER_ALREADY_LINKED": "User is already linked"
-      }
-    },
-    "PROFILE": {
-      "TITLE": "Opponent's profile",
-      "EDIT": "Edit",
-      "LINKED_WITH_CREATOR": "Your account",
-      "STATS": {
-        "TITLE": "Stats",
-        "LAST_PLAY": "Last played",
-        "MOST_PLAYED_BOARD_GAME": "Most played",
-        "MOST_WINS_BOARD_GAME": "Most wins"
-      }
-    },
-    "WAITING_FOR_CONFIRMATION": "User doesn't accept the invitation"
-  },
-  "PLAYS": {
-    "FORM": {
-      "OPPONENTS": {
-        "TITLE": "Choose players",
-        "MORE": "More",
-        "LESS": "Less",
-        "DROPDOWN_LABEL": "Opponent",
-        "NO_OPTIONS_DROPDOWN": "Start writing to add opponent"
-      },
-      "META": {
-        "NOTE": "Note",
-        "TITLE": "Additional info"
-      },
-      "RESULTS_TABLE": {
-        "OPPONENT": "Opponent",
-        "POSITION": "Position",
-        "POINTS": "Points"
-      }
-    },
-    "ADD": {
-      "TITLE": "Add play"
-    },
-    "TAGS": {
-      "DROPDOWN_LABEL": "Tags",
-      "NO_OPTIONS_DROPDOWN": "Start writing to add tag"
-    },
-    "LIST": {
-      "EMPTY": {
-        "TOP": "You don't have any plays yet",
-        "BOTTOM": "Add some, to follow your progress"
-      },
-      "ADD_BUTTON": "Add play"
-    }
-  },
-  "ERRORS": {
-    "BOARD_GAME": {
-      "EXISTS": "Game already exists"
-    },
-    "UNKNOWN": "Unknown error"
-  },
-  "NOTIFICATIONS": {
-    "DELETE": "Delete",
-    "MARK_AS_READ": "Mark as read",
-    "MARK_ALL_AS_READ": "Mark all as read",
+    "NOTIFICATIONS": {
+        "DELETE": "Delete",
+        "MARK_AS_READ": "Mark as read",
+        "MARK_ALL_AS_READ": "Mark all as read",
 
-    "PLAY_ADDED": {
-      "ACCEPT": "Accept",
-      "ACCEPT_ALL": "Accept all",
-      "REJECT": "Reject",
-      "TITLE": "New game with your participation",
-      "POSITION": "Position: ",
-      "POINTS": "Points: "
-    },
-    "OPPONENT_LINKED": {
-      "ACCEPT": "Accept",
-      "TITLE": "You are linked with opponent",
-      "META_INFO": "Accept, to follow your common games"
-    },
-    "ACCEPT_LINKED": {
-      "HEADER": "Users linking",
-      "TITLE": "User {{name}} linked you with his opponent.",
-      "DESCRIPTION": "When accepted, you will be able to see all future plays with your participation created by this user.",
-      "LINK_TITLE": "Link user with your own opponent",
-      "LINK_DESCRIPTION": "It will allow {{name}} to see plays with his participation created by you",
-      "RADIO_EXISTING": "Existing opponent",
-      "RADIO_NEW": "Add new"
+        "PLAY_ADDED": {
+            "ACCEPT": "Accept",
+            "ACCEPT_ALL": "Accept all",
+            "REJECT": "Reject",
+            "TITLE": "New game with your participation",
+            "POSITION": "Position: ",
+            "POINTS": "Points: "
+        },
+        "OPPONENT_LINKED": {
+            "ACCEPT": "Accept",
+            "TITLE": "You are linked with opponent",
+            "META_INFO": "Accept, to follow your common games"
+        },
+        "ACCEPT_LINKED": {
+            "HEADER": "Users linking",
+            "TITLE": "User {{name}} linked you with his opponent.",
+            "DESCRIPTION": "When accepted, you will be able to see all future plays with your participation created by this user.",
+            "LINK_TITLE": "Link user with your own opponent",
+            "LINK_DESCRIPTION": "It will allow {{name}} to see plays with his participation created by you",
+            "RADIO_EXISTING": "Existing opponent",
+            "RADIO_NEW": "Add new"
+        }
     }
-  }
 }

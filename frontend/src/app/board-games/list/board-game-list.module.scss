@@ -9,7 +9,6 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
-
 .searchWrapper {
     width: 100%;
 }
@@ -28,7 +27,6 @@
     @include largeShadow;
     @include floatingItem;
 }
-
 
 @media (min-width: $small) {
     .list {

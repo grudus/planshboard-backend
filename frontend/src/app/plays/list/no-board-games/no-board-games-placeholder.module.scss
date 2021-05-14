@@ -24,7 +24,7 @@
     flex-direction: column;
 }
 
-@media (min-width: $medium)  {
+@media (min-width: $medium) {
     .emptyWrapper {
         flex-direction: row-reverse;
         justify-content: space-evenly;

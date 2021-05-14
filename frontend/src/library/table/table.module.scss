@@ -24,11 +24,11 @@
         border-bottom: 1px solid var(--main-background);
     }
 
-    td, th {
+    td,
+    th {
         padding: 12px;
     }
 }
-
 
 @media (max-width: $small) {
     .table {
@@ -63,5 +63,4 @@
             border-bottom: 0;
         }
     }
-
 }

@@ -11,19 +11,18 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 
-
-    &:hover,&:focus-within {
+    &:hover,
+    &:focus-within {
         background: var(--card-form-header-backgrund);
     }
 
     & svg {
-        transition: all .3s ease-in-out;
-        fill: var(--secondary-text-on-card)
+        transition: all 0.3s ease-in-out;
+        fill: var(--secondary-text-on-card);
     }
-
 
     & + .button {
         margin-left: 16px;
@@ -36,7 +35,6 @@
     justify-content: center;
     align-items: center;
 }
-
 
 .buttonText {
     font-size: 14px;

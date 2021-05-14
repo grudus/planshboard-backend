@@ -27,7 +27,6 @@ $hideAnimationTime: 150;
     &.visible {
         opacity: 1;
     }
-
 }
 
 .bodyBlocker {
@@ -50,7 +49,6 @@ $hideAnimationTime: 150;
     color: var(--primary-text-on-card);
 }
 
-
 .dialogFooter {
     margin: 8px 4px;
     display: flex;
@@ -59,8 +57,7 @@ $hideAnimationTime: 150;
     gap: 8px;
 }
 
-
-@media (max-width: $medium)  {
+@media (max-width: $medium) {
     .mobileFull {
         &.dialogWrapper {
             padding-bottom: 54px;
