@@ -4,12 +4,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "cd .. && husky install frontend/.husky",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test:dev": "react-scripts test",
     "test": "CI=true react-scripts test --watch-all false",
     "eject": "react-scripts eject",
-    "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --fix"
+    "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --fix",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
@@ -50,8 +52,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "node-sass": "^4.13.1",
     "prettier": "^2.3.0",
     "react-test-renderer": "^16.13.1",
@@ -74,13 +76,8 @@
       "last 1 safari version"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
+    "src/**/*.{js,ts,tsx}": [
       "npm run lint",
       "prettier --write .",
       "git add ."
