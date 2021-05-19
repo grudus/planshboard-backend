@@ -20,8 +20,8 @@
     }
 
     &[disabled] {
-        background: var(--disabled-background) !important;
-        color: var(--disabled-text-color) !important;
+        background: var(--disabled-color) !important;
+        color: var(--disabled-contrast) !important;
         cursor: not-allowed;
         pointer-events: none;
     }
@@ -62,7 +62,7 @@
 .primary {
     &.solid {
         background: var(--primary-color);
-        color: var(--text-on-primary);
+        color: var(--primary-contrast);
 
         &:focus,
         &:hover {
@@ -84,7 +84,7 @@
 .accent {
     &.solid {
         background: var(--accent-color);
-        color: var(--text-on-accent);
+        color: var(--accent-contrast);
 
         &:focus,
         &:hover {
@@ -106,7 +106,7 @@
 .normal {
     &.solid {
         background: #f0f0f0;
-        color: var(--primary-text-on-card);
+        color: var(--surface-contrast);
 
         &:focus,
         &:hover {
@@ -116,7 +116,7 @@
 
     &.outlined {
         background: transparent;
-        color: var(--primary-text-on-card);
+        color: var(--surface-contrast);
 
         &:focus,
         &:hover {

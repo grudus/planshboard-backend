@@ -2,8 +2,8 @@
 @import "src/utils";
 
 .pika-single {
-    color: var(--primary-text-on-card);
-    background: var(--card-background);
+    color: var(--surface-contrast);
+    background: var(--surface-color);
 
     border: none;
 
@@ -72,11 +72,11 @@
 
 .is-selected .pika-button {
     background: var(--primary-color);
-    color: var(--text-on-primary) !important;
+    color: var(--primary-contrast) !important;
     box-shadow: none;
 
     &:hover {
-        color: var(--text-on-primary);
+        color: var(--primary-contrast);
         background: var(--primary-color);
     }
 }
