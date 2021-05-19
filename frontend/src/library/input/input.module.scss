@@ -63,7 +63,7 @@
     opacity: 0.9;
     width: 100%;
     resize: vertical;
-    height: var(--input-min-height);
+    height: 40px;
 
     &:focus {
         border-color: var(--input-border-focus);

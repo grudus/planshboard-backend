@@ -6,8 +6,8 @@ $borderRadius: 8px;
 
 .section {
     @include softShadow;
-    background: var(--card-background);
-    color: var(--primary-text-on-card);
+    background: var(--surface-color);
+    color: var(--surface-contrast);
     border-radius: $borderRadius;
 }
 

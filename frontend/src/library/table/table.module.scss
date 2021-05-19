@@ -2,8 +2,8 @@
 @import "src/utils";
 
 .table {
-    background: var(--table-background);
-    color: var(--primary-text-on-card);
+    background: var(--surface-color);
+    color: var(--surface-contrast);
     table-layout: fixed;
     border-collapse: collapse;
     border: none;
@@ -21,7 +21,7 @@
     }
 
     & tr {
-        border-bottom: 1px solid var(--main-background);
+        border-bottom: 1px solid var(--background-color);
     }
 
     td,
@@ -44,7 +44,7 @@
             @include shadow;
             display: block;
             margin-bottom: 20px;
-            background: var(--table-background);
+            background: var(--surface-color);
         }
 
         & td {

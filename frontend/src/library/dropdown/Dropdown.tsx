@@ -66,7 +66,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
 
         menuList: (provided: CSSProperties) => ({
             ...provided,
-            background: theme["--card-background"],
+            background: theme["--surface-color"],
             borderRadius: "8px",
             padding: "8px",
         }),
@@ -74,7 +74,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         option: (provided: CSSProperties, state: any) => ({
             ...provided,
             color: theme["--input-text"],
-            background: state.isFocused ? theme["--input-background"] : theme["--card-background"],
+            background: state.isFocused ? theme["--input-background"] : theme["--surface-color"],
 
             "&:hover": {
                 background: theme["--control-focus-background"],

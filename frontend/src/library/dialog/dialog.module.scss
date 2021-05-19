@@ -45,8 +45,8 @@ $hideAnimationTime: 150;
     max-width: 600px;
     max-height: calc(100% - 96px);
     border-radius: 4px;
-    background: var(--card-background);
-    color: var(--primary-text-on-card);
+    background: var(--surface-color);
+    color: var(--surface-contrast);
 }
 
 .dialogFooter {

@@ -29,7 +29,7 @@
     &[disabled] {
         cursor: not-allowed !important;
         pointer-events: none;
-        background: var(--disabled-background);
-        color: var(--disabled-text-color);
+        background: var(--disabled-color);
+        color: var(--disabled-contrast);
     }
 }

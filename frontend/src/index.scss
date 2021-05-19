@@ -9,7 +9,7 @@ body {
     font-family: "Lato", sans-serif, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: var(--main-background);
+    background: var(--background-color);
 }
 
 html {
@@ -32,46 +32,46 @@ a {
 }
 
 :root {
-    --primary-color: #4265bd;
+    --gray-100: #1a1a1a;
+    --gray-200: #404040;
+    --gray-300: #6c718a;
+    --gray-400: #d4d4d4;
+    --gray-500: #f8f9fc;
+
+    --primary-color: #3e5fb3;
     --primary-color-light: #d9e0f2;
     --primary-color-dark: #345097;
+    --primary-contrast: #fff;
+
     --accent-color: #538688;
     --accent-color-light: #dce7e7;
     --accent-color-dark: #426b6c;
+    --accent-contrast: #fff;
 
-    --main-background: #f4f5f9;
-    --card-background: #fefefe;
-    --table-background: var(--card-background);
+    --background-color: #f4f5f9;
+    --background-contrast: #1a1f36;
 
-    --card-form-header-backgrund: #f8f9fc;
-    --card-form-header-text: #83889e;
+    --surface-color: #fefefe;
+    --surface-contrast: #1a1f36;
 
     --error-color: #cc0033;
 
-    --text-on-primary: #fff;
-    --text-on-accent: #fff;
-    --text-on-main-background: #1a1f36;
-    --primary-text-on-card: #1a1f36;
-    --secondary-text-on-card: #8898aa;
+    --disabled-color: var(--gray-400);
+    --disabled-contrast: var(--gray-300);
 
-    --menu-icon-color: #747474;
+    --card-form-header-backgrund: var(--gray-500);
+    --card-form-header-text: var(--gray-300);
 
-    --input-border-normal: #e6e8ef;
+    --secondary-text-on-card: var(--gray-300);
+
+    --input-border-normal: var(--gray-400);
     --input-border-focus: var(--input-label);
-    --input-text: #1a3349;
-    --input-text-muted: #d2d0d5;
-    --input-background: #f1f3f4;
-    --input-label: #87878b;
-    --input-min-height: 40px;
+    --input-text: var(--gray-200);
+    --input-background: var(--gray-500);
+    --input-label: var(--gray-200);
 
-    --control-focus-background: #f7f7f7;
+    --control-focus-background: var(--gray-500);
 
-    --disabled-background: #ccc;
-    --disabled-text-color: #888;
-
-    --nav-solid-color: var(--primary-color);
-    --nav-light-color: var(--primary-color-light);
-
-    --win-color: #a79248;
-    --defeat-color: #6e248d;
+    --win-color: var(--accent-color);
+    --defeat-color: var(--accent-color);
 }

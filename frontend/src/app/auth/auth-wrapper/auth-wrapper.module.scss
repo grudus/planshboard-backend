@@ -17,8 +17,8 @@
     flex-direction: column;
     padding: 0 24px;
     width: 100%;
-    background: var(--card-background);
-    color: var(--primary-text-on-card);
+    background: var(--surface-color);
+    color: var(--surface-contrast);
 }
 
 @media (min-width: $large) {
@@ -28,8 +28,8 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background: var(--main-background);
-        color: var(--text-on-main-background);
+        background: var(--background-color);
+        color: var(--background-contrast);
     }
 
     .imageTitle {

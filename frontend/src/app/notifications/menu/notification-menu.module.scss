@@ -2,7 +2,7 @@
 @import "src/utils";
 
 .notificationMenu {
-    background: var(--card-background);
+    background: var(--surface-color);
     color: var(--secondary-text-on-card);
     @include shadow;
     border-radius: 8px;
@@ -24,11 +24,11 @@
 
     &:hover,
     &:focus {
-        background: var(--main-background);
-        color: var(--text-on-main-background);
+        background: var(--background-color);
+        color: var(--background-contrast);
 
         svg {
-            color: var(--text-on-main-background);
+            color: var(--background-contrast);
         }
     }
 }
