@@ -1,5 +1,4 @@
-import { configureStore, getDefaultMiddleware, PayloadAction } from "@reduxjs/toolkit";
-import logger from "redux-logger";
+import { configureStore, PayloadAction } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./rootReducer";
 import rootSaga from "../sagas/rootSaga";
@@ -7,21 +6,13 @@ import { getPersistedState, persistState } from "./persistStore";
 import { createBrowserHistory, History, LocationState } from "history";
 import { routerMiddleware } from "connected-react-router";
 import { logoutAction } from "app/auth/__store/authActions";
+import logger from "redux-logger";
 
 const devMode = process.env.NODE_ENV === "development";
 
 export const history: History<LocationState> = createBrowserHistory();
 
 const sagaMiddleware = createSagaMiddleware();
-
-const commonMiddleware = [
-    ...getDefaultMiddleware({
-        thunk: false,
-        serializableCheck: false,
-    }),
-    sagaMiddleware,
-    routerMiddleware(history),
-];
 
 const logoutAwareReducer = (state: any, action: PayloadAction) => {
     let newState: any = state;
@@ -37,7 +28,10 @@ const logoutAwareReducer = (state: any, action: PayloadAction) => {
 export const planshboardStore = configureStore({
     reducer: logoutAwareReducer,
     devTools: devMode,
-    middleware: devMode ? [...commonMiddleware, logger] : commonMiddleware,
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }).prepend(sagaMiddleware, routerMiddleware(history), logger),
     preloadedState: getPersistedState(),
 });
 

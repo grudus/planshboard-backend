@@ -5,3 +5,7 @@ export interface ExistsResponse {
 export interface IdResponse {
     id: number;
 }
+
+export interface IdRequest {
+    id: number;
+}

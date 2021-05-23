@@ -1,71 +1,42 @@
-import { HttpDispatch } from "app/shared/store/httpRequestActions";
+import { ApiCall } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
-import {
-    addBoardGameSuccessAction,
-    deleteBoardGameSuccessAction,
-    editBoardGameSuccessAction,
-    getBoardGamesSuccessAction,
-    getSingleBoardGameSuccessAction,
-} from "app/board-games/__store/boardGameActions";
-import { IdResponse } from "app/shared/models/Response";
-import { BoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
+import { AddBoardGameRequest, EditBoardGameRequest } from "app/board-games/__models/BoardGameApiModels";
+import { IdRequest } from "app/shared/models/Response";
 
-export function getBoardGamesRequest(dispatch: HttpDispatch): Promise<any> {
-    return dispatch({
-        type: "get",
-        path: apiRoutes.boardGame.list,
-        successAction: getBoardGamesSuccessAction,
-    });
-}
+const getBoardGames: ApiCall = () => ({
+    type: "get",
+    path: apiRoutes.boardGame.list,
+});
 
-interface GetSingleBoardGameRequest {
-    id: number;
-}
+const getSingleBoardGame: ApiCall<IdRequest> = request => ({
+    type: "get",
+    path: apiRoutes.boardGame.single(request.id),
+});
 
-export function getSingleBoardGame(dispatch: HttpDispatch, request: GetSingleBoardGameRequest): Promise<any> {
-    return dispatch({
-        type: "get",
-        path: apiRoutes.boardGame.single(request.id),
-        successAction: getSingleBoardGameSuccessAction,
-    });
-}
+const addBoardGame: ApiCall<AddBoardGameRequest> = request => ({
+    type: "post",
+    path: apiRoutes.boardGame.list,
+    body: request,
+});
 
-export interface AddBoardGameRequest {
-    name: string;
-    options: BoardGamePlayResultsOptions;
-}
+const editBoardGame: ApiCall<EditBoardGameRequest> = request => ({
+    type: "put",
+    path: apiRoutes.boardGame.single(request.id),
+    body: request,
+});
 
-export function addBoardGameRequest(dispatch: HttpDispatch, request: AddBoardGameRequest): Promise<any> {
-    return dispatch({
-        type: "post",
-        path: apiRoutes.boardGame.list,
-        successAction: ({ id }: IdResponse) => addBoardGameSuccessAction({ id, request }),
-        body: request,
-    });
-}
+const deleteBoardGame: ApiCall<IdRequest> = request => ({
+    type: "delete",
+    path: apiRoutes.boardGame.single(request.id),
+    body: request,
+});
 
-export interface EditBoardGameRequest extends AddBoardGameRequest {
-    id: number;
-}
+const BoardGameApi = {
+    getBoardGames,
+    getSingleBoardGame,
+    addBoardGame,
+    editBoardGame,
+    deleteBoardGame,
+};
 
-export function editBoardGameRequest(dispatch: HttpDispatch, request: EditBoardGameRequest): Promise<any> {
-    return dispatch({
-        type: "put",
-        path: apiRoutes.boardGame.single(request.id),
-        successAction: () => editBoardGameSuccessAction(request),
-        body: request,
-    });
-}
-
-export interface DeleteBoardGameRequest {
-    id: number;
-}
-
-export function deleteBoardGameRequest(dispatch: HttpDispatch, request: DeleteBoardGameRequest): Promise<any> {
-    return dispatch({
-        type: "delete",
-        path: apiRoutes.boardGame.single(request.id),
-        successAction: () => deleteBoardGameSuccessAction(request),
-        body: request,
-    });
-}
+export default BoardGameApi;

@@ -1,13 +1,8 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { BasicBoardGame, BoardGame, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
-import {
-    addBoardGameSuccessAction,
-    deleteBoardGameSuccessAction,
-    editBoardGameSuccessAction,
-    getBoardGamesSuccessAction,
-    getSingleBoardGameSuccessAction,
-} from "app/board-games/__store/boardGameActions";
-import { AddBoardGameRequest, DeleteBoardGameRequest } from "app/board-games/BoardGameApi";
+import { BoardGame, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
+import { BoardGameActions } from "app/board-games/__store/boardGameActions";
+import { EditBoardGameRequest } from "app/board-games/__models/BoardGameApiModels";
+import { IdRequest } from "app/shared/models/Response";
 
 export interface BoardGameStore {
     list: BoardGame[];
@@ -20,25 +15,24 @@ const initialState: BoardGameStore = {
 };
 
 export const boardGamesReducer = createReducer<BoardGameStore>(initialState, {
-    [getBoardGamesSuccessAction.type]: (state, action: PayloadAction<BoardGame[]>) => ({
+    [BoardGameActions.getBoardGames.fulfilled.type]: (state, action: PayloadAction<BoardGame[]>) => ({
         ...state,
         list: action.payload,
         boardGameExists: !!action.payload.length,
     }),
-    [addBoardGameSuccessAction.type]: (state, action: PayloadAction<{ id: number; request: AddBoardGameRequest }>) => {
-        const { id, request } = action.payload;
-        const list = [...state.list, { id, name: request.name, createdAt: new Date() }];
+    [BoardGameActions.addBoardGame.fulfilled.type]: (state, action: PayloadAction<BoardGame>) => {
+        const list = [...state.list, { ...action.payload }];
         return { ...state, list, boardGameExists: true };
     },
-    [getSingleBoardGameSuccessAction.type]: (state, action: PayloadAction<SingleBoardGame>) => ({
+    [BoardGameActions.getSingleBoardGame.fulfilled.type]: (state, action: PayloadAction<SingleBoardGame>) => ({
         ...state,
         single: action.payload,
     }),
-    [editBoardGameSuccessAction.type]: (state, action: PayloadAction<BasicBoardGame>) => ({
+    [BoardGameActions.editBoardGame.fulfilled.type]: (state, action: PayloadAction<EditBoardGameRequest>) => ({
         ...state,
         list: state.list.map(game => (game.id === action.payload.id ? { ...game, name: action.payload.name } : game)),
     }),
-    [deleteBoardGameSuccessAction.type]: (state, action: PayloadAction<DeleteBoardGameRequest>) => {
+    [BoardGameActions.deleteBoardGame.fulfilled.type]: (state, action: PayloadAction<IdRequest>) => {
         const list = state.list.filter(game => game.id !== action.payload.id);
         return {
             ...state,
