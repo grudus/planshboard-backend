@@ -5,7 +5,7 @@ import css from "./board-game-form.module.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import BoardGameOptions from "app/board-games/form/board-game-options/BoardGameOptions";
 import { defaultRegularGameOptions, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
-import { AddBoardGameRequest, EditBoardGameRequest } from "app/board-games/BoardGameApi";
+import { AddBoardGameRequest, EditBoardGameRequest } from "app/board-games/__models/BoardGameApiModels";
 
 interface BoardGameFormProps {
     onSubmit: (request: AddBoardGameRequest | EditBoardGameRequest) => Promise<void>;

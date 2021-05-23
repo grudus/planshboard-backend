@@ -1,13 +1,17 @@
-import { createAction } from "@reduxjs/toolkit";
+import { AsyncThunk, createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { useAwaitDispatch, WaitPayload } from "app/shared/store/useAwaitDispatch";
 import { useCallback } from "react";
+import { Store } from "store/rootReducer";
+import { fetchJson, postFormRequest } from "utils/httpUtils";
 
-export interface HttpRequestPayload {
+export interface HttpRequestPayload<REQ = any> {
     path: string;
     type: "post" | "get" | "put" | "delete";
-    body?: any;
+    body?: REQ;
     isForm?: boolean;
 }
+
+export type ApiCall<REQ = any> = (req: REQ) => HttpRequestPayload<REQ>;
 
 export interface ProxyPayload {
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -29,3 +33,37 @@ export function useHttpDispatch(): HttpDispatch {
 
     return useCallback((request: HttpRequestPayload) => dispatch(request, httpRequestAction), [dispatch]);
 }
+
+export const httpRequestAction2 = createAsyncThunk(
+    "HTTP_REQQQ",
+    async (req: HttpRequestPayload, thunkAPI): Promise<any> => {
+        const state = thunkAPI.getState() as Store;
+        const token = state?.auth?.token;
+        try {
+            return req.isForm ? await postFormRequest(req, token) : await fetchJson(req, token);
+        } catch (e) {
+            const error = e instanceof Response ? await e.text() : e;
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
+export const passBodyToResponse = (response: any, body: any) => body;
+
+export const baseHttpAction = <Returned, Body = any, RawResponse = Returned>(
+    type: string,
+    payloadCreator: (body: Body) => HttpRequestPayload,
+    responseMapper: (response: RawResponse, body: Body) => Returned = response => response as any,
+): AsyncThunk<Returned, Body, any> => {
+    return createAsyncThunk<Returned, Body, any>(type, async (arg, thunkAPI) => {
+        try {
+            const actionResponse = await thunkAPI.dispatch(httpRequestAction2(payloadCreator(arg)));
+            if (actionResponse.meta.requestStatus === "rejected") {
+                return thunkAPI.rejectWithValue(actionResponse);
+            }
+            return responseMapper(actionResponse.payload, arg);
+        } catch (e) {
+            throw thunkAPI.rejectWithValue(e);
+        }
+    });
+};

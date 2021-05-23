@@ -12,11 +12,12 @@ import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { createPlayRequest, getTagsRequest } from "app/plays/PlayApi";
 import { getAllOpponentsRequest, getFrequentOpponentsRequest } from "app/opponents/OpponentApi";
 import { useQueryParams } from "app/shared/hooks/useQueryParams";
-import { getSingleBoardGame } from "app/board-games/BoardGameApi";
 import Chip from "library/chip/Chip";
 import { appRoutes } from "app/routing/routes";
 import SelectBoardGameDialog from "app/plays/select-board-game-dialog/SelectBoardGameDialog";
 import useDialog from "library/dialog/context/useDialog";
+import { useDispatch } from "react-redux";
+import { BoardGameActions } from "app/board-games/__store/boardGameActions";
 
 const AddPlay: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -25,7 +26,8 @@ const AddPlay: React.FC = () => {
 
     const { boardGameId, history } = useQueryParams();
     const { translate } = useTranslations();
-    const dispatch = useHttpDispatch();
+    const httpDispatch = useHttpDispatch();
+    const dispatch = useDispatch();
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
     const { showDialog } = useDialog();
 
@@ -47,11 +49,11 @@ const AddPlay: React.FC = () => {
             showBoardGameDialog();
             return;
         }
-        getTagsRequest(dispatch);
-        getAllOpponentsRequest(dispatch);
-        getFrequentOpponentsRequest(dispatch);
-        getSingleBoardGame(dispatch, { id: parseInt(boardGameId, 10) });
-    }, [boardGameId, dispatch, showBoardGameDialog]);
+        getTagsRequest(httpDispatch);
+        getAllOpponentsRequest(httpDispatch);
+        getFrequentOpponentsRequest(httpDispatch);
+        dispatch(BoardGameActions.getSingleBoardGame({ id: parseInt(boardGameId, 10) }));
+    }, [boardGameId, httpDispatch, showBoardGameDialog, dispatch]);
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
         setLoading(true);
@@ -61,7 +63,7 @@ const AddPlay: React.FC = () => {
             tags: meta.tags ?? [],
             ...meta,
         };
-        await createPlayRequest(dispatch, request);
+        await createPlayRequest(httpDispatch, request);
         setLoading(false);
         goBack();
     };
