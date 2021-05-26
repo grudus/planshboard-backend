@@ -1,33 +1,19 @@
-import { AsyncThunk, createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { WaitPayload } from "app/shared/store/useAwaitDispatch";
+import { AsyncThunk, createAsyncThunk } from "@reduxjs/toolkit";
 import { Store } from "store/rootReducer";
 import { fetchJson, postFormRequest } from "utils/httpUtils";
 
-export interface HttpRequestPayload<REQ = any> {
+export interface HttpRequestDefinition<BODY = any> {
     path: string;
     type: "post" | "get" | "put" | "delete";
-    body?: REQ;
+    body?: BODY;
     isForm?: boolean;
 }
 
-export type ApiCall<REQ = any> = (req: REQ) => HttpRequestPayload<REQ>;
+export type ApiCall<BODY = any> = (body: BODY) => HttpRequestDefinition<BODY>;
 
-export interface ProxyPayload {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    successAction?: Function;
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    errorAction?: Function;
-}
-
-export interface WaitHttpRequestPayload extends HttpRequestPayload, WaitPayload, ProxyPayload {}
-
-export const httpRequestAction = createAction<WaitHttpRequestPayload>("HTTP_REQUEST");
-export const httpErrorAction = createAction<Response>("HTTP_REQUEST_ERROR");
-export const httpSuccessAction = createAction<Response | any>("HTTP_REQUEST_SUCCESS");
-
-export const httpRequestAction2 = createAsyncThunk(
-    "HTTP_REQQQ",
-    async (req: HttpRequestPayload, thunkAPI): Promise<any> => {
+export const httpRequestAction = createAsyncThunk(
+    "HTTP_REQUEST",
+    async (req: HttpRequestDefinition, thunkAPI): Promise<any> => {
         const state = thunkAPI.getState() as Store;
         const token = state?.auth?.token;
         try {
@@ -39,22 +25,22 @@ export const httpRequestAction2 = createAsyncThunk(
     },
 );
 
-export const passBodyToResponse = (response: any, body: any) => body;
+export const passBodyAsResponse = (response: any, body: any) => body;
 
-export const baseHttpAction = <Returned, Body = any, RawResponse = Returned>(
+export function baseHttpAction<Returned, Body = any, RawResponse = Returned>(
     type: string,
-    payloadCreator: (body: Body) => HttpRequestPayload<Body>,
+    payloadCreator: (body: Body) => HttpRequestDefinition<Body>,
     responseMapper: (response: RawResponse, body: Body) => Returned = response => response as any,
-): AsyncThunk<Returned, Body, any> => {
-    return createAsyncThunk<Returned, Body, any>(type, async (arg, thunkAPI) => {
+): AsyncThunk<Returned, Body, any> {
+    return createAsyncThunk<Returned, Body, any>(type, async (body, thunkAPI) => {
         try {
-            const actionResponse = await thunkAPI.dispatch(httpRequestAction2(payloadCreator(arg)));
+            const actionResponse = await thunkAPI.dispatch(httpRequestAction(payloadCreator(body)));
             if (actionResponse.meta.requestStatus === "rejected") {
                 return thunkAPI.rejectWithValue(actionResponse);
             }
-            return responseMapper(actionResponse.payload, arg);
+            return responseMapper(actionResponse.payload, body);
         } catch (e) {
             throw thunkAPI.rejectWithValue(e);
         }
     });
-};
+}

@@ -1,6 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { httpErrorAction } from "app/shared/store/httpRequestActions";
+import { httpRequestAction } from "app/shared/store/httpRequestActions";
 import AuthActions from "app/auth/__store/authActions";
 
 function* catchError(action: PayloadAction<Response | string>): Generator {
@@ -13,5 +13,5 @@ function* catchError(action: PayloadAction<Response | string>): Generator {
 }
 
 export default function* httpRequestSaga(): Generator {
-    yield takeEvery(httpErrorAction.type, catchError);
+    yield takeEvery(httpRequestAction.rejected.type, catchError);
 }

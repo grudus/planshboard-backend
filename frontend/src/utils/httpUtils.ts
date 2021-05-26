@@ -1,10 +1,7 @@
-import { HttpRequestPayload } from "app/shared/store/httpRequestActions";
+import { HttpRequestDefinition } from "app/shared/store/httpRequestActions";
 import { JSONObject } from "utils/models/json";
 
-export async function postFormRequest(
-    request: HttpRequestPayload,
-    token?: string,
-): Promise<Response | Record<string, any>> {
+export async function postFormRequest(request: HttpRequestDefinition, token?: string): Promise<Response | JSONObject> {
     const body = Object.keys(request.body)
         .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(request.body[key]))
         .join("&");
@@ -20,7 +17,7 @@ export async function postFormRequest(
     return text ? JSON.parse(text) : response;
 }
 
-export async function fetchJson(request: HttpRequestPayload, token?: string): Promise<JSONObject> {
+export async function fetchJson(request: HttpRequestDefinition, token?: string): Promise<JSONObject> {
     const response = await fetchRequest(
         { ...request, body: JSON.stringify(request.body) },
         {
@@ -33,7 +30,7 @@ export async function fetchJson(request: HttpRequestPayload, token?: string): Pr
     return text ? JSON.parse(text) : {};
 }
 
-export async function fetchRequest(request: HttpRequestPayload, headers?: HeadersInit): Promise<Response> {
+export async function fetchRequest(request: HttpRequestDefinition, headers?: HeadersInit): Promise<Response> {
     const response = await fetch(normalizePath(request), {
         body: request.body,
         method: request.type,
@@ -55,7 +52,7 @@ export const getErrorCode = (errorString: string): string | undefined => {
     }
 };
 
-function normalizePath(request: HttpRequestPayload): string {
+function normalizePath(request: HttpRequestDefinition): string {
     if (request.path.startsWith("http")) return request.path;
     if (request.path.startsWith("/")) return process.env.REACT_APP_BACKEND_URL + request.path;
     return process.env.REACT_APP_BACKEND_URL + "/" + request.path;

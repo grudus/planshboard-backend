@@ -1,6 +1,6 @@
 import { BoardGame } from "app/board-games/__models/BoardGameModels";
 import BoardGameApi from "app/board-games/BoardGameApi";
-import { baseHttpAction, passBodyToResponse } from "app/shared/store/httpRequestActions";
+import { baseHttpAction, passBodyAsResponse } from "app/shared/store/httpRequestActions";
 import { IdResponse } from "app/shared/models/Response";
 import { AddBoardGameRequest } from "app/board-games/__models/BoardGameApiModels";
 
@@ -14,9 +14,9 @@ const addBoardGame = baseHttpAction<BoardGame, AddBoardGameRequest, IdResponse>(
     ({ id }, { name }) => ({ id, name, createdAt: new Date() }),
 );
 
-const editBoardGame = baseHttpAction("EDIT_BOARD_GAME", BoardGameApi.editBoardGame, passBodyToResponse);
+const editBoardGame = baseHttpAction("EDIT_BOARD_GAME", BoardGameApi.editBoardGame, passBodyAsResponse);
 
-const deleteBoardGame = baseHttpAction("DELETE_BOARD_GAME_SUCCESS", BoardGameApi.deleteBoardGame, passBodyToResponse);
+const deleteBoardGame = baseHttpAction("DELETE_BOARD_GAME_SUCCESS", BoardGameApi.deleteBoardGame, passBodyAsResponse);
 
 export const BoardGameActions = {
     getBoardGames,
