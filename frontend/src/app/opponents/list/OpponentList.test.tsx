@@ -1,5 +1,5 @@
 import React from "react";
-import { mockHttpDispatch, mockRedux, mockTranslations } from "utils/testUtils";
+import { mockDispatch, mockRedux, mockTranslations } from "utils/testUtils";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import OpponentList from "app/opponents/list/OpponentList";
@@ -11,7 +11,7 @@ jest.mock("react-flip-move", () => {
 });
 
 beforeEach(() => {
-    mockHttpDispatch();
+    mockDispatch();
     mockTranslations({});
 });
 

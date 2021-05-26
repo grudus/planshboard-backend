@@ -1,5 +1,6 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { getCurrentUserSuccessAction, GetCurrentUserSuccessPayload } from "app/user/__store/userActions";
+import UserActions from "app/user/__store/userActions";
+import { CurrentUser } from "app/user/__models/UserModels";
 
 export interface UserStore {
     current?: {
@@ -11,7 +12,7 @@ export interface UserStore {
 const initialState: UserStore = {};
 
 export const userReducer = createReducer<UserStore>(initialState, {
-    [getCurrentUserSuccessAction.type]: (state, action: PayloadAction<GetCurrentUserSuccessPayload>) => ({
+    [UserActions.getCurrentUser.fulfilled.type]: (state, action: PayloadAction<CurrentUser>) => ({
         ...state,
         current: action.payload,
     }),

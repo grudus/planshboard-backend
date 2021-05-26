@@ -1,9 +1,9 @@
 import initCurrentUserSaga from "app/user/__sagas/initCurrentUserSaga";
 import AuthActions from "app/auth/__store/authActions";
 import SagaTester from "redux-saga-tester";
-import { getCurrentUserSuccessAction } from "app/user/__store/userActions";
 import { testTypeRootReducer } from "store/rootReducer";
 import httpRequestSaga from "app/shared/sagas/httpRequestSaga";
+import UserActions from "app/user/__store/userActions";
 
 test("Should set current user after successful http request", async () => {
     const sagaTester = new SagaTester({ initialState: undefined, reducers: testTypeRootReducer });
@@ -15,7 +15,7 @@ test("Should set current user after successful http request", async () => {
 
     sagaTester.dispatch(AuthActions.authTokenObtained(""));
 
-    await sagaTester.waitFor(getCurrentUserSuccessAction.type);
+    await sagaTester.waitFor(UserActions.getCurrentUser.fulfilled.type);
 
     const finalState = sagaTester.getState();
     expect(finalState.user.current?.id).toBe(1);

@@ -1,17 +1,11 @@
 import { put } from "redux-saga/effects";
-import { httpRequestAction } from "app/shared/store/httpRequestActions";
-import { apiRoutes } from "app/routing/routes";
-import { getCurrentUserSuccessAction } from "app/user/__store/userActions";
+import UserActions from "app/user/__store/userActions";
 import { appLoadedForUser } from "sagas/appLoadedForUser";
 
 function* initCurrentUser() {
-    yield put(
-        httpRequestAction({
-            type: "get",
-            path: apiRoutes.user.current,
-            successAction: getCurrentUserSuccessAction,
-        }),
-    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    yield put(UserActions.getCurrentUser());
 }
 
 export default function* initCurrentUserSaga(): Generator {

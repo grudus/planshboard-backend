@@ -1,8 +1,11 @@
-import { createAction } from "@reduxjs/toolkit";
+import { CurrentUser } from "app/user/__models/UserModels";
+import { baseHttpAction } from "app/shared/store/httpRequestActions";
+import UserApi from "app/user/UserApi";
 
-export interface GetCurrentUserSuccessPayload {
-    id: number;
-    username: string;
-}
+const getCurrentUser = baseHttpAction<CurrentUser, void>("GET_CURRENT_USER", UserApi.getCurrent);
 
-export const getCurrentUserSuccessAction = createAction<GetCurrentUserSuccessPayload>("GET_USER_SUCCESS");
+const UserActions = {
+    getCurrentUser,
+};
+
+export default UserActions;

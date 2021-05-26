@@ -1,7 +1,6 @@
-import { ApiCall, HttpDispatch } from "app/shared/store/httpRequestActions";
-import { ExistsResponse, IdResponse } from "app/shared/models/Response";
+import { ApiCall } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
-import { CheckUsernameRequest, RegisterRequest } from "app/auth/__models/AuthApiModels";
+import { CheckUsernameRequest, LoginRequest, RegisterRequest } from "app/auth/__models/AuthApiModels";
 
 const checkUsername: ApiCall<CheckUsernameRequest> = request => ({
     type: "get",
@@ -14,24 +13,17 @@ const register: ApiCall<RegisterRequest> = ({ username, password }) => ({
     body: { username, password, confirmPassword: password },
 });
 
+const login: ApiCall<LoginRequest> = request => ({
+    type: "post",
+    isForm: true,
+    body: request,
+    path: apiRoutes.auth.login,
+});
+
 const AuthApi = {
     checkUsername,
     register,
+    login,
 };
 
 export default AuthApi;
-
-export function checkUsernameRequest(dispatch: HttpDispatch, request: CheckUsernameRequest): Promise<ExistsResponse> {
-    return dispatch({
-        type: "get",
-        path: apiRoutes.auth.checkUsername(request.username),
-    });
-}
-
-export function registerRequest(dispatch: HttpDispatch, request: RegisterRequest): Promise<IdResponse> {
-    return dispatch({
-        type: "post",
-        path: apiRoutes.auth.registration,
-        body: { username: request.username, password: request.password, confirmPassword: request.password },
-    });
-}
