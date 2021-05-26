@@ -1,6 +1,6 @@
 import { TagCounts } from "app/plays/__models/TagModels";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { getAllPlaysAction, getTagsSuccessAction } from "app/plays/__store/playActions";
+import PlayActions from "app/plays/__store/playActions";
 import { PlayListItem } from "app/plays/__models/PlayModels";
 
 export interface PlayStore {
@@ -14,11 +14,11 @@ const initialState: PlayStore = {
 };
 
 export const playReducer = createReducer<PlayStore>(initialState, {
-    [getTagsSuccessAction.type]: (state, action: PayloadAction<TagCounts[]>) => ({
+    [PlayActions.getTags.fulfilled.type]: (state, action: PayloadAction<TagCounts[]>) => ({
         ...state,
         tags: action.payload,
     }),
-    [getAllPlaysAction.type]: (state, action: PayloadAction<PlayListItem[]>) => ({
+    [PlayActions.getAllPlays.fulfilled.type]: (state, action: PayloadAction<PlayListItem[]>) => ({
         ...state,
         list: action.payload,
     }),

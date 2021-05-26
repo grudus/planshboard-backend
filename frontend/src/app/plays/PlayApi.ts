@@ -1,29 +1,23 @@
-import { HttpDispatch } from "app/shared/store/httpRequestActions";
+import { ApiCall } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 import { SavePlayRequest } from "app/plays/__models/PlayModels";
-import { getAllPlaysAction, getTagsSuccessAction, savePlaySuccessAction } from "app/plays/__store/playActions";
 
-export function createPlayRequest(dispatch: HttpDispatch, request: SavePlayRequest): Promise<any> {
-    return dispatch({
-        type: "post",
-        path: apiRoutes.play.create,
-        successAction: savePlaySuccessAction,
-        body: request,
-    });
-}
+const createPlay: ApiCall<SavePlayRequest> = request => ({
+    type: "post",
+    path: apiRoutes.play.create,
+    body: request,
+});
 
-export function getTagsRequest(dispatch: HttpDispatch): Promise<any> {
-    return dispatch({
-        type: "get",
-        path: apiRoutes.tags.getWithPlaysCount,
-        successAction: getTagsSuccessAction,
-    });
-}
+const getTags: ApiCall = () => ({
+    type: "get",
+    path: apiRoutes.tags.getWithPlaysCount,
+});
 
-export function getAllPlaysRequest(dispatch: HttpDispatch): Promise<any> {
-    return dispatch({
-        type: "get",
-        path: apiRoutes.play.list,
-        successAction: getAllPlaysAction,
-    });
-}
+const getAllPlays: ApiCall = () => ({
+    type: "get",
+    path: apiRoutes.play.list,
+});
+
+const PlayApi = { createPlay, getTags, getAllPlays };
+
+export default PlayApi;

@@ -9,7 +9,6 @@ import { useRedux } from "store/rootReducer";
 import { PlayMeta, PlayResultRow, SavePlayRequest } from "app/plays/__models/PlayModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { createPlayRequest, getTagsRequest } from "app/plays/PlayApi";
 import { useQueryParams } from "app/shared/hooks/useQueryParams";
 import Chip from "library/chip/Chip";
 import { appRoutes } from "app/routing/routes";
@@ -18,6 +17,7 @@ import useDialog from "library/dialog/context/useDialog";
 import { useDispatch } from "react-redux";
 import { BoardGameActions } from "app/board-games/__store/boardGameActions";
 import OpponentActions from "app/opponents/__store/opponentActions";
+import PlayActions from "app/plays/__store/playActions";
 
 const AddPlay: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -49,7 +49,7 @@ const AddPlay: React.FC = () => {
             showBoardGameDialog();
             return;
         }
-        getTagsRequest(httpDispatch);
+        dispatch(PlayActions.getTags());
         dispatch(OpponentActions.getAllOpponents());
         dispatch(OpponentActions.getFrequentOpponents());
         dispatch(BoardGameActions.getSingleBoardGame({ id: parseInt(boardGameId, 10) }));
@@ -63,7 +63,7 @@ const AddPlay: React.FC = () => {
             tags: meta.tags ?? [],
             ...meta,
         };
-        await createPlayRequest(httpDispatch, request);
+        await dispatch(PlayActions.savePlay(request));
         setLoading(false);
         goBack();
     };
