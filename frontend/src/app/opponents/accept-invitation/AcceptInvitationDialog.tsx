@@ -7,10 +7,10 @@ import Button from "library/button/Button";
 import CardFormContent from "library/card-form/CardFormContent";
 import AcceptInvitationDescription from "app/opponents/accept-invitation/AcceptInvitationDescription";
 import AcceptInvitationSelectOpponent from "app/opponents/accept-invitation/AcceptInvitationSelectOpponent";
-import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { acceptOpponentLinkedNotification } from "app/notifications/NotificationApi";
 import { getErrorCode } from "utils/httpUtils";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import { useAppDispatch } from "store/useAppDispatch";
+import NotificationActions from "app/notifications/__store/notificationActions";
 
 interface AcceptInvitationDialogProps extends DialogProps {
     notification: NotificationItem<OpponentNotification>;
@@ -29,13 +29,18 @@ const AcceptInvitationDialog: React.FC<AcceptInvitationDialogProps> = props => {
     const [opponent, setOpponent] = useState<SelectedOpponent | null>(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const dispatch = useHttpDispatch();
+    const dispatch = useAppDispatch();
     const { translate } = useTranslations();
 
     const onConfirm = async () => {
         if (!opponent) return;
         setLoading(true);
-        await acceptOpponentLinkedNotification(dispatch, { opponent, notificationId: notification.id }).catch(err => {
+        await dispatch(
+            NotificationActions.acceptOpponentLinked({
+                opponent,
+                notificationId: notification.id,
+            }),
+        ).catch((err: any) => {
             setError(getErrorCode(err) ?? "");
         });
         setLoading(false);

@@ -4,10 +4,11 @@ import PlayAddedNotification from "app/notifications/types/PlayAddedNotification
 import UnknownNotification from "app/notifications/types/UnknownNotification";
 import Icons from "library/icons/Icons";
 import { HttpDispatch } from "app/shared/store/httpRequestActions";
-import { acceptPlayNotification } from "app/notifications/NotificationApi";
 import OpponentLinkedNotification from "app/notifications/types/OpponentLinkedNotification";
 import { DialogContextProps } from "library/dialog/context/DialogContext";
 import AcceptInvitationDialog from "app/opponents/accept-invitation/AcceptInvitationDialog";
+import { AppDispatch } from "store/useAppDispatch";
+import NotificationActions from "app/notifications/__store/notificationActions";
 
 export interface NotificationActionsDescriptor {
     translateBase: string;
@@ -19,7 +20,7 @@ export interface NotificationAction {
     svgIcon?: ReactElement;
     clickAction?: (
         notification: NotificationItem,
-        dispatch: HttpDispatch,
+        dispatch: AppDispatch,
         dialogContext: DialogContextProps,
     ) => Promise<any>;
 }
@@ -40,8 +41,8 @@ const notificationEntryByType: Map<NotificationEventType, NotificationEntry> = n
                     {
                         key: "ACCEPT",
                         svgIcon: Icons.CheckIcon,
-                        clickAction: (notification: NotificationItem, dispatch: HttpDispatch) =>
-                            acceptPlayNotification(dispatch, { notificationId: notification.id }),
+                        clickAction: ({ id }: NotificationItem, dispatch: AppDispatch) =>
+                            dispatch(NotificationActions.acceptPlay({ notificationId: id })),
                     },
                     { key: "ACCEPT_ALL", svgIcon: Icons.CheckDouble },
                     { key: "REJECT", svgIcon: Icons.XIcon },
