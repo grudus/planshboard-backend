@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { useRedux } from "store/rootReducer";
-import { getAllOpponentsRequest } from "app/opponents/OpponentApi";
 import OpponentListItem from "app/opponents/list-item/OpponentListItem";
 import css from "./opponent-list.module.scss";
 import FlipMove from "react-flip-move";
 import SearchInput from "library/search-input/SearchInput";
 import AddOpponentButton from "app/opponents/add-button/AddOpponentButton";
+import { useAppDispatch } from "store/useAppDispatch";
+import OpponentActions from "app/opponents/__store/opponentActions";
 
 const OpponentList: React.FC = () => {
     const opponents = useRedux(state => state.opponent.list);
     const [filter, setFilter] = useState("");
-    const dispatch = useHttpDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        getAllOpponentsRequest(dispatch);
+        dispatch(OpponentActions.getAllOpponents());
     }, [dispatch]);
 
     return (

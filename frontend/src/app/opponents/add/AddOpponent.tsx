@@ -8,13 +8,13 @@ import css from "./add-opponent.module.scss";
 import { useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 import useTranslations from "app/locale/__hooks/useTranslations";
-import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { createOpponentRequest } from "app/opponents/OpponentApi";
+import { useAppDispatch } from "store/useAppDispatch";
+import OpponentActions from "app/opponents/__store/opponentActions";
 
 const AddOpponent: React.FC = () => {
     const history = useHistory();
     const { translate } = useTranslations();
-    const dispatch = useHttpDispatch();
+    const dispatch = useAppDispatch();
     const [opponentNameError, setOpponentNameError] = useState("");
     const [existingUserNameError, setExistingUserNameError] = useState("");
 
@@ -22,7 +22,7 @@ const AddOpponent: React.FC = () => {
         try {
             setExistingUserNameError("");
             setOpponentNameError("");
-            await createOpponentRequest(dispatch, request);
+            dispatch(OpponentActions.createOpponent(request));
             onCancel();
         } catch (e) {
             const code = JSON.parse(e).code;

@@ -5,12 +5,7 @@ import {
     SingleOpponentStats,
 } from "app/opponents/__models/OpponentModels";
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import {
-    createOpponentSuccessAction,
-    getAllOpponentsSuccessAction,
-    getFrequentOpponentsSuccessAction,
-    getSingleOpponentSuccessAction,
-} from "app/opponents/__store/opponentActions";
+import OpponentActions from "app/opponents/__store/opponentActions";
 
 export interface OpponentStore {
     list: OpponentListItem[];
@@ -28,20 +23,20 @@ const initialState: OpponentStore = {
 };
 
 export const opponentReducer = createReducer<OpponentStore>(initialState, {
-    [getAllOpponentsSuccessAction.type]: (state, action: PayloadAction<OpponentListItem[]>) => ({
+    [OpponentActions.getAllOpponents.fulfilled.type]: (state, action: PayloadAction<OpponentListItem[]>) => ({
         ...state,
         list: action.payload,
         currentUser: action.payload.find(op => op.linkedUser?.status === "LINKED_WITH_CREATOR"),
     }),
-    [getSingleOpponentSuccessAction.type]: (state, action: PayloadAction<OpponentWithStats>) => ({
+    [OpponentActions.getSingleOpponent.fulfilled.type]: (state, action: PayloadAction<OpponentWithStats>) => ({
         ...state,
         single: action.payload,
     }),
-    [createOpponentSuccessAction.type]: (state, action: PayloadAction<Opponent>) => ({
+    [OpponentActions.createOpponent.fulfilled.type]: (state, action: PayloadAction<Opponent>) => ({
         ...state,
         list: [...state.list, { ...action.payload, numberOfPlays: 0, numberOfWins: 0 }],
     }),
-    [getFrequentOpponentsSuccessAction.type]: (state, action: PayloadAction<Opponent[]>) => ({
+    [OpponentActions.getFrequentOpponents.fulfilled.type]: (state, action: PayloadAction<Opponent[]>) => ({
         ...state,
         frequentOpponents: action.payload,
     }),

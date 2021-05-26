@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useRedux } from "store/rootReducer";
 import Dropdown, { DropdownProps } from "library/dropdown/Dropdown";
-import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { createOpponentRequest } from "app/opponents/OpponentApi";
 import { ValueType } from "react-select";
 import { Opponent } from "app/opponents/__models/OpponentModels";
+import { useAppDispatch } from "store/useAppDispatch";
+import OpponentActions from "app/opponents/__store/opponentActions";
 
 interface OpponentsDropdownProps extends Partial<DropdownProps<any>> {
     opponentFilter: (opponent: Opponent) => boolean;
@@ -13,11 +13,11 @@ interface OpponentsDropdownProps extends Partial<DropdownProps<any>> {
 const OpponentsDropdown: React.FC<OpponentsDropdownProps> = props => {
     const [isCreatingNew, setCreatingNew] = useState(false);
     const opponents = useRedux(state => state.opponent.list);
-    const dispatch = useHttpDispatch();
+    const dispatch = useAppDispatch();
 
     const createOpponent = async (opponentName: string) => {
         setCreatingNew(true);
-        const response = await createOpponentRequest(dispatch, { opponentName });
+        const response = await dispatch(OpponentActions.createOpponent({ opponentName }));
         setCreatingNew(false);
         const { id } = response;
         props.onSelect?.({ id, name: opponentName });
