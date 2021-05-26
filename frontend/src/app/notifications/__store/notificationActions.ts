@@ -1,12 +1,43 @@
-import { createAction } from "@reduxjs/toolkit";
 import { NotificationItem } from "../__models/NotificationModels";
+import { baseHttpAction } from "app/shared/store/httpRequestActions";
+import NotificationApi from "app/notifications/NotificationApi";
 
-export const fetchInitialNotificationsSuccess = createAction<NotificationItem[]>("GET_NOTIFICATIONS_SUCCESS");
-export const markAsReadSuccess = createAction<number[]>("MARK_AS_READ_SUCCESS");
-export const markAllAsReadSuccess = createAction("MARK_ALL_AS_READ_SUCCESS");
-export const deleteNotificationSuccess = createAction<number>("DELETE_NOTIFICATION_SUCCESS");
-export const loadMoreNotificationsSuccess = createAction<NotificationItem[]>("LOAD_MORE_NOTIFICATIONS_SUCCESS");
-export const acceptPlayNotificationSuccess = createAction<number>("ACCEPT_PLAY_NOTIFICATIONS_SUCCESS");
-export const acceptOpponentLinkedNotificationSuccess = createAction<NotificationItem>(
-    "ACCEPT_OPPONENT_LINKED_NOTIFICATIONS_SUCCESS",
+const markAsRead = baseHttpAction("MARK_AS_READ", NotificationApi.markAsRead, (_, req) => req.ids);
+
+const markAllAsRead = baseHttpAction<never, void>("MARK_ALL_AS_READ", NotificationApi.markAllAsRead);
+
+const deleteNotification = baseHttpAction(
+    "DELETE_NOTIFICATION",
+    NotificationApi.deleteNotification,
+    (_, req) => req.id,
 );
+
+const loadMore = baseHttpAction<NotificationItem[]>("LOAD_MORE_NOTIFICATIONS", NotificationApi.loadMore);
+
+const acceptPlay = baseHttpAction(
+    "ACCEPT_PLAY_NOTIFICATIONS",
+    NotificationApi.acceptPlay,
+    (_, req) => req.notificationId,
+);
+
+const acceptOpponentLinked = baseHttpAction<NotificationItem>(
+    "ACCEPT_OPPONENT_LINKED_NOTIFICATIONS",
+    NotificationApi.acceptOpponentLinked,
+);
+
+const fetchInitial = baseHttpAction<NotificationItem[], void>(
+    "FETCH_INITIAL_NOTIFICATIONS",
+    NotificationApi.fetchInitial,
+);
+
+const NotificationActions = {
+    markAsRead,
+    markAllAsRead,
+    deleteNotification,
+    loadMore,
+    acceptPlay,
+    acceptOpponentLinked,
+    fetchInitial,
+};
+
+export default NotificationActions;

@@ -5,16 +5,16 @@ import Button from "library/button/Button";
 import { useDateTime } from "app/shared/hooks/useDateTime";
 import NotificationMenu from "./menu/NotificationMenu";
 import { cssIf, merge } from "utils/cssUtils";
-import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { loadMoreNotificationsRequest, markAllAsReadRequest } from "app/notifications/NotificationApi";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { getNotificationEntry, NotificationEntry } from "app/notifications/NotificationTypesFactory";
+import { useAppDispatch } from "store/useAppDispatch";
+import NotificationActions from "app/notifications/__store/notificationActions";
 
 const Notifications: React.FC = () => {
     const notifications = useRedux(state => state.notification.list);
     const { translate } = useTranslations();
     const { formatTime, getUtcDate } = useDateTime();
-    const dispatch = useHttpDispatch();
+    const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
 
     if (!notifications?.length) {
@@ -23,14 +23,14 @@ const Notifications: React.FC = () => {
 
     const markAllAsRead = async () => {
         setLoading(true);
-        await markAllAsReadRequest(dispatch);
+        await dispatch(NotificationActions.markAllAsRead());
         setLoading(false);
     };
 
     const loadMore = async () => {
         setLoading(true);
         const lastVisibleDate = notifications[notifications.length - 1].createdAt;
-        await loadMoreNotificationsRequest(dispatch, { count: 10, dateToLookAfter: getUtcDate(lastVisibleDate) });
+        await dispatch(NotificationActions.loadMore({ count: 10, dateToLookAfter: getUtcDate(lastVisibleDate) }));
         setLoading(false);
     };
 

@@ -1,81 +1,59 @@
-import { HttpDispatch } from "app/shared/store/httpRequestActions";
+import { ApiCall } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 import {
-    acceptOpponentLinkedNotificationSuccess,
-    acceptPlayNotificationSuccess,
-    deleteNotificationSuccess,
-    loadMoreNotificationsSuccess,
-    markAllAsReadSuccess,
-    markAsReadSuccess,
-} from "app/notifications/__store/notificationActions";
-import { SelectedOpponent } from "app/opponents/accept-invitation/AcceptInvitationDialog";
+    AcceptOpponentLinkedNotificationRequest,
+    AcceptPlayNotificationRequest,
+    LoadMoreRequest,
+    MarkAsReadRequest,
+} from "app/notifications/__models/NotificationApiModels";
+import { IdRequest } from "app/shared/models/Response";
 
-interface MarkAsReadRequest {
-    ids: number[];
-}
+const markAsRead: ApiCall<MarkAsReadRequest> = request => ({
+    type: "put",
+    path: apiRoutes.notifications.markAsRead,
+    body: request,
+});
 
-export function markAsReadRequest(dispatch: HttpDispatch, request: MarkAsReadRequest): Promise<any> {
-    return dispatch({
-        type: "put",
-        path: apiRoutes.notifications.markAsRead,
-        successAction: () => markAsReadSuccess(request.ids),
-        body: request,
-    });
-}
+const markAllAsRead: ApiCall = () => ({
+    type: "put",
+    path: apiRoutes.notifications.markAllAsRead,
+});
 
-export function markAllAsReadRequest(dispatch: HttpDispatch): Promise<any> {
-    return dispatch({
-        type: "put",
-        path: apiRoutes.notifications.markAllAsRead,
-        successAction: markAllAsReadSuccess,
-    });
-}
+const deleteNotification: ApiCall<IdRequest> = request => ({
+    type: "delete",
+    path: apiRoutes.notifications.delete(request.id),
+});
 
-interface AcceptPlayNotificationRequest {
-    notificationId: number;
-}
+const loadMore: ApiCall<LoadMoreRequest> = request => ({
+    type: "get",
+    path: apiRoutes.notifications.paginated(request.count, request.dateToLookAfter),
+});
 
-export function acceptPlayNotification(dispatch: HttpDispatch, request: AcceptPlayNotificationRequest): Promise<any> {
-    return dispatch({
-        type: "post",
-        path: apiRoutes.playNotifications.accept,
-        body: request,
-        successAction: () => acceptPlayNotificationSuccess(request.notificationId),
-    });
-}
+const acceptPlay: ApiCall<AcceptPlayNotificationRequest> = request => ({
+    type: "post",
+    path: apiRoutes.playNotifications.accept,
+    body: request,
+});
 
-interface AcceptOpponentLinkedNotificationRequest {
-    notificationId: number;
-    opponent: SelectedOpponent;
-}
+const acceptOpponentLinked: ApiCall<AcceptOpponentLinkedNotificationRequest> = request => ({
+    type: "post",
+    path: apiRoutes.opponentNotifications.accept,
+    body: request,
+});
 
-export function acceptOpponentLinkedNotification(
-    dispatch: HttpDispatch,
-    request: AcceptOpponentLinkedNotificationRequest,
-): Promise<any> {
-    return dispatch({
-        type: "post",
-        path: apiRoutes.opponentNotifications.accept,
-        body: request,
-        successAction: acceptOpponentLinkedNotificationSuccess,
-    });
-}
+const fetchInitial: ApiCall = () => ({
+    type: "get",
+    path: apiRoutes.notifications.paginated(10),
+});
 
-export function deleteRequest(dispatch: HttpDispatch, request: { id: number }): Promise<any> {
-    return dispatch({
-        type: "delete",
-        path: apiRoutes.notifications.delete(request.id),
-        successAction: () => deleteNotificationSuccess(request.id),
-    });
-}
+const NotificationApi = {
+    markAsRead,
+    markAllAsRead,
+    deleteNotification,
+    loadMore,
+    acceptPlay,
+    acceptOpponentLinked,
+    fetchInitial,
+};
 
-export function loadMoreNotificationsRequest(
-    dispatch: HttpDispatch,
-    request: { count: number; dateToLookAfter: Date },
-): Promise<any> {
-    return dispatch({
-        type: "get",
-        path: apiRoutes.notifications.paginated(request.count, request.dateToLookAfter),
-        successAction: loadMoreNotificationsSuccess,
-    });
-}
+export default NotificationApi;

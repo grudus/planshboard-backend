@@ -1,17 +1,11 @@
 import { put } from "redux-saga/effects";
-import { httpRequestAction } from "app/shared/store/httpRequestActions";
-import { apiRoutes } from "app/routing/routes";
-import { fetchInitialNotificationsSuccess } from "app/notifications/__store/notificationActions";
+import NotificationActions from "app/notifications/__store/notificationActions";
 import { appLoadedForUser } from "sagas/appLoadedForUser";
 
 function* initNotifications() {
-    yield put(
-        httpRequestAction({
-            type: "get",
-            path: apiRoutes.notifications.paginated(10),
-            successAction: fetchInitialNotificationsSuccess,
-        }),
-    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    yield put(NotificationActions.fetchInitial());
 }
 
 export default function* initNotificationsSaga(): Generator {
