@@ -4,7 +4,7 @@ import {
     OpponentWithStats,
     SaveOpponentRequest,
 } from "app/opponents/__models/OpponentModels";
-import { baseHttpAction, passBodyToResponse } from "app/shared/store/httpRequestActions";
+import { baseHttpAction, passBodyAsResponse } from "app/shared/store/httpRequestActions";
 import OpponentApi from "app/opponents/OpponentApi";
 import { IdRequest } from "app/shared/models/Response";
 
@@ -32,7 +32,7 @@ const createOpponent = baseHttpAction<Opponent, SaveOpponentRequest>(
 const updateOpponent = baseHttpAction<SaveOpponentRequest>(
     "UPDATE_OPPONENT",
     OpponentApi.updateOpponent,
-    passBodyToResponse,
+    passBodyAsResponse,
 );
 
 const OpponentActions = {
