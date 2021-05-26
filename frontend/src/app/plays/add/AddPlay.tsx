@@ -10,7 +10,6 @@ import { PlayMeta, PlayResultRow, SavePlayRequest } from "app/plays/__models/Pla
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { createPlayRequest, getTagsRequest } from "app/plays/PlayApi";
-import { getAllOpponentsRequest, getFrequentOpponentsRequest } from "app/opponents/OpponentApi";
 import { useQueryParams } from "app/shared/hooks/useQueryParams";
 import Chip from "library/chip/Chip";
 import { appRoutes } from "app/routing/routes";
@@ -18,6 +17,7 @@ import SelectBoardGameDialog from "app/plays/select-board-game-dialog/SelectBoar
 import useDialog from "library/dialog/context/useDialog";
 import { useDispatch } from "react-redux";
 import { BoardGameActions } from "app/board-games/__store/boardGameActions";
+import OpponentActions from "app/opponents/__store/opponentActions";
 
 const AddPlay: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -50,8 +50,8 @@ const AddPlay: React.FC = () => {
             return;
         }
         getTagsRequest(httpDispatch);
-        getAllOpponentsRequest(httpDispatch);
-        getFrequentOpponentsRequest(httpDispatch);
+        dispatch(OpponentActions.getAllOpponents());
+        dispatch(OpponentActions.getFrequentOpponents());
         dispatch(BoardGameActions.getSingleBoardGame({ id: parseInt(boardGameId, 10) }));
     }, [boardGameId, httpDispatch, showBoardGameDialog, dispatch]);
 

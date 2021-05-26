@@ -52,7 +52,7 @@ export const passBodyToResponse = (response: any, body: any) => body;
 
 export const baseHttpAction = <Returned, Body = any, RawResponse = Returned>(
     type: string,
-    payloadCreator: (body: Body) => HttpRequestPayload,
+    payloadCreator: (body: Body) => HttpRequestPayload<Body>,
     responseMapper: (response: RawResponse, body: Body) => Returned = response => response as any,
 ): AsyncThunk<Returned, Body, any> => {
     return createAsyncThunk<Returned, Body, any>(type, async (arg, thunkAPI) => {
