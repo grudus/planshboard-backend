@@ -9,7 +9,7 @@ import { ReactComponent as UserIcon } from "./icon-user.svg";
 import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
 import { useAwaitDispatch } from "app/shared/store/useAwaitDispatch";
-import { tryToLoginAction } from "app/auth/__store/authActions";
+import AuthActions from "app/auth/__store/authActions";
 import { Link, useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 
@@ -28,7 +28,7 @@ const Login: React.FunctionComponent<any> = () => {
         try {
             setLoading(true);
             setError("");
-            await dispatch({ username: login, password }, tryToLoginAction);
+            await dispatch({ username: login, password }, AuthActions.tryToLogin);
             history.push("/");
         } catch (e) {
             setError(translate("AUTH.ERRORS.INVALID_LOGIN"));

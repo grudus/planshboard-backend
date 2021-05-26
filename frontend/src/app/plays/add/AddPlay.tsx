@@ -8,7 +8,6 @@ import { Opponent } from "app/opponents/__models/OpponentModels";
 import { useRedux } from "store/rootReducer";
 import { PlayMeta, PlayResultRow, SavePlayRequest } from "app/plays/__models/PlayModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
-import { useHttpDispatch } from "app/shared/store/httpRequestActions";
 import { useQueryParams } from "app/shared/hooks/useQueryParams";
 import Chip from "library/chip/Chip";
 import { appRoutes } from "app/routing/routes";
@@ -26,7 +25,6 @@ const AddPlay: React.FC = () => {
 
     const { boardGameId, history } = useQueryParams();
     const { translate } = useTranslations();
-    const httpDispatch = useHttpDispatch();
     const dispatch = useDispatch();
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
     const { showDialog } = useDialog();
@@ -53,7 +51,7 @@ const AddPlay: React.FC = () => {
         dispatch(OpponentActions.getAllOpponents());
         dispatch(OpponentActions.getFrequentOpponents());
         dispatch(BoardGameActions.getSingleBoardGame({ id: parseInt(boardGameId, 10) }));
-    }, [boardGameId, httpDispatch, showBoardGameDialog, dispatch]);
+    }, [boardGameId, showBoardGameDialog, dispatch]);
 
     const onSubmit = async (results: PlayResultRow[], meta: PlayMeta) => {
         setLoading(true);

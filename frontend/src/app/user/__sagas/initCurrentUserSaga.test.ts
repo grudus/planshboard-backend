@@ -1,5 +1,5 @@
 import initCurrentUserSaga from "app/user/__sagas/initCurrentUserSaga";
-import { authTokenObtainedAction } from "app/auth/__store/authActions";
+import AuthActions from "app/auth/__store/authActions";
 import SagaTester from "redux-saga-tester";
 import { getCurrentUserSuccessAction } from "app/user/__store/userActions";
 import { testTypeRootReducer } from "store/rootReducer";
@@ -13,7 +13,7 @@ test("Should set current user after successful http request", async () => {
     const mockResponse = { text: () => Promise.resolve(JSON.stringify({ id: 1, username: "user" })) };
     window.fetch = jest.fn().mockImplementation(() => mockResponse);
 
-    sagaTester.dispatch(authTokenObtainedAction(""));
+    sagaTester.dispatch(AuthActions.authTokenObtained(""));
 
     await sagaTester.waitFor(getCurrentUserSuccessAction.type);
 
