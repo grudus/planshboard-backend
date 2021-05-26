@@ -8,15 +8,15 @@ import image from "./login-left.svg";
 import { ReactComponent as UserIcon } from "./icon-user.svg";
 import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
-import { useAwaitDispatch } from "app/shared/store/useAwaitDispatch";
 import AuthActions from "app/auth/__store/authActions";
 import { Link, useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
+import { useAppDispatch } from "store/useAppDispatch";
 
 const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
     const history = useHistory();
-    const dispatch = useAwaitDispatch();
+    const dispatch = useAppDispatch();
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ const Login: React.FunctionComponent<any> = () => {
         try {
             setLoading(true);
             setError("");
-            await dispatch({ username: login, password }, AuthActions.tryToLogin);
+            await dispatch(AuthActions.login({ username: login, password }));
             history.push("/");
         } catch (e) {
             setError(translate("AUTH.ERRORS.INVALID_LOGIN"));

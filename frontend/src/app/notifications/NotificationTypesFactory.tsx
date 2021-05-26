@@ -3,7 +3,6 @@ import { NotificationEventType, NotificationItem } from "app/notifications/__mod
 import PlayAddedNotification from "app/notifications/types/PlayAddedNotification";
 import UnknownNotification from "app/notifications/types/UnknownNotification";
 import Icons from "library/icons/Icons";
-import { HttpDispatch } from "app/shared/store/httpRequestActions";
 import OpponentLinkedNotification from "app/notifications/types/OpponentLinkedNotification";
 import { DialogContextProps } from "library/dialog/context/DialogContext";
 import AcceptInvitationDialog from "app/opponents/accept-invitation/AcceptInvitationDialog";
@@ -62,7 +61,7 @@ const notificationEntryByType: Map<NotificationEventType, NotificationEntry> = n
                         svgIcon: Icons.CheckIcon,
                         clickAction: (
                             notification: NotificationItem,
-                            dispatch: HttpDispatch,
+                            dispatch: AppDispatch,
                             dialogContext: DialogContextProps,
                         ) => dialogContext.showDialog(<AcceptInvitationDialog notification={notification} />),
                     },

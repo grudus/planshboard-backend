@@ -1,6 +1,5 @@
 import { AsyncThunk, createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { useAwaitDispatch, WaitPayload } from "app/shared/store/useAwaitDispatch";
-import { useCallback } from "react";
+import { WaitPayload } from "app/shared/store/useAwaitDispatch";
 import { Store } from "store/rootReducer";
 import { fetchJson, postFormRequest } from "utils/httpUtils";
 
@@ -25,14 +24,6 @@ export interface WaitHttpRequestPayload extends HttpRequestPayload, WaitPayload,
 export const httpRequestAction = createAction<WaitHttpRequestPayload>("HTTP_REQUEST");
 export const httpErrorAction = createAction<Response>("HTTP_REQUEST_ERROR");
 export const httpSuccessAction = createAction<Response | any>("HTTP_REQUEST_SUCCESS");
-
-export type HttpDispatch = (request: HttpRequestPayload | (HttpRequestPayload & ProxyPayload)) => Promise<any>;
-
-export function useHttpDispatch(): HttpDispatch {
-    const dispatch = useAwaitDispatch();
-
-    return useCallback((request: HttpRequestPayload) => dispatch(request, httpRequestAction), [dispatch]);
-}
 
 export const httpRequestAction2 = createAsyncThunk(
     "HTTP_REQQQ",

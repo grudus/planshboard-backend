@@ -1,11 +1,11 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import BoardGameList from "./BoardGameList";
-import { mockHttpDispatch, mockRedux } from "utils/testUtils";
+import { mockDispatch, mockRedux } from "utils/testUtils";
 import { MemoryRouter } from "react-router-dom";
 
 beforeEach(() => {
-    mockHttpDispatch();
+    mockDispatch();
 });
 
 test("Should display all items", () => {
