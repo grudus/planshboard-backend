@@ -31,7 +31,7 @@ export const planshboardStore = configureStore({
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }).prepend(sagaMiddleware, routerMiddleware(history), logger),
+        }).concat(logger, sagaMiddleware, routerMiddleware(history)),
     preloadedState: getPersistedState(),
 });
 
