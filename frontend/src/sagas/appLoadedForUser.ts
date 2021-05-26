@@ -1,5 +1,5 @@
 import { select, takeEvery } from "redux-saga/effects";
-import { authTokenObtainedAction } from "app/auth/__store/authActions";
+import AuthActions from "app/auth/__store/authActions";
 import { Store } from "store/rootReducer";
 import { routesWithoutAuth } from "app/routing/routes";
 
@@ -14,7 +14,7 @@ function* routeGuard(actionType: string, generatorToRun: () => any) {
 }
 
 export function* appLoadedForUser(generatorToRun: () => any): Generator {
-    yield takeEvery(["APP_INITIALIZED", authTokenObtainedAction.type], action =>
+    yield takeEvery(["APP_INITIALIZED", AuthActions.authTokenObtained.type], action =>
         routeGuard(action.type, generatorToRun),
     );
 }

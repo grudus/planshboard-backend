@@ -1,11 +1,6 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
-import {
-    authTokenObtainedAction,
-    loginSuccessAction,
-    tryToLoginAction,
-    WaitTryToLoginPayload,
-} from "app/auth/__store/authActions";
+import AuthActions, { WaitTryToLoginPayload } from "app/auth/__store/authActions";
 import { httpRequestAction } from "app/shared/store/httpRequestActions";
 import { apiRoutes } from "app/routing/routes";
 
@@ -24,17 +19,17 @@ function* login(action: PayloadAction<WaitTryToLoginPayload>): Generator {
             isForm: true,
             body,
             path: apiRoutes.auth.login,
-            successAction: loginSuccessAction,
+            successAction: AuthActions.loginSuccess,
         }),
     );
 }
 
 function* afterSuccessfulLogin(action: PayloadAction<Response>): Generator {
     const token = extractAuthToken(action.payload);
-    if (token) yield put(authTokenObtainedAction(token));
+    if (token) yield put(AuthActions.authTokenObtained(token));
 }
 
 export default function* loginSaga(): Generator {
-    yield takeLatest(tryToLoginAction.type, login);
-    yield takeLatest(loginSuccessAction.type, afterSuccessfulLogin);
+    yield takeLatest(AuthActions.tryToLogin.type, login);
+    yield takeLatest(AuthActions.loginSuccess.type, afterSuccessfulLogin);
 }

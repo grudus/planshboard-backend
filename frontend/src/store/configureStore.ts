@@ -5,7 +5,7 @@ import rootSaga from "../sagas/rootSaga";
 import { getPersistedState, persistState } from "./persistStore";
 import { createBrowserHistory, History, LocationState } from "history";
 import { routerMiddleware } from "connected-react-router";
-import { logoutAction } from "app/auth/__store/authActions";
+import AuthActions from "app/auth/__store/authActions";
 import logger from "redux-logger";
 
 const devMode = process.env.NODE_ENV === "development";
@@ -16,7 +16,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const logoutAwareReducer = (state: any, action: PayloadAction) => {
     let newState: any = state;
-    if (action.type === logoutAction.type) {
+    if (action.type === AuthActions.logout.type) {
         newState = {
             router: state.router,
             locale: state.locale,

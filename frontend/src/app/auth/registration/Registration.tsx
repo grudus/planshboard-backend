@@ -11,12 +11,12 @@ import { ReactComponent as PassIcon } from "app/auth/login/icon-lock.svg";
 import Button from "library/button/Button";
 import { appRoutes } from "app/routing/routes";
 import RingLoading from "library/loading/RingLoading";
-import { useHttpDispatch } from "app/shared/store/httpRequestActions";
-import { checkUsernameRequest, registerRequest } from "app/auth/AuthApi";
+import AuthActions from "app/auth/__store/authActions";
+import { useAppDispatch } from "store/useAppDispatch";
 
 const Registration: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
-    const dispatch = useHttpDispatch();
+    const dispatch = useAppDispatch();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ const Registration: React.FunctionComponent<any> = () => {
         event.preventDefault();
         setLoading(true);
 
-        await registerRequest(dispatch, { username, password });
+        await dispatch(AuthActions.register({ username, password }));
 
         setLoading(false);
     };
@@ -37,7 +37,7 @@ const Registration: React.FunctionComponent<any> = () => {
         setCheckingUsername(true);
         setUsernameError("");
 
-        const result = await checkUsernameRequest(dispatch, { username });
+        const result = await dispatch(AuthActions.checkUsername({ username }));
 
         setCheckingUsername(false);
         setUsernameError(result.exists ? translate("AUTH.ERRORS.USERNAME_EXISTS") : "");
