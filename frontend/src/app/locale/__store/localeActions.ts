@@ -1,18 +1,14 @@
-import { createAction, PrepareAction } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Language, Translations } from "./localeStore";
 
-export const changeLanguage = createAction("CHANGE_LANGUAGE", (language: Language) => ({
-    payload: language,
-}));
+const changeLanguage = createAsyncThunk("CHANGE_LANGUAGE", async (language: Language, thunkAPI) => {
+    const newLanguage = await import(`../language-${language}.json`);
+    const translations = newLanguage.default as Translations;
+    return { language, translations };
+});
 
-export interface ChangeLanguageSuccessPayload {
-    language: Language;
-    translations: any;
-}
+const LocaleActions = {
+    changeLanguage,
+};
 
-export const changeLanguageSuccess = createAction<PrepareAction<ChangeLanguageSuccessPayload>>(
-    "CHANGE_LANGUAGE_SUCCESS",
-    (language: Language, translations: Translations) => ({
-        payload: { language, translations },
-    }),
-);
+export default LocaleActions;

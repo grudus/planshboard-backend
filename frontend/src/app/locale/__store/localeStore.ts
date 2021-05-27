@@ -1,5 +1,6 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { changeLanguageSuccess, ChangeLanguageSuccessPayload } from "./localeActions";
+import LocaleActions from "./localeActions";
+import { ChangeLanguageSuccess } from "app/locale/__models/localeModels";
 
 export type Translations = { [key: string]: Record<string, any> | string };
 export type Language = "en" | "pl";
@@ -19,7 +20,7 @@ const initialState: LocaleStore = {
 };
 
 export const localeReducer = createReducer(initialState, {
-    [changeLanguageSuccess.type]: (state, action: PayloadAction<ChangeLanguageSuccessPayload>) => {
+    [LocaleActions.changeLanguage.fulfilled.type]: (state, action: PayloadAction<ChangeLanguageSuccess>) => {
         state.language = action.payload.language;
         state.translations = action.payload.translations;
         state.translationsLoaded = true;
