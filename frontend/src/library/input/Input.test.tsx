@@ -20,12 +20,6 @@ test("Error should have proper role", () => {
     expect(error).toBeInTheDocument();
 });
 
-test("Should not display error when no error was passed", () => {
-    const { queryByRole } = render(<Input label="Label" name="Name" />);
-    const error = queryByRole(/alert/i);
-    expect(error).not.toBeInTheDocument();
-});
-
 test("Should display initial value", () => {
     const { getByDisplayValue } = render(<Input label="Label" name="Name" initialValue="Initial" />);
     const value = getByDisplayValue(/Initial/i);
