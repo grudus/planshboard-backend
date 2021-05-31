@@ -1,4 +1,4 @@
-import { createAction, PayloadAction } from "@reduxjs/toolkit";
+import { createAction } from "@reduxjs/toolkit";
 import { baseHttpAction } from "app/shared/store/httpRequestActions";
 import AuthApi from "app/auth/AuthApi";
 import { ExistsResponse } from "app/shared/models/Response";
