@@ -1,15 +1,22 @@
-import { Dispatch, Middleware, MiddlewareAPI } from "redux";
+import { Dispatch, Middleware } from "redux";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "store/useAppDispatch";
 
 export function listenForActionsMiddleware(listeners: ActionListeners): Middleware {
-    return (storeAPI: MiddlewareAPI) => (dispatch: Dispatch) => action => {
+    return () => (dispatch: Dispatch) => action => {
+        const result = dispatch(action);
+
         if (listeners.has(action?.type)) {
-            console.log("Listening for", action);
             const listener = listeners.get(action.type)!;
-            listener(action);
+            listener(action, dispatch);
         }
 
-        dispatch(action);
+        return result;
     };
 }
 
-export type ActionListeners = Map<string, (action: any) => any>;
+type ActionType = string;
+type ListenerFunc = (action: PayloadAction | any, dispatch: AppDispatch) => any;
+
+export type ActionListeners = Map<ActionType, ListenerFunc>;
+export type ActionListener = [ActionType, ListenerFunc];
