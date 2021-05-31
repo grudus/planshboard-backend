@@ -4,7 +4,7 @@ import { localeReducer } from "app/locale/__store/localeStore";
 import { authReducer } from "app/auth/__store/authStore";
 import { connectRouter } from "connected-react-router";
 import { userReducer } from "app/user/__store/userReducer";
-import { boardGamesReducer } from "app/board-games/__store/boardGameReducer";
+import { boardGamesSlice } from "app/board-games/__store/boardGameSlice";
 import { opponentReducer } from "app/opponents/__store/opponentReducer";
 import { History, LocationState } from "history";
 import { playReducer } from "app/plays/__store/playReducer";
@@ -15,7 +15,7 @@ const rootReducer = (history: History<LocationState>) =>
         locale: localeReducer,
         auth: authReducer,
         user: userReducer,
-        boardGame: boardGamesReducer,
+        boardGame: boardGamesSlice.reducer,
         opponent: opponentReducer,
         play: playReducer,
         notification: notificationReducer,

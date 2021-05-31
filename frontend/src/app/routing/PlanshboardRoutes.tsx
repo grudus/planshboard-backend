@@ -6,7 +6,6 @@ import { appRoutes } from "./routes";
 import Stats from "app/stats/Stats";
 import Ranking from "app/ranking/Ranking";
 import Notifications from "app/notifications/Notifications";
-import Settings from "app/settings/Settings";
 import OpponentRoutes from "app/opponents/OpponentRoutes";
 import PlayRoutes from "app/plays/PlayRoutes";
 import Logout from "app/auth/logout/Logout";
