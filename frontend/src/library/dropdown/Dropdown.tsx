@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import CreatableSelect, { Props } from "react-select/creatable";
 import useTranslations from "../../app/locale/__hooks/useTranslations";
 import useTheme from "../../app/shared/hooks/useTheme";
@@ -13,6 +13,7 @@ import IconButton from "library/icon-button/IconButton";
 import Icons from "library/icons/Icons";
 import { LoadingIndicatorProps } from "react-select/src/components/indicators";
 import { ContainerProps } from "react-select/src/components/containers";
+import { CSSObject } from "@emotion/serialize";
 
 export interface DropdownProps<T> extends Props<T, any> {
     options: OptionsType<T>;
@@ -57,21 +58,21 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
     );
 
     const customStyles: StylesConfig<any, false> = {
-        menu: (provided: CSSProperties) => ({
+        menu: (provided: CSSObject) => ({
             ...provided,
             zIndex: 20,
             borderRadius: "8px",
             marginTop: "-8px",
         }),
 
-        menuList: (provided: CSSProperties) => ({
+        menuList: (provided: CSSObject) => ({
             ...provided,
             background: theme["--surface-color"],
             borderRadius: "8px",
             padding: "8px",
         }),
 
-        option: (provided: CSSProperties, state: any) => ({
+        option: (provided: CSSObject, state: any) => ({
             ...provided,
             color: theme["--input-text"],
             background: state.isFocused ? theme["--input-background"] : theme["--surface-color"],
@@ -84,7 +85,7 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             borderRadius: "8px",
             cursor: "pointer",
         }),
-        control: (provided: CSSProperties) => ({
+        control: (provided: CSSObject) => ({
             ...provided,
             background: theme["--input-background"],
             border: `1px solid ${theme["--input-border-normal"]}`,
@@ -96,15 +97,15 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
             },
             height: "40px",
         }),
-        noOptionsMessage: (provided: CSSProperties) => ({
+        noOptionsMessage: (provided: CSSObject) => ({
             ...provided,
             fontSize: "14px",
         }),
-        singleValue: (provided: CSSProperties) => ({
+        singleValue: (provided: CSSObject) => ({
             ...provided,
             color: theme["--input-text"],
         }),
-        valueContainer: base => ({
+        valueContainer: (base: CSSObject) => ({
             ...base,
             height: "40px",
             paddingLeft: "12px",
@@ -112,7 +113,10 @@ const Dropdown: React.FC<DropdownProps<BaseDropdownItem>> = props => {
         }),
     };
 
-    const SelectComponent = (p: any) => (!p.creationForbidden ? <CreatableSelect {...p} /> : <Select {...p} />);
+    const SelectComponent = React.useCallback(
+        (p: any) => (!p.creationForbidden ? <CreatableSelect {...p} /> : <Select {...p} />),
+        [],
+    );
 
     return (
         <SelectComponent
