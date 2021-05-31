@@ -35,10 +35,10 @@ export function baseHttpAction<Returned, Body = any, RawResponse = Returned>(
     return createAsyncThunk<Returned, Body, any>(type, async (body, thunkAPI) => {
         try {
             const actionResponse = await thunkAPI.dispatch(httpRequestAction(payloadCreator(body)));
-            if (actionResponse.meta.requestStatus === "rejected") {
+            if (actionResponse?.meta?.requestStatus === "rejected") {
                 return thunkAPI.rejectWithValue(actionResponse);
             }
-            return responseMapper(actionResponse.payload, body);
+            return responseMapper(actionResponse?.payload, body);
         } catch (e) {
             throw thunkAPI.rejectWithValue(e);
         }

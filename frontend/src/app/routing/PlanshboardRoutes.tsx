@@ -9,6 +9,7 @@ import Notifications from "app/notifications/Notifications";
 import Settings from "app/settings/Settings";
 import OpponentRoutes from "app/opponents/OpponentRoutes";
 import PlayRoutes from "app/plays/PlayRoutes";
+import Logout from "app/auth/logout/Logout";
 
 const PlashboardRoutes: React.FunctionComponent<any> = () => (
     <>
@@ -26,7 +27,7 @@ const PlashboardRoutes: React.FunctionComponent<any> = () => (
             <Notifications />
         </Route>
         <Route path={appRoutes.settings}>
-            <Settings />
+            <Logout />
         </Route>
         <Route exact path={appRoutes.home}>
             <Redirect to={appRoutes.boardGame.list} />

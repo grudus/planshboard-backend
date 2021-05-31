@@ -6,17 +6,20 @@ import LocaleLoadedGuard from "app/locale/LocaleLoadedGuard";
 import { ConnectedRouter } from "connected-react-router";
 import NavBar from "app/nav-bar/NavBar";
 import { DialogProvider } from "library/dialog/context/DialogContext";
+import AppLoadedForUser from "app/user/AppLoadedForUser";
 
 const App: React.FC = () => {
     return (
         <Provider store={planshboardStore}>
             <ConnectedRouter history={history}>
                 <LocaleLoadedGuard>
-                    <DialogProvider>
-                        <NavBar>
-                            <PlashboardRoutes />
-                        </NavBar>
-                    </DialogProvider>
+                    <AppLoadedForUser>
+                        <DialogProvider>
+                            <NavBar>
+                                <PlashboardRoutes />
+                            </NavBar>
+                        </DialogProvider>
+                    </AppLoadedForUser>
                 </LocaleLoadedGuard>
             </ConnectedRouter>
         </Provider>
