@@ -22,7 +22,7 @@ class LinkedBoardGameDao
 @Autowired
 constructor(
     private val dsl: DSLContext,
-    private val helper: OpponentDaoHelper
+    private val helper: OpponentDaoHelper,
 ) {
 
     fun findBoardGamesLinkedWithUser(userId: Id, withHidden: Boolean = true): List<LinkedBoardGame> {
@@ -34,13 +34,14 @@ constructor(
             BOARD_GAMES.CREATED_AT,
             BOARD_GAMES.CREATOR_ID,
             LINKED_BOARD_GAMES.HIDDEN,
+            LINKED_BOARD_GAMES.LINKED_USER_MERGED_BOARD_GAME_ID,
             OPPONENTS.ID,
             OPPONENTS.NAME,
             USERS.ID,
             USERS.NAME,
-            LINKED_OPPONENTS.INTEGRATION_STATUS
+            LINKED_OPPONENTS.INTEGRATION_STATUS,
         ).from(LINKED_BOARD_GAMES)
-            .join(BOARD_GAMES).on(BOARD_GAMES.ID.eq(LINKED_BOARD_GAMES.BOARD_GAME_ID))
+            .join(BOARD_GAMES).on(BOARD_GAMES.ID.eq(LINKED_BOARD_GAMES.CREATOR_BOARD_GAME_ID))
             .join(USERS).on(USERS.ID.eq(BOARD_GAMES.CREATOR_ID))
             .join(LINKED_OPPONENTS).on(LINKED_OPPONENTS.LINKED_USER_ID.eq(BOARD_GAMES.CREATOR_ID))
             .join(OPPONENTS).on(OPPONENTS.ID.eq(LINKED_OPPONENTS.OPPONENT_ID))
@@ -63,10 +64,14 @@ constructor(
                         record[USERS.ID],
                         record[USERS.NAME],
                         helper.convert(record[LINKED_OPPONENTS.INTEGRATION_STATUS])
-                    )
+                    ),
                 )
 
-                return@fetch LinkedBoardGame(game, opponent, record[LINKED_BOARD_GAMES.HIDDEN])
+                return@fetch LinkedBoardGame(game,
+                    opponent,
+                    record[LINKED_BOARD_GAMES.HIDDEN],
+                    record[LINKED_BOARD_GAMES.LINKED_USER_MERGED_BOARD_GAME_ID]
+                )
             }
 
     }
@@ -74,7 +79,7 @@ constructor(
     fun linkBoardGame(userId: Id, boardGameId: Id): Int {
         return dsl.insertInto(LINKED_BOARD_GAMES)
             .set(LINKED_BOARD_GAMES.LINKED_USER_ID, userId)
-            .set(LINKED_BOARD_GAMES.BOARD_GAME_ID, boardGameId)
+            .set(LINKED_BOARD_GAMES.CREATOR_BOARD_GAME_ID, boardGameId)
             .set(LINKED_BOARD_GAMES.HIDDEN, false)
             .onDuplicateKeyIgnore()
             .execute()
