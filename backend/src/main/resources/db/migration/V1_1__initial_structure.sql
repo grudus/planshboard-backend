@@ -34,10 +34,12 @@ CREATE TABLE IF NOT EXISTS board_game_options
 
 CREATE TABLE IF NOT EXISTS linked_board_games
 (
-    board_game_id  BIGINT  NOT NULL REFERENCES board_games (id) ON DELETE CASCADE,
-    linked_user_id BIGINT  NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    hidden         BOOLEAN NOT NULL DEFAULT FALSE,
-    CONSTRAINT UNIQUE_LINKED_BOARDGAMES UNIQUE (board_game_id, linked_user_id)
+    creator_board_game_id            BIGINT  NOT NULL REFERENCES board_games (id) ON DELETE CASCADE,
+    linked_user_id                   BIGINT  NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    linked_user_merged_board_game_id BIGINT  NULL REFERENCES board_games (id) ON DELETE CASCADE,
+    hidden                           BOOLEAN NOT NULL DEFAULT FALSE,
+    CONSTRAINT UNIQUE_LINKED_BOARDGAMES UNIQUE (creator_board_game_id, linked_user_id),
+    CONSTRAINT UNIQUE_MERGED_BOARD_GAME UNIQUE (linked_user_merged_board_game_id)
 );
 
 CREATE TABLE IF NOT EXISTS opponents

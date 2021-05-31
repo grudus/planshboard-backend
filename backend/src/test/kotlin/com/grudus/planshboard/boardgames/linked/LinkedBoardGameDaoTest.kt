@@ -73,8 +73,8 @@ constructor(
         val games = linkedBoardGameDao.findBoardGamesLinkedWithUser(linkedUser)
 
         assertEquals(1, games.size)
-        assertEquals(boardGameId, games[0].game.id)
-        assertEquals(boardGameName, games[0].game.name)
+        assertEquals(boardGameId, games[0].creatorBoardGame.id)
+        assertEquals(boardGameName, games[0].creatorBoardGame.name)
         assertEquals(firstUserId, games[0].creator.linkedUser!!.userId)
     }
 
@@ -102,12 +102,12 @@ constructor(
         ) // shouldn't find, because not linked
 
         val games = linkedBoardGameDao.findBoardGamesLinkedWithUser(linkedUser)
-            .sortedBy { it.game.name }
+            .sortedBy { it.creatorBoardGame.name }
 
         assertEquals(3, games.size)
-        assertEquals("aGame", games[0].game.name)
-        assertEquals("bGame", games[1].game.name)
-        assertEquals("cGame", games[2].game.name)
+        assertEquals("aGame", games[0].creatorBoardGame.name)
+        assertEquals("bGame", games[1].creatorBoardGame.name)
+        assertEquals("cGame", games[2].creatorBoardGame.name)
         assertEquals(creator1, games[0].creator.linkedUser!!.userId)
         assertEquals("Opp1", games[0].creator.name)
         assertEquals("Opp1", games[1].creator.name)
