@@ -35,16 +35,15 @@ const AcceptInvitationDialog: React.FC<AcceptInvitationDialogProps> = props => {
     const onConfirm = async () => {
         if (!opponent) return;
         setLoading(true);
-        await dispatch(
-            NotificationActions.acceptOpponentLinked({
-                opponent,
-                notificationId: notification.id,
-            }),
-        ).catch((err: any) => {
-            setError(getErrorCode(err) ?? "");
-        });
+        try {
+            const notificationId = notification.id;
+            await dispatch(NotificationActions.acceptOpponentLinked({ opponent, notificationId }));
+            props.onCancel?.();
+        } catch (e) {
+            const errorKey = `OPPONENTS.ADD.ERRORS.${getErrorCode(e)}`;
+            setError(translate(errorKey));
+        }
         setLoading(false);
-        props.onCancel?.();
     };
 
     const creatorDisplayName = notification.eventData.creatorDisplayName;

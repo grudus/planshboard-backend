@@ -1,5 +1,6 @@
 import { HttpRequestDefinition } from "app/shared/store/httpRequestActions";
 import { JSONObject } from "utils/models/json";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 export async function postFormRequest(request: HttpRequestDefinition, token?: string): Promise<Response | JSONObject> {
     const body = Object.keys(request.body)
@@ -43,11 +44,12 @@ export async function fetchRequest(request: HttpRequestDefinition, headers?: Hea
     return response;
 }
 
-export const getErrorCode = (errorString: string): string | undefined => {
+export const getErrorCode = (error: string | PayloadAction): string | undefined => {
+    const errorString = typeof error === "string" ? error : (error.payload as any);
     try {
         return JSON.parse(errorString)?.code;
     } catch (e) {
-        console.error("Cannot parse error", errorString, e);
+        console.error("Cannot parse error", error, e);
         return "UNKNOWN";
     }
 };
