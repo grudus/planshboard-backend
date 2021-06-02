@@ -59,7 +59,8 @@
                 "TOP": "Nie masz jeszcze żadnych gier!",
                 "BOTTOM": "Stwórz je, aby móc zapisywać rozgrywki."
             },
-            "ADD_BUTTON": "Dodaj grę"
+            "ADD_BUTTON": "Dodaj grę",
+            "LINKED": "Gry innych graczy"
         },
         "FORM": {
             "INPUT": "Podaj nazwę",
@@ -180,7 +181,6 @@
         "DELETE": "Usuń",
         "MARK_AS_READ": "Oznacz jako przeczytane",
         "MARK_ALL_AS_READ": "Oznacz wszystkie jako przeczytane",
-
         "PLAY_ADDED": {
             "ACCEPT": "Akceptuj",
             "ACCEPT_ALL": "Akceptuj wszystkie",

@@ -31,12 +31,18 @@ const deleteBoardGame: ApiCall<IdRequest> = request => ({
     body: request,
 });
 
+const getLinkedBoardGames: ApiCall<void> = () => ({
+    type: "get",
+    path: apiRoutes.boardGame.linked,
+});
+
 const BoardGameApi = {
     getBoardGames,
     getSingleBoardGame,
     addBoardGame,
     editBoardGame,
     deleteBoardGame,
+    getLinkedBoardGames,
 };
 
 export default BoardGameApi;

@@ -24,6 +24,6 @@ constructor(
 
     @Cacheable(key = "#userId")
     fun findBoardGamesLinkedWithUser(userId: Id): List<LinkedBoardGame> {
-        return linkedBoardGameDao.findBoardGamesLinkedWithUser(userId, true)
+        return linkedBoardGameDao.findBoardGamesLinkedWithUser(userId)
     }
 }
