@@ -11,12 +11,13 @@ import useDialog from "library/dialog/context/useDialog";
 import { BoardGameActions } from "app/board-games/__store/boardGameActions";
 import BoardGameListItem from "app/board-games/list-item/BoardGameListItem";
 import { useAppDispatch } from "store/useAppDispatch";
+import MediumTitle from "library/text/MediumTitle";
 
 const BoardGameList: React.FunctionComponent<any> = () => {
     const { showDialog } = useDialog();
     const { setFilter, filterCondition } = useFilter();
     const dispatch = useAppDispatch();
-    const { list: boardGames, boardGameExists } = useRedux(state => state.boardGame);
+    const { list: boardGames, linked: linkedBoardGames, boardGameExists } = useRedux(state => state.boardGame);
 
     const confirmDeleteItem = useCallback(
         (id: number) => dispatch(BoardGameActions.deleteBoardGame({ id })),
@@ -30,9 +31,10 @@ const BoardGameList: React.FunctionComponent<any> = () => {
 
     useEffect(() => {
         dispatch(BoardGameActions.getBoardGames());
+        dispatch(BoardGameActions.getLinkedBoardGames());
     }, [dispatch]);
 
-    if (!boardGameExists) {
+    if (!boardGameExists && !linkedBoardGames) {
         return (
             <>
                 <EmptyListPlaceholder />
@@ -46,6 +48,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
             <div className={css.searchWrapper}>
                 <SearchInput onTextChange={setFilter} hideLabel />
             </div>
+
             <FlipMove className={css.list} typeName="ul">
                 {boardGames
                     ?.filter(game => filterCondition(game.name))
@@ -55,6 +58,19 @@ const BoardGameList: React.FunctionComponent<any> = () => {
                         </li>
                     ))}
             </FlipMove>
+
+            <MediumTitle>BOARD_GAMES.LIST.LINKED</MediumTitle>
+
+            <FlipMove className={css.list} typeName="ul">
+                {linkedBoardGames
+                    ?.filter(({ creatorBoardGame }) => filterCondition(creatorBoardGame.name))
+                    ?.map(({ creatorBoardGame }) => (
+                        <li key={creatorBoardGame.id} className={css.singleItem}>
+                            {JSON.stringify(creatorBoardGame)}
+                        </li>
+                    ))}
+            </FlipMove>
+
             <AddBoardGameButton className={css.addButton} />
         </div>
     );

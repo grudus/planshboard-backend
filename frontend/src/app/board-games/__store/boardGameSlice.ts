@@ -27,5 +27,8 @@ export const boardGamesSlice = createSlice({
                 const list = state.list.filter(game => game.id !== payload.id);
                 state.list = list;
                 state.boardGameExists = !!list.length;
+            })
+            .addCase(BoardGameActions.getLinkedBoardGames.fulfilled, (state, { payload }) => {
+                state.linked = payload;
             }),
 });

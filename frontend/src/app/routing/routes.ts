@@ -52,6 +52,7 @@ export const apiRoutes = {
     boardGame: {
         list: "/api/board-games",
         single: (id: number) => `/api/board-games/${id}`,
+        linked: "/api/board-games/linked",
     },
     opponent: {
         list: "/api/opponents",

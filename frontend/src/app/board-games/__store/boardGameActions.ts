@@ -1,10 +1,15 @@
-import { BoardGame, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
+import { BoardGame, LinkedBoardGame, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
 import BoardGameApi from "app/board-games/BoardGameApi";
 import { baseHttpAction, passBodyAsResponse } from "app/shared/store/httpRequestActions";
 import { IdRequest, IdResponse } from "app/shared/models/Response";
 import { AddBoardGameRequest, EditBoardGameRequest } from "app/board-games/__models/BoardGameApiModels";
 
 const getBoardGames = baseHttpAction<BoardGame[], void>("GET_BOARD_GAMES", BoardGameApi.getBoardGames);
+
+const getLinkedBoardGames = baseHttpAction<LinkedBoardGame[], void>(
+    "GET_LINKED_BOARD_GAMES",
+    BoardGameApi.getLinkedBoardGames,
+);
 
 const getSingleBoardGame = baseHttpAction<SingleBoardGame>("GET_SINGLE_BOARD_GAME", BoardGameApi.getSingleBoardGame);
 
@@ -32,4 +37,5 @@ export const BoardGameActions = {
     addBoardGame,
     editBoardGame,
     deleteBoardGame,
+    getLinkedBoardGames,
 };

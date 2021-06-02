@@ -1,3 +1,5 @@
+import { Opponent } from "app/opponents/__models/OpponentModels";
+
 export interface BoardGame {
     id: number;
     name: string;
@@ -5,14 +7,16 @@ export interface BoardGame {
     createdAt: Date;
 }
 
+export interface LinkedBoardGame {
+    creatorBoardGame: BoardGame;
+    creator: Opponent;
+    hidden: boolean;
+    mergedBoardGameId?: number;
+}
+
 export interface SingleBoardGame {
     boardGame: BoardGame;
     options: BoardGamePlayResultsOptions;
-}
-
-export interface BasicBoardGame {
-    id: number;
-    name: string;
 }
 
 export enum BoardGameType {

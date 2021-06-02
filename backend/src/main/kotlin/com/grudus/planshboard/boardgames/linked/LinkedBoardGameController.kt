@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/board-games/lined")
+@RequestMapping("/api/board-games/linked")
 class LinkedBoardGameController
 @Autowired
 constructor(private val linkedBoardGameService: LinkedBoardGameService) {
