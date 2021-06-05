@@ -17,7 +17,6 @@ interface PlayMetaFieldsProps {
 
 const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
     const allTags = useRedux(state => state.play.tags);
-    const { translate } = useTranslations();
     const onNoteChange = (note: string) => {
         const copy = { ...props.meta, note };
         props.onChange(copy);
@@ -45,7 +44,7 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
                 {props.gameOptions.showNote && (
                     <Input
                         name="note"
-                        label={translate("PLAYS.FORM.META.NOTE")}
+                        label="PLAYS.FORM.META.NOTE"
                         multiline
                         initialValue={props.meta?.note}
                         onTextChange={onNoteChange}

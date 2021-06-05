@@ -2,7 +2,6 @@ import React, { FormEvent, useEffect, useState } from "react";
 import Input from "library/input/Input";
 import Button from "library/button/Button";
 import css from "./board-game-form.module.scss";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import BoardGameOptions from "app/board-games/form/board-game-options/BoardGameOptions";
 import { defaultRegularGameOptions, SingleBoardGame } from "app/board-games/__models/BoardGameModels";
 import { AddBoardGameRequest, EditBoardGameRequest } from "app/board-games/__models/BoardGameApiModels";
@@ -18,7 +17,6 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
     const [name, setName] = useState(props.initialValue?.boardGame.name ?? "");
     const [options, setOptions] = useState(props.initialValue?.options ?? defaultRegularGameOptions);
     const [loading, setLoading] = useState(false);
-    const { translate } = useTranslations();
 
     useEffect(() => {
         !!props.error && setLoading(false);
@@ -38,7 +36,7 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
     return (
         <form onSubmit={submitForm} className={css.form}>
             <Input
-                label={translate("BOARD_GAMES.FORM.INPUT")}
+                label="BOARD_GAMES.FORM.INPUT"
                 name="name"
                 onTextChange={setName}
                 autoFocus

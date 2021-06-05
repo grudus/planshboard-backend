@@ -33,7 +33,7 @@ const AcceptInvitationSelectOpponent: React.FC<AcceptInvitationSelectOpponentPro
     ) : (
         <Input
             name="newUserName"
-            label={translate("OPPONENTS.FORM.NAME_LABEL")}
+            label="OPPONENTS.FORM.NAME_LABEL"
             onTextChange={text => props.onChange({ newOpponentName: text })}
             error={props.error}
         />

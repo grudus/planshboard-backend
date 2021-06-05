@@ -32,7 +32,7 @@ const Login: React.FunctionComponent<any> = () => {
             await dispatch(AuthActions.login({ username: login, password }));
             history.push("/");
         } catch (e) {
-            setError(translate("AUTH.ERRORS.INVALID_LOGIN"));
+            setError("AUTH.ERRORS.INVALID_LOGIN");
         } finally {
             setLoading(false);
         }
@@ -44,14 +44,14 @@ const Login: React.FunctionComponent<any> = () => {
                 <Heading variant="h1" className={css.title} text="AUTH.LOGIN.TITLE" />
 
                 <Input
-                    label={translate("AUTH.LOGIN.INPUT_LOGIN_LABEL")}
+                    label="AUTH.LOGIN.INPUT_LOGIN_LABEL"
                     name="username"
                     onTextChange={setLogin}
                     autoFocus
                     frontIcon={<UserIcon />}
                 />
                 <PasswordInput
-                    label={translate("AUTH.LOGIN.INPUT_PASSWORD_LABEL")}
+                    label="AUTH.LOGIN.INPUT_PASSWORD_LABEL"
                     name="password"
                     onTextChange={setPassword}
                     frontIcon={<PassIcon />}

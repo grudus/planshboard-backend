@@ -1,6 +1,7 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import css from "./input.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 export type InputType = "text" | "password" | "number";
 
@@ -26,6 +27,7 @@ export interface InputProps {
 
 const Input: React.FC<InputProps> = props => {
     const [text, setText] = useState("");
+    const { translate } = useTranslations();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { value } = e.target;
@@ -80,7 +82,7 @@ const Input: React.FC<InputProps> = props => {
     return (
         <div className={merge(css.wrapper, cssIf(css.error, isError()), css[props.size ?? "normal"], props.className)}>
             <label className={merge(css.label, cssIf(css.hideLabel, !!props.hideLabel))} htmlFor={props.name}>
-                {props.label}
+                {props.label ? translate(props.label) : null}
             </label>
 
             <div className={css.inputWithIconsWrapper}>
@@ -93,7 +95,7 @@ const Input: React.FC<InputProps> = props => {
             </div>
 
             <span role="alert" className={merge(css.errorMessage, cssIf(css.showError, isError()))}>
-                {props.error}
+                {props.error ? translate(props.error) : null}
             </span>
         </div>
     );

@@ -17,7 +17,6 @@ interface SelectBoardGameDialogProps extends DialogProps {
 const SelectBoardGameDialog: React.FC<SelectBoardGameDialogProps> = props => {
     const boardGames = useRedux(state => state.boardGame.list);
     const { setFilter, filterCondition } = useFilter();
-    const { translate } = useTranslations();
 
     const selectGame = (game: BoardGame) => {
         props.onSelect(game.id);
@@ -34,7 +33,9 @@ const SelectBoardGameDialog: React.FC<SelectBoardGameDialogProps> = props => {
 
     return (
         <Dialog open={props.open} mobileFull {...props}>
-            <CardFormTitle>{translate("BOARD_GAMES.SELECT.TITLE")}</CardFormTitle>
+            <CardFormTitle>
+                <Heading text="BOARD_GAMES.SELECT.TITLE" variant="h4" />
+            </CardFormTitle>
             <CardFormContent className={css.content}>
                 <SearchInput hideLabel onTextChange={setFilter} autoFocus onEnter={selectFirstValue} />
 
