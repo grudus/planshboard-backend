@@ -2,6 +2,7 @@ import React from "react";
 import css from "./opponent-radio.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 import Avatar from "library/avatar/Avatar";
+import Heading from "library/text/Heading";
 
 interface OpponentCheckboxProps {
     title: string;
@@ -17,7 +18,7 @@ const OpponentRadio: React.FC<OpponentCheckboxProps> = props => (
     <label className={merge(css.radioLabelWrapper, cssIf(css.selected, props.selectedValue === props.value))}>
         <Avatar image={props.icon} name={props.title} />
         <div className={css.textWrapper}>
-            <h4 className={css.radioTitle}>{props.title}</h4>
+            <Heading variant="h6" text={props.title} noTranslation className={css.radioTitle} center />
             <span className={css.secondaryText}>{props.secondaryText}</span>
         </div>
         <input type="radio" name={OPPONENT_TYPE_KEY} value={props.value} className={css.radio} />

@@ -4,11 +4,11 @@ import CardFormTitle from "library/card-form/CardFormTitle";
 import CardFormContent from "library/card-form/CardFormContent";
 import { useRedux } from "store/rootReducer";
 import css from "./select-board-game-dialog.module.scss";
-import MediumTitle from "library/text/MediumTitle";
 import SearchInput from "library/search-input/SearchInput";
 import useFilter from "app/shared/hooks/useFilter";
 import { BoardGame } from "app/board-games/__models/BoardGameModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import Heading from "library/text/Heading";
 
 interface SelectBoardGameDialogProps extends DialogProps {
     onSelect: (id: number) => void;
@@ -49,7 +49,7 @@ const SelectBoardGameDialog: React.FC<SelectBoardGameDialogProps> = props => {
                                     onClick={() => selectGame(boardGame)}
                                 >
                                     <button className={css.boardGameOptionButton}>
-                                        <MediumTitle>{boardGame.name}</MediumTitle>
+                                        <Heading text={boardGame.name} />
                                     </button>
                                 </li>
                             ))}

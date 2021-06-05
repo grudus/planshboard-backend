@@ -3,6 +3,7 @@ import { NotificationItem, OpponentNotification } from "app/notifications/__mode
 import BaseNotificationWrapper from "app/notifications/types/BaseNotificationWrapper";
 import css from "./notification-types.module.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import Heading from "library/text/Heading";
 
 export interface OpponentLinkedNotificationProps {
     data: OpponentNotification;
@@ -14,7 +15,7 @@ const OpponentLinkedNotification: React.FC<OpponentLinkedNotificationProps> = pr
 
     return (
         <BaseNotificationWrapper notification={props.notification} creatorName={props.data.creatorDisplayName}>
-            <h5 className={css.title}>{translate("NOTIFICATIONS.OPPONENT_LINKED.TITLE")}.</h5>
+            <Heading variant="h4" text="NOTIFICATIONS.OPPONENT_LINKED.TITLE" className={css.title} />
             <span className={css.metaInfo}>{translate("NOTIFICATIONS.OPPONENT_LINKED.META_INFO")}.</span>
         </BaseNotificationWrapper>
     );

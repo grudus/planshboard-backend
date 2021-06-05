@@ -1,22 +1,16 @@
 import React from "react";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import css from "app/plays/list/no-board-games/no-board-games-placeholder.module.scss";
 import { ReactComponent as EmptyImage } from "./no-plays.svg";
-import MediumTitle from "library/text/MediumTitle";
+import Heading from "library/text/Heading";
 
-const NoPlaysPlaceholder: React.FC = () => {
-    const { translate } = useTranslations();
-
-    return (
-        <div className={css.emptyWrapper}>
-            {<EmptyImage />}
-            <MediumTitle className={css.emptyText}>
-                {translate("PLAYS.LIST.EMPTY.TOP")}
-                <br />
-                {translate("PLAYS.LIST.EMPTY.BOTTOM")}
-            </MediumTitle>
+const NoPlaysPlaceholder: React.FC = () => (
+    <div className={css.emptyWrapper}>
+        {<EmptyImage />}
+        <div>
+            <Heading variant="h2" className={css.emptyText} text="PLAYS.LIST.EMPTY.TOP" />
+            <Heading variant="h2" className={css.emptyText} text="PLAYS.LIST.EMPTY.BOTTOM" />
         </div>
-    );
-};
+    </div>
+);
 
-export default NoPlaysPlaceholder;
+export default React.memo(NoPlaysPlaceholder);

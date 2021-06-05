@@ -11,6 +11,7 @@ import css from "./add-board-game.module.scss";
 import { useDispatch } from "react-redux";
 import { BoardGameActions } from "app/board-games/__store/boardGameActions";
 import { AddBoardGameRequest } from "app/board-games/__models/BoardGameApiModels";
+import Heading from "library/text/Heading";
 
 const AddBoardGame: React.FC = () => {
     const history = useHistory();
@@ -34,7 +35,7 @@ const AddBoardGame: React.FC = () => {
     return (
         <CardForm className={css.formWrapper}>
             <CardFormTitle>
-                <h1>{translate("BOARD_GAMES.ADD.TITLE")}</h1>
+                <Heading variant="h4" text="BOARD_GAMES.ADD.TITLE" />
             </CardFormTitle>
             <CardFormContent>
                 <BoardGameForm onSubmit={onSubmit} onCancel={onCancel} error={error} />

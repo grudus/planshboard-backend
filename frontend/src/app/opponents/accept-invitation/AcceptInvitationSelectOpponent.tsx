@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import MediumTitle from "library/text/MediumTitle";
 import FancyRadio from "library/fancy-radio/FancyRadio";
 import Input from "library/input/Input";
 import OpponentsDropdown from "app/opponents/dropdown/OpponentsDropdown";
@@ -7,6 +6,7 @@ import css from "./accept-invitation.module.scss";
 import Icons from "library/icons/Icons";
 import { SelectedOpponent } from "app/opponents/accept-invitation/AcceptInvitationDialog";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import Heading from "library/text/Heading";
 
 interface AcceptInvitationSelectOpponentProps {
     onChange: (opponent: SelectedOpponent | null) => void;
@@ -41,7 +41,7 @@ const AcceptInvitationSelectOpponent: React.FC<AcceptInvitationSelectOpponentPro
 
     return (
         <div className={css.selectOpponents}>
-            <MediumTitle className={css.mainText}>{translate("NOTIFICATIONS.ACCEPT_LINKED.LINK_TITLE")}</MediumTitle>
+            <Heading variant="h4" className={css.mainText} text="NOTIFICATIONS.ACCEPT_LINKED.LINK_TITLE" />
             <p className={css.subText}>
                 {translate("NOTIFICATIONS.ACCEPT_LINKED.LINK_DESCRIPTION").replace(
                     "{{name}}",
@@ -50,7 +50,7 @@ const AcceptInvitationSelectOpponent: React.FC<AcceptInvitationSelectOpponentPro
             </p>
             <div onChange={toggleExistingOpponent} className={css.radioGroup}>
                 <FancyRadio
-                    text={translate("NOTIFICATIONS.ACCEPT_LINKED.RADIO_EXISTING")}
+                    text="NOTIFICATIONS.ACCEPT_LINKED.RADIO_EXISTING"
                     icon={Icons.ExistingUser}
                     value="existing"
                     inputName="useExisting"
@@ -58,7 +58,7 @@ const AcceptInvitationSelectOpponent: React.FC<AcceptInvitationSelectOpponentPro
                     selectedClassName={css.selectedOption}
                 />
                 <FancyRadio
-                    text={translate("NOTIFICATIONS.ACCEPT_LINKED.RADIO_NEW")}
+                    text="NOTIFICATIONS.ACCEPT_LINKED.RADIO_NEW"
                     icon={Icons.NewUser}
                     value="new"
                     inputName="useExisting"

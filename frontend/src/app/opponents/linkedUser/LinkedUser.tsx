@@ -16,11 +16,13 @@ const LinkedUser: React.FC<LinkedUserProps> = props => {
     if (!props.opponent?.linkedUser) return <h6 className={css.existingUserName}>&nbsp;</h6>;
 
     return isCurrentUser ? (
-        <h6 className={css.existingUserName}>{translate("OPPONENTS.PROFILE.LINKED_WITH_CREATOR")}</h6>
+        <div className={css.existingUserWrapper}>
+            <span className={css.existingUserName}>{translate("OPPONENTS.PROFILE.LINKED_WITH_CREATOR")}</span>
+        </div>
     ) : (
         <div className={css.existingUserWrapper} data-tip={translate("OPPONENTS.WAITING_FOR_CONFIRMATION")}>
             <Tooltip />
-            <h6 className={css.existingUserName}>{props.opponent?.linkedUser?.userName}</h6>
+            <span className={css.existingUserName}>{props.opponent?.linkedUser?.userName}</span>
             {Icons.AlertIcon}
         </div>
     );

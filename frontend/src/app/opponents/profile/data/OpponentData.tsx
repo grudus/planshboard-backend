@@ -20,7 +20,7 @@ const OpponentData: React.FC<OpponentDataProps> = props => {
                 color="accent"
             />
             <div className={css.namesWrapper}>
-                <h4 className={css.opponentName}>{props.opponent?.name}</h4>
+                <p className={css.opponentName}>{props.opponent?.name}</p>
                 <LinkedUser opponent={props.opponent} />
             </div>
         </article>

@@ -7,6 +7,7 @@ import DatePicker from "library/datepicker/DatePicker";
 import TagsInput from "library/tags-input/TagsInput";
 import { useRedux } from "store/rootReducer";
 import { BoardGamePlayResultsOptions } from "app/board-games/__models/BoardGameModels";
+import Heading from "library/text/Heading";
 
 interface PlayMetaFieldsProps {
     meta?: PlayMeta;
@@ -34,7 +35,7 @@ const PlayMetaFields: React.FC<PlayMetaFieldsProps> = props => {
 
     return (
         <div className={css.wrapper}>
-            <h6>{translate("PLAYS.FORM.META.TITLE")}</h6>
+            <Heading variant="h6" text="PLAYS.FORM.META.TITLE" />
 
             <div className={css.fieldsWrapper}>
                 {props.gameOptions.showTags && (

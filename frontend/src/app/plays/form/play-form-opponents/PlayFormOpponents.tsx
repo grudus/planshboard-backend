@@ -6,6 +6,7 @@ import FlipMove from "react-flip-move";
 import OpponentsDropdown from "app/opponents/dropdown/OpponentsDropdown";
 import { merge } from "utils/cssUtils";
 import useTranslations from "app/locale/__hooks/useTranslations";
+import Heading from "library/text/Heading";
 
 interface PlayFormOpponentsProps {
     frequentOpponents: Opponent[];
@@ -20,7 +21,7 @@ const PlayFormOpponents: React.FC<PlayFormOpponentsProps> = props => {
     return (
         <section>
             <div className={merge(css.titleMoreWrapper)}>
-                <h6 className={css.title}>{translate("PLAYS.FORM.OPPONENTS.TITLE")}</h6>
+                <Heading variant="h6" className={css.title} text="PLAYS.FORM.OPPONENTS.TITLE" />
                 <button className={css.more} onClick={() => setShowMoreOpponents(!showMoreOpponents)}>
                     {showMoreOpponents
                         ? translate("PLAYS.FORM.OPPONENTS.LESS")
