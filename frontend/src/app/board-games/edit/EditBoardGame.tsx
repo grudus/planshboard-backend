@@ -33,7 +33,7 @@ const EditBoardGame: React.FC = () => {
             onCancel();
         } catch (e) {
             const code = getErrorCode(e);
-            setError(translate(`ERRORS.${code}`));
+            setError(`ERRORS.${code}`);
         }
     };
     const onCancel = () => {

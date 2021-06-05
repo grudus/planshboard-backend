@@ -54,7 +54,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
     return (
         <form onSubmit={onSubmit}>
             <Input
-                label={translate("OPPONENTS.FORM.NAME_LABEL")}
+                label="OPPONENTS.FORM.NAME_LABEL"
                 name="name"
                 onTextChange={setOpponentName}
                 autoFocus
@@ -65,15 +65,15 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
             <div className={css.radioGroup} onChange={change}>
                 <OpponentRadio
                     icon={Icons.NewUser}
-                    title={translate("OPPONENTS.FORM.NEW_OPPONENT_VALUE")}
-                    secondaryText={translate("OPPONENTS.FORM.NEW_OPPONENT_SECONDARY")}
+                    title="OPPONENTS.FORM.NEW_OPPONENT_VALUE"
+                    secondaryText="OPPONENTS.FORM.NEW_OPPONENT_SECONDARY"
                     value={NEW_OPPONENT_VALUE}
                     selectedValue={opponentType}
                 />
                 <OpponentRadio
                     icon={Icons.ExistingUser}
-                    title={translate("OPPONENTS.FORM.EXISTING_USER_VALUE")}
-                    secondaryText={translate("OPPONENTS.FORM.EXISTING_USER_SECONDARY")}
+                    title="OPPONENTS.FORM.EXISTING_USER_VALUE"
+                    secondaryText="OPPONENTS.FORM.EXISTING_USER_SECONDARY"
                     value={EXISTING_OPPONENT_VALUE}
                     selectedValue={opponentType}
                 />
@@ -82,7 +82,7 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
             <div className={merge(css.existingUserWrapper, cssIf(css.visible, shouldDisplayUserInput))}>
                 <p className={css.existingUserExplanation}>{translate("OPPONENTS.FORM.EXISTING_USER_EXPLANATION")}</p>
                 <Input
-                    label={translate("OPPONENTS.FORM.EXISTING_USER_LABEL")}
+                    label="OPPONENTS.FORM.EXISTING_USER_LABEL"
                     name="existing-user"
                     onTextChange={setExistingUserName}
                     initialValue={props.initialValue?.linkedUser?.userName}

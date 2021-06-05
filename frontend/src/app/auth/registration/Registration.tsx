@@ -41,7 +41,7 @@ const Registration: React.FunctionComponent<any> = () => {
         const result = await dispatch(AuthActions.checkUsername({ username }));
 
         setCheckingUsername(false);
-        setUsernameError(result.exists ? translate("AUTH.ERRORS.USERNAME_EXISTS") : "");
+        setUsernameError(result.exists ? "AUTH.ERRORS.USERNAME_EXISTS" : "");
     };
 
     return (
@@ -49,7 +49,7 @@ const Registration: React.FunctionComponent<any> = () => {
             <form onSubmit={tryToRegister} className={css.form}>
                 <Heading variant="h1" center className={css.title} text="AUTH.REGISTRATION.TITLE" />
                 <Input
-                    label={translate("AUTH.REGISTRATION.INPUT_LOGIN_LABEL")}
+                    label={"AUTH.REGISTRATION.INPUT_LOGIN_LABEL"}
                     name="username"
                     onTextChange={setUsername}
                     autoFocus
@@ -63,7 +63,7 @@ const Registration: React.FunctionComponent<any> = () => {
                     }
                 />
                 <PasswordInput
-                    label={translate("AUTH.REGISTRATION.INPUT_PASSWORD_LABEL")}
+                    label="AUTH.REGISTRATION.INPUT_PASSWORD_LABEL"
                     name="password"
                     onTextChange={setPassword}
                     frontIcon={<PassIcon />}
