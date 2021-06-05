@@ -65,7 +65,7 @@ const OpponentProfile: React.FC = () => {
                     {!editing && <OpponentData opponent={opponent} />}
                     {!editing && !isCurrentUser && (
                         <Button
-                            text={translate("OPPONENTS.PROFILE.EDIT")}
+                            text="OPPONENTS.PROFILE.EDIT"
                             onClick={() => setEditing(!editing)}
                             decoration="outlined"
                             className={css.editButton}

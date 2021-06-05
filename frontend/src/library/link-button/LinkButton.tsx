@@ -12,4 +12,4 @@ const LinkButton: React.FC<LinkButtonProps> = props => (
     </Link>
 );
 
-export default LinkButton;
+export default React.memo(LinkButton);

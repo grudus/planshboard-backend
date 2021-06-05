@@ -8,7 +8,6 @@ import { FinalResult, PlayMeta, PlayResultRow } from "app/plays/__models/PlayMod
 import { useRedux } from "store/rootReducer";
 import PlayMetaFields from "app/plays/form/play-meta/PlayMetaFields";
 import Button from "library/button/Button";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import CooperativePlayResult from "app/plays/form/results/cooperative-play-result/CooperativePlayResult";
 
 interface PlayFormProps {
@@ -20,7 +19,6 @@ interface PlayFormProps {
 }
 
 const PlayForm: React.FC<PlayFormProps> = props => {
-    const { translate } = useTranslations();
     const frequent: Opponent[] = useRedux(state => state.opponent.frequentOpponents);
     const gameOptions = useRedux(state => state.boardGame.single?.options ?? defaultRegularGameOptions);
     const [frequentOpponents, setFrequentOpponents] = useState(frequent);
@@ -84,12 +82,8 @@ const PlayForm: React.FC<PlayFormProps> = props => {
                 <PlayMetaFields onChange={setMeta} meta={meta} gameOptions={gameOptions} />
 
                 <div className={css.buttonsWrapper}>
-                    <Button text={translate("CANCEL")} decoration="outlined" onClick={props.onCancel} />
-                    <Button
-                        text={translate("SAVE")}
-                        loading={props.loading}
-                        onClick={() => props.onSubmit(results, meta)}
-                    />
+                    <Button text="CANCEL" decoration="outlined" onClick={props.onCancel} />
+                    <Button text="SAVE" loading={props.loading} onClick={() => props.onSubmit(results, meta)} />
                 </div>
             </form>
         </main>

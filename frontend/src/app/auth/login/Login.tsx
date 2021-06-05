@@ -59,7 +59,7 @@ const Login: React.FunctionComponent<any> = () => {
                 />
 
                 <Button
-                    text={translate("AUTH.LOGIN.BUTTON")}
+                    text="AUTH.LOGIN.BUTTON"
                     color="primary"
                     fullWidth
                     className={css.button}

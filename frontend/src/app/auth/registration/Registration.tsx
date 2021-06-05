@@ -70,7 +70,7 @@ const Registration: React.FunctionComponent<any> = () => {
                 />
 
                 <Button
-                    text={translate("AUTH.REGISTRATION.BUTTON")}
+                    text="AUTH.REGISTRATION.BUTTON"
                     color="primary"
                     fullWidth
                     className={css.button}

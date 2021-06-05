@@ -5,14 +5,12 @@ import Button from "library/button/Button";
 import { useDateTime } from "app/shared/hooks/useDateTime";
 import NotificationMenu from "./menu/NotificationMenu";
 import { cssIf, merge } from "utils/cssUtils";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import { getNotificationEntry, NotificationEntry } from "app/notifications/NotificationTypesFactory";
 import { useAppDispatch } from "store/useAppDispatch";
 import NotificationActions from "app/notifications/__store/notificationActions";
 
 const Notifications: React.FC = () => {
     const notifications = useRedux(state => state.notification.list);
-    const { translate } = useTranslations();
     const { formatTime, getUtcDate } = useDateTime();
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
@@ -37,7 +35,7 @@ const Notifications: React.FC = () => {
     return (
         <section className={css.wrapper}>
             <Button
-                text={translate("NOTIFICATIONS.MARK_ALL_AS_READ")}
+                text="NOTIFICATIONS.MARK_ALL_AS_READ"
                 decoration="outlined"
                 loading={loading}
                 className={css.markAsReadButton}
@@ -63,7 +61,7 @@ const Notifications: React.FC = () => {
                 })}
             </ul>
 
-            <Button text={translate("SHOW_MORE")} decoration="outlined" loading={loading} onClick={loadMore} />
+            <Button text="SHOW_MORE" decoration="outlined" loading={loading} onClick={loadMore} />
         </section>
     );
 };
