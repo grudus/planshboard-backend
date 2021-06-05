@@ -7,7 +7,6 @@ import css from "./add-play.module.scss";
 import { Opponent } from "app/opponents/__models/OpponentModels";
 import { useRedux } from "store/rootReducer";
 import { PlayMeta, PlayResultRow, SavePlayRequest } from "app/plays/__models/PlayModels";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import { useQueryParams } from "app/shared/hooks/useQueryParams";
 import Chip from "library/chip/Chip";
 import { appRoutes } from "app/routing/routes";
