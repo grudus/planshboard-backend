@@ -2,7 +2,6 @@ import React from "react";
 import css from "./play-meta-fields.module.scss";
 import Input from "library/input/Input";
 import { PlayMeta } from "app/plays/__models/PlayModels";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import DatePicker from "library/datepicker/DatePicker";
 import TagsInput from "library/tags-input/TagsInput";
 import { useRedux } from "store/rootReducer";

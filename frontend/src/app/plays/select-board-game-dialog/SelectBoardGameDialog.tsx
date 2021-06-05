@@ -7,7 +7,6 @@ import css from "./select-board-game-dialog.module.scss";
 import SearchInput from "library/search-input/SearchInput";
 import useFilter from "app/shared/hooks/useFilter";
 import { BoardGame } from "app/board-games/__models/BoardGameModels";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import Heading from "library/text/Heading";
 
 interface SelectBoardGameDialogProps extends DialogProps {
