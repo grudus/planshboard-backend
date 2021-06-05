@@ -49,19 +49,8 @@ const BoardGameForm: React.FC<BoardGameFormProps> = props => {
             <BoardGameOptions options={options} onChangeOptions={setOptions} />
 
             <div className={css.buttonsWrapper}>
-                <Button
-                    text={translate("BOARD_GAMES.FORM.CANCEL")}
-                    color="accent"
-                    decoration="outlined"
-                    onClick={props.onCancel}
-                />
-                <Button
-                    text={translate("BOARD_GAMES.FORM.SAVE")}
-                    color="primary"
-                    type="submit"
-                    disabled={!name}
-                    loading={loading}
-                />
+                <Button text="BOARD_GAMES.FORM.CANCEL" color="accent" decoration="outlined" onClick={props.onCancel} />
+                <Button text="BOARD_GAMES.FORM.SAVE" color="primary" type="submit" disabled={!name} loading={loading} />
             </div>
         </form>
     );

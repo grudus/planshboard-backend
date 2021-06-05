@@ -91,8 +91,8 @@ const OpponentForm: React.FC<OpponentFormProps> = props => {
             </div>
 
             <div className={merge(css.buttons)}>
-                <Button text={translate("CANCEL")} decoration="outlined" color="primary" onClick={props.onCancel} />
-                <Button text={translate("SAVE")} type="submit" disabled={!isFormValid()} loading={loading} />
+                <Button text="CANCEL" decoration="outlined" color="primary" onClick={props.onCancel} />
+                <Button text="SAVE" type="submit" disabled={!isFormValid()} loading={loading} />
             </div>
         </form>
     );
