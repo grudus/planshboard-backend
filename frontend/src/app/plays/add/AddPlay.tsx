@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { BoardGameActions } from "app/board-games/__store/boardGameActions";
 import OpponentActions from "app/opponents/__store/opponentActions";
 import PlayActions from "app/plays/__store/playActions";
+import Heading from "library/text/Heading";
 
 const AddPlay: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -24,7 +25,6 @@ const AddPlay: React.FC = () => {
     const currentUser = useRedux(s => s.opponent.currentUser);
 
     const { boardGameId, history } = useQueryParams();
-    const { translate } = useTranslations();
     const dispatch = useDispatch();
     const selectedOpponents: Opponent[] = currentUser ? [currentUser] : [];
     const { showDialog } = useDialog();
@@ -75,7 +75,7 @@ const AddPlay: React.FC = () => {
             <CardForm className={css.formWrapper}>
                 <CardFormTitle>
                     <div className={css.headerWrapper}>
-                        <h1>{translate("PLAYS.ADD.TITLE")}</h1>
+                        <Heading text="PLAYS.ADD.TITLE" variant="h4" />
                         {currentGame && (
                             <Chip
                                 text={currentGame.boardGame.name}

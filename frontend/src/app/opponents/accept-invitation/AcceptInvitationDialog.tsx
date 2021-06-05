@@ -11,6 +11,7 @@ import { getErrorCode } from "utils/httpUtils";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { useAppDispatch } from "store/useAppDispatch";
 import NotificationActions from "app/notifications/__store/notificationActions";
+import Heading from "library/text/Heading";
 
 interface AcceptInvitationDialogProps extends DialogProps {
     notification: NotificationItem<OpponentNotification>;
@@ -50,7 +51,9 @@ const AcceptInvitationDialog: React.FC<AcceptInvitationDialogProps> = props => {
 
     return (
         <Dialog {...dialogProps} mobileFull>
-            <CardFormTitle>{translate("NOTIFICATIONS.ACCEPT_LINKED.HEADER")}</CardFormTitle>
+            <CardFormTitle>
+                <Heading text="NOTIFICATIONS.ACCEPT_LINKED.HEADER" variant="h4" />
+            </CardFormTitle>
             <CardFormContent>
                 <AcceptInvitationDescription creatorDisplayName={creatorDisplayName} />
                 <AcceptInvitationSelectOpponent
@@ -61,8 +64,8 @@ const AcceptInvitationDialog: React.FC<AcceptInvitationDialogProps> = props => {
             </CardFormContent>
 
             <DialogFooter>
-                <Button text={translate("CANCEL")} decoration="outlined" onClick={props.onCancel} loading={loading} />
-                <Button text={translate("ACCEPT")} onClick={onConfirm} disabled={!opponent} loading={loading} />
+                <Button text="CANCEL" decoration="outlined" onClick={props.onCancel} loading={loading} />
+                <Button text="ACCEPT" onClick={onConfirm} disabled={!opponent} loading={loading} />
             </DialogFooter>
         </Dialog>
     );

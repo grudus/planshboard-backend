@@ -10,6 +10,7 @@ import { appRoutes } from "app/routing/routes";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { useAppDispatch } from "store/useAppDispatch";
 import OpponentActions from "app/opponents/__store/opponentActions";
+import Heading from "library/text/Heading";
 
 const AddOpponent: React.FC = () => {
     const history = useHistory();
@@ -39,7 +40,7 @@ const AddOpponent: React.FC = () => {
     return (
         <CardForm className={css.formWrapper}>
             <CardFormTitle>
-                <h1>{translate("OPPONENTS.ADD.TITLE")}</h1>
+                <Heading text="OPPONENTS.ADD.TITLE" variant="h4" />
             </CardFormTitle>
             <CardFormContent>
                 <OpponentForm

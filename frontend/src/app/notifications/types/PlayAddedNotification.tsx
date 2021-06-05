@@ -3,6 +3,7 @@ import { NotificationItem, PlayNotification } from "app/notifications/__models/N
 import css from "./notification-types.module.scss";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import BaseNotificationWrapper from "app/notifications/types/BaseNotificationWrapper";
+import Heading from "library/text/Heading";
 
 export interface PlayAddedNotificationProps {
     data: PlayNotification;
@@ -29,7 +30,7 @@ const PlayAddedNotification: React.FC<PlayAddedNotificationProps> = props => {
 
     return (
         <BaseNotificationWrapper notification={props.notification} creatorName={props.data.creatorDisplayName}>
-            <h5 className={css.title}>{translate("NOTIFICATIONS.PLAY_ADDED.TITLE")}</h5>
+            <Heading text="NOTIFICATIONS.PLAY_ADDED.TITLE" className={css.title} variant="h5" />
             <span className={css.metaInfo}>{MetaInfo}</span>
         </BaseNotificationWrapper>
     );

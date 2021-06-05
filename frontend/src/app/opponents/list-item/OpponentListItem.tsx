@@ -24,7 +24,7 @@ const OpponentListItem: React.FC<OpponentListItemProps> = props => {
             <section className={css.item} title={props.opponent.name}>
                 <Avatar image={Icons.NoImageUserIcon} name={props.opponent.name} />
                 <div className={css.namesWrapper}>
-                    <h3 className={css.opponentName}>{props.opponent.name}</h3>
+                    <p className={css.opponentName}>{props.opponent.name}</p>
                     <LinkedUser opponent={props.opponent} />
                 </div>
 

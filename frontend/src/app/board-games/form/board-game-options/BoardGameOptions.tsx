@@ -8,7 +8,7 @@ import {
     defaultGameOptions,
 } from "app/board-games/__models/BoardGameModels";
 import Checkbox from "library/checkbox/Checkbox";
-import useTranslations from "app/locale/__hooks/useTranslations";
+import Heading from "library/text/Heading";
 
 export interface BoardGameOptionsProps {
     options: BoardGamePlayResultsOptions;
@@ -17,8 +17,6 @@ export interface BoardGameOptionsProps {
 
 const BoardGameOptions: React.FC<BoardGameOptionsProps> = props => {
     const [userChangedData, setUserChangedData] = useState(!props.options.isDefault);
-
-    const { translate } = useTranslations();
 
     const changeGameType = (a: ChangeEvent<HTMLInputElement>) => {
         const result = a.target.value as BoardGameType;
@@ -34,10 +32,10 @@ const BoardGameOptions: React.FC<BoardGameOptionsProps> = props => {
 
     return (
         <div>
-            <h6>{translate("BOARD_GAMES.OPTIONS.GAME_TYPE")}</h6>
+            <Heading text="BOARD_GAMES.OPTIONS.GAME_TYPE" variant="h6" />
             <div className={css.gameTypeWrapper} onChange={changeGameType}>
                 <FancyRadio
-                    text={translate("BOARD_GAMES.OPTIONS.TRADITIONAL")}
+                    text="BOARD_GAMES.OPTIONS.TRADITIONAL"
                     icon={Icons.HiveIcon}
                     value="REGULAR"
                     inputName="type"
@@ -45,7 +43,7 @@ const BoardGameOptions: React.FC<BoardGameOptionsProps> = props => {
                     selectedClassName={css.selectedType}
                 />
                 <FancyRadio
-                    text={translate("BOARD_GAMES.OPTIONS.COOPERATIVE")}
+                    text="BOARD_GAMES.OPTIONS.COOPERATIVE"
                     icon={Icons.PolygonIcon}
                     value="COOPERATIVE"
                     inputName="type"
@@ -54,31 +52,31 @@ const BoardGameOptions: React.FC<BoardGameOptionsProps> = props => {
                 />
             </div>
 
-            <h6>{translate("BOARD_GAMES.OPTIONS.SHOW_WHEN_CREATING_PLAY")}</h6>
+            <Heading text="BOARD_GAMES.OPTIONS.SHOW_WHEN_CREATING_PLAY" variant="h6" />
 
             <div className={css.gameSettingsWrapper}>
                 <Checkbox
-                    text={translate("BOARD_GAMES.OPTIONS.SHOW_POSITION")}
+                    text="BOARD_GAMES.OPTIONS.SHOW_POSITION"
                     checked={props.options.showPosition}
                     onCheck={changeSingleOption("showPosition")}
                 />
                 <Checkbox
-                    text={translate("BOARD_GAMES.OPTIONS.SHOW_POINTS")}
+                    text="BOARD_GAMES.OPTIONS.SHOW_POINTS"
                     checked={props.options.showPoints}
                     onCheck={changeSingleOption("showPoints")}
                 />
                 <Checkbox
-                    text={translate("BOARD_GAMES.OPTIONS.SHOW_NOTE")}
+                    text="BOARD_GAMES.OPTIONS.SHOW_NOTE"
                     checked={props.options.showNote}
                     onCheck={changeSingleOption("showNote")}
                 />
                 <Checkbox
-                    text={translate("BOARD_GAMES.OPTIONS.SHOW_DATE")}
+                    text="BOARD_GAMES.OPTIONS.SHOW_DATE"
                     checked={props.options.showDate}
                     onCheck={changeSingleOption("showDate")}
                 />
                 <Checkbox
-                    text={translate("BOARD_GAMES.OPTIONS.SHOW_TAGS")}
+                    text="BOARD_GAMES.OPTIONS.SHOW_TAGS"
                     checked={props.options.showTags}
                     onCheck={changeSingleOption("showTags")}
                 />

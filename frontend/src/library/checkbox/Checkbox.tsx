@@ -1,6 +1,7 @@
 import React from "react";
 import css from "./checkbox.module.scss";
 import { merge } from "utils/cssUtils";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 export interface CheckboxProps {
     text: string;
@@ -15,10 +16,12 @@ const Checkbox: React.FC<CheckboxProps> = props => {
         props.onCheck?.(checked);
     };
 
+    const { translate } = useTranslations();
+
     return (
         <label className={merge(css.checkbox, css[props.color || "primary"])}>
             <input type="checkbox" checked={props.checked} onChange={handleInputChange} />
-            <span>{props.text}</span>
+            <span>{translate(props.text)}</span>
         </label>
     );
 };

@@ -3,6 +3,7 @@ import { SingleOpponentStats } from "app/opponents/__models/OpponentModels";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import css from "./opponent-profile-stats.module.scss";
 import CardFormContent from "library/card-form/CardFormContent";
+import Heading from "library/text/Heading";
 
 interface OpponentProfileStatsProps {
     stats?: SingleOpponentStats;
@@ -19,7 +20,7 @@ const OpponentProfileStats: React.FC<OpponentProfileStatsProps> = props => {
 
     return (
         <CardFormContent className={css.wrapper}>
-            <h4 className={css.title}>{translate("OPPONENTS.PROFILE.STATS.TITLE")}</h4>
+            <Heading variant="h4" className={css.title} text="OPPONENTS.PROFILE.STATS.TITLE" />
 
             <div className={css.numberStatsWrapper}>
                 <div className={css.numberStat}>

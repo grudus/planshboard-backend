@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ConfirmDialog from "library/dialog/confirm-dialog/ConfirmDialog";
-import useTranslations from "app/locale/__hooks/useTranslations";
 import { DialogProps } from "library/dialog/Dialog";
 
 export interface DeleteBoardGameDialogProps extends DialogProps {
@@ -9,7 +8,6 @@ export interface DeleteBoardGameDialogProps extends DialogProps {
 
 const DeleteBoardGameDialog: React.FC<DeleteBoardGameDialogProps> = props => {
     const [loading, setLoading] = useState(false);
-    const { translate } = useTranslations();
 
     const onSubmit = async () => {
         setLoading(true);
@@ -20,10 +18,10 @@ const DeleteBoardGameDialog: React.FC<DeleteBoardGameDialogProps> = props => {
 
     return (
         <ConfirmDialog
-            title={translate("BOARD_GAMES.DELETE.TITLE")}
-            text={translate("BOARD_GAMES.DELETE.CONTENT")}
-            confirmButtonText={translate("BOARD_GAMES.DELETE.CONFIRM_TEXT")}
-            cancelButtonText={translate("BOARD_GAMES.DELETE.CANCEL_TEXT")}
+            title="BOARD_GAMES.DELETE.TITLE"
+            text="BOARD_GAMES.DELETE.CONTENT"
+            confirmButtonText="BOARD_GAMES.DELETE.CONFIRM_TEXT"
+            cancelButtonText="BOARD_GAMES.DELETE.CANCEL_TEXT"
             loading={loading}
             {...props}
             onConfirm={onSubmit}

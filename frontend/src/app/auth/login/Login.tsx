@@ -12,6 +12,7 @@ import AuthActions from "app/auth/__store/authActions";
 import { Link, useHistory } from "react-router-dom";
 import { appRoutes } from "app/routing/routes";
 import { useAppDispatch } from "store/useAppDispatch";
+import Heading from "library/text/Heading";
 
 const Login: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
@@ -38,9 +39,9 @@ const Login: React.FunctionComponent<any> = () => {
     };
 
     return (
-        <AuthFormWrapper image={image} text={translate("AUTH.LOGIN.IMAGE_TITLE")}>
+        <AuthFormWrapper image={image} text="AUTH.LOGIN.IMAGE_TITLE">
             <form onSubmit={tryToLogin} className={css.form}>
-                <h1 className={css.title}>{translate("AUTH.LOGIN.TITLE")}</h1>
+                <Heading variant="h1" className={css.title} text="AUTH.LOGIN.TITLE" />
 
                 <Input
                     label={translate("AUTH.LOGIN.INPUT_LOGIN_LABEL")}

@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import css from "./button.module.scss";
 import { cssIf, merge } from "utils/cssUtils";
 import RingLoading from "library/loading/RingLoading";
+import useTranslations from "app/locale/__hooks/useTranslations";
 
 export interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
     text: string;
@@ -39,6 +40,9 @@ const Button: React.FC<ButtonProps> = props => {
         css[textSize || "normalSize"],
         className,
     );
+
+    const { translate } = useTranslations();
+
     return (
         <button
             className={classes}
@@ -49,7 +53,7 @@ const Button: React.FC<ButtonProps> = props => {
         >
             <span className={css.insideButton}>
                 {leftIcon}
-                {props.text}
+                {translate(props.text)}
                 {loading && <RingLoading className={merge(css.loader, css[props.color || "primary"])} />}
             </span>
         </button>

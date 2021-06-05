@@ -13,6 +13,7 @@ import { appRoutes } from "app/routing/routes";
 import RingLoading from "library/loading/RingLoading";
 import AuthActions from "app/auth/__store/authActions";
 import { useAppDispatch } from "store/useAppDispatch";
+import Heading from "library/text/Heading";
 
 const Registration: React.FunctionComponent<any> = () => {
     const { translate } = useTranslations();
@@ -44,9 +45,9 @@ const Registration: React.FunctionComponent<any> = () => {
     };
 
     return (
-        <AuthFormWrapper image={image} text={translate("AUTH.REGISTRATION.IMAGE_TITLE")}>
+        <AuthFormWrapper image={image} text="AUTH.REGISTRATION.IMAGE_TITLE">
             <form onSubmit={tryToRegister} className={css.form}>
-                <h1 className={css.title}>{translate("AUTH.REGISTRATION.TITLE")}</h1>
+                <Heading variant="h1" center className={css.title} text="AUTH.REGISTRATION.TITLE" />
                 <Input
                     label={translate("AUTH.REGISTRATION.INPUT_LOGIN_LABEL")}
                     name="username"
