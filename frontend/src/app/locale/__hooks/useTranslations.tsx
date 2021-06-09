@@ -1,16 +1,16 @@
 import { useCallback } from "react";
 import { useRedux } from "store/rootReducer";
 import { getNestedTranslation } from "utils/objectUtils";
-import { memoize } from "lodash";
+import memoize from "lodash/memoize";
 import { Translations } from "app/locale/__store/localeStore";
 
 const performTranslate = (key: string, translations: Translations): string =>
-    key && getNestedTranslation(key, translations);
+    key ? getNestedTranslation(key, translations) : "";
 
 export const memoizedTranslation = memoize(performTranslate);
 
 interface UseTranslationsReturn {
-    translate<T extends string>(key: T): string | T;
+    translate<T extends string>(key?: T): string | T;
 }
 
 const useTranslations = (): UseTranslationsReturn => {
