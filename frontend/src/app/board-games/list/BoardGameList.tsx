@@ -11,7 +11,6 @@ import useDialog from "library/dialog/context/useDialog";
 import { BoardGameActions } from "app/board-games/__store/boardGameActions";
 import BoardGameListItem from "app/board-games/list-item/BoardGameListItem";
 import { useAppDispatch } from "store/useAppDispatch";
-import MediumTitle from "library/text/MediumTitle";
 
 const BoardGameList: React.FunctionComponent<any> = () => {
     const { showDialog } = useDialog();
@@ -55,18 +54,6 @@ const BoardGameList: React.FunctionComponent<any> = () => {
                     ?.map(boardGame => (
                         <li key={boardGame.id} className={css.singleItem}>
                             <BoardGameListItem game={boardGame} onDeleteIconClick={deleteGameRequest} />
-                        </li>
-                    ))}
-            </FlipMove>
-
-            <MediumTitle>BOARD_GAMES.LIST.LINKED</MediumTitle>
-
-            <FlipMove className={css.list} typeName="ul">
-                {linkedBoardGames
-                    ?.filter(({ creatorBoardGame }) => filterCondition(creatorBoardGame.name))
-                    ?.map(({ creatorBoardGame }) => (
-                        <li key={creatorBoardGame.id} className={css.singleItem}>
-                            {JSON.stringify(creatorBoardGame)}
                         </li>
                     ))}
             </FlipMove>

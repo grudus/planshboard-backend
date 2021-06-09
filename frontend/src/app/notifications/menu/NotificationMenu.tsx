@@ -1,14 +1,14 @@
 import React from "react";
 import IconButton from "library/icon-button/IconButton";
 import Icons from "library/icons/Icons";
-import { Menu, MenuDivider, MenuItem } from "@szhsin/react-menu";
+import { MenuDivider } from "@szhsin/react-menu";
 import { NotificationAction, NotificationActionsDescriptor } from "app/notifications/NotificationTypesFactory";
-import useTranslations from "app/locale/__hooks/useTranslations";
-import css from "./notification-menu.module.scss";
 import { NotificationItem } from "app/notifications/__models/NotificationModels";
 import useDialog from "library/dialog/context/useDialog";
 import { AppDispatch, useAppDispatch } from "store/useAppDispatch";
 import NotificationActions from "app/notifications/__store/notificationActions";
+import ContextMenu from "library/menu/ContextMenu";
+import ContextMenuItem from "library/menu/ContextMenuItem";
 
 interface NotificationMenuProps {
     actionsDescriptor: NotificationActionsDescriptor;
@@ -34,7 +34,6 @@ const defaultActions: NotificationActionsDescriptor = {
 };
 
 const NotificationMenu: React.FC<NotificationMenuProps> = props => {
-    const { translate } = useTranslations();
     const dispatch = useAppDispatch();
     const dialogContext = useDialog();
 
@@ -43,10 +42,12 @@ const NotificationMenu: React.FC<NotificationMenuProps> = props => {
     };
 
     const NotificationMenuItem = (action: NotificationAction, translateBase: string) => (
-        <MenuItem key={action.key} className={css.menuItem} onClick={() => onItemClick(action)}>
-            {action.svgIcon}
-            {translate(`${translateBase}.${action.key}`)}
-        </MenuItem>
+        <ContextMenuItem
+            text={`${translateBase}.${action.key}`}
+            svgIcon={action.svgIcon}
+            key={action.key}
+            onClick={() => onItemClick(action)}
+        />
     );
 
     const createMenuItems = (descriptor: NotificationActionsDescriptor) =>
@@ -61,13 +62,9 @@ const NotificationMenu: React.FC<NotificationMenuProps> = props => {
         : createMenuItems(defaultActions);
 
     return (
-        <Menu
-            menuButton={<IconButton svgIcon={Icons.MoreVertical} />}
-            className={css.notificationMenu}
-            direction="left"
-        >
+        <ContextMenu menuButton={<IconButton svgIcon={Icons.MoreVertical} />} direction="left">
             {MenuItems}
-        </Menu>
+        </ContextMenu>
     );
 };
 
