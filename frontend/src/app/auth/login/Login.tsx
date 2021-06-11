@@ -4,7 +4,6 @@ import AuthFormWrapper from "app/auth/auth-wrapper/AuthFormWrapper";
 import Input from "library/input/Input";
 import Button from "library/button/Button";
 import css from "app/auth/auth.module.scss";
-import image from "./login-left.svg";
 import { ReactComponent as UserIcon } from "./icon-user.svg";
 import { ReactComponent as PassIcon } from "./icon-lock.svg";
 import PasswordInput from "library/password-input/PasswordInput";
@@ -39,7 +38,7 @@ const Login: React.FunctionComponent<any> = () => {
     };
 
     return (
-        <AuthFormWrapper image={image} text="AUTH.LOGIN.IMAGE_TITLE">
+        <AuthFormWrapper image="/img/login-image.svg" text="AUTH.LOGIN.IMAGE_TITLE">
             <form onSubmit={tryToLogin} className={css.form}>
                 <Heading variant="h1" className={css.title} text="AUTH.LOGIN.TITLE" />
 

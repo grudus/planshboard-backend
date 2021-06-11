@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from "react";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import { Link } from "react-router-dom";
 import AuthFormWrapper from "app/auth/auth-wrapper/AuthFormWrapper";
-import image from "app/auth/registration/registration-left.svg";
 import css from "app/auth/auth.module.scss";
 import Input from "library/input/Input";
 import { ReactComponent as UserIcon } from "app/auth/login/icon-user.svg";
@@ -45,7 +44,7 @@ const Registration: React.FunctionComponent<any> = () => {
     };
 
     return (
-        <AuthFormWrapper image={image} text="AUTH.REGISTRATION.IMAGE_TITLE">
+        <AuthFormWrapper image="/img/registration-image.svg" text="AUTH.REGISTRATION.IMAGE_TITLE">
             <form onSubmit={tryToRegister} className={css.form}>
                 <Heading variant="h1" center className={css.title} text="AUTH.REGISTRATION.TITLE" />
                 <Input
