@@ -23,7 +23,7 @@
     }
 }
 
-.addButton {
+button.addButton {
     @include largeShadow;
     @include floatingItem;
 }
@@ -38,7 +38,7 @@
     .list {
         grid-template-columns: repeat(4, 1fr);
     }
-    .addButton {
+    button.addButton {
         @include noShadow;
         @include topSpaceItem;
     }
