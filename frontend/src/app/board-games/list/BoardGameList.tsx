@@ -33,7 +33,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
         dispatch(BoardGameActions.getLinkedBoardGames());
     }, [dispatch]);
 
-    if (!boardGameExists && !linkedBoardGames) {
+    if (!boardGameExists) {
         return (
             <>
                 <EmptyListPlaceholder />

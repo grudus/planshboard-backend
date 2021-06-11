@@ -1,4 +1,8 @@
 import React from "react";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// @types/pikaday includes whole moment.js lib (optional in the original pikaday)
+// which cra cannot easily ignore. It unnecessarily adds ~60kB of not-used js to the bundle
 import Pikaday from "pikaday";
 import Input from "library/input/Input";
 import IconButton from "library/icon-button/IconButton";
@@ -18,7 +22,7 @@ interface DatePickerProps {
 
 interface DatePickerState {
     date: Date;
-    pikadayInstance?: Pikaday;
+    pikadayInstance?: any;
 }
 
 class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
