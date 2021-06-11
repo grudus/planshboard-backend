@@ -19,6 +19,7 @@ import { ReactComponent as XIcon } from "./x.svg";
 import { ReactComponent as MarkAsReadIcon } from "./mark-as-read.svg";
 import { ReactComponent as CheckDouble } from "./check-double.svg";
 import { ReactComponent as Down } from "./down.svg";
+import { ReactComponent as Edit } from "./edit.svg";
 
 const Icons = {
     PlusIcon: <PlusIcon />,
@@ -41,6 +42,7 @@ const Icons = {
     MarkAsReadIcon: <MarkAsReadIcon />,
     CheckDouble: <CheckDouble />,
     Down: <Down />,
+    EditIcon: <Edit />,
 };
 
 export default Icons;

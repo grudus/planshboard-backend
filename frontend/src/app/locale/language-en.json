@@ -155,6 +155,9 @@
             "DROPDOWN_LABEL": "Tags",
             "NO_OPTIONS_DROPDOWN": "Start writing to add tag"
         },
+        "SHOW": {
+            "TITLE": "Show plays"
+        },
         "LIST": {
             "EMPTY": {
                 "TOP": "You don't have any plays yet",
@@ -173,7 +176,6 @@
         "DELETE": "Delete",
         "MARK_AS_READ": "Mark as read",
         "MARK_ALL_AS_READ": "Mark all as read",
-
         "PLAY_ADDED": {
             "ACCEPT": "Accept",
             "ACCEPT_ALL": "Accept all",

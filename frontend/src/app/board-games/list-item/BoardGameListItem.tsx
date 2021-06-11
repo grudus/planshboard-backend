@@ -18,12 +18,14 @@ const BoardGameListItem: React.FC<BoardGameListItemProps> = props => {
         props.onDeleteIconClick(props.game.id);
     };
     return (
-        <Link className={css.linkWrapper} to={appRoutes.boardGame.edit.replace(":id", props.game.id.toString())}>
-            <section className={css.item} title={props.game.name}>
-                <Heading variant="h4" text={props.game.name} className={css.boardGameName} noTranslation />
-                <BoardGameItemContextMenu onDeleteClick={onDeleteClick} />
-            </section>
-        </Link>
+        <div className={css.linkWrapper}>
+            <Link to={appRoutes.boardGame.edit.replace(":id", props.game.id.toString())}>
+                <section className={css.item} title={props.game.name}>
+                    <Heading variant="h4" text={props.game.name} className={css.boardGameName} noTranslation />
+                </section>
+            </Link>
+            <BoardGameItemContextMenu onDeleteClick={onDeleteClick} gameId={props.game.id} />
+        </div>
     );
 };
 
