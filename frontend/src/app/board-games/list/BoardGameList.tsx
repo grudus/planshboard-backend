@@ -16,7 +16,7 @@ const BoardGameList: React.FunctionComponent<any> = () => {
     const { showDialog } = useDialog();
     const { setFilter, filterCondition } = useFilter();
     const dispatch = useAppDispatch();
-    const { list: boardGames, linked: linkedBoardGames, boardGameExists } = useRedux(state => state.boardGame);
+    const { list: boardGames, boardGameExists } = useRedux(state => state.boardGame);
 
     const confirmDeleteItem = useCallback(
         (id: number) => dispatch(BoardGameActions.deleteBoardGame({ id })),
