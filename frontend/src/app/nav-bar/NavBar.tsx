@@ -2,17 +2,11 @@ import React, { ReactElement, ReactNode } from "react";
 import { appRoutes, routesWithoutNav } from "app/routing/routes";
 import useTranslations from "app/locale/__hooks/useTranslations";
 import DesktopNavBar from "app/nav-bar/desktop/DesktopNavBar";
-import { ReactComponent as BoardGamesIcon } from "./icons/board-games.svg";
-import { ReactComponent as StatsIcon } from "./icons/stats.svg";
-import { ReactComponent as PlaysIcon } from "./icons/plays.svg";
-import { ReactComponent as NotificationsIcon } from "./icons/notifications.svg";
-import { ReactComponent as SettingsIcon } from "./icons/settings.svg";
-import { ReactComponent as RankingIcon } from "./icons/ranking.svg";
-import { ReactComponent as OpponentsIcon } from "./icons/opponents.svg";
 import css from "./nav-bar.module.scss";
 import { useLocation } from "react-router-dom";
 import { useSize } from "app/shared/hooks/useSize";
 import MobileNavBar from "app/nav-bar/mobile/MobileNavBar";
+import Icons from "library/icons/Icons";
 
 export interface NavBarMenuItem {
     path: string;
@@ -27,13 +21,13 @@ export interface NavBarMenuListProps {
 
 function menu(translate: (key: string) => string): NavBarMenuItem[] {
     return [
-        { path: appRoutes.boardGame.list, label: translate("NAV_BAR.BOARD_GAMES"), icon: <BoardGamesIcon /> },
-        { path: appRoutes.plays.list, label: translate("NAV_BAR.PLAYS"), icon: <PlaysIcon /> },
-        { path: appRoutes.stats, label: translate("NAV_BAR.STATS"), icon: <StatsIcon /> },
-        { path: appRoutes.ranking, label: translate("NAV_BAR.RANKING"), icon: <RankingIcon /> },
-        { path: appRoutes.opponents.list, label: translate("NAV_BAR.OPPONENTS"), icon: <OpponentsIcon /> },
-        { path: appRoutes.notifications, label: translate("NAV_BAR.NOTIFICATIONS"), icon: <NotificationsIcon /> },
-        { path: appRoutes.settings, label: translate("NAV_BAR.SETTINGS"), icon: <SettingsIcon /> },
+        { path: appRoutes.boardGame.list, label: translate("NAV_BAR.BOARD_GAMES"), icon: Icons.BoardGamesIcon },
+        { path: appRoutes.plays.list, label: translate("NAV_BAR.PLAYS"), icon: Icons.PlaysIcon },
+        { path: appRoutes.stats, label: translate("NAV_BAR.STATS"), icon: Icons.StatsIcon },
+        { path: appRoutes.ranking, label: translate("NAV_BAR.RANKING"), icon: Icons.RankingIcon },
+        { path: appRoutes.opponents.list, label: translate("NAV_BAR.OPPONENTS"), icon: Icons.OpponentsIcon },
+        { path: appRoutes.notifications, label: translate("NAV_BAR.NOTIFICATIONS"), icon: Icons.NotificationsIcon },
+        { path: appRoutes.settings, label: translate("NAV_BAR.SETTINGS"), icon: Icons.SettingsIcon },
     ];
 }
 

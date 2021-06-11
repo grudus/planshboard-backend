@@ -90,6 +90,11 @@
             "CONFIRM_TEXT": "Usuń grę",
             "CANCEL_TEXT": "Cofnij"
         },
+        "LINKED": {
+            "HEADER": "Gry Twoich przeciwników",
+            "MERGE": "Połącz ze swoją grą",
+            "REMOVE": "Ukryj powiązanie"
+        },
         "SELECT": {
             "TITLE": "Wybierz grę"
         }

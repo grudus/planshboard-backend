@@ -8,6 +8,7 @@ import SearchInput from "library/search-input/SearchInput";
 import useFilter from "app/shared/hooks/useFilter";
 import { BoardGame } from "app/board-games/__models/BoardGameModels";
 import Heading from "library/text/Heading";
+import BoardGameListItem from "app/board-games/list-item/BoardGameListItem";
 
 interface SelectBoardGameDialogProps extends DialogProps {
     onSelect: (id: number) => void;
@@ -48,9 +49,7 @@ const SelectBoardGameDialog: React.FC<SelectBoardGameDialogProps> = props => {
                                     className={css.boardGameOption}
                                     onClick={() => selectGame(boardGame)}
                                 >
-                                    <button className={css.boardGameOptionButton}>
-                                        <Heading text={boardGame.name} />
-                                    </button>
+                                    <BoardGameListItem game={boardGame} />
                                 </li>
                             ))}
                     </ul>

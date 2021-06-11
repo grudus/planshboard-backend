@@ -87,6 +87,11 @@
             "CONFIRM_TEXT": "Remove game",
             "CANCEL_TEXT": "Cancel"
         },
+        "LINKED": {
+            "HEADER": "Your opponents' games",
+            "MERGE": "Merge with your game",
+            "REMOVE": "Remove linking"
+        },
         "SELECT": {
             "TITLE": "Select a game"
         }

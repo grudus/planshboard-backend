@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { NavBarMenuListProps } from "app/nav-bar/NavBar";
 import css from "app/nav-bar/mobile/mobile-nav-bar.module.scss";
 import { NavLink } from "react-router-dom";
-import { ReactComponent as MoreIcon } from "./more-icon.svg";
 import MoreItems from "app/nav-bar/mobile/more-items/MoreItems";
+import Icons from "library/icons/Icons";
 
 const numberOfVisibleItems = 3;
 
@@ -38,7 +38,7 @@ const MobileNavBar: React.FC<MobileNavBarProps> = props => {
                 ))}
                 <li className={css.menuItem} onClick={openMoreItems}>
                     <div className={css.menuLink}>
-                        <MoreIcon />
+                        {Icons.MoreVertical}
                         <span>{props.moreText}</span>
                     </div>
                 </li>
