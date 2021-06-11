@@ -169,6 +169,9 @@
                 "BOTTOM": "Utwórz ją, aby móc śledzić swoje postępy!"
             },
             "ADD_BUTTON": "Dodaj rozgrywkę"
+        },
+        "SHOW": {
+            "TITLE": "Pokaż rozgrywki"
         }
     },
     "ERRORS": {
