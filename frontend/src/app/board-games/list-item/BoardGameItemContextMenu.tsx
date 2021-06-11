@@ -21,7 +21,7 @@ const BoardGameItemContextMenu: React.FC<BoardGameItemContextMenuProps> = props 
         />
         <ContextMenuItem
             text="PLAYS.SHOW.TITLE"
-            svgIcon={Icons.GridIcon}
+            svgIcon={Icons.PlaysIcon}
             href={`${appRoutes.plays.list}?boardGameId=${props.gameId}`}
         />
         <MenuDivider />
@@ -38,4 +38,4 @@ const BoardGameItemContextMenu: React.FC<BoardGameItemContextMenuProps> = props 
     </ContextMenu>
 );
 
-export default BoardGameItemContextMenu;
+export default React.memo(BoardGameItemContextMenu);

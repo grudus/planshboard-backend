@@ -23,6 +23,15 @@
     }
 }
 
+.gameCreatorChip {
+    right: 8px;
+    top: 8px;
+    max-width: 50%;
+    & > * {
+        @include ellipsis;
+    }
+}
+
 button.addButton {
     @include largeShadow;
     @include floatingItem;

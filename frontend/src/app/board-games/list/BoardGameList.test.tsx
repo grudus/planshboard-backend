@@ -21,7 +21,7 @@ test("Should display all items", () => {
     });
     const { getByText } = render(
         <MemoryRouter>
-            <BoardGameList />
+            <BoardGameList filterCondition={a => !!a} />
         </MemoryRouter>,
     );
     const game1 = getByText(/Item1/i);

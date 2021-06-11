@@ -20,6 +20,13 @@ import { ReactComponent as MarkAsReadIcon } from "./mark-as-read.svg";
 import { ReactComponent as CheckDouble } from "./check-double.svg";
 import { ReactComponent as Down } from "./down.svg";
 import { ReactComponent as Edit } from "./edit.svg";
+import { ReactComponent as BoardGamesIcon } from "./board-games.svg";
+import { ReactComponent as StatsIcon } from "./stats.svg";
+import { ReactComponent as PlaysIcon } from "./plays.svg";
+import { ReactComponent as NotificationsIcon } from "./notifications.svg";
+import { ReactComponent as SettingsIcon } from "./settings.svg";
+import { ReactComponent as RankingIcon } from "./ranking.svg";
+import { ReactComponent as OpponentsIcon } from "./opponents.svg";
 
 const Icons = {
     PlusIcon: <PlusIcon />,
@@ -43,6 +50,13 @@ const Icons = {
     CheckDouble: <CheckDouble />,
     Down: <Down />,
     EditIcon: <Edit />,
+    BoardGamesIcon: <BoardGamesIcon />,
+    PlaysIcon: <PlaysIcon />,
+    NotificationsIcon: <NotificationsIcon />,
+    StatsIcon: <StatsIcon />,
+    SettingsIcon: <SettingsIcon />,
+    RankingIcon: <RankingIcon />,
+    OpponentsIcon: <OpponentsIcon />,
 };
 
 export default Icons;
