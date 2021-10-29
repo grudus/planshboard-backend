@@ -35,7 +35,7 @@ const OpponentProfile: React.FC = () => {
             setOpponentNameError("");
             await dispatch(OpponentActions.updateOpponent({ ...request, id: +id! }));
             onCancel();
-        } catch (e) {
+        } catch (e: any) {
             const code = JSON.parse(e).code;
             const errorText = translate(`OPPONENTS.ADD.ERRORS.${code}`);
             const inputWithError = code === "OPPONENT_ALREADY_EXISTS" ? setOpponentNameError : setExistingUserNameError;

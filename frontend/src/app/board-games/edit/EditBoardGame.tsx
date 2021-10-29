@@ -31,7 +31,7 @@ const EditBoardGame: React.FC = () => {
             setError("");
             await dispatch(BoardGameActions.editBoardGame({ ...request, id: +id! }));
             onCancel();
-        } catch (e) {
+        } catch (e: any) {
             const code = getErrorCode(e);
             setError(`ERRORS.${code}`);
         }

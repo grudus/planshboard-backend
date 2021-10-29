@@ -24,7 +24,7 @@
         <jooq.db.inputSchema>public</jooq.db.inputSchema>
 
         <java.version>11</java.version>
-        <kotlin.version>1.4.32</kotlin.version>
+        <kotlin.version>1.5.31</kotlin.version>
         <flyway.version>6.2.2</flyway.version>
         <jooq.version>3.12.4</jooq.version>
         <jwt-library.version>0.11.0</jwt-library.version>
