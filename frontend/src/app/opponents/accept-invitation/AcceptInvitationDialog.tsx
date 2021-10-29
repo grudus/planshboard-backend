@@ -40,7 +40,7 @@ const AcceptInvitationDialog: React.FC<AcceptInvitationDialogProps> = props => {
             const notificationId = notification.id;
             await dispatch(NotificationActions.acceptOpponentLinked({ opponent, notificationId }));
             props.onCancel?.();
-        } catch (e) {
+        } catch (e: any) {
             const errorKey = `OPPONENTS.ADD.ERRORS.${getErrorCode(e)}`;
             setError(translate(errorKey));
         }

@@ -22,7 +22,7 @@ const AddBoardGame: React.FC = () => {
             setError("");
             await dispatch(BoardGameActions.addBoardGame(request));
             onCancel();
-        } catch (e) {
+        } catch (e: any) {
             const code = getErrorCode(e);
             setError(`ERRORS.${code}`);
         }

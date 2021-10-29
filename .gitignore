@@ -4,6 +4,7 @@
 *.ipr
 *.iml
 .idea/
+.run
 
 ### Frontend ###
 **/node_modules

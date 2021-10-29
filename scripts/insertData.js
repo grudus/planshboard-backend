@@ -12,26 +12,26 @@ function httpRequest(params, postData) {
     }
     console.log(`\nExecute request "${params.path}" with data:`, postData);
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         const req = http.request(params, res => {
             if (res.statusCode < 200 || res.statusCode >= 300) {
                 console.error(`Invalid status code [${res.statusCode}]`);
             }
             let body = [];
-            res.on("data", function(chunk) {
+            res.on("data", function (chunk) {
                 body.push(chunk);
             });
-            res.on("end", function() {
+            res.on("end", function () {
                 try {
                     body = body.length ? JSON.parse(Buffer.concat(body).toString()) : null;
                 } catch (e) {
                     reject(e);
                 }
                 console.log("Request ended with response: ", body);
-                resolve({ body, headers: res.headers });
+                resolve({body, headers: res.headers});
             });
         });
-        req.on("error", function(err) {
+        req.on("error", function (err) {
             reject(err);
         });
         if (postData) {
@@ -84,13 +84,13 @@ function postFormRequest(path, requestString) {
 
 async function login(username, password) {
     const req = "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
-    const { headers } = await postFormRequest("/api/auth/login", req);
-    const { authorization } = headers;
+    const {headers} = await postFormRequest("/api/auth/login", req);
+    const {authorization} = headers;
     authToken = authorization;
 }
 
 function createUser(username) {
-    const data = { username, password: username, confirmPassword: username };
+    const data = {username, password: username, confirmPassword: username};
     return postRequest("/api/auth/registration", data);
 }
 
@@ -106,7 +106,7 @@ function createBoardGame(name) {
             showTags: true,
         },
     };
-    return postRequest("/api/board-games", data).then(({ id }) => id);
+    return postRequest("/api/board-games", data).then(({id}) => id);
 }
 
 function createOpponent(opponentName, existingUserName = null) {
@@ -114,11 +114,11 @@ function createOpponent(opponentName, existingUserName = null) {
         opponentName,
         existingUserName,
     };
-    return postRequest("/api/opponents", data).then(({ id }) => id);
+    return postRequest("/api/opponents", data).then(({id}) => id);
 }
 
 function createPlay(boardGameId, opponentIds, tags = [], date = new Date(), note, finalResult) {
-    const results = opponentIds.map(opponentId => ({ opponentId }));
+    const results = opponentIds.map(opponentId => ({opponentId}));
     const data = {
         boardGameId,
         results,
@@ -127,19 +127,19 @@ function createPlay(boardGameId, opponentIds, tags = [], date = new Date(), note
         note,
         finalResult,
     };
-    return postRequest("/api/plays", data).then(({ id }) => id);
+    return postRequest("/api/plays", data).then(({id}) => id);
 }
 
-async function acceptOpponentRequest(opponentId) {
+async function acceptOpponentRequest(opponentId, newOpponentName) {
     const notifications = await getRequest("/api/notifications?limitPerPage=100");
 // noinspection JSUnresolvedVariable
     const notificationId = notifications
         .filter(not => not.eventType === "OPPONENT_LINKED" && not.eventData.linkedOpponentId === opponentId)[0].id;
-    const data = { notificationId };
+    const data = {notificationId, opponent: {newOpponentName}};
     return postRequest("/api/opponent-notifications/accept", data);
 }
 
-(async function() {
+(async function () {
     await createUser("grudus");
     await createUser("madzia");
     await login("grudus", "grudus");
@@ -148,8 +148,7 @@ async function acceptOpponentRequest(opponentId) {
     const linkedOpponent = await createOpponent("madzia", "madzia");
 
     await login("madzia", "madzia");
-    await acceptOpponentRequest(linkedOpponent);
-    await createOpponent("gruuuuuuuuu", "grudus");
+    await acceptOpponentRequest(linkedOpponent, "grudus");
     await login("grudus", "grudus");
 
     const boardGame1 = await createBoardGame("Carcassone");
