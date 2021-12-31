@@ -6,7 +6,7 @@ export const mock = <T extends any, K extends keyof T>(object: T, property: K, v
     Object.defineProperty(object, property, { get: () => value });
 };
 
-export const mockRedux = (response: any) => {
+export const mockRedux = (response: any = {}) => {
     const store = "locale" in response ? response : { ...response, locale: {} };
     mock(rootReducer, "useRedux", state => state(store));
 };

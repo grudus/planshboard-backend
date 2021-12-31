@@ -10,6 +10,7 @@ import com.grudus.planshboard.commons.cache.CacheKeys
 import com.grudus.planshboard.utils.CacheUtils
 import com.grudus.planshboard.utils.randomId
 import com.grudus.planshboard.utils.randomText
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +27,10 @@ class LinkedBoardGameServiceTest : AbstractDatabaseTest() {
     @Autowired
     private lateinit var cacheManager: CacheManager
 
+    @AfterEach
+    fun `clean cache`() {
+        CacheUtils.clearStats(cacheManager.getCache(CacheKeys.LINKED_BOARD_GAMES)!!)
+    }
 
     @Test
     fun `should use cache when accessing linked games for same id`() {
@@ -66,7 +71,9 @@ class LinkedBoardGameServiceTest : AbstractDatabaseTest() {
     }
 
     private fun addBoardGame(): Id {
-        return boardGameService.createBoardGame(addUser(),
-            CreateBoardGameRequest(randomText(), BoardGameOptions.default()))
+        return boardGameService.createBoardGame(
+            addUser(),
+            CreateBoardGameRequest(randomText(), BoardGameOptions.default())
+        )
     }
 }

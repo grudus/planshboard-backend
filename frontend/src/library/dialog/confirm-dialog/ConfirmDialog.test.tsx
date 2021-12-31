@@ -1,6 +1,9 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import ConfirmDialog from "library/dialog/confirm-dialog/ConfirmDialog";
+import { mockRedux } from "../../../utils/testUtils";
+
+beforeAll(mockRedux);
 
 test("Should display nothing when closed", () => {
     const { queryByText } = render(
