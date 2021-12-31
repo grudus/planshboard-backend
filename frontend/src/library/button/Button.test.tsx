@@ -1,6 +1,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import Button from "./Button";
+import { mockRedux } from "../../utils/testUtils";
+
+beforeAll(mockRedux);
 
 test("Should display button correctly", () => {
     const { getByText } = render(<Button text="My Button" />);

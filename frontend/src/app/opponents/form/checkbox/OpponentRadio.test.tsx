@@ -1,6 +1,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import OpponentRadio from "app/opponents/form/checkbox/OpponentRadio";
+import { mockRedux } from "../../../../utils/testUtils";
+
+beforeAll(mockRedux);
 
 test("Should render title properly", () => {
     const { getByText } = render(

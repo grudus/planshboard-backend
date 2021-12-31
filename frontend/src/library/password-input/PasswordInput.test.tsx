@@ -3,6 +3,9 @@ import { render, fireEvent } from "@testing-library/react";
 import PasswordInput from "library/password-input/PasswordInput";
 import IconEye from "./icon-eye.svg";
 import IconEyeOff from "./icon-eye-off.svg";
+import { mockRedux } from "../../utils/testUtils";
+
+beforeAll(mockRedux);
 
 test("Should generate label correctly", () => {
     const { getByLabelText } = render(<PasswordInput label="Label" name="Name" />);

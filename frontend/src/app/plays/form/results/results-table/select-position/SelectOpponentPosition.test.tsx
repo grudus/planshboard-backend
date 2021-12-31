@@ -56,7 +56,6 @@ test("Should call on change properly", () => {
     const { getByText } = render(<SelectOpponentPosition numberOfPositions={4} result={result} onChange={onChange} />);
 
     const querySelector = getByText("3").parentElement!.querySelector("input")!;
-    console.log(querySelector);
     userEvent.click(querySelector);
     expect(onChange).toBeCalledWith({ ...result, position: 3 });
 });

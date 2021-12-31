@@ -1,6 +1,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import Input from "./Input";
+import { mockRedux } from "../../utils/testUtils";
+
+beforeAll(mockRedux);
 
 test("Should generate label correctly", () => {
     const { getByLabelText } = render(<Input label="Label" name="Name" />);
