@@ -1,4 +1,5 @@
 # Planshboard
+![planshboard-test badge](https://github.com/grudus/PlanshboardApp/actions/workflows/test-planshboard.yml/badge.svg)
 
 Web platform for managing board game results and tracking gamers’ progress.
 
@@ -6,7 +7,7 @@ Web platform for managing board game results and tracking gamers’ progress.
 ## Technology overview
 
 
-As a standard web application, Planshboard consist of 3 main parts: 
+As a standard web application, Planshboard consist of 3 main parts:
 
 * application server | [Kotlin](https://kotlinlang.org), [Spring Framework](https://spring.io)
 * web client | [React](https://reactjs.org), [Typescript](https://www.typescriptlang.org)
@@ -19,10 +20,10 @@ As a standard web application, Planshboard consist of 3 main parts:
 It is possible to run the whole app inside the docker containers. It can be done by executing the following command:
 
 ```bash
-./scripts/run-app-docker.sh 
+./scripts/run-app-docker.sh
 ```
 
-The app will be available at `localhost:3031`. 
+The app will be available at `localhost:3031`.
 
 ### Initial data
 
