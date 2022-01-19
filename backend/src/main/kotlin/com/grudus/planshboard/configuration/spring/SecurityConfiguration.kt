@@ -11,14 +11,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy.STATELESS
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
-
 @Configuration
 @EnableWebSecurity
 class StatelessSecurityConfiguration
 @Autowired
-constructor(private val corsFilter: CorsFilter,
-            private val statelessLoginFilter: StatelessLoginFilter,
-            private val statelessAuthenticationFilter: StatelessAuthenticationFilter) : WebSecurityConfigurerAdapter() {
+constructor(
+    private val corsFilter: CorsFilter,
+    private val statelessLoginFilter: StatelessLoginFilter,
+    private val statelessAuthenticationFilter: StatelessAuthenticationFilter
+) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http
@@ -27,6 +28,7 @@ constructor(private val corsFilter: CorsFilter,
             .and()
             .authorizeRequests()
             .antMatchers("/api/auth/**").permitAll()
+            .antMatchers("/actuator/health").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter::class.java)
