@@ -2,9 +2,6 @@
 
 DOCKER_COMPOSES_DIR=docker/compose
 BACKEND_DOCKER_COMPOSE_FILE=docker-compose-backend-tests.yml
-FRONTEND_DOCKER_COMPOSE_FILE=docker-compose-frontend-tests.yml
-FRONTEND_TEST_CONTAINER_NAME=planshboard_test_frontend_container
-FRONTEND_TEST_IMAGE_NAME=planshboard_test_frontend_image
 BACKEND_TEST_IMAGE_NAME=planshboard_test_backend_image
 BACKEND_TEST_CONTAINER_NAME=planshboard_test_backend_container
 
@@ -31,9 +28,6 @@ runDockerTests() {
     return "${test_result}";
 }
 
-
-echo "=== Start frontend tests ==="
-runDockerTests $FRONTEND_DOCKER_COMPOSE_FILE $FRONTEND_TEST_IMAGE_NAME $FRONTEND_TEST_CONTAINER_NAME || testFailed
 echo "=== Start backend tests ==="
 runDockerTests $BACKEND_DOCKER_COMPOSE_FILE $BACKEND_TEST_IMAGE_NAME $BACKEND_TEST_CONTAINER_NAME || testFailed
 

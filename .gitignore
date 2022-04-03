@@ -6,18 +6,12 @@
 .idea/
 .run
 
-### Frontend ###
-**/node_modules
-**/npm-debug.log*
-
 
 **/target/
 /lib
 /out
-backend/lib/
 **/build
 **/coverage
-frontend/build
 
 **/.DS_Store
 **/.env.local

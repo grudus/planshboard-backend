@@ -1,9 +1,0 @@
-version: '3.7'
-
-services:
-    planshboard_test_frontend_image:
-        container_name: planshboard_test_frontend_container
-        build:
-            context: .
-            dockerfile: docker/frontend/tests/Dockerfile
-        restart: "no"

@@ -28,17 +28,3 @@ services:
             - planshboard_app_postgres_image
         ports:
         - 8083:8080
-    planshboard_app_frontend_image:
-        container_name: planshboard_app_frontend_container
-        build:
-          context: .
-          dockerfile: docker/frontend/Dockerfile
-        restart: "no"
-        depends_on:
-            - planshboard_app_backend_image
-        environment:
-          BACKEND_URL: http://localhost:8083
-        volumes:
-        - ./frontend:/app
-        ports:
-        - 3001:3000
