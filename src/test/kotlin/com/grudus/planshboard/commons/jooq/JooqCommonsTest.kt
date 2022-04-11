@@ -58,7 +58,7 @@ class JooqCommonsTest : AbstractDatabaseTest() {
         val ids = JooqCommons.insertMultipleAndReturnIds(dsl, USERS, users)
 
         ids.forEachIndexed { index, id ->
-            val user = dsl.selectFrom(USERS).where(USERS.ID.eq(id)).fetchOne()
+            val user = dsl.selectFrom(USERS).where(USERS.ID.eq(id)).fetchOne()!!
             assertEquals(user.name, users[index].name)
             assertEquals(user.password, users[index].password)
         }

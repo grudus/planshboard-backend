@@ -1,9 +1,14 @@
 package com.grudus.planshboard.commons.jooq
 
 import com.grudus.planshboard.commons.Id
-import org.jooq.*
+import java.util.Collections
+import org.jooq.DSLContext
+import org.jooq.Field
+import org.jooq.InsertSetStep
+import org.jooq.Record
+import org.jooq.Table
+import org.jooq.exception.DataAccessException
 import org.jooq.impl.DSL
-import java.util.*
 
 
 object JooqCommons {
@@ -13,7 +18,7 @@ object JooqCommons {
             return Collections.emptyList()
         }
 
-        val idField: Field<*> = table.field("id")
+        val idField: Field<*> = table.field("id") ?: throw DataAccessException("Cannot find 'id' field in table ${table.qualifiedName}")
         val maxIndex = dslContext.select(DSL.max(idField)).from(table).fetchOneInto(Id::class.java) ?: 0
 
         @Suppress("UNCHECKED_CAST")

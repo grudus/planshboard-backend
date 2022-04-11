@@ -2,6 +2,7 @@ package com.grudus.planshboard.opponents
 
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.exceptions.CannotFetchAfterInsertException
 import com.grudus.planshboard.commons.security.AccessToResourceChecker
 import com.grudus.planshboard.opponents.model.OpponentDto
 import com.grudus.planshboard.opponents.model.OpponentListItem
@@ -42,7 +43,7 @@ constructor(
             .set(OPPONENTS.CREATED_AT, currentTimeProvider.now())
             .returning()
             .fetchOne()
-            .id
+            ?.id ?: throw CannotFetchAfterInsertException()
 
 
     fun updateName(id: Id, name: String) {

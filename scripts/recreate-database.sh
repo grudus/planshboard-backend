@@ -7,7 +7,7 @@ DATABASE_PASSWORD="grudus"
 DATABASE_DATABASE="planshboard"
 
 CURR_DIR=$(pwd)
-MIGRATIONS_DIR='backend'
+MIGRATIONS_DIR='.'
 
 pwd
 echo "About to remove public schema on database ${DATABASE_DATABASE} for user ${DATABASE_USER} in container ${DATABASE_CONTAINER}"
