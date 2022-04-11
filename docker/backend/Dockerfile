@@ -1,10 +1,10 @@
-FROM maven:3.8.1-jdk-11-slim
+FROM maven:3.8.5-openjdk-17
 WORKDIR /workspace/app
 
-COPY backend/pom.xml .
+COPY pom.xml .
 RUN mvn dependency:go-offline
 
-COPY backend/src src
+COPY src src
 
 CMD export SPRING_DATASOURCE_URL=$DATABASE_URL SPRING_DATASOURCE_USERNAME=$DATABASE_USER SPRING_DATASOURCE_PASSWORD=$DATABASE_PASSWORD FRONTEND_ADDRESS=$FRONTEND_ADDRESS \
     && mvn spring-boot:run -DskipTests -Dmaven.javadoc.skip=true -B -V \

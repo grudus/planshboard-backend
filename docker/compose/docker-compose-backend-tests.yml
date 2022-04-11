@@ -12,7 +12,7 @@ services:
             POSTGRES_PASSWORD: test_password
             POSTGRES_MULTIPLE_DATABASES: planshboard_test
         ports:
-            - 5432:5432
+            - 5438:5432
     planshboard_test_backend_image:
         container_name: planshboard_test_backend_container
         build:
@@ -22,6 +22,6 @@ services:
         environment:
             DATABASE_USER: test_user
             DATABASE_PASSWORD: test_password
-            DATABASE_URL: "jdbc:postgresql://planshboard_test_postgres_image:5432/planshboard_test"
+            DATABASE_URL: "jdbc:postgresql://planshboard_test_postgres_image:5438/planshboard_test"
         depends_on:
             - planshboard_test_postgres_image

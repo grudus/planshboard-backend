@@ -2,6 +2,7 @@ package com.grudus.planshboard.plays
 
 import com.grudus.planshboard.commons.CurrentTimeProvider
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.exceptions.CannotFetchAfterInsertException
 import com.grudus.planshboard.commons.security.AccessToResourceChecker
 import com.grudus.planshboard.enums.FinalResult
 import com.grudus.planshboard.enums.LinkedOpponentStatus
@@ -36,7 +37,7 @@ constructor(
             .set(PLAYS.FINAL_RESULT, request.finalResult?.name?.let { FinalResult.valueOf(it) })
             .returning()
             .fetchOne()
-            .id!!
+            ?.id ?: throw CannotFetchAfterInsertException()
 
     fun updatePlayAlone(playId: Id, date: LocalDateTime?, note: String?) {
         dsl.update(PLAYS)

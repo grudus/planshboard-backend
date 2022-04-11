@@ -6,6 +6,11 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
+import java.time.temporal.TemporalUnit
+import java.util.Calendar
+import org.apache.commons.lang3.time.CalendarUtils
+import org.apache.commons.lang3.time.DateUtils
 
 class NotificationDaoTest
 @Autowired
@@ -33,8 +38,11 @@ constructor(
             )[0]
 
             assertEquals(result.id, notification.id)
-            assertEquals(result.createdAt, notification.createdAt)
             assertEquals(result.eventData, notification.eventData)
+            assertEquals(
+                result.createdAt.truncatedTo(ChronoUnit.SECONDS),
+                notification.createdAt.truncatedTo(ChronoUnit.SECONDS)
+            )
         }
     }
 

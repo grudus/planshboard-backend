@@ -1,6 +1,7 @@
 package com.grudus.planshboard.auth
 
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.exceptions.CannotFetchAfterInsertException
 import com.grudus.planshboard.tables.Users.USERS
 import org.jooq.DSLContext
 import org.jooq.impl.DSL.count
@@ -17,7 +18,8 @@ constructor(private val dsl: DSLContext) {
         dsl.select(
             USERS.ID,
             USERS.NAME.`as`("username"),
-            USERS.PASSWORD.`as`("passwordHash"))
+            USERS.PASSWORD.`as`("passwordHash")
+        )
             .from(USERS)
             .where(USERS.NAME.eq(username))
             .fetchOneInto(UserAuthDto::class.java)
@@ -27,11 +29,10 @@ constructor(private val dsl: DSLContext) {
             .values(username, passwordHash, registerDate)
             .returning()
             .fetchOne()
-            .id
+            ?.id ?: throw CannotFetchAfterInsertException()
 
     fun exists(username: String): Boolean =
-        dsl.select(count())
-            .from(USERS)
-            .where(USERS.NAME.eq(username))
-            .fetchOneInto(Int::class.java) > 0
+        dsl.fetchCount(
+            USERS.where(USERS.NAME.eq(username))
+        ) > 0
 }

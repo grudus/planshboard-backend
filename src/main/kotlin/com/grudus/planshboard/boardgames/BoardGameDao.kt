@@ -4,6 +4,7 @@ import com.grudus.planshboard.boardgames.model.BoardGame
 import com.grudus.planshboard.boardgames.model.SingleBoardGameResponse
 import com.grudus.planshboard.boardgames.options.BoardGameOptionsDao.Companion.optionsFromRecord
 import com.grudus.planshboard.commons.Id
+import com.grudus.planshboard.commons.exceptions.CannotFetchAfterInsertException
 import com.grudus.planshboard.tables.BoardGameOptions.BOARD_GAME_OPTIONS
 import com.grudus.planshboard.tables.BoardGames.BOARD_GAMES
 import org.jooq.DSLContext
@@ -28,7 +29,7 @@ constructor(private val dsl: DSLContext) {
             .set(BOARD_GAMES.NAME, name)
             .returning()
             .fetchOne()
-            .id
+            ?.id ?: throw CannotFetchAfterInsertException()
 
 
     fun nameExists(userId: Id, name: String): Boolean =
