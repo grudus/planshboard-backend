@@ -1,7 +1,7 @@
 package com.grudus.planshboard.plays
 
 import com.grudus.planshboard.commons.Id
-import com.grudus.planshboard.plays.model.PlayListItem
+import com.grudus.planshboard.plays.model.SinglePlay
 import com.grudus.planshboard.plays.model.SavePlayRequest
 import com.grudus.planshboard.plays.notifications.PlayNotificationService
 import com.grudus.planshboard.plays.tags.TagService
@@ -39,7 +39,7 @@ constructor(
         tagService.resetTagsForPlay(request.tags, playId)
     }
 
-    fun getPlays(userId: Id): List<PlayListItem> =
+    fun getPlays(userId: Id): List<SinglePlay> =
         playDao.getPlays(userId)
 
     fun userParticipatedInPlay(userId: Id, playId: Id): Boolean =

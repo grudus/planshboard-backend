@@ -8,6 +8,7 @@ import com.grudus.planshboard.opponents.model.LinkedOpponentStatus
 import com.grudus.planshboard.opponents.model.SaveOpponentRequest
 import com.grudus.planshboard.plays.model.PlayResult
 import com.grudus.planshboard.plays.model.SavePlayRequest
+import com.grudus.planshboard.plays.tags.TagDao
 import com.grudus.planshboard.tables.PlayResults.PLAY_RESULTS
 import com.grudus.planshboard.tables.Plays.PLAYS
 import com.grudus.planshboard.utils.randomId
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 import kotlin.random.Random.Default.nextLong
 
 class PlayDaoTest
@@ -27,6 +29,7 @@ constructor(
     private val playDao: PlayDao,
     private val boardGameDao: BoardGameDao,
     private val opponentService: OpponentService,
+    private val tagDao: TagDao,
     private val dslContext: DSLContext
 ) : AbstractDatabaseTest() {
 
@@ -85,7 +88,7 @@ constructor(
         val boardGameId = addRandomBoardGame(creatorId)
         val playId = addRandomPlay(boardGameId)
 
-        playDao.updatePlayAlone(playId, LocalDateTime.now(), "abc")
+        playDao.updatePlayAlone(playId, now(), "abc")
 
         val note = dsl.select(PLAYS.NOTE).from(PLAYS).fetchOne(PLAYS.NOTE)
         assertEquals("abc", note)
@@ -205,6 +208,89 @@ constructor(
         assertTrue(userParticipatedInPlay2)
     }
 
+    @Test
+    fun `should fetch all plays belonging to the user`() {
+        val user1 = addUser()
+        val user2 = addUser()
+        val opponent1 = addRandomOpponent(user1)
+        val opponent2 = addRandomOpponent(user1, linkedToUser = user2)
+
+        val boardGameId1 = addRandomBoardGame(user1)
+        val boardGameId2 = addRandomBoardGame(user2)
+
+        playDao.savePlayResults(addRandomPlay(boardGameId1), listOf(PlayResult(opponent1, 12, 1)))
+        playDao.savePlayResults(addRandomPlay(boardGameId1), listOf(PlayResult(opponent2)))
+        playDao.savePlayResults(addRandomPlay(boardGameId1), listOf(PlayResult(opponent1)))
+        playDao.savePlayResults(addRandomPlay(boardGameId2), listOf(PlayResult(opponent2)))
+
+        assertEquals(3, playDao.getPlays(userId = user1).size)
+        assertEquals(1, playDao.getPlays(userId = user2).size)
+    }
+
+    @Test
+    fun `should fetch plays and sort them by play date by default`() {
+        val user = addUser()
+        val opponent = addRandomOpponent(user)
+
+        val boardGameId = addRandomBoardGame(user)
+
+        val play1 = addRandomPlay(boardGameId, date = now().minusMonths(2))
+        val play2 = addRandomPlay(boardGameId, date = now().minusMonths(3))
+        val play3 = addRandomPlay(boardGameId, date = now())
+
+        playDao.savePlayResults(play1, listOf(PlayResult(opponent, 12, 1)))
+        playDao.savePlayResults(play2, listOf(PlayResult(opponent)))
+        playDao.savePlayResults(play3, listOf(PlayResult(opponent)))
+
+        val plays = playDao.getPlays(userId = user)
+
+        assertEquals(play3, plays[0].id)
+        assertEquals(play1, plays[1].id)
+        assertEquals(play2, plays[2].id)
+    }
+
+    @Test
+    fun `should correctly fetch all play related data`() {
+        val user = addUser()
+        val opponent1 = addRandomOpponent(user)
+        val opponent2 = addRandomOpponent(user)
+
+        val boardGameId1 = addRandomBoardGame(user)
+        val boardGameId2 = addRandomBoardGame(user)
+
+        val play1 = addRandomPlay(boardGameId1, date = now())
+        val play2 = addRandomPlay(boardGameId2, date = now().minusMonths(12))
+
+        addTagsToPlay(user, play1, listOf("tag1", "tag2"))
+
+        playDao.savePlayResults(play1, listOf(PlayResult(opponent1, 12, 1), PlayResult(opponent2, 33, 2)))
+        playDao.savePlayResults(play2, listOf(PlayResult(opponent1), PlayResult(opponent2, null)))
+
+        val plays = playDao.getPlays(userId = user)
+
+
+        assertEquals(2, plays.size)
+        assertEquals(play1, plays[0].id)
+        assertEquals(boardGameId1, plays[0].boardGameId)
+        assertEquals(listOf("tag1", "tag2"), plays[0].tags)
+        val results1 = plays[0].results.sortedBy { it.position }
+        assertEquals(PlayResult(opponent1, 12, 1), results1[0])
+        assertEquals(PlayResult(opponent2, 33, 2), results1[1])
+
+        assertEquals(play2, plays[1].id)
+        assertEquals(boardGameId2, plays[1].boardGameId)
+        assertTrue(plays[1].tags.isEmpty())
+        val results2 = plays[1].results.sortedBy { it.position }
+        assertEquals(PlayResult(opponent1), results2[0])
+        assertEquals(PlayResult(opponent2, null), results2[1])
+    }
+
+    private fun addTagsToPlay(userId: Long, playId: Id, tags: List<String>) {
+        val ids = tagDao.saveTags(tags, userId)
+        tagDao.linkTagsToPlay(ids, playId)
+    }
+
+
     private fun addRandomOpponent(
         creatorId: Id,
         linkedToUser: Id? = null,
@@ -216,12 +302,12 @@ constructor(
     private fun addRandomBoardGame(creatorId: Id) =
         boardGameDao.create(creatorId, randomText())
 
-    private fun addRandomPlay(boardGameId: Id) = playDao.savePlayAlone(
+    private fun addRandomPlay(boardGameId: Id, date: LocalDateTime = now()) = playDao.savePlayAlone(
         SavePlayRequest(
             boardGameId,
             emptyList(),
             emptyList(),
-            LocalDateTime.now(),
+            date,
             randomText()
         )
     )

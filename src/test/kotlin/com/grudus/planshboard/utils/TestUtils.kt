@@ -2,6 +2,8 @@ package com.grudus.planshboard.utils
 
 import com.grudus.planshboard.commons.Id
 import com.grudus.planshboard.notifications.model.Notification
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 import org.mockito.ArgumentCaptor
@@ -29,4 +31,7 @@ object TestUtils {
     fun <T> capture(argumentCaptor: ArgumentCaptor<T>): T = argumentCaptor.capture()
 
     fun hasSize(size: Int): Matcher<MutableCollection<out Int>> = Matchers.hasSize<Int>(size)
+
+    fun isIsoDate(date: LocalDateTime): Matcher<String> =
+        Matchers.containsString(date.format(DateTimeFormatter.ISO_DATE))
 }
