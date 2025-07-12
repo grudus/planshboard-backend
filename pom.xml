@@ -28,7 +28,7 @@
         <flyway.version>8.5.4</flyway.version>
         <jooq.version>3.16.5</jooq.version>
         <jwt-library.version>0.11.2</jwt-library.version>
-        <apache-commons.version>3.12.0</apache-commons.version>
+        <apache-commons.version>3.18.0</apache-commons.version>
         <caffeine.version>3.0.6</caffeine.version>
     </properties>
 
